@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IAssinanteRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public AssinanteService(IAssinanteRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {

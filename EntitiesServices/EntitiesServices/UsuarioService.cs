@@ -26,7 +26,7 @@ namespace ModelServices.EntitiesServices
         private readonly IUsuarioAnexoRepository _anexoRepository;
         private readonly INotificacaoRepository _notRepository;
         private readonly INoticiaRepository _ntcRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public UsuarioService(IUsuarioRepository usuarioRepository, ILogRepository logRepository, IConfiguracaoRepository configuracaoRepository, IPerfilRepository perfRepository, ITemplateRepository tempRepository, IUsuarioAnexoRepository anexoRepository, INotificacaoRepository notRepository, INoticiaRepository ntcRepository) : base(usuarioRepository)
         {

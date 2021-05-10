@@ -19,9 +19,10 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<CONFIGURACAO> GetAllItems()
+        public List<CONFIGURACAO> GetAllItems(Int32 idAss)
         {
             IQueryable<CONFIGURACAO> query = Db.CONFIGURACAO;
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
     }

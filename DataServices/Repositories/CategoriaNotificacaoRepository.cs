@@ -20,17 +20,15 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<CATEGORIA_NOTIFICACAO> GetAllItensAdm()
+        public List<CATEGORIA_NOTIFICACAO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<CATEGORIA_NOTIFICACAO> query = Db.CATEGORIA_NOTIFICACAO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<CATEGORIA_NOTIFICACAO> GetAllItens()
+        public List<CATEGORIA_NOTIFICACAO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<CATEGORIA_NOTIFICACAO> query = Db.CATEGORIA_NOTIFICACAO.Where(p => p.CANO_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();

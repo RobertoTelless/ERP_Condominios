@@ -10,6 +10,6 @@ namespace ModelServices.Interfaces.Repositories
     public interface IConfiguracaoRepository : IRepositoryBase<CONFIGURACAO>
     {
         CONFIGURACAO GetItemById(Int32 id);
-        List<CONFIGURACAO> GetAllItems();
+        List<CONFIGURACAO> GetAllItems(Int32 idAss);
     }
 }

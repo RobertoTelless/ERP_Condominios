@@ -18,27 +18,24 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<NOTIFICACAO> GetAllItens()
+        public List<NOTIFICACAO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<NOTIFICACAO> query = Db.NOTIFICACAO.Where(p => p.NOTI_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.OrderByDescending(a => a.NOTI_DT_EMISSAO);
             return query.ToList();
         }
 
-        public List<NOTIFICACAO> GetAllItensAdm()
+        public List<NOTIFICACAO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<NOTIFICACAO> query = Db.NOTIFICACAO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.OrderByDescending(a => a.NOTI_DT_EMISSAO);
             return query.ToList();
         }
 
-        public List<NOTIFICACAO> GetAllItensUser(Int32 id)
+        public List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<NOTIFICACAO> query = Db.NOTIFICACAO.Where(p => p.NOTI_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_CD_ID == id);
             query = query.Where(p => DbFunctions.TruncateTime(p.NOTI_DT_VALIDADE) >= DbFunctions.TruncateTime(DateTime.Today));
@@ -48,9 +45,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id)
+        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<NOTIFICACAO> query = Db.NOTIFICACAO.Where(p => p.NOTI_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_CD_ID == id);
             query = query.Where(p => DbFunctions.TruncateTime(p.NOTI_DT_VALIDADE) >= DbFunctions.TruncateTime(DateTime.Today));
@@ -61,9 +57,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<NOTIFICACAO> ExecuteFilter(String titulo, DateTime? data, String texto)
+        public List<NOTIFICACAO> ExecuteFilter(String titulo, DateTime? data, String texto, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<NOTIFICACAO> lista = new List<NOTIFICACAO>();
             IQueryable<NOTIFICACAO> query = Db.NOTIFICACAO;
             if (!String.IsNullOrEmpty(titulo))

@@ -21,8 +21,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<NOTICIA> GetAllItensAdm();
         List<NOTICIA> ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link);
         List<NOTICIA> GetAllItensValidos();
-        List<TIPO_TAG> GetAllTiposTag();
         NOTICIA_COMENTARIO GetComentarioById(Int32 id);
-        Int32 CreateTag(NOTICIA_TAG item);
     }
 }

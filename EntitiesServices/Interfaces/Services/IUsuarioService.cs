@@ -19,6 +19,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 EditUser(USUARIO usuario, LOG log);
         Int32 VerifyUserSubscription(USUARIO usuario);
         Int32 EditUser(USUARIO usuario);
+
         Endereco GetAdressCEP(string CEP);
         CONFIGURACAO CarregaConfiguracao(Int32 id);
         List<USUARIO> GetAllUsuariosAdm();

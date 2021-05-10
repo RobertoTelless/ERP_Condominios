@@ -12,21 +12,19 @@ namespace DataServices.Repositories
 {
     public class AgendaRepository : RepositoryBase<AGENDA>, IAgendaRepository
     {
-        public List<AGENDA> GetByDate(DateTime data)
+        public List<AGENDA> GetByDate(DateTime data, Int32 idAss)
         {
-            Int32? idCond = SessionMocks.IdAssinante;
             IQueryable<AGENDA> query = Db.AGENDA.Where(p => p.AGEN_IN_ATIVO == 1);
-            query = query.Where(p => p.ASSI_CD_ID == idCond);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => p.AGEN_DT_DATA == data);
             query = query.Include(p => p.AGENDA_ANEXO);
             return query.ToList();
         }
 
-        public List<AGENDA> GetByUser(Int32 id)
+        public List<AGENDA> GetByUser(Int32 id, Int32 idAss)
         {
-            Int32? idCond = SessionMocks.IdAssinante;
             IQueryable<AGENDA> query = Db.AGENDA.Where(p => p.AGEN_IN_ATIVO == 1);
-            query = query.Where(p => p.ASSI_CD_ID == idCond);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => p.USUA_CD_ID == id);
             query = query.Include(p => p.AGENDA_ANEXO);
             return query.ToList();
@@ -40,28 +38,25 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<AGENDA> GetAllItens()
+        public List<AGENDA> GetAllItens(Int32 idAss)
         {
-            Int32? idCond = SessionMocks.IdAssinante;
             IQueryable<AGENDA> query = Db.AGENDA.Where(p => p.AGEN_IN_ATIVO == 1);
-            query = query.Where(p => p.ASSI_CD_ID == idCond);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<AGENDA> GetAllItensAdm()
+        public List<AGENDA> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idCond = SessionMocks.IdAssinante;
             IQueryable<AGENDA> query = Db.AGENDA;
-            query = query.Where(p => p.ASSI_CD_ID == idCond);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao)
+        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser)
         {
-            Int32? idCond = SessionMocks.IdAssinante;
-            USUARIO user = SessionMocks.UserCredentials;
+            //USUARIO user = SessionMocks.UserCredentials;
             List<AGENDA> lista = new List<AGENDA>();
-            IQueryable<AGENDA> query = Db.AGENDA.Where(x => x.USUA_CD_ID == user.USUA_CD_ID);
+            IQueryable<AGENDA> query = Db.AGENDA.Where(x => x.USUA_CD_ID == idUser);
             if (!String.IsNullOrEmpty(titulo))
             {
                 query = query.Where(p => p.AGEN_NM_TITULO.Contains(titulo));
@@ -77,7 +72,7 @@ namespace DataServices.Repositories
 
             if (query != null)
             {
-                query = query.Where(p => p.ASSI_CD_ID == idCond);
+                query = query.Where(p => p.ASSI_CD_ID == idAss);
                 query = query.OrderByDescending(a => a.AGEN_DT_DATA).ThenByDescending(b => b.AGEN_HR_HORA);
                 lista = query.ToList<AGENDA>();
                 if (data != DateTime.MinValue)

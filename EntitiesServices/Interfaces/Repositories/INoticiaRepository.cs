@@ -10,9 +10,9 @@ namespace ModelServices.Interfaces.Repositories
     public interface INoticiaRepository : IRepositoryBase<NOTICIA>
     {
         NOTICIA GetItemById(Int32 id);
-        List<NOTICIA> GetAllItens();
-        List<NOTICIA> GetAllItensAdm();
-        List<NOTICIA> ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link);
-        List<NOTICIA> GetAllItensValidos();
+        List<NOTICIA> GetAllItens(Int32 idAss);
+        List<NOTICIA> GetAllItensAdm(Int32 idAss);
+        List<NOTICIA> ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link, Int32 idAss);
+        List<NOTICIA> GetAllItensValidos(Int32 idAss);
     }
 }

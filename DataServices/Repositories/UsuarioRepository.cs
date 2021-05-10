@@ -40,19 +40,8 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public USUARIO GetComprador()
+        public USUARIO GetAdministrador(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
-            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
-            query = query.Where(p => p.USUA_IN_COMPRADOR == 1);
-            query = query.Include(p => p.ASSINANTE);
-            query = query.Include(p => p.PERFIL);
-            return query.FirstOrDefault();
-        }
-
-        public USUARIO GetAdministrador()
-        {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.PERFIL.PERF_SG_SIGLA == "ADM");
             query = query.Include(p => p.ASSINANTE);
@@ -60,19 +49,8 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public USUARIO GetAprovador()
+        public List<USUARIO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
-            IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
-            query = query.Where(p => p.USUA_IN_APROVADOR == 1);
-            query = query.Include(p => p.ASSINANTE);
-            query = query.Include(p => p.PERFIL);
-            return query.FirstOrDefault();
-        }
-
-        public List<USUARIO> GetAllItens()
-        {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_IN_BLOQUEADO == 0);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -81,9 +59,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<USUARIO> GetAllItensBloqueados()
+        public List<USUARIO> GetAllItensBloqueados(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_IN_BLOQUEADO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -92,9 +69,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<USUARIO> GetAllItensAcessoHoje()
+        public List<USUARIO> GetAllItensAcessoHoje(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_IN_BLOQUEADO == 0);
             query = query.Where(p => DbFunctions.TruncateTime(p.USUA_DT_ACESSO) == DbFunctions.TruncateTime(DateTime.Today.Date));
@@ -104,9 +80,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<USUARIO> GetAllUsuariosAdm()
+        public List<USUARIO> GetAllUsuariosAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Include(p => p.PERFIL);
@@ -114,9 +89,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<USUARIO> GetAllUsuarios()
+        public List<USUARIO> GetAllUsuarios(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Include(p => p.PERFIL);
@@ -124,9 +98,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email)
+        public List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<USUARIO> lista = new List<USUARIO>();
             IQueryable<USUARIO> query = Db.USUARIO;
             if (!String.IsNullOrEmpty(email))

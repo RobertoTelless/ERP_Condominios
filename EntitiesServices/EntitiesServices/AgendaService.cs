@@ -23,7 +23,7 @@ namespace ModelServices.EntitiesServices
         private readonly ICategoriaAgendaRepository _tipoRepository;
         private readonly IAgendaAnexoRepository _anexoRepository;
 
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public AgendaService(IAgendaRepository baseRepository, ILogRepository logRepository, ICategoriaAgendaRepository tipoRepository, IAgendaAnexoRepository anexoRepository) : base(baseRepository)
         {
@@ -34,15 +34,15 @@ namespace ModelServices.EntitiesServices
 
         }
 
-        public List<AGENDA> GetByDate(DateTime data)
+        public List<AGENDA> GetByDate(DateTime data, Int32 idAss)
         {
-            List<AGENDA> item = _baseRepository.GetByDate(data);
+            List<AGENDA> item = _baseRepository.GetByDate(data, idAss);
             return item;
         }
 
-        public List<AGENDA> GetByUser(Int32 id)
+        public List<AGENDA> GetByUser(Int32 id, Int32 idAss)
         {
-            List<AGENDA> item = _baseRepository.GetByUser(id);
+            List<AGENDA> item = _baseRepository.GetByUser(id, idAss);
             return item;
         }
 
@@ -52,19 +52,19 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<AGENDA> GetAllItens()
+        public List<AGENDA> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<AGENDA> GetAllItensAdm()
+        public List<AGENDA> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao)
+        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser)
         {
-            List<AGENDA> lista = _baseRepository.ExecuteFilter(data, cat, titulo, descricao);
+            List<AGENDA> lista = _baseRepository.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser);
             return lista;
         }
 
@@ -73,9 +73,9 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public List<CATEGORIA_AGENDA> GetAllTipos()
+        public List<CATEGORIA_AGENDA> GetAllTipos(Int32 idAss)
         {
-            return _tipoRepository.GetAllItens();
+            return _tipoRepository.GetAllItens(idAss);
         }
 
         public Int32 Create(AGENDA item, LOG log)

@@ -9,8 +9,8 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface ICategoriaNotificacaoRepository : IRepositoryBase<CATEGORIA_NOTIFICACAO>
     {
-        List<CATEGORIA_NOTIFICACAO> GetAllItens();
+        List<CATEGORIA_NOTIFICACAO> GetAllItens(Int32 idAss);
         CATEGORIA_NOTIFICACAO GetItemById(Int32 id);
-        List<CATEGORIA_NOTIFICACAO> GetAllItensAdm();
+        List<CATEGORIA_NOTIFICACAO> GetAllItensAdm(Int32 idAss);
     }
 }

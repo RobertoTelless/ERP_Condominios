@@ -22,17 +22,13 @@ namespace DataServices.Repositories
 
         public List<TIPO_PESSOA> GetAllItensAdm()
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<TIPO_PESSOA> query = Db.TIPO_PESSOA;
-            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
         public List<TIPO_PESSOA> GetAllItens()
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<TIPO_PESSOA> query = Db.TIPO_PESSOA.Where(p => p.TIPE_IN_ATIVO == 1);
-            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 

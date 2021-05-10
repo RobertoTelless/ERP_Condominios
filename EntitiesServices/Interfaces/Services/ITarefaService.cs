@@ -15,6 +15,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(TAREFA tarefa, LOG log);
         Int32 Edit(TAREFA tarefa);
         Int32 Delete(TAREFA tarefa, LOG log);
+
         TAREFA CheckExist(TAREFA tarefa);
         TAREFA GetItemById(Int32 id);
         List<TAREFA> GetByDate(DateTime data);

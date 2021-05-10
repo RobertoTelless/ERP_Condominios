@@ -19,9 +19,7 @@ namespace DataServices.Repositories
 
         public List<TIPO_TAREFA> GetAllItens()
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<TIPO_TAREFA> query = Db.TIPO_TAREFA;
-            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
     }

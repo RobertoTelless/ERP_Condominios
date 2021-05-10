@@ -185,10 +185,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AgendaAnexoRepository.cs" />
+    <Compile Include="Repositories\AgendaRepository.cs" />
+    <Compile Include="Repositories\AssinanteRepository.cs" />
+    <Compile Include="Repositories\CategoriaAgendaRepository.cs" />
+    <Compile Include="Repositories\CategoriaNotificacaoRepository.cs" />
+    <Compile Include="Repositories\ConfiguracaoRepository.cs" />
+    <Compile Include="Repositories\LogRepository.cs" />
+    <Compile Include="Repositories\NoticiaComentarioRepository.cs" />
+    <Compile Include="Repositories\NoticiaRepository.cs" />
+    <Compile Include="Repositories\NotificacaoAnexoRepository.cs" />
+    <Compile Include="Repositories\NotificacaoRepository.cs" />
+    <Compile Include="Repositories\PerfilRepository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\TarefaAnexoRepository.cs" />
+    <Compile Include="Repositories\TarefaNotificacaoRepository.cs" />
+    <Compile Include="Repositories\TarefaRepository.cs" />
+    <Compile Include="Repositories\TemplateRepository.cs" />
+    <Compile Include="Repositories\TipoPessoaRepository.cs" />
+    <Compile Include="Repositories\TipoTarefaRepository.cs" />
+    <Compile Include="Repositories\UFRepository.cs" />
+    <Compile Include="Repositories\UsuarioAnexoRepository.cs" />
+    <Compile Include="Repositories\UsuarioRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -197,6 +217,10 @@
     <ProjectReference Include="..\CrossCutting\CrossCutting.csproj">
       <Project>{af21cce6-67e8-4efe-883f-85a2bf17e947}</Project>
       <Name>CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntitiesServices\EntitiesServices.csproj">
+      <Project>{888f90bf-96a5-4e1a-9a80-22140dd756c7}</Project>
+      <Name>EntitiesServices</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

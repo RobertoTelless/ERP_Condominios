@@ -184,7 +184,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommunicationPackage.cs" />
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="EMail.cs" />
+    <Compile Include="ExceptionManagement.cs" />
+    <Compile Include="Formatters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomStringGenerator.cs" />
+    <Compile Include="Serialization.cs" />
+    <Compile Include="ValidarCPF.cs" />
+    <Compile Include="ValidarItensDiversos.cs" />
+    <Compile Include="ValidarNumerosDocumentos.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

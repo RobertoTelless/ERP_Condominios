@@ -20,18 +20,16 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<LOG> GetAllItens()
+        public List<LOG> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.OrderByDescending(a => a.LOG_DT_DATA);
             return query.ToList();
         }
 
-        public List<LOG> GetAllItensDataCorrente()
+        public List<LOG> GetAllItensDataCorrente(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Where(p => DbFunctions.TruncateTime(p.LOG_DT_DATA) == DbFunctions.TruncateTime(DateTime.Today.Date));
@@ -39,9 +37,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<LOG> GetAllItensMesCorrente()
+        public List<LOG> GetAllItensMesCorrente(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
             query = query.Where(p => DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Month == DbFunctions.TruncateTime(DateTime.Today.Date).Value.Month);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -49,9 +46,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<LOG> GetAllItensMesAnterior()
+        public List<LOG> GetAllItensMesAnterior(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             var currentMonth = DateTime.Today.Month;
             var previousMonth = DateTime.Today.AddMonths(-1).Month;
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
@@ -61,9 +57,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<LOG> GetAllItensUsuario(Int32 id)
+        public List<LOG> GetAllItensUsuario(Int32 id, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_CD_ID == id);
             query = query.OrderByDescending(a => a.LOG_DT_DATA);
@@ -71,9 +66,8 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<LOG> ExecuteFilter(Int32? usuId, DateTime? data, String operacao)
+        public List<LOG> ExecuteFilter(Int32? usuId, DateTime? data, String operacao, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             List<LOG> lista = new List<LOG>();
             IQueryable<LOG> query = Db.LOG;
             if (!String.IsNullOrEmpty(operacao))

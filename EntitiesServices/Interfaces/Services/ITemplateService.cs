@@ -15,6 +15,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(TEMPLATE perfil, LOG log);
         Int32 Edit(TEMPLATE perfil);
         Int32 Delete(TEMPLATE perfil, LOG log);
+
         TEMPLATE GetByCode(String code);
         List<TEMPLATE> GetAllItens();
         TEMPLATE GetItemById(Int32 id);

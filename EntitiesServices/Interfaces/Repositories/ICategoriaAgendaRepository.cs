@@ -9,8 +9,8 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface ICategoriaAgendaRepository : IRepositoryBase<CATEGORIA_AGENDA>
     {
-        List<CATEGORIA_AGENDA> GetAllItens();
+        List<CATEGORIA_AGENDA> GetAllItens(Int32 idAss);
         CATEGORIA_AGENDA GetItemById(Int32 id);
-        List<CATEGORIA_AGENDA> GetAllItensAdm();
+        List<CATEGORIA_AGENDA> GetAllItensAdm(Int32 idAss);
     }
 }
