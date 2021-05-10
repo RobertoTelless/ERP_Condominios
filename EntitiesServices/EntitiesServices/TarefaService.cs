@@ -34,9 +34,9 @@ namespace ModelServices.EntitiesServices
             _usuRepository = usuRepository;
         }
 
-        public TAREFA CheckExist(TAREFA tarefa)
+        public TAREFA CheckExist(TAREFA tarefa, Int32 idAss)
         {
-            TAREFA item = _baseRepository.CheckExist(tarefa);
+            TAREFA item = _baseRepository.CheckExist(tarefa, idAss);
             return item;
         }
 
@@ -46,9 +46,9 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<TAREFA> GetByDate(DateTime data)
+        public List<TAREFA> GetByDate(DateTime data, Int32 idAss)
         {
-            return _baseRepository.GetByDate(data);
+            return _baseRepository.GetByDate(data, idAss);
         }
 
         public USUARIO GetUserById(Int32 id)
@@ -67,14 +67,14 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.GetTarefaStatus(user, tipo);
         }
 
-        public List<TAREFA> GetAllItens()
+        public List<TAREFA> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<TAREFA> GetAllItensAdm()
+        public List<TAREFA> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public List<TIPO_TAREFA> GetAllTipos()
@@ -82,9 +82,9 @@ namespace ModelServices.EntitiesServices
             return _tipoRepository.GetAllItens();
         }
 
-        public List<USUARIO> GetAllUsers()
+        public List<USUARIO> GetAllUsers(Int32 idAss)
         {
-            return _usuRepository.GetAllItens();
+            return _usuRepository.GetAllItens(idAss);
         }
 
         public TAREFA_ANEXO GetAnexoById(Int32 id)
@@ -98,9 +98,9 @@ namespace ModelServices.EntitiesServices
         }
 
 
-        public List<TAREFA> ExecuteFilter(Int32? tipoId, String titulo, DateTime? data, Int32 encerrada, Int32 prioridade, Int32? usuario)
+        public List<TAREFA> ExecuteFilter(Int32? tipoId, String titulo, DateTime? data, Int32 encerrada, Int32 prioridade, Int32? usuario, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(tipoId, titulo, data, encerrada, prioridade, usuario);
+            return _baseRepository.ExecuteFilter(tipoId, titulo, data, encerrada, prioridade, usuario, idAss);
 
         }
 

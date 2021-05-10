@@ -40,9 +40,9 @@ namespace ModelServices.EntitiesServices
             _ntcRepository = ntcRepository;
         }
 
-        public USUARIO RetriveUserByEmail(String email)
+        public USUARIO RetriveUserByEmail(String email, Int32 idAss)
         {
-            USUARIO usuario = _usuarioRepository.GetByEmail(email);
+            USUARIO usuario = _usuarioRepository.GetByEmail(email, idAss);
             return usuario;
         }
 
@@ -65,9 +65,9 @@ namespace ModelServices.EntitiesServices
             return true;
         }
 
-        public USUARIO GetByEmail(String email)
+        public USUARIO GetByEmail(String email, Int32 idAss)
         {
-            return _usuarioRepository.GetByEmail(email);
+            return _usuarioRepository.GetByEmail(email, idAss);
         }
 
         public USUARIO_ANEXO GetAnexoById(Int32 id)
@@ -75,9 +75,9 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public USUARIO GetByLogin(String login)
+        public USUARIO GetByLogin(String login, Int32 idAss)
         {
-            return _usuarioRepository.GetByLogin(login);
+            return _usuarioRepository.GetByLogin(login, idAss);
         }
 
         public TEMPLATE GetTemplateByCode(String codigo)
@@ -90,44 +90,34 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetItemById(id);
         }
 
-        public List<USUARIO> GetAllUsuariosAdm()
+        public List<USUARIO> GetAllUsuariosAdm(Int32 idAss)
         {
-            return _usuarioRepository.GetAllUsuariosAdm();
+            return _usuarioRepository.GetAllUsuariosAdm(idAss);
         }
 
-        public List<USUARIO> GetAllUsuarios()
+        public List<USUARIO> GetAllUsuarios(Int32 idAss)
         {
-            return _usuarioRepository.GetAllUsuarios();
+            return _usuarioRepository.GetAllUsuarios(idAss);
         }
 
-        public List<USUARIO> GetAllItens()
+        public List<USUARIO> GetAllItens(Int32 idAss)
         {
-            return _usuarioRepository.GetAllItens();
+            return _usuarioRepository.GetAllItens(idAss);
         }
 
-        public List<USUARIO> GetAllItensBloqueados()
+        public List<USUARIO> GetAllItensBloqueados(Int32 idAss)
         {
-            return _usuarioRepository.GetAllItensBloqueados();
+            return _usuarioRepository.GetAllItensBloqueados(idAss);
         }
 
-        public USUARIO GetComprador()
+        public USUARIO GetAdministrador(Int32 idAss)
         {
-            return _usuarioRepository.GetComprador();
+            return _usuarioRepository.GetAdministrador(idAss);
         }
 
-        public USUARIO GetAdministrador()
+        public List<USUARIO> GetAllItensAcessoHoje(Int32 idAss)
         {
-            return _usuarioRepository.GetAdministrador();
-        }
-
-        public USUARIO GetAprovador()
-        {
-            return _usuarioRepository.GetAprovador();
-        }
-
-        public List<USUARIO> GetAllItensAcessoHoje()
-        {
-            return _usuarioRepository.GetAllItensAcessoHoje();
+            return _usuarioRepository.GetAllItensAcessoHoje(idAss);
         }
 
         public Int32 CreateUser(USUARIO usuario, LOG log)
@@ -220,9 +210,9 @@ namespace ModelServices.EntitiesServices
             return conf;
         }
 
-        public List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email)
+        public List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss)
         {
-            List<USUARIO> lista = _usuarioRepository.ExecuteFilter(perfilId, cargoId, nome, login, email);
+            List<USUARIO> lista = _usuarioRepository.ExecuteFilter(perfilId, cargoId, nome, login, email, idAss);
             return lista;
         }
 
@@ -232,19 +222,19 @@ namespace ModelServices.EntitiesServices
             return lista;
         }
 
-        public List<NOTIFICACAO> GetAllItensUser(Int32 id)
+        public List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss)
         {
-            return _notRepository.GetAllItensUser(id);
+            return _notRepository.GetAllItensUser(id, idAss);
         }
 
-        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id)
+        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss)
         {
-            return _notRepository.GetNotificacaoNovas(id);
+            return _notRepository.GetNotificacaoNovas(id, idAss);
         }
 
-        public List<NOTICIA> GetAllNoticias()
+        public List<NOTICIA> GetAllNoticias(Int32 idAss)
         {
-            return _ntcRepository.GetAllItens();
+            return _ntcRepository.GetAllItens(idAss);
         }
     }
 }

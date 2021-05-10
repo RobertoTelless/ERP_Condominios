@@ -36,19 +36,19 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<NOTICIA> GetAllItens()
+        public List<NOTICIA> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<NOTICIA> GetAllItensAdm()
+        public List<NOTICIA> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<NOTICIA> GetAllItensValidos()
+        public List<NOTICIA> GetAllItensValidos(Int32 idAss)
         {
-            return _baseRepository.GetAllItensValidos();
+            return _baseRepository.GetAllItensValidos(idAss);
         }
         
         public NOTICIA_COMENTARIO GetComentarioById(Int32 id)
@@ -56,9 +56,9 @@ namespace ModelServices.EntitiesServices
             return _comRepository.GetItemById(id);
         }
        
-        public List<NOTICIA> ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link)
+        public List<NOTICIA> ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(titulo, autor, data, texto, link);
+            return _baseRepository.ExecuteFilter(titulo, autor, data, texto, link, idAss);
 
         }
 

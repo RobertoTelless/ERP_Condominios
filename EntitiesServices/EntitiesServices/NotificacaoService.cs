@@ -38,14 +38,14 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<NOTIFICACAO> GetAllItens()
+        public List<NOTIFICACAO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<NOTIFICACAO> GetAllItensAdm()
+        public List<NOTIFICACAO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public NOTIFICACAO_ANEXO GetAnexoById(Int32 id)
@@ -53,24 +53,24 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public List<NOTIFICACAO> GetAllItensUser(Int32 id)
+        public List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss)
         {
-            return _baseRepository.GetAllItensUser(id);
+            return _baseRepository.GetAllItensUser(id, idAss);
         }
 
-        public List<CATEGORIA_NOTIFICACAO> GetAllCategorias()
+        public List<CATEGORIA_NOTIFICACAO> GetAllCategorias(Int32 idAss)
         {
-            return _catRepository.GetAllItens();
+            return _catRepository.GetAllItens(idAss);
         }
 
-        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id)
+        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss)
         {
-            return _baseRepository.GetNotificacaoNovas(id);
+            return _baseRepository.GetNotificacaoNovas(id, idAss);
         }
 
-        public List<NOTIFICACAO> ExecuteFilter(String titulo, DateTime? data, String texto)
+        public List<NOTIFICACAO> ExecuteFilter(String titulo, DateTime? data, String texto, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(titulo, data, texto);
+            return _baseRepository.ExecuteFilter(titulo, data, texto, idAss);
 
         }
 

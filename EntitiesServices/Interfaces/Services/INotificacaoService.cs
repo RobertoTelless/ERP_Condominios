@@ -15,13 +15,14 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(NOTIFICACAO item, LOG log);
         Int32 Edit(NOTIFICACAO item);
         Int32 Delete(NOTIFICACAO item, LOG log);
+
         NOTIFICACAO GetItemById(Int32 id);
-        List<NOTIFICACAO> GetAllItens();
-        List<NOTIFICACAO> GetAllItensAdm();
-        List<NOTIFICACAO> GetAllItensUser(Int32 id);
-        List<NOTIFICACAO> GetNotificacaoNovas(Int32 id);
-        List<NOTIFICACAO> ExecuteFilter(String titulo, DateTime? data, String texto);
+        List<NOTIFICACAO> GetAllItens(Int32 idAss);
+        List<NOTIFICACAO> GetAllItensAdm(Int32 idAss);
+        List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss);
+        List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss);
+        List<NOTIFICACAO> ExecuteFilter(String titulo, DateTime? data, String texto, Int32 idAss);
         NOTIFICACAO_ANEXO GetAnexoById(Int32 id);
-        List<CATEGORIA_NOTIFICACAO> GetAllCategorias();
+        List<CATEGORIA_NOTIFICACAO> GetAllCategorias(Int32 idAss);
     }
 }

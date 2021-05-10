@@ -11,18 +11,20 @@ namespace DataServices.Repositories
 {
     public class UsuarioRepository : RepositoryBase<USUARIO>, IUsuarioRepository
     {
-        public USUARIO GetByEmail(String email)
+        public USUARIO GetByEmail(String email, Int32 idAss)
         {
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_NM_EMAIL == email);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }
 
-        public USUARIO GetByLogin(String login)
+        public USUARIO GetByLogin(String login, Int32 idAss)
         {
             //Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_NM_LOGIN == login);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
             //query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.Include(p => p.PERFIL);
             return query.FirstOrDefault();

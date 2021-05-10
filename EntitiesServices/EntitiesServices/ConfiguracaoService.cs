@@ -34,9 +34,9 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<CONFIGURACAO> GetAllItems()
+        public List<CONFIGURACAO> GetAllItems(Int32 idAss)
         {
-            List<CONFIGURACAO> item = _baseRepository.GetAllItems();
+            List<CONFIGURACAO> item = _baseRepository.GetAllItems(idAss);
             return item;
         }
 

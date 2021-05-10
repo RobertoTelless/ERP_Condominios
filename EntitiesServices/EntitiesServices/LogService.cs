@@ -32,34 +32,34 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<LOG> GetAllItens()
+        public List<LOG> GetAllItens(Int32 idAss)
         {
-            return _logRepository.GetAllItens();
+            return _logRepository.GetAllItens(idAss);
         }
 
-        public List<LOG> GetAllItensDataCorrente()
+        public List<LOG> GetAllItensDataCorrente(Int32 idAss)
         {
-            return _logRepository.GetAllItensDataCorrente();
+            return _logRepository.GetAllItensDataCorrente(idAss);
         }
 
-        public List<LOG> GetAllItensMesCorrente()
+        public List<LOG> GetAllItensMesCorrente(Int32 idAss)
         {
-            return _logRepository.GetAllItensMesCorrente();
+            return _logRepository.GetAllItensMesCorrente(idAss);
         }
 
-        public List<LOG> GetAllItensMesAnterior()
+        public List<LOG> GetAllItensMesAnterior(Int32 idAss)
         {
-            return _logRepository.GetAllItensMesAnterior();
+            return _logRepository.GetAllItensMesAnterior(idAss);
         }
 
-        public List<LOG> GetAllItensUsuario(Int32 id)
+        public List<LOG> GetAllItensUsuario(Int32 id, Int32 idAss)
         {
-            return _logRepository.GetAllItensUsuario(id);
+            return _logRepository.GetAllItensUsuario(id, idAss);
         }
 
-        public List<LOG> ExecuteFilter(Int32? usuId, DateTime? data, String operacao)
+        public List<LOG> ExecuteFilter(Int32? usuId, DateTime? data, String operacao, Int32 idAss)
         {
-            List<LOG> lista = _logRepository.ExecuteFilter(usuId, data, operacao);
+            List<LOG> lista = _logRepository.ExecuteFilter(usuId, data, operacao, idAss);
             return lista;
         }
     }
