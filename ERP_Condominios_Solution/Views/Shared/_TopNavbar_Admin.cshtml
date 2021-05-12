@@ -1,6 +1,7 @@
 @using Inspinia_MVC5;
-@using EntitiesServices.Work_Classes;
+@using Presentation.Extensions
 @using CrossCutting
+@using EntitiesServices.Model;
 <div class="row border-bottom">
     <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -13,20 +14,20 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <span class="m-r-sm text-muted welcome-message" data-i18n="topnav.welcometext">@SessionMocks.Greeting</span>
+                <span class="m-r-sm text-muted welcome-message" data-i18n="topnav.welcometext">@((String)Session["Greeting"])</span>
             </li>
 
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                    <i class="fa fa-envelope"></i>  <span class="label label-warning">@SessionMocks.NovasNotificacoes</span>
+                    <i class="fa fa-envelope"></i>  <span class="label label-warning">@((Int32)Session["NovasNotificacoes"])</span>
                 </a>
                 <ul class="dropdown-menu dropdown-messages">
-                    @foreach (var cond in (SessionMocks.listaNovas as List<EntitiesServices.Model.NOTIFICACAO>).Take(5))
+                    @foreach (var cond in (((List<NOTIFICACAO>)Session["ListaNovas"]) as List<EntitiesServices.Model.NOTIFICACAO>))
                     {
                         <li>
                             <div class="dropdown-messages-box">
                                 <a href="@Url.Action("VerNotificacao", "Notificacao", new { id = cond.NOTI_CD_ID })" class="pull-left btn-link">
-                                    <img alt="image" class="img-circle" src="@Url.Content(SessionMocks.Foto)">
+                                    <img alt="image" class="img-circle" src="@Url.Content((String)Session["Foto"])">
                                 </a>
                                 <div class="media-body">
                                     <small class="pull-right">@cond.NOTI_DT_EMISSAO.Value.ToShortDateString()</small>
@@ -70,15 +71,15 @@
 
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                    <i class="fa fa-tasks"></i>  <span class="label label-warning">@SessionMocks.TarefasPendentes</span>
+                    <i class="fa fa-tasks"></i>  <span class="label label-warning">@((Int32)Session["TarefasPendentes"])</span>
                 </a>
                 <ul class="dropdown-menu dropdown-messages">
-                    @foreach (var cond in (SessionMocks.listaPendentes as List<EntitiesServices.Model.TAREFA>).Take(5))
+                    @foreach (var cond in (((List<TAREFA>)Session["ListaPendentes"]) as List<EntitiesServices.Model.TAREFA>).Take(5))
                     {
                         <li>
                             <div class="dropdown-messages-box">
                                 <a href="@Url.Action("EditarTarefa", "Tarefa", new { id = cond.TARE_CD_ID })" class="pull-left btn-link">
-                                    <img alt="image" class="img-circle" src="@Url.Content(SessionMocks.Foto)">
+                                    <img alt="image" class="img-circle" src="@Url.Content(((String)Session["Foto"]))">
                                 </a>
                                 <div class="media-body">
                                     <small class="pull-right">@cond.TARE_DT_CADASTRO.ToShortDateString()</small>
@@ -119,10 +120,10 @@
 
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                    <i class="fa fa-newspaper-o"></i>  <span class="label label-warning">@SessionMocks.NoticiasNumero</span>
+                    <i class="fa fa-newspaper-o"></i>  <span class="label label-warning">@((Int32)Session["NoticiasNumero"])</span>
                 </a>
                 <ul class="dropdown-menu dropdown-messages">
-                    @foreach (var cond in (SessionMocks.Noticias as List<EntitiesServices.Model.NOTICIA>).Take(5))
+                    @foreach (var cond in (((List<NOTICIA>)Session["Noticias"]) as List<EntitiesServices.Model.NOTICIA>).Take(5))
                     {
                         <li>
                             <div class="dropdown-messages-box">
@@ -152,10 +153,10 @@
 
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                    <i class="fa fa-calendar-o"></i>  <span class="label label-warning">@SessionMocks.numAgendasHoje</span>
+                    <i class="fa fa-calendar-o"></i>  <span class="label label-warning">@((Int32)Session["NumAgendasHoje"])</span>
                 </a>
                 <ul class="dropdown-menu dropdown-messages">
-                    @foreach (var cond in (SessionMocks.AgendasHoje as List<EntitiesServices.Model.AGENDA>).Take(5))
+                    @foreach (var cond in (((List<AGENDA>)Session["AgendasHoje"]) as List<EntitiesServices.Model.AGENDA>).Take(5))
                     {
                         <li>
                             <div class="dropdown-messages-box">
@@ -183,7 +184,7 @@
                 </ul>
             </li>
             <li>
-                @if (SessionMocks.UserCredentials == null)
+                @if ((USUARIO)Session["UserCredentials"] != null)
 	            {
                     <a href="@Url.Action("Login", "ControleAcesso")">
                         <i class="fa fa-sign-in"></i> Login
@@ -197,12 +198,6 @@
                 }
 
             </li>
-
-            @*<li>
-                <a class="right-sidebar-toggle">
-                    <i class="fa fa-tasks"></i>
-                </a>
-            </li>*@
         </ul>
     </nav>
 </div>

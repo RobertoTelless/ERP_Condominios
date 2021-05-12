@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ApplicationServices.Interfaces;
+using EntitiesServices.Model;
+using System.Globalization;
+using ERP_Condominios_Solution.App_Start;
+using EntitiesServices.Work_Classes;
+using AutoMapper;
+using System.IO;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -10,7 +17,7 @@ namespace ERP_Condominios_Solution.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login", "ControleAcesso");
         }
 
         public ActionResult About()
