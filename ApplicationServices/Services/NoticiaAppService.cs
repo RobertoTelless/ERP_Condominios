@@ -21,15 +21,15 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<NOTICIA> GetAllItens()
+        public List<NOTICIA> GetAllItens(Int32 idAss)
         {
-            List<NOTICIA> lista = _baseService.GetAllItens();
+            List<NOTICIA> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<NOTICIA> GetAllItensAdm()
+        public List<NOTICIA> GetAllItensAdm(Int32 idAss)
         {
-            List<NOTICIA> lista = _baseService.GetAllItensAdm();
+            List<NOTICIA> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -39,15 +39,9 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<TIPO_TAG> GetAllTiposTag()
+        public List<NOTICIA> GetAllItensValidos(Int32 idAss)
         {
-            List<TIPO_TAG> lista = _baseService.GetAllTiposTag();
-            return lista;
-        }
-
-        public List<NOTICIA> GetAllItensValidos()
-        {
-            List<NOTICIA> lista = _baseService.GetAllItensValidos();
+            List<NOTICIA> lista = _baseService.GetAllItensValidos(idAss);
             return lista;
         }
 
@@ -57,7 +51,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link, out List<NOTICIA> objeto)
+        public Int32 ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link, Int32 idAss, out List<NOTICIA> objeto)
         {
             try
             {
@@ -65,7 +59,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(titulo, autor, data, texto, link);
+                objeto = _baseService.ExecuteFilter(titulo, autor, data, texto, link, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -92,7 +86,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "AddNOTI",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTICIA>(item)
@@ -117,7 +111,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "EditNOTI",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTICIA>(item),
@@ -161,7 +155,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelNOTI",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTICIA>(item)
@@ -190,7 +184,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatNOTI",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTICIA>(item)
@@ -198,20 +192,6 @@ namespace ApplicationServices.Services
 
                 // Persiste
                 return _baseService.Edit(item, log);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        public Int32 ValidateCreateTag(NOTICIA_TAG item)
-        {
-            try
-            {
-                // Persiste
-                Int32 volta = _baseService.CreateTag(item);
-                return volta;
             }
             catch (Exception ex)
             {

@@ -16,12 +16,10 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateReativar(NOTICIA item, USUARIO usuario);
 
         NOTICIA GetItemById(Int32 id);
-        List<NOTICIA> GetAllItens();
-        List<NOTICIA> GetAllItensAdm();
-        Int32 ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link, out List<NOTICIA> objeto);
-        List<NOTICIA> GetAllItensValidos();
-        List<TIPO_TAG> GetAllTiposTag();
+        List<NOTICIA> GetAllItens(Int32 idAss);
+        List<NOTICIA> GetAllItensAdm(Int32 idAss);
+        Int32 ExecuteFilter(String titulo, String autor, DateTime? data, String texto, String link, Int32 idAss, out List<NOTICIA> objeto);
+        List<NOTICIA> GetAllItensValidos(Int32 idAss);
         NOTICIA_COMENTARIO GetComentarioById(Int32 id);
-        Int32 ValidateCreateTag(NOTICIA_TAG item);
     }
 }

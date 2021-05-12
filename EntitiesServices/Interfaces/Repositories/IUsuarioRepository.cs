@@ -9,8 +9,8 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IUsuarioRepository : IRepositoryBase<USUARIO>
     {
-        USUARIO GetByEmail(String email, Int32 idAss);
-        USUARIO GetByLogin(String login, Int32 idAss);
+        USUARIO GetByEmail(String email);
+        USUARIO GetByLogin(String login);
         USUARIO GetItemById(Int32 id);
         List<USUARIO> GetAllUsuarios(Int32 idAss);
         List<USUARIO> GetAllItens(Int32 idAss);

@@ -26,9 +26,9 @@ namespace ApplicationServices.Services
             return _baseService.GetItemById(id);
         }
 
-        public List<CONFIGURACAO> GetAllItems()
+        public List<CONFIGURACAO> GetAllItems(Int32 idAss)
         {
-            return _baseService.GetAllItems();
+            return _baseService.GetAllItems(idAss);
         }
 
         public Int32 ValidateEdit(CONFIGURACAO item, CONFIGURACAO itemAntes, USUARIO usuario)
@@ -40,7 +40,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "EditCONF",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<CONFIGURACAO>(item),
                     LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<CONFIGURACAO>(itemAntes),

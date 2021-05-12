@@ -9,8 +9,8 @@ using ApplicationServices.Interfaces;
 using ModelServices.Interfaces.EntitiesServices;
 using CrossCutting;
 using System.Text.RegularExpressions;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+//using SendGrid;
+//using SendGrid.Helpers.Mail;
 using System.Web;
 
 namespace ApplicationServices.Services
@@ -36,9 +36,9 @@ namespace ApplicationServices.Services
             return _usuarioService.GetByLogin(login);
         }
 
-        public List<USUARIO> GetAllUsuariosAdm()
+        public List<USUARIO> GetAllUsuariosAdm(Int32 idAss)
         {
-            return _usuarioService.GetAllUsuariosAdm();
+            return _usuarioService.GetAllUsuariosAdm(idAss);
         }
 
         public USUARIO GetItemById(Int32 id)
@@ -46,54 +46,44 @@ namespace ApplicationServices.Services
             return _usuarioService.GetItemById(id);
         }
 
-        public List<USUARIO> GetAllUsuarios()
+        public List<USUARIO> GetAllUsuarios(Int32 idAss)
         {
-            return _usuarioService.GetAllUsuarios();
+            return _usuarioService.GetAllUsuarios(idAss);
         }
 
-        public List<USUARIO> GetAllItens()
+        public List<USUARIO> GetAllItens(Int32 idAss)
         {
-            return _usuarioService.GetAllItens();
+            return _usuarioService.GetAllItens(idAss);
         }
 
-        public USUARIO GetComprador()
+        public USUARIO GetAdministrador(Int32 idAss)
         {
-            return _usuarioService.GetComprador();
+            return _usuarioService.GetAdministrador(idAss);
         }
 
-        public USUARIO GetAdministrador()
+        public List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss)
         {
-            return _usuarioService.GetAdministrador();
+            return _usuarioService.GetAllItensUser(id, idAss);
         }
 
-        public USUARIO GetAprovador()
+        public List<NOTICIA> GetAllNoticias(Int32 idAss)
         {
-            return _usuarioService.GetAprovador();
+            return _usuarioService.GetAllNoticias(idAss);
         }
 
-        public List<NOTIFICACAO> GetAllItensUser(Int32 id)
+        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss)
         {
-            return _usuarioService.GetAllItensUser(id);
+            return _usuarioService.GetNotificacaoNovas(id, idAss);
         }
 
-        public List<NOTICIA> GetAllNoticias()
+        public List<USUARIO> GetAllItensBloqueados(Int32 idAss)
         {
-            return _usuarioService.GetAllNoticias();
+            return _usuarioService.GetAllItensBloqueados(idAss);
         }
 
-        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id)
+        public List<USUARIO> GetAllItensAcessoHoje(Int32 idAss)
         {
-            return _usuarioService.GetNotificacaoNovas(id);
-        }
-
-        public List<USUARIO> GetAllItensBloqueados()
-        {
-            return _usuarioService.GetAllItensBloqueados();
-        }
-
-        public List<USUARIO> GetAllItensAcessoHoje()
-        {
-            return _usuarioService.GetAllItensAcessoHoje();
+            return _usuarioService.GetAllItensAcessoHoje(idAss);
         }
 
         public USUARIO_ANEXO GetAnexoById(Int32 id)
@@ -141,14 +131,14 @@ namespace ApplicationServices.Services
                 usuario.USUA_DT_CADASTRO = DateTime.Today.Date;
                 usuario.USUA_IN_ATIVO = 1;
                 usuario.USUA_DT_ULTIMA_FALHA = DateTime.Now;
-                usuario.ASSI_CD_ID = SessionMocks.IdAssinante;
+                usuario.ASSI_CD_ID = usuarioLogado.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuarioLogado.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "AddUSUA",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
                     LOG_IN_ATIVO = 1
@@ -205,14 +195,14 @@ namespace ApplicationServices.Services
                 usuario.USUA_DT_CADASTRO = DateTime.Today.Date;
                 usuario.USUA_IN_ATIVO = 1;
                 usuario.USUA_DT_ULTIMA_FALHA = DateTime.Now;
-                usuario.ASSI_CD_ID = SessionMocks.IdAssinanteVolta;
+                usuario.ASSI_CD_ID = usuarioLogado.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuarioLogado.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "AddUSUA",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
                     LOG_IN_ATIVO = 1
@@ -266,7 +256,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuarioLogado.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "EditUSUA",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
                     LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<USUARIO>(usuarioAntes),
@@ -400,7 +390,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuarioLogado.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "BlqUSUA",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
                     LOG_IN_ATIVO = 1
@@ -427,7 +417,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuarioLogado.ASSI_CD_ID,
                     USUA_CD_ID = usuarioLogado.USUA_CD_ID,
                     LOG_NM_OPERACAO = "DbqUSUA",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
@@ -527,13 +517,11 @@ namespace ApplicationServices.Services
                         Int32 voltaBloqueio = _usuarioService.EditUser(usuario);
                         return 6;
                     }
-                    SessionMocks.IdAssinante = usuario.ASSI_CD_ID;
                     Int32 volta = _usuarioService.EditUser(usuario);
                     return 7;
                 }
 
                 // Atualiza acessos e data do acesso
-                SessionMocks.IdAssinante = usuario.ASSI_CD_ID;
                 usuario.USUA_NR_ACESSOS = ++usuario.USUA_NR_ACESSOS;
                 usuario.USUA_DT_ACESSO = DateTime.Now.Date;
                 Int32 voltaAcesso = _usuarioService.EditUser(usuario);
@@ -587,21 +575,19 @@ namespace ApplicationServices.Services
                 usuario.USUA_DT_CADASTRO = DateTime.Now;
                 usuario.USUA_IN_ATIVO = 1;
                 usuario.USUA_DT_ULTIMA_FALHA = null;
-                usuario.ASSI_CD_ID = SessionMocks.IdAssinante;
+                usuario.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Gera Notificação
                 NOTIFICACAO noti = new NOTIFICACAO();
                 noti.CANO_CD_ID = 1;
                 noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
                 noti.NOTI_DT_EMISSAO = DateTime.Today;
-                noti.NOTI_DT_DATA = DateTime.Today.Date;
                 noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
                 noti.NOTI_IN_VISTA = 0;
                 noti.NOTI_NM_TITULO = "Alteração de Senha";
                 noti.NOTI_IN_ATIVO = 1;
                 noti.NOTI_TX_TEXTO = "ATENÇÃO: A sua senha foi alterada em " + DateTime.Today.Date.ToLongDateString() + ".";
                 noti.USUA_CD_ID = usuario.USUA_CD_ID;
-                noti.NOTI_IN_ENVIADA = 1;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_NIVEL = 1;
                 Int32 volta1 = _notiService.Create(noti);
@@ -611,7 +597,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "ChangePWD",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<USUARIO>(usuario),
@@ -675,14 +661,12 @@ namespace ApplicationServices.Services
             noti.CANO_CD_ID = 1;
             noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
             noti.NOTI_DT_EMISSAO = DateTime.Today;
-            noti.NOTI_DT_DATA = DateTime.Today.Date;
             noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
             noti.NOTI_IN_VISTA = 0;
             noti.NOTI_NM_TITULO = "Geração de Nova Senha";
             noti.NOTI_IN_ATIVO = 1;
             noti.NOTI_TX_TEXTO = "ATENÇÃO: Sua solicitação de nova senha foi atendida em " + DateTime.Today.Date.ToLongDateString() + ". Verifique no seu e-mail cadastrado no sistema.";
             noti.USUA_CD_ID = usuario.USUA_CD_ID;
-            noti.NOTI_IN_ENVIADA = 1;
             noti.NOTI_IN_STATUS = 1;
             noti.NOTI_IN_NIVEL = 1;
             Int32 volta1 = _notiService.Create(noti);
@@ -726,24 +710,7 @@ namespace ApplicationServices.Services
             return 0;
         }
 
-        public static async Task<Response> Execute(CONFIGURACAO conf, String emailBody, USUARIO usuario)
-        {
-            //String apiKey = System.Environment.GetEnvironmentVariable("SENDGRIDAPIKEY");
-            String apiKey = conf.CONF_NM_SENDGRID_KEY;
-            SendGridClient client = new SendGridClient(apiKey);
-            SendGridMessage msg = new SendGridMessage()
-            {
-                From = new EmailAddress(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_NOME_EMPRESA),
-                Subject = "Geração de Nova Senha",
-                HtmlContent = emailBody
-            };
-            msg.AddTo(new EmailAddress(usuario.USUA_NM_EMAIL, usuario.USUA_NM_NOME));
-            var response = await client.SendEmailAsync(msg);
-            return response;
-        }
-
-
-        public Int32 ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, out List<USUARIO> objeto)
+        public Int32 ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss, out List<USUARIO> objeto)
         {
             try
             {
@@ -751,7 +718,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _usuarioService.ExecuteFilter(perfilId, cargoId, nome, login, email);
+                objeto = _usuarioService.ExecuteFilter(perfilId, cargoId, nome, login, email, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

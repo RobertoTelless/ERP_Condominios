@@ -14,14 +14,14 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateDelete(AGENDA perfil, USUARIO usuario);
         Int32 ValidateReativar(AGENDA perfil, USUARIO usuario);
 
-        List<CATEGORIA_AGENDA> GetAllTipos();
+        List<CATEGORIA_AGENDA> GetAllTipos(Int32 idAss);
         AGENDA_ANEXO GetAnexoById(Int32 id);
 
-        List<AGENDA> GetByDate(DateTime data);
-        List<AGENDA> GetByUser(Int32 id);
-        List<AGENDA> GetAllItens();
-        List<AGENDA> GetAllItensAdm();
+        List<AGENDA> GetByDate(DateTime data, Int32 idAss);
+        List<AGENDA> GetByUser(Int32 id, Int32 idAss);
+        List<AGENDA> GetAllItens(Int32 idAss);
+        List<AGENDA> GetAllItensAdm(Int32 idAss);
         AGENDA GetItemById(Int32 id);
-        Int32 ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, out List<AGENDA> objeto);
+        Int32 ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, out List<AGENDA> objeto);
     }
 }

@@ -22,21 +22,21 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<NOTIFICACAO> GetAllItens()
+        public List<NOTIFICACAO> GetAllItens(Int32 idAss)
         {
-            List<NOTIFICACAO> lista = _baseService.GetAllItens();
+            List<NOTIFICACAO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<NOTIFICACAO> GetAllItensAdm()
+        public List<NOTIFICACAO> GetAllItensAdm(Int32 idAss)
         {
-            List<NOTIFICACAO> lista = _baseService.GetAllItensAdm();
+            List<NOTIFICACAO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
-        public List<CATEGORIA_NOTIFICACAO> GetAllCategorias()
+        public List<CATEGORIA_NOTIFICACAO> GetAllCategorias(Int32 idAss)
         {
-            List<CATEGORIA_NOTIFICACAO> lista = _baseService.GetAllCategorias();
+            List<CATEGORIA_NOTIFICACAO> lista = _baseService.GetAllCategorias(idAss);
             return lista;
         }
 
@@ -52,19 +52,19 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<NOTIFICACAO> GetAllItensUser(Int32 id)
+        public List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss)
         {
-            List<NOTIFICACAO> lista = _baseService.GetAllItensUser(id);
+            List<NOTIFICACAO> lista = _baseService.GetAllItensUser(id, idAss);
             return lista;
         }
 
-        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id)
+        public List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss)
         {
-            List<NOTIFICACAO> lista = _baseService.GetNotificacaoNovas(id);
+            List<NOTIFICACAO> lista = _baseService.GetNotificacaoNovas(id, idAss);
             return lista;
         }
 
-        public Int32 ExecuteFilter(String titulo, DateTime? data, String texto, out List<NOTIFICACAO> objeto)
+        public Int32 ExecuteFilter(String titulo, DateTime? data, String texto, Int32 idAss, out List<NOTIFICACAO> objeto)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(titulo, data, texto);
+                objeto = _baseService.ExecuteFilter(titulo, data, texto, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -99,7 +99,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "AddNOTI",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTIFICACAO>(item)
@@ -124,7 +124,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_NM_OPERACAO = "EditNOTI",
                     LOG_IN_ATIVO = 1,
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTIFICACAO>(item),
@@ -169,7 +169,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelNOTI",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTIFICACAO>(item)
@@ -198,7 +198,7 @@ namespace ApplicationServices.Services
                 {
                     LOG_DT_DATA = DateTime.Now,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatNOTI",
                     LOG_TX_REGISTRO = Serialization.SerializeJSON<NOTIFICACAO>(item)

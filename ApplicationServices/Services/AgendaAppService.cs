@@ -21,27 +21,27 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<AGENDA> GetAllItens()
+        public List<AGENDA> GetAllItens(Int32 idAss)
         {
-            List<AGENDA> lista = _baseService.GetAllItens();
+            List<AGENDA> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<AGENDA> GetAllItensAdm()
+        public List<AGENDA> GetAllItensAdm(Int32 idAss)
         {
-            List<AGENDA> lista = _baseService.GetAllItensAdm();
+            List<AGENDA> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
-        public List<AGENDA> GetByDate(DateTime data)
+        public List<AGENDA> GetByDate(DateTime data, Int32 idAss)
         {
-            List<AGENDA> lista = _baseService.GetByDate(data);
+            List<AGENDA> lista = _baseService.GetByDate(data, idAss);
             return lista;
         }
 
-        public List<AGENDA> GetByUser(Int32 id)
+        public List<AGENDA> GetByUser(Int32 id, Int32 idAss)
         {
-            List<AGENDA> lista = _baseService.GetByUser(id);
+            List<AGENDA> lista = _baseService.GetByUser(id, idAss);
             return lista;
         }
 
@@ -51,9 +51,9 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<CATEGORIA_AGENDA> GetAllTipos()
+        public List<CATEGORIA_AGENDA> GetAllTipos(Int32 idAss)
         {
-            List<CATEGORIA_AGENDA> lista = _baseService.GetAllTipos();
+            List<CATEGORIA_AGENDA> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
@@ -63,7 +63,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(DateTime? data, Int32 ? cat, String titulo, String descricao, out List<AGENDA> objeto)
+        public Int32 ExecuteFilter(DateTime? data, Int32 ? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, out List<AGENDA> objeto)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(data, cat, titulo, descricao);
+                objeto = _baseService.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -96,7 +96,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddAGEN",
                     LOG_IN_ATIVO = 1,
@@ -150,7 +150,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelAGEN",
@@ -180,7 +180,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatAGEN",

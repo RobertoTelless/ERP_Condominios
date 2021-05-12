@@ -184,15 +184,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAgendaAppService.cs" />
+    <Compile Include="Interfaces\IAppServiceBase.cs" />
+    <Compile Include="Interfaces\IAssinanteAppService.cs" />
+    <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
+    <Compile Include="Interfaces\ILogAppService.cs" />
+    <Compile Include="Interfaces\INoticiaAppService.cs" />
+    <Compile Include="Interfaces\INotificacaoAppService.cs" />
+    <Compile Include="Interfaces\IPerfilAppService.cs" />
+    <Compile Include="Interfaces\ITarefaAppService.cs" />
+    <Compile Include="Interfaces\ITemplateAppService.cs" />
+    <Compile Include="Interfaces\ITipoPessoaAppService.cs" />
+    <Compile Include="Interfaces\IUsuarioAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AgendaAppService.cs" />
+    <Compile Include="Services\AppServiceBase.cs" />
+    <Compile Include="Services\AssinanteAppService.cs" />
+    <Compile Include="Services\ConfiguracaoAppService.cs" />
+    <Compile Include="Services\LogAppService.cs" />
+    <Compile Include="Services\NoticiaAppService.cs" />
+    <Compile Include="Services\NotificacaoAppService.cs" />
+    <Compile Include="Services\PerfilAppService.cs" />
+    <Compile Include="Services\TarefaAppService.cs" />
+    <Compile Include="Services\TemplateAppService.cs" />
+    <Compile Include="Services\TipoPessoaAppService.cs" />
+    <Compile Include="Services\UsuarioAppService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCutting\CrossCutting.csproj">
+      <Project>{af21cce6-67e8-4efe-883f-85a2bf17e947}</Project>
+      <Name>CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntitiesServices\EntitiesServices.csproj">
+      <Project>{888f90bf-96a5-4e1a-9a80-22140dd756c7}</Project>
+      <Name>EntitiesServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

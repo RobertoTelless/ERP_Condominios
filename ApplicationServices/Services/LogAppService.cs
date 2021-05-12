@@ -26,33 +26,33 @@ namespace ApplicationServices.Services
             return _baseService.GetById(id);
         }
 
-        public List<LOG> GetAllItens()
+        public List<LOG> GetAllItens(Int32 idAss)
         {
-            return _baseService.GetAllItens();
+            return _baseService.GetAllItens(idAss);
         }
 
-        public List<LOG> GetAllItensDataCorrente()
+        public List<LOG> GetAllItensDataCorrente(Int32 idAss)
         {
-            return _baseService.GetAllItensDataCorrente();
+            return _baseService.GetAllItensDataCorrente(idAss);
         }
 
-        public List<LOG> GetAllItensUsuario(Int32 id)
+        public List<LOG> GetAllItensUsuario(Int32 id, Int32 idAss)
         {
-            return _baseService.GetAllItensUsuario(id);
+            return _baseService.GetAllItensUsuario(id, idAss);
         }
 
 
-        public List<LOG> GetAllItensMesCorrente()
+        public List<LOG> GetAllItensMesCorrente(Int32 idAss)
         {
-            return _baseService.GetAllItensMesCorrente();
+            return _baseService.GetAllItensMesCorrente(idAss);
         }
 
-        public List<LOG> GetAllItensMesAnterior()
+        public List<LOG> GetAllItensMesAnterior(Int32 idAss)
         {
-            return _baseService.GetAllItensMesAnterior();
+            return _baseService.GetAllItensMesAnterior(idAss);
         }
 
-        public Int32 ExecuteFilter(Int32? usuId, DateTime? data, String operacao, out List<LOG> objeto)
+        public Int32 ExecuteFilter(Int32? usuId, DateTime? data, String operacao, Int32 idAss, out List<LOG> objeto)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(usuId, data, operacao);
+                objeto = _baseService.ExecuteFilter(usuId, data, operacao, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

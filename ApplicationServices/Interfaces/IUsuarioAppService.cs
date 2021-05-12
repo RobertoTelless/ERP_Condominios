@@ -11,15 +11,16 @@ namespace ApplicationServices.Interfaces
     {
         USUARIO GetByEmail(String email);
         USUARIO GetByLogin(String login);
-        List<USUARIO> GetAllUsuariosAdm();
+        List<USUARIO> GetAllUsuariosAdm(Int32 idAss);
         USUARIO GetItemById(Int32 id);
-        List<USUARIO> GetAllUsuarios();
-        List<USUARIO> GetAllItens();
-        List<USUARIO> GetAllItensBloqueados();
-        List<USUARIO> GetAllItensAcessoHoje();
+        List<USUARIO> GetAllUsuarios(Int32 idAss);
+        List<USUARIO> GetAllItens(Int32 idAss);
+        List<USUARIO> GetAllItensBloqueados(Int32 idAss);
+        List<USUARIO> GetAllItensAcessoHoje(Int32 idAss);
         USUARIO_ANEXO GetAnexoById(Int32 id);
-        List<NOTIFICACAO> GetAllItensUser(Int32 id);
-        List<NOTIFICACAO> GetNotificacaoNovas(Int32 id);
+        List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss);
+        List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss);
+
         Int32 ValidateCreate(USUARIO usuario, USUARIO usuarioLogado);
         Int32 ValidateCreateAssinante(USUARIO usuario, USUARIO usuarioLogado);
         Int32 ValidateEdit(USUARIO usuario, USUARIO usuarioAntes, USUARIO usuarioLogado);
@@ -30,12 +31,11 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateDesbloqueio(USUARIO usuario, USUARIO usuarioLogado);
         Int32 ValidateChangePassword(USUARIO usuario);
         Int32 ValidateReativar(USUARIO usuario, USUARIO usuarioLogado);
+
         Int32 GenerateNewPassword(String email);
         List<PERFIL> GetAllPerfis();
-        Int32 ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, out List<USUARIO> objeto);
-        List<NOTICIA> GetAllNoticias();
-        USUARIO GetComprador();
-        USUARIO GetAprovador();
-        USUARIO GetAdministrador();
+        Int32 ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss, out List<USUARIO> objeto);
+        List<NOTICIA> GetAllNoticias(Int32 idAss);
+        USUARIO GetAdministrador(Int32 idAss);
     }
 }

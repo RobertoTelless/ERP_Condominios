@@ -40,9 +40,9 @@ namespace ModelServices.EntitiesServices
             _ntcRepository = ntcRepository;
         }
 
-        public USUARIO RetriveUserByEmail(String email, Int32 idAss)
+        public USUARIO RetriveUserByEmail(String email)
         {
-            USUARIO usuario = _usuarioRepository.GetByEmail(email, idAss);
+            USUARIO usuario = _usuarioRepository.GetByEmail(email);
             return usuario;
         }
 
@@ -65,9 +65,9 @@ namespace ModelServices.EntitiesServices
             return true;
         }
 
-        public USUARIO GetByEmail(String email, Int32 idAss)
+        public USUARIO GetByEmail(String email)
         {
-            return _usuarioRepository.GetByEmail(email, idAss);
+            return _usuarioRepository.GetByEmail(email);
         }
 
         public USUARIO_ANEXO GetAnexoById(Int32 id)
@@ -75,9 +75,9 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public USUARIO GetByLogin(String login, Int32 idAss)
+        public USUARIO GetByLogin(String login)
         {
-            return _usuarioRepository.GetByLogin(login, idAss);
+            return _usuarioRepository.GetByLogin(login);
         }
 
         public TEMPLATE GetTemplateByCode(String codigo)
