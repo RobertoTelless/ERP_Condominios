@@ -1,0 +1,223 @@
+@using Inspinia_MVC5;
+@using EntitiesServices.Work_Classes;
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="@Url.Content(SessionMocks.Foto)" style = "width: auto; height: auto; max-height: 50px; max-width: 50px;" />
+                        @*<img alt="image" class="img-circle" src="~/Images/Clayton.jpg" style = "width: auto; height: auto; max-height: 50px; max-width: 50px;" />*@
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@SessionMocks.Nome</strong>
+                                @*<strong class="font-bold">Clayton Sant'Anna</strong>*@
+                            </span> 
+                            <br />
+                            <span class="text-muted text-xs block">Controle de Acesso<b class="caret"></b></span>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        @if (SessionMocks.IdAssinante == 0)
+	                    {
+                            <li><a href="@Url.Action("Login", "ControleAcesso")">Login</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="@Url.Action("Logout", "ControleAcesso")">Logout</a></li>
+                            <li><a href="@Url.Action("TrocarSenha", "ControleAcesso")">Alterar Senha</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    ERP
+                </div>
+            </li>
+
+            <li @*class="@Html.IsSelected(controller: "BaseAdmin")"*@>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Cadastros</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Cadastros", cssClass: "in")">
+                    <li @*class="@Html.IsSelected(action: "CarregarBase")*@">
+                        <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Comercial</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Cadastros", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaCliente")"><a href="@Url.Action("MontarTelaCliente", "Cliente")">Clientes</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaFornecedor")"><a href="@Url.Action("MontarTelaFornecedor", "Fornecedor")">Fornecedores</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaProduto")"><a href="@Url.Action("MontarTelaProduto", "Produto")">Produtos</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaMateria")"><a href="@Url.Action("MontarTelaMateria", "Insumo")">Insumos</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaFT")"><a href="@Url.Action("MontarTelaFT", "FichaTecnica")">Fichas Técnicas</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaServico")"><a href="@Url.Action("MontarTelaServico", "Servico")">Serviços</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaTransportadora")"><a href="@Url.Action("MontarTelaTransportadora", "Transportadora")">Transportadoras</a></li>
+                        </ul>
+                    </li>
+                    <li @*class="@Html.IsSelected(action: "CarregarBase")*@">
+                        <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Operacional</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Cadastros", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaEquipamento")"><a href="@Url.Action("MontarTelaEquipamento", "Equipamento")">Patrimônio</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaMatriz")"><a href="@Url.Action("MontarTelaMatriz", "MatrizFilial")">Matriz & Filiais</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaTemplate")"><a href="@Url.Action("MontarTelaTemplate", "Template")">Templates</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCargo")"><a href="@Url.Action("MontarTelaCargo", "TabelasAuxiliares")">Cargos</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaComissao")"><a href="@Url.Action("MontarTelaComissao", "ValorComissao")">Valores de Comissão</a></li>
+                        </ul>
+                    </li>
+                    <li class="@*@Html.IsSelected(action: "CarregarBase")*@">
+                        <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financeiro</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Cadastros", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaBanco")"><a href="@Url.Action("MontarTelaBanco", "Banco")">Bancos & Contas</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCC")"><a href="@Url.Action("MontarTelaCC", "CentroCusto")">Plano de Contas</a></li>
+                        </ul>
+                    </li>
+                    <li @*class="@Html.IsSelected(action: "CarregarBase")*@">
+                        <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tabelas Auxiliares</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Cadastros", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaProduto")"><a href="@Url.Action("MontarTelaCategoriaProduto", "TabelasAuxiliares")">Categoria Produto</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaMateria")"><a href="@Url.Action("MontarTelaCategoriaMateria", "TabelasAuxiliares")">Categoria Insumo</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaSubCategoriaProduto")"><a href="@Url.Action("MontarTelaSubCategoriaProduto", "TabelasAuxiliares")">Subcategoria Produto</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaSubCategoriaMateria")"><a href="@Url.Action("MontarTelaSubCategoriaMateria", "TabelasAuxiliares")">Subcategoria Insumo</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaCliente")"><a href="@Url.Action("MontarTelaCategoriaCliente", "TabelasAuxiliares")">Categoria Cliente</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaFornecedor")"><a href="@Url.Action("MontarTelaCategoriaFornecedor", "TabelasAuxiliares")">Categoria Fornecedor</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaContrato")"><a href="@Url.Action("MontarTelaCategoriaContrato", "TabelasAuxiliares")">Categoria Contrato</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaFormaPagamento")"><a href="@Url.Action("MontarTelaFormaPagamento", "TabelasAuxiliares")">Formas de Pagamento</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaPeriodicidade")"><a href="@Url.Action("MontarTelaPeriodicidade", "TabelasAuxiliares")">Periodicidade</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaTipoContrato")"><a href="@Url.Action("MontarTelaTipoContrato", "TabelasAuxiliares")">Tipo Contrato</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaTamanho")"><a href="@Url.Action("MontarTelaTamanho", "TabelasAuxiliares")">Tamanhos</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaTipoPessoa")"><a href="@Url.Action("MontarTelaTipoPessoa", "TabelasAuxiliares")">Tipo Pessoa</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaEquipamento")"><a href="@Url.Action("MontarTelaCategoriaEquipamento", "TabelasAuxiliares")">Categ.Equipamento</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaRegimeTributario")"><a href="@Url.Action("MontarTelaRegimeTributario", "TabelasAuxiliares")">Regimes Tributários</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaUnidade")"><a href="@Url.Action("MontarTelaUnidade", "TabelasAuxiliares")">Unidades</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCategoriaAtendimento")"><a href="@Url.Action("MontarTelaCategoriaAtendimento", "TabelasAuxiliares")">Categ.Atendimento</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaGrupo")"><a href="@Url.Action("MontarTelaGrupo", "TabelasAuxiliares")">Grupos de CC</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaSubgrupo")"><a href="@Url.Action("MontarTelaSubgrupo", "TabelasAuxiliares")">Subgrupos de CC</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li @*class="@Html.IsSelected(controller: "BaseAdmin")*@">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Comercial</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "GestaoComercial", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "CarregarLandingPage")"><a href="@Url.Action("CarregarLandingPage", "BaseAdmin")">Site Comercial</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Oportunidades</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Propostas</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaPedidoVenda")"><a href="@Url.Action("MontarTelaPedidoVenda", "Venda")">Pedidos de Vendas</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaContrato")"><a href="@Url.Action("MontarTelaContrato", "GestaoComercial")">Contratos</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Marketing</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">E-Commerce</a></li>
+                </ul>
+            </li>
+
+            <li @*class="@Html.IsSelected(controller: "BaseAdmin")*@">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Operacional</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "GestaoOperacional", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Index")"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Estoque</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "GestaoOperacional", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaPedidoCompra")"><a href="@Url.Action("MontarTelaPedidoCompra", "Compra")">Compras</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaMovimentacaoAvulsa")"><a href="@Url.Action("MontarTelaMovimentacaoAvulsa", "Estoque")">Movimentações Avulsas</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaEstoqueProduto")"><a href="@Url.Action("MontarTelaEstoqueProduto", "Estoque")">Consulta Produtos</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaEstoqueInsumo")"><a href="@Url.Action("MontarTelaEstoqueInsumo", "Estoque")">Consulta Insumos</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaInventario")"><a href="@Url.Action("MontarTelaInventario", "Estoque")">Inventário</a></li>
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Importação de NF-e</a></li>
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Requisições</a></li>
+                        </ul>                    
+                    </li>
+                    <li class="@Html.IsSelected(action: "MontarTelaEquipamento")"><a href="@Url.Action("MontarTelaEquipamento", "Equipamento")">Patrimônio</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Produção</a></li>
+                    <li @*class="@Html.IsSelected(action: "CarregarBase")*@"><a href="@Url.Action("CarregarBase", "GestaoOperacional")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Expedição</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "GestaoOperacional", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Separação</a></li>
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Envio</a></li>
+                        </ul>                    
+                    </li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">NF-e</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">NFS-e</a></li>
+                </ul>
+            </li>
+
+            <li @*class="@Html.IsSelected(controller: "BaseAdmin")*@">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Financeiro</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Financeiro", cssClass: "in")">
+                    <li @*class="@Html.IsSelected(action: "CarregarBase")*@"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Tesouraria</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "GestaoFinanceira", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaCaixaFinal")"><a href="@Url.Action("MontarTelaCaixaFinal", "Financeiro")">Controle de Caixa</a></li>
+                        </ul>                    
+                    </li>
+                    <li @*class="@Html.IsSelected(action: "CarregarBase")*@"><a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Contas</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "Financeiro", cssClass: "in")">
+                            <li class="@Html.IsSelected(action: "MontarTelaCP")"><a href="@Url.Action("MontarTelaCP", "ContaPagar")">Pagar</a></li>
+                            <li class="@Html.IsSelected(action: "MontarTelaCR")"><a href="@Url.Action("MontarTelaCR", "ContaReceber")">Receber</a></li>
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Arquivo Remessa</a></li>
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Arquivo Retorno</a></li>
+                            <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Conciliação Bancária</a></li>
+                        </ul>                    
+                    </li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Comissões</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Contabilidade</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Planejamento</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Riscos</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Tributária</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Relac.Investidores</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "GestaoAdministrativa")">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Administração</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "GestaoComercial", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Processos</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaAgendaCalendario")"><a href="@Url.Action("MontarTelaAgendaCalendario", "Agenda")">Agenda</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaTarefa")"><a href="@Url.Action("MontarTelaTarefa", "Tarefa")">Tarefas</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaDepartamento")"><a href="@Url.Action("MontarTelaDepartamento", "Departamento")">Departamentos</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaLog")"><a href="@Url.Action("MontarTelaLog", "Administracao")">Auditoria</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaUsuario")"><a href="@Url.Action("MontarTelaUsuario", "Administracao")">Usuários</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaNotificacao")"><a href="@Url.Action("MontarTelaNotificacao", "Notificacao")">Notificações</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaNoticia")"><a href="@Url.Action("MontarTelaNoticia", "Noticia")">Notícias</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Atendimento")">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Atendimento</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Atendimento", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "MontarTelaAtendimento")"><a href="@Url.Action("MontarTelaAtendimento", "Atendimento")">Service Desk</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Ordens de Serviço</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "RecursoHumano")">
+                <a href="@Url.Action("Index", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Recursos Humanos</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "RecursoHumano", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "MontarTelaFunc")"><a href="@Url.Action("MontarTelaFunc", "Funcionario")">Colaboradores</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Controle de Ponto</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Rede Colaborativa</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Universidade</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "AdministracaoGeral")">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Administração Geral</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "AdministracaoGeral", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "MontarTelaAssinante")"><a href="@Url.Action("MontarTelaAssinante", "Assinante")">Assinantes</a></li>
+                    <li class="@Html.IsSelected(action: "MontarTelaUsuario")"><a href="@Url.Action("MontarTelaUsuario", "Administracao")">Usuários</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Pagamentos</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Planos de Assinatura</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Configuracao")">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Configurações</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Configuracao", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Configurações</a></li>
+                </ul>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Institucional")">
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Institucional</span> <span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Institucional", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Fale Conosco</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Sobre...</a></li>
+                    <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Informações Legais</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
