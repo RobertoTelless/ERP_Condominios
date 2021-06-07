@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_Condominios_Solution.ViewModels
 {
     public class NoticiaComentarioViewModel
     {

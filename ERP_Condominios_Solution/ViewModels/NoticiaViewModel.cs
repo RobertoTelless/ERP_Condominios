@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_Condominios_Solution.ViewModels
 {
     public class NoticiaViewModel
     {
@@ -29,17 +29,16 @@ namespace SystemBRPresentation.ViewModels
         public Nullable<System.DateTime> NOTC_DT_DATA_AUTOR { get; set; }
         public string NOTC_TX_TEXTO { get; set; }
         [StringLength(250, ErrorMessage = "O NOME DO ARQUIVO deve ter máximo 250 caracteres.")]
-        public string NOTC_AQ_AQRUIVO { get; set; }
+        public string NOTC_AQ_ARQUIVO { get; set; }
         [StringLength(250, ErrorMessage = "O NOME DO LINK deve ter máximo 250 caracteres.")]
         public string NOTC_LK_LINK { get; set; }
         public int NOTC_NR_ACESSO { get; set; }
         public int NOTC_IN_ATIVO { get; set; }
         public string NOTC_AQ_FOTO { get; set; }
+        public string NOTC_NM_ORIGEM { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTICIA_COMENTARIO> NOTICIA_COMENTARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NOTICIA_TAG> NOTICIA_TAG { get; set; }
-
+        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

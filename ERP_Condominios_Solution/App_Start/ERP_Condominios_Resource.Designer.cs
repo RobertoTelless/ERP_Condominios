@@ -142,6 +142,42 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Você não tem acesso a essa funcionalidade.
+        /// </summary>
+        internal static string M0011 {
+            get {
+                return ResourceManager.GetString("M0011", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum registro atendeu ao filtro especificado.
+        /// </summary>
+        internal static string M0016 {
+            get {
+                return ResourceManager.GetString("M0016", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum arquivo selecionado.
+        /// </summary>
+        internal static string M0019 {
+            get {
+                return ResourceManager.GetString("M0019", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nome do arquivo muito longo.
+        /// </summary>
+        internal static string M0024 {
+            get {
+                return ResourceManager.GetString("M0024", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {

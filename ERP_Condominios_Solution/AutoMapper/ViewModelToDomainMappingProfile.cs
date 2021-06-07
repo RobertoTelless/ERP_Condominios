@@ -19,8 +19,8 @@ namespace MvcMapping.Mappers
             //CreateMap<FornecedorViewModel, FORNECEDOR>();
             //CreateMap<CargoViewModel, CARGO>();
             //CreateMap<FornecedorContatoViewModel, FORNECEDOR_CONTATO>();
-            //CreateMap<NoticiaViewModel, NOTICIA>();
-            //CreateMap<NoticiaComentarioViewModel, NOTICIA_COMENTARIO>();
+            CreateMap<NoticiaViewModel, NOTICIA>();
+            CreateMap<NoticiaComentarioViewModel, NOTICIA_COMENTARIO>();
             //CreateMap<NotificacaoViewModel, NOTIFICACAO>();
             //CreateMap<ContaReceberViewModel, CONTA_RECEBER>();
             //CreateMap<CategoriaProdutoViewModel, CATEGORIA_PRODUTO>();

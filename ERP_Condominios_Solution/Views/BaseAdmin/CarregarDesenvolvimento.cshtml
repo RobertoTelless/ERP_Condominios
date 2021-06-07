@@ -1,0 +1,116 @@
+﻿@using EntitiesServices.Work_Classes;
+@using Presentation.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2 class="text-thin" style="color: darkgreen">Em Desenvolvimento</h2>
+    </div>
+</div> 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content">
+            <div class="middle-box text-center animated fadeInRightBig">
+                <img alt="image" class="img-circle" src="~/Images/ff1.jpg" style = "width: auto; height: auto; max-height: 200px; max-width: 200px;" />
+                <br />
+                <h3 class="font-bold">Funcionalidade em Desenvolvimento</h3>
+
+                <div class="error-desc">
+                    Em breve estará disponível no Sistema.
+                    <br />
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "CarregarBase", controller: "BaseAdmin")
+                </div>              
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+   
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([5, 12, 6, 4, 15, 1, 11, 8], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline2").sparkline([1, 3, 6, 2, 7, 1, 5, 3], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
