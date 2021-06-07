@@ -2839,6 +2839,9 @@
     <Content Include="Views\Shared\_TopNavbar_Admin.cshtml" />
     <Content Include="Views\Shared\_TopNavbar_Admin_Y.cshtml" />
     <Content Include="Views\ControleAcesso\Login.cshtml" />
+    <Content Include="Views\ControleAcesso\TrocarSenha.cshtml" />
+    <Content Include="Views\ControleAcesso\TrocarSenhaInicio.cshtml" />
+    <Content Include="Views\ControleAcesso\GerarSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

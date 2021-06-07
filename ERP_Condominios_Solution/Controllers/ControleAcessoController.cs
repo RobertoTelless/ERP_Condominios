@@ -58,65 +58,56 @@ namespace ERP_Condominios_Solution.Controllers
                 Int32 volta = baseApp.ValidateLogin(login.USUA_NM_LOGIN, login.USUA_NM_SENHA, out usuario);
                 if (volta == 1)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 2)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 3)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 5)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0005", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0005", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 4)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 6)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0006", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0006", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 7)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0007", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0007", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 9)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0073", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0073", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 10)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0109", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0109", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
 
                 // Armazena credenciais para autorização
-                SessionMocks.UserCredentials = usuario;
                 Session["UserCredentials"] = usuario;
-                SessionMocks.Usuario = usuario;
-                SessionMocks.IdAssinante = usuario.ASSI_CD_ID;
-                SessionMocks.tipoAssinante = usuario.ASSINANTE.ASSI_IN_TIPO.Value;
-                SessionMocks.assinante = usuario.ASSINANTE;
-                if (usuario.FILI_CD_ID != null)
-                {
-                    SessionMocks.idFilial = usuario.FILI_CD_ID.Value;
-                }
-                else
-                {
-                    SessionMocks.idFilial = 1;
-                }
+                Session["Usuario"] = usuario;
+                Session["IdAssinante"] = usuario.ASSI_CD_ID;
+                Session["TipoAssinante"] = usuario.ASSINANTE.ASSI_IN_TIPO.Value;
+                Session["Assinante"] = usuario.ASSINANTE;
 
                 // Atualiza view
                 String frase = String.Empty;
@@ -138,16 +129,14 @@ namespace ERP_Condominios_Solution.Controllers
                 ViewBag.Cargo = usuario.CARGO.CARG_NM_NOME;
                 ViewBag.Foto = usuario.USUA_AQ_FOTO;
 
-                SessionMocks.Greeting = frase;
-                SessionMocks.Nome = usuario.USUA_NM_NOME;
-                SessionMocks.Cargo = usuario.CARGO.CARG_NM_NOME;
-                SessionMocks.Foto = usuario.USUA_AQ_FOTO;
-                SessionMocks.Matriz = matrizApp.GetAllItens().FirstOrDefault();
-                Session["Matriz"] = SessionMocks.Matriz;
-                SessionMocks.perfil = usuario.PERFIL;
-                SessionMocks.flagInicial = 0;
-                SessionMocks.filtroData = 1;
-                SessionMocks.filtroStatus = 1;
+                Session["Greeting"] = frase;
+                Session["Nome"] = usuario.USUA_NM_NOME;
+                Session["Cargo"] = usuario.CARGO.CARG_NM_NOME;
+                Session["Foto"] = usuario.USUA_AQ_FOTO;
+                Session["Perfil"] = usuario.PERFIL;
+                Session["FlagInicial"] = 0;
+                Session["FiltroData"] = 1;
+                Session["FiltroStatus"] = 1;
                 Session["Ativa"] = "1";
                 Session["Login"] = 1;
                 Session["IdAssinante"] = usuario.ASSI_CD_ID;
@@ -157,7 +146,7 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     return RedirectToAction("TrocarSenhaInicio", "ControleAcesso");
                 }
-                if (SessionMocks.UserCredentials != null)
+                if ((USUARIO)Session["UserCredentials"] != null)
                 {
                     return RedirectToAction("CarregarBase", "BaseAdmin");
                 }
@@ -172,7 +161,7 @@ namespace ERP_Condominios_Solution.Controllers
 
         public ActionResult Logout()
         {
-            SessionMocks.UserCredentials = null;
+            Session["UserCredentials"] = null;
             Session.Clear();
             return RedirectToAction("Login", "ControleAcesso");
         }
@@ -187,9 +176,9 @@ namespace ERP_Condominios_Solution.Controllers
         {
             // Verifica se tem usuario logado
             USUARIO usuario = new USUARIO();
-            if (SessionMocks.UserCredentials != null)
+            if ((USUARIO)Session["UserCredentials"] != null)
             {
-                usuario = SessionMocks.UserCredentials;
+                usuario = (USUARIO)Session["UserCredentials"];
             }
             else
             {
@@ -210,31 +199,31 @@ namespace ERP_Condominios_Solution.Controllers
             try
             {
                 // Checa credenciais e atualiza acessos
-                USUARIO usuario = SessionMocks.UserCredentials;
+                USUARIO usuario = (USUARIO)Session["UserCredentials"];
                 USUARIO item = Mapper.Map<UsuarioLoginViewModel, USUARIO>(vm);
                 Int32 volta = baseApp.ValidateChangePassword(item);
                 if (volta == 1)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 2)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 3)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 4)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
-                ViewBag.Message = SystemBR_Resource.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
-                SessionMocks.UserCredentials = null;
+                ViewBag.Message = ERP_Condominios_Resource.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
+                Session["UserCredentials"] = null;
                 return RedirectToAction("Login", "ControleAcesso");
             }
             catch (Exception ex)
@@ -249,9 +238,9 @@ namespace ERP_Condominios_Solution.Controllers
         {
             // Verifica se tem usuario logado
             USUARIO usuario = new USUARIO();
-            if (SessionMocks.UserCredentials != null)
+            if ((USUARIO)Session["UserCredentials"] != null)
             {
-                usuario = SessionMocks.UserCredentials;
+                usuario = (USUARIO)Session["UserCredentials"];
             }
             else
             {
@@ -272,31 +261,31 @@ namespace ERP_Condominios_Solution.Controllers
             try
             {
                 // Checa credenciais e atualiza acessos
-                USUARIO usuario = SessionMocks.UserCredentials;
+                USUARIO usuario = (USUARIO)Session["UserCredentials"];
                 USUARIO item = Mapper.Map<UsuarioLoginViewModel, USUARIO>(vm);
                 Int32 volta = baseApp.ValidateChangePassword(item);
                 if (volta == 1)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 2)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 3)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 4)
                 {
-                    ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
-                ViewBag.Message = SystemBR_Resource.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
-                SessionMocks.UserCredentials = null;
+                ViewBag.Message = ERP_Condominios_Resource.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
+                Session["UserCredentials"] = null;
                 return RedirectToAction("Login", "ControleAcesso");
             }
             catch (Exception ex)
@@ -321,28 +310,24 @@ namespace ERP_Condominios_Solution.Controllers
             try
             {
                 // Processa
-                SessionMocks.UserCredentials = null;
+                Session["UserCredentials"] = null;
                 USUARIO item = Mapper.Map<UsuarioLoginViewModel, USUARIO>(vm);
                 Int32 volta = baseApp.GenerateNewPassword(item.USUA_NM_EMAIL);
                 if (volta == 1)
                 {
-                    //ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
-                    return Json(SystemBR_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
                 }
                 if (volta == 2)
                 {
-                    //ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
-                    return Json(SystemBR_Resource.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
                 }
                 if (volta == 3)
                 {
-                    //ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
-                    return Json(SystemBR_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
                 }
                 if (volta == 4)
                 {
-                    //ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
-                    return Json(SystemBR_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
                 }
                 return Json(1);
             }
