@@ -1,7 +1,278 @@
-﻿
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.NOTICIA
 @{
-    ViewBag.Title = "MontarTelaNoticia";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Notícias</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarAdmin", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Notícias</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>           
+            
+                @using (Html.BeginForm("FiltrarNoticiaGeral", "Noticia", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-5 col-md-5 col-xs-12">
+                                    Título
+                                    @Html.TextBoxFor(m => m.NOTC_NM_TITULO, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Autor
+                                    @Html.TextBoxFor(m => m.NOTC_NM_AUTOR, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Data de Autoria
+                                    @Html.TextBoxFor(m => m.NOTC_DT_DATA_AUTOR, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-9 col-md-9 col-xs-12">
+                                    Conteúdo da Notícia
+                                    @Html.TextBoxFor(m => m.NOTC_TX_TEXTO, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Link
+                                    @Html.TextBoxFor(m => m.NOTC_LK_LINK, new { @class = "form-control", autofocus = true })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    @Html.ButtonActionSubmit(text: "Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Noticia", action: "RetirarFiltroNoticiageral")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Noticia", action: "MostrarTudoNoticiaGeral")
+                                    @Html.ButtonLinkIndex(text: "Nova Notícia", controller: "Noticia", action: "IncluirNoticia")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Noticia", action: "Voltar")
+                                </div>
+                            </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Notícias</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.NOTICIA>).Count > 0)                                        {
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead style ="background-color:lightsteelblue">
+                                        <tr>
+                                            <th>Data</th>   
+                                            <th>Título</th>   
+                                            <th>Autor</th>
+                                            <th>Acessos</th>
+                                            <th class="td-one-action">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.NOTICIA>))
+                                        {
+                                            <tr>
+                                                <td>@cond.NOTC_DT_DATA_AUTOR.Value.ToShortDateString()</td>
+                                                <td>@cond.NOTC_NM_TITULO</td>
+                                                <td>@cond.NOTC_NM_AUTOR</td>
+                                                <td>@cond.NOTC_NR_ACESSO</td>
+                                                <td class="td-one-action">
+                                                    @Html.TableLinkDetails(cond.NOTC_CD_ID, "EditarNoticia","fa-edit", "Editar/Ver")
+                                                    @if (cond.NOTC_IN_ATIVO == 1)
+	                                                {
+                                                        @Html.TableLinkDetails(cond.NOTC_CD_ID, "ExcluirNoticia","fa-trash-o", "Excluir")
+                                                    }
+                                                    else
+                                                    {   
+                                                        @Html.TableLinkDetails(cond.NOTC_CD_ID, "ReativarNoticia","fa-refresh", "Reativar")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
 }
 
-<h2>MontarTelaNoticia</h2>
+@section Scripts {
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
 
