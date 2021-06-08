@@ -6,12 +6,18 @@ using EntitiesServices.Model;
 using System.Web;
 using EntitiesServices.Attributes;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_Condominios_Solution.ViewModels
 {
     public class AgendaViewModel
     {
         [Key]
         public int AGEN_CD_ID { get; set; }
+
+
+
+
+
+
         [Required(ErrorMessage = "Campo USUÁRIO obrigatorio")]
         public int USUA_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo ASSINANTE obrigatorio")]
@@ -40,5 +46,7 @@ namespace SystemBRPresentation.ViewModels
         public virtual CATEGORIA_AGENDA CATEGORIA_AGENDA { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         public virtual USUARIO USUARIO1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AGENDA_VINCULO> AGENDA_VINCULO { get; set; }
     }
 }

@@ -29,8 +29,8 @@ namespace MvcMapping.Mappers
             //CreateMap<UNIDADE, UnidadeViewModel>();
             //CreateMap<TEMPLATE, TemplateViewModel>();
             //CreateMap<TAREFA, TarefaViewModel>();
-            //CreateMap<CATEGORIA_AGENDA, CategoriaAgendaViewModel>();
-            //CreateMap<AGENDA, AgendaViewModel>();
+            CreateMap<CATEGORIA_AGENDA, CategoriaAgendaViewModel>();
+            CreateMap<AGENDA, AgendaViewModel>();
             //CreateMap<TAREFA_ACOMPANHAMENTO, TarefaAcompanhamentoViewModel>();
 
         }
