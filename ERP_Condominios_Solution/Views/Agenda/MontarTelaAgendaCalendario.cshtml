@@ -1,7 +1,413 @@
-﻿
-@{
-    ViewBag.Title = "MontarTelaAgendaCalendario";
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model ERP_Condominios_Solution.ViewModels.AgendaViewModel
+@{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Agenda</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Agenda</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="ibox-title">
+                <span class="label label-primary pull-right">Hoje</span>
+                <h5>Calendário</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Nova Agenda", controller: "Agenda", action: "IncluirAgenda")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAgenda", controller: "Agenda")
+                </div>
+                <div id="calendario"></div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAgenda", controller: "Agenda")
+                </div>
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("IncluirAgenda", "Agenda", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+    {
+        <div id="criarEventoModalContainer">
+            <div class="modal fade" id="modalCadastroEvento" tabindex="-1" role="dialog" aria-labelledby="modalCadastroEvento" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTitulo">Agenda - Incluir</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        @Html.HiddenFor(m => m.ASSI_CD_ID, new { id = "cdAssi" })
+                                        @Html.HiddenFor(m => m.AGEN_IN_ATIVO, new { id = "ativo" })
+                                        @Html.HiddenFor(m => m.USUA_CD_ID, new { id = "cdUsua" })
+                                        @Html.HiddenFor(m => m.AGEN_IN_STATUS, new { id = "status" })
+                                        Data*
+                                        @Html.TextBoxFor(m => m.AGEN_DT_DATA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, id = "data", @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(m => m.AGEN_DT_DATA, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Hora*
+                                        <div class='input-group date' id='datetimepicker3'>
+                                            @Html.TextBoxFor(m => m.AGEN_HR_HORA, new { @class = "form-control time-picker", autofocus = true, @id = "hora" })
+                                            @Html.ValidationMessageFor(m => m.AGEN_HR_HORA, "", new { @style = "color:red" })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Categoria*
+                                        @Html.DropDownListFor(m => m.CAAG_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, id = "catAgenda" })
+                                        @Html.ValidationMessageFor(m => m.CAAG_CD_ID, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Contato
+                                        @Html.DropDownListFor(m => m.AGEN_CD_USUARIO, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true, id = "cdUsuAgenda" })
+                                        @Html.ValidationMessageFor(m => m.AGEN_CD_USUARIO, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <br />
+                                        Título*
+                                        @Html.TextBoxFor(m => m.AGEN_NM_TITULO, new { @class = "form-control", autofocus = true, id = "titulo" })
+                                        @Html.ValidationMessageFor(m => m.AGEN_NM_TITULO, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <br />
+                                        Descrição
+                                        @Html.TextAreaFor(m => m.AGEN_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, id = "desc" })
+                                        @Html.ValidationMessageFor(m => m.AGEN_DS_DESCRICAO, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <br />
+                                        Observações
+                                        @Html.TextAreaFor(m => m.AGEN_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, id = "obs" })
+                                        @Html.ValidationMessageFor(m => m.AGEN_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <h4>Anexos da Agenda</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                    <br />
+                                    <div class="form-group">
+                                        <div class="ibox-content">
+                                            <br />
+                                            <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="myFiles">
+                                                <thead style="background-color:lightsteelblue">
+                                                    <tr>
+                                                        <td>Nome</td>
+                                                        <td>Ações</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="button" class="btnSubmit btn btn-primary" id="basictoast">Confirma Inclusão da Agenda</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/fullcalendar.min.css")
 }
 
-<h2>MontarTelaAgendaCalendario</h2>
+@section Scripts {
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
 
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+    @Scripts.Render("~/Scripts/plugins/fullcalendar/moment.min.js")
+    @Scripts.Render("~/Scripts/plugins/fullcalendar/fullcalendar.min.js")
+
+    <script>
+        $('#modalCadastroEvento').on('hidden.bs.modal', function () {
+            $('#calendario').fullCalendar('removeEvents', 0);
+        });
+
+        $.ajax({
+            url: '../Agenda/GetEventosCalendario'
+            , type: 'POST'
+            , success: function (r) {
+                $('#calendario').fullCalendar({
+                    events: r
+                    , editable: true
+                    , header: {
+                        left: 'title',
+                        right: 'month,agendaWeek,agendaDay, prev,next'
+                    }
+                    , eventClick: function (event, jsEvent, view) {
+                        GetEventoDetalhe(event.id);
+                    }
+                    , monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
+                    , monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+                    , dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']
+                    , dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+                    , buttonText: {
+                        today: "Hoje"
+                        , month: "Mês"
+                        , week: "Semana"
+                        , day: "Dia"
+                    }
+                    , allDayText: "Dia Inteiro"
+                    , slotLabelFormat: "HH:mm"
+                    , timeFormat: "HH:mm"
+                    , columnFormat: {
+                        month: 'ddd'
+                        , week: 'ddd DD/MM'
+                        , day: 'dddd'
+                    }
+                    , eventRender: function (event, element, view) {
+                        $(element).attr('data-toggle', 'tooltip');
+                        $(element).attr('data-placement', 'top');
+                        $(element).attr('title', 'Horário: ' + event.description);
+                        $(element).tooltip();
+                    }
+                    , eventDrop: function (info) {
+                        var data = {
+                            id: info.id
+                            , data: info.start.toISOString()
+                        }
+
+                        $.ajax({
+                            url: '../Agenda/EditarAgendaOnChange'
+                            , type: 'POST'
+                            , data: data
+                            , success: function (r) {
+                                console.log(r);
+                                if (r.length > 1) {
+                                    alert(r);
+                                }
+                                else if (r != 0) {
+                                    alert("Erro na alteração de data");
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                $('.fc-day').click(function () {
+                    // Evento
+                    var newEvent = {
+                        id: 0
+                        , title: '(Sem Título)'
+                        , start: $(this).attr('data-date')
+                    }
+
+                    // Seleciona a data para inclusão referente ao dia clicado
+                    $('#data').val(formatDate($(this).attr('data-date')));
+
+                    // Adiciona função de atualização simultanea de evento
+                    $('#titulo').attr('onkeyup', 'eventTitleChange("' + $(this).attr('data-date') + '")');
+
+                    $('#modalCadastroEvento').modal('show');
+
+                    // Renderiza evento
+                    $('#calendario').fullCalendar('renderEvent', newEvent);
+                });
+            }
+        });
+
+        function eventTitleChange(data) {
+            // Deleta evento para recriar com valor atual do titulo
+            $('#calendario').fullCalendar('removeEvents', 0);
+            var newEvent = {
+                id: 0
+                , title: $('#titulo').val()
+                , start: data
+            }
+
+            // Renderiza evento novo
+            $('#calendario').fullCalendar('renderEvent', newEvent);
+        }
+
+        function GetEventoDetalhe(id) {
+            if ($('#agendaModal' + id).length == 0) {
+
+                var data = {
+                    id: id
+                }
+
+                $.ajax({
+                    url: '../Agenda/GetDetalhesEvento'
+                    , type: 'POST'
+                    , data: data
+                    , success: function (det) {
+                        var modal = '<div class="modal fade" id="agendaModal' + id + '" tabindex="-1" role="dialog" aria-labelledby="agendaModal' + id + '" aria-hidden="true">'
+                            + '<div class="modal-dialog modal-dialog-centered modal-lg" role="document">'
+                            + '<div class="modal-content">'
+                            + '<div class="modal-header">'
+                            + '<h5 class="modal-title" id="exampleModalLongTitle">' + det.titulo + ' - Detalhes</h5>'
+                            + '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+                            + '<span aria-hidden="true">&times;</span>'
+                            + '</button>'
+                            + '</div>'
+                            + '<div class="modal-body">'
+                            /*CONTENT*/
+                            + '<table class="table table-striped table-bordered table-hover dataTables-example">'
+                            + '<thead style ="background-color:lightsteelblue">'
+                            + '<tr>'
+                            + '<th>Data</th>'
+                            + '<th>Hora</th>'
+                            + '<th>Categoria</th>'
+                            + '<th>Título</th>'
+                            + '<th>Contato</th>'
+                            + '<th>Status</th>'
+                            + '<th>Anexos</th>'
+                            + '<th class="td-one-action">Ações</th>'
+                            + '</tr>'
+                            + '</thead>'
+                            + '<tbody>'
+                            + '<tr>'
+                            + '<td>' + det.data + '</td>'
+                            + '<td>' + det.hora + '</td>'
+                            + '<td>' + det.categoria + '</td>'
+                            + '<td>' + det.titulo + '</td>'
+                            + '<td>' + det.contato + '</td>'
+                            + '<td>' + det.status + '</td>'
+                            + '<td>' + det.anexo + '</td>'
+                            + '<td><a alt="Editar/Consultar" class="tbl-link fa-lg fa fa-edit" href="/Agenda/EditarAgenda/' + id + '" target="_self" title="Editar/Consultar"></a> <a alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" href="/Agenda/ExcluirAgenda/' + id + '" target="_self" title="Desativar"></a></td>'
+                            + '</tr>'
+                            + '</tbody>'
+                            + '</table>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>';
+
+                        $('#modalContainer').append(modal);
+                        $('#agendaModal' + id).modal('show');
+                    }
+                });
+            } else {
+                $('#agendaModal' + id).modal('show');
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.dataTables-example').DataTable({
+                paging: false,
+                ordering: false,
+                pageLength: 25
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        function formatDate(input) {
+            var datePart = input.match(/\d+/g),
+                year = datePart[0]
+                , month = datePart[1]
+                , day = datePart[2];
+
+            return day + '/' + month + '/' + year;
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.time-picker').datetimepicker({
+                datepicker: false,
+                format: 'H:i'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker3').click(function () {
+                $('.time-picker').datetimepicker('show');
+            });
+        });
+    </script>
+
+    <script>
+        SendFilesV2(null, "Agenda", "UploadFileToSession");
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+<script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+</script>}
