@@ -464,6 +464,13 @@ namespace ApplicationServices.Services
                     return 3;
                 }
 
+                // Verifica se acessa sistema
+                if (usuario.USUA_IN_SISTEMA == 0)
+                {
+                    return 11;
+                }
+
+
                 // Verifica se está bloqueado
                 if (usuario.USUA_IN_BLOQUEADO == 1)
                 {

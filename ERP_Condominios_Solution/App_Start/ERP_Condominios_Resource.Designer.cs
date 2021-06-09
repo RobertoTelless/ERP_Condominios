@@ -151,6 +151,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário cadastrado mas sem acesso ao sistema. Consulte a administração..
+        /// </summary>
+        internal static string M0012 {
+            get {
+                return ResourceManager.GetString("M0012", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum registro atendeu ao filtro especificado.
         /// </summary>
         internal static string M0016 {

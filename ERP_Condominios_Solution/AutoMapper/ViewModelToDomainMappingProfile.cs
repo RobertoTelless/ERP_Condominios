@@ -28,10 +28,10 @@ namespace MvcMapping.Mappers
             //CreateMap<TipoPessoaViewModel, TIPO_PESSOA>();
             //CreateMap<UnidadeViewModel, UNIDADE>();
             //CreateMap<TemplateViewModel, TEMPLATE>();
-            //CreateMap<TarefaViewModel, TAREFA>();
+            CreateMap<TarefaViewModel, TAREFA>();
             CreateMap<CategoriaAgendaViewModel, CATEGORIA_AGENDA>();
             CreateMap<AgendaViewModel, AGENDA>();
-            //CreateMap<TarefaAcompanhamentoViewModel, TAREFA_ACOMPANHAMENTO>();
+            CreateMap<TarefaAcompanhamentoViewModel, TAREFA_ACOMPANHAMENTO>();
 
         }
     }

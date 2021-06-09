@@ -54,7 +54,6 @@ namespace DataServices.Repositories
 
         public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser)
         {
-            //USUARIO user = SessionMocks.UserCredentials;
             List<AGENDA> lista = new List<AGENDA>();
             IQueryable<AGENDA> query = Db.AGENDA.Where(x => x.USUA_CD_ID == idUser);
             if (!String.IsNullOrEmpty(titulo))

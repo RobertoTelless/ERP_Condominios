@@ -282,6 +282,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
+    <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
     <Compile Include="Extensions\WebMvcExtensions.cs" />
@@ -296,6 +297,8 @@
     <Compile Include="ViewModels\NoticiaViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
+    <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\TarefaViewModel.cs" />
     <Compile Include="ViewModels\UsuarioLoginViewModel.cs" />
     <Compile Include="ViewModels\UsuarioViewModel.cs" />
   </ItemGroup>
@@ -2880,6 +2883,9 @@
     <Content Include="Views\Agenda\EditarAgenda.cshtml" />
     <Content Include="Views\Agenda\VerAnexoAgenda.cshtml" />
     <Content Include="Views\Agenda\VerTimelineAgenda.cshtml" />
+    <Content Include="Views\Tarefa\MontarTelaTarefaKanban.cshtml" />
+    <Content Include="Views\Tarefa\MontarTelaTarefa.cshtml" />
+    <Content Include="Views\Tarefa\IncluirTarefa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

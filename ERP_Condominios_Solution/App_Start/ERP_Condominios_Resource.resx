@@ -147,6 +147,9 @@
   <data name="M0011" xml:space="preserve">
     <value>Você não tem acesso a essa funcionalidade</value>
   </data>
+  <data name="M0012" xml:space="preserve">
+    <value>Usuário cadastrado mas sem acesso ao sistema. Consulte a administração.</value>
+  </data>
   <data name="M0016" xml:space="preserve">
     <value>Nenhum registro atendeu ao filtro especificado</value>
   </data>

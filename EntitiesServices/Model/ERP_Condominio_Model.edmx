@@ -918,6 +918,7 @@
           <Property Name="TARE_TX_OBSERVACOES" Type="text" />
           <Property Name="TARE_NM_LOCAL" Type="varchar" MaxLength="150" />
           <Property Name="TARE_IN_AVISA" Type="int" />
+          <Property Name="TARE_NR_PERIODICIDADE_QUANTIDADE" Type="int" />
         </EntityType>
         <EntityType Name="TAREFA_ACOMPANHAMENTO">
           <Key>
@@ -1170,6 +1171,9 @@
           <Property Name="USUA_DS_MOTIVO_SAIDA" Type="varchar" MaxLength="500" />
           <Property Name="USUA_IN_PROPRIETARIO" Type="int" />
           <Property Name="USUA_DS_JUSTIFICATIVA" Type="varchar" MaxLength="250" />
+          <Property Name="USUA_IN_SISTEMA" Type="int" />
+          <Property Name="USUA_IN_MORADOR" Type="int" />
+          <Property Name="USUA_IN_FUNCIONARIO" Type="int" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -5040,6 +5044,7 @@
           <NavigationProperty Name="TAREFA_VINCULO" Relationship="Self.FK_TAREFA_VINCULO_TAREFA" FromRole="TAREFA" ToRole="TAREFA_VINCULO" />
           <Property Name="PETA_CD_ID" Type="Int32" />
           <NavigationProperty Name="PERIODICIDADE_TAREFA" Relationship="ERP_CondominioModel.FK_TAREFA_PERIODICIDADE_TAREFA" FromRole="TAREFA" ToRole="PERIODICIDADE_TAREFA" />
+          <Property Name="TARE_NR_PERIODICIDADE_QUANTIDADE" Type="Int32" />
         </EntityType>
         <EntityType Name="TAREFA_ACOMPANHAMENTO">
           <Key>
@@ -5377,6 +5382,9 @@
           <NavigationProperty Name="USUARIO_ESCALA_TRABALHO" Relationship="Self.FK_USUARIO_ESCALA_TRABALHO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ESCALA_TRABALHO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
+          <Property Name="USUA_IN_SISTEMA" Type="Int32" />
+          <Property Name="USUA_IN_MORADOR" Type="Int32" />
+          <Property Name="USUA_IN_FUNCIONARIO" Type="Int32" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -9104,6 +9112,7 @@
           <EntitySetMapping Name="TAREFA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.TAREFA">
               <MappingFragment StoreEntitySet="TAREFA">
+                <ScalarProperty Name="TARE_NR_PERIODICIDADE_QUANTIDADE" ColumnName="TARE_NR_PERIODICIDADE_QUANTIDADE" />
                 <ScalarProperty Name="PETA_CD_ID" ColumnName="PETA_CD_ID" />
                 <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -9354,6 +9363,9 @@
           <EntitySetMapping Name="USUARIO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="USUA_IN_FUNCIONARIO" ColumnName="USUA_IN_FUNCIONARIO" />
+                <ScalarProperty Name="USUA_IN_MORADOR" ColumnName="USUA_IN_MORADOR" />
+                <ScalarProperty Name="USUA_IN_SISTEMA" ColumnName="USUA_IN_SISTEMA" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="PERF_CD_ID" ColumnName="PERF_CD_ID" />

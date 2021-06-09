@@ -77,6 +77,11 @@ namespace ERP_Condominios_Solution.ViewModels
         [StringLength(200, ErrorMessage = "O MOTIVO DA SAÌDA deve ter no máximo 200 caracteres.")]
         public string USUA_DS_MOTIVO_SAIDA { get; set; }
         public Nullable<int> USUA_IN_PROPRIETARIO { get; set; }
+        [StringLength(200, ErrorMessage = "A JUSTIFICATIVA deve ter no máximo 200 caracteres.")]
+        public string USUA_DS_JUSTIFICATIVA { get; set; }
+        public Nullable<int> USUA_IN_SISTEMA { get; set; }
+        public Nullable<int> USUA_IN_MORADOR { get; set; }
+        public Nullable<int> USUA_IN_FUNCIONARIO { get; set; }
 
 
         public bool Bloqueio
@@ -137,6 +142,70 @@ namespace ERP_Condominios_Solution.ViewModels
             set
             {
                 USUA_IN_RESPONSAVEL = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Proprietario
+        {
+            get
+            {
+                if (USUA_IN_PROPRIETARIO == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_PROPRIETARIO = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Morador
+        {
+            get
+            {
+                if (USUA_IN_MORADOR == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_MORADOR = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Funcionario
+        {
+            get
+            {
+                if (USUA_IN_FUNCIONARIO == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_FUNCIONARIO = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Sistema
+        {
+            get
+            {
+                if (USUA_IN_SISTEMA == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_SISTEMA = (value == true) ? 1 : 0;
             }
         }
 

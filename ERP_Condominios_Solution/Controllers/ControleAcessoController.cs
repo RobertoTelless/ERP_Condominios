@@ -101,6 +101,11 @@ namespace ERP_Condominios_Solution.Controllers
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0109", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
+                if (volta == 11)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0012", CultureInfo.CurrentCulture));
+                    return View(vm);
+                }
 
                 // Armazena credenciais para autorização
                 Session["UserCredentials"] = usuario;
