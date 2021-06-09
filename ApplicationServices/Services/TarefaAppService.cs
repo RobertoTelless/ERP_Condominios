@@ -113,17 +113,29 @@ namespace ApplicationServices.Services
         {
             try
             {
+                //Verifica Campos
+                if (item.TIPO_TAREFA != null)
+                {
+                    item.TIPO_TAREFA = null;
+                }
+                if (item.USUARIO != null)
+                {
+                    item.USUARIO = null;
+                }
+                if (item.ASSINANTE != null)
+                {
+                    item.ASSINANTE = null;
+                }
+                if (item.PERIODICIDADE_TAREFA != null)
+                {
+                    item.PERIODICIDADE_TAREFA = null;
+                }
+
                 // Verifica existencia prévia
                 if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
-
-                //// Verifica compartilhamento
-                //if (item.TARE_CD_USUA_1 == item.USUA_CD_ID || item.TARE_CD_USUA_2 == item.USUA_CD_ID || item.TARE_CD_USUA_3 == item.USUA_CD_ID )
-                //{
-                //    return 2;
-                //}
 
                 // Completa objeto
                 item.TARE_IN_ATIVO = 1;
@@ -144,6 +156,9 @@ namespace ApplicationServices.Services
                 
                 // Persiste
                 Int32 volta = _baseService.Create(item, log);
+
+                // Gera Notificações e tarefas compartilhadas
+
                 return volta;
             }
             catch (Exception ex)
@@ -151,6 +166,7 @@ namespace ApplicationServices.Services
                 throw;
             }
         }
+
 
         public Int32 ValidateEdit(TAREFA item, TAREFA itemAntes, USUARIO usuario)
         {
@@ -204,6 +220,7 @@ namespace ApplicationServices.Services
 
                 // Persiste
                 Int32 volta = _baseService.Edit(item);
+
                 return volta;
             }
             catch (Exception ex)

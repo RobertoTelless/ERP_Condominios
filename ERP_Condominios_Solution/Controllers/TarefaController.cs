@@ -381,7 +381,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            
+
             // Prepara listas
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(), "TITR_CD_ID", "TITR_NM_NOME");
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
@@ -449,9 +449,10 @@ namespace ERP_Condominios_Solution.Controllers
                     TAREFA item = Mapper.Map<TarefaViewModel, TAREFA>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
 
-                    if (item.TARE_NR_PERIODICIDADE_QUANTIDADE != null)
+                    if (item.TARE_NR_PERIODICIDADE_QUANTIDADE != null || item.TARE_NR_PERIODICIDADE_QUANTIDADE == 0)
                     {
                         DateTime dtAgenda = (DateTime)item.TARE_DT_ESTIMADA;
+                        DateTime dtTarefa = (DateTime)item.TARE_DT_CADASTRO;
 
                         for (var i = 0; i < item.TARE_NR_PERIODICIDADE_QUANTIDADE; i++)
                         {
@@ -464,51 +465,79 @@ namespace ERP_Condominios_Solution.Controllers
                             ag.AGEN_IN_STATUS = 1;
                             ag.AGEN_NM_TITULO = item.TARE_NM_TITULO;
                             ag.AGEN_TX_OBSERVACOES = item.TARE_TX_OBSERVACOES;
-                            ag.ASSI_CD_ID = SessionMocks.IdAssinante;
+                            ag.ASSI_CD_ID = usuarioLogado.ASSI_CD_ID;
                             ag.CAAG_CD_ID = 1;
 
-                            item.TARE_DT_ESTIMADA = dtAgenda;
-                            Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
-                            Int32 count = 1;
-                            item.TARE_NM_TITULO = $"{item.TARE_NM_TITULO} #{count}";
+                            if (i == 0)
+                            {
+                                Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
-                            // Verifica retorno
-                            if (volta == 1)
-                            {
-                                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
-                                return View(vm);
+                                Session["PeriTarefa"] = item.PERIODICIDADE_TAREFA;
+
+                                // Verifica retorno
+                                if (volta == 1)
+                                {
+                                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
+                                    return View(vm);
+                                }
+                                if (volta == 2)
+                                {
+                                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
+                                    return View(vm);
+                                }
                             }
-                            if (volta == 2)
+                            else
                             {
-                                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
-                                return View(vm);
+                                TAREFA tarefa = new TAREFA();
+                                tarefa.USUA_CD_ID = item.USUA_CD_ID;
+                                tarefa.TITR_CD_ID = item.TITR_CD_ID;
+                                tarefa.TARE_DS_DESCRICAO = item.TARE_DS_DESCRICAO;
+                                tarefa.TARE_IN_STATUS = item.TARE_IN_STATUS;
+                                tarefa.TARE_IN_PRIORIDADE = item.TARE_IN_PRIORIDADE;
+                                tarefa.TARE_IN_ATIVO = item.TARE_IN_ATIVO;
+                                tarefa.TARE_DT_REALIZADA = item.TARE_DT_REALIZADA;
+                                tarefa.TARE_TX_OBSERVACOES = item.TARE_TX_OBSERVACOES;
+                                tarefa.TARE_NM_LOCAL = item.TARE_NM_LOCAL;
+                                tarefa.TARE_IN_AVISA = item.TARE_IN_AVISA;
+                                tarefa.ASSI_CD_ID = item.ASSI_CD_ID;
+                                tarefa.PETA_CD_ID = item.PETA_CD_ID;
+                                tarefa.TARE_NR_PERIODICIDADE_QUANTIDADE = item.TARE_NR_PERIODICIDADE_QUANTIDADE;
+                                tarefa.TARE_DT_CADASTRO = dtTarefa;
+                                tarefa.TARE_DT_ESTIMADA = dtAgenda;
+                                tarefa.TARE_NM_TITULO = $"{item.TARE_NM_TITULO} #{i}";
+
+                                Int32 volta = baseApp.ValidateCreate(tarefa, usuarioLogado);
                             }
 
                             Int32 voltaAg = agenApp.ValidateCreate(ag, usuarioLogado);
 
                             // Cria pastas Tarefa
-                            String caminho = "/Imagens/" + SessionMocks.IdAssinante.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+                            String caminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
                             Directory.CreateDirectory(Server.MapPath(caminho));
 
                             // Cria pastas Agenda
-                            String agCaminho = "/Imagens/Agenda/" + SessionMocks.IdAssinante.ToString() + "/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
+                            String agCaminho = "/Imagens/Agenda/" + usuarioLogado.ASSI_CD_ID.ToString() + "/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
                             Directory.CreateDirectory(Server.MapPath(agCaminho));
 
-                            if (item.PERIODICIDADE_TAREFA.PETA_CD_ID == 4) //Mensal
+                            if (((PERIODICIDADE_TAREFA)Session["PeriTarefa"]).PETA_CD_ID == 4) //Mensal
                             {
                                 dtAgenda = dtAgenda.AddMonths(1);
+                                dtTarefa = dtTarefa.AddMonths(1);
                             }
-                            else if (item.PERIODICIDADE_TAREFA.PETA_CD_ID == 5) //Semestral
+                            else if (((PERIODICIDADE_TAREFA)Session["PeriTarefa"]).PETA_CD_ID == 5) //Semestral
                             {
                                 dtAgenda = dtAgenda.AddMonths(6);
+                                dtTarefa = dtTarefa.AddMonths(6);
                             }
-                            else if (item.PERIODICIDADE_TAREFA.PETA_CD_ID == 6) //Anual
+                            else if (((PERIODICIDADE_TAREFA)Session["PeriTarefa"]).PETA_CD_ID == 6) //Anual
                             {
                                 dtAgenda = dtAgenda.AddYears(1);
+                                dtTarefa = dtTarefa.AddYears(1);
                             }
                             else // Outras
                             {
-                                dtAgenda = dtAgenda.AddDays(item.PERIODICIDADE_TAREFA.PETA_NR_DIAS);
+                                dtAgenda = dtAgenda.AddDays(((PERIODICIDADE_TAREFA)Session["PeriTarefa"]).PETA_NR_DIAS);
+                                dtTarefa = dtTarefa.AddDays(((PERIODICIDADE_TAREFA)Session["PeriTarefa"]).PETA_NR_DIAS);
                             }
                         }
                     }
@@ -523,7 +552,7 @@ namespace ERP_Condominios_Solution.Controllers
                         ag.AGEN_IN_STATUS = 1;
                         ag.AGEN_NM_TITULO = item.TARE_NM_TITULO;
                         ag.AGEN_TX_OBSERVACOES = item.TARE_TX_OBSERVACOES;
-                        ag.ASSI_CD_ID = SessionMocks.IdAssinante;
+                        ag.ASSI_CD_ID = usuarioLogado.ASSI_CD_ID;
                         ag.CAAG_CD_ID = 1;
 
                         Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
@@ -531,30 +560,26 @@ namespace ERP_Condominios_Solution.Controllers
                         // Verifica retorno
                         if (volta == 1)
                         {
-                            ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0093", CultureInfo.CurrentCulture));
-                            return View(vm);
-                        }
-                        if (volta == 2)
-                        {
-                            ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
+                            ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
                             return View(vm);
                         }
 
                         Int32 voltaAg = agenApp.ValidateCreate(ag, usuarioLogado);
 
                         // Cria pastas Tarefa
-                        String caminho = "/Imagens/" + SessionMocks.IdAssinante.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+                        String caminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
                         Directory.CreateDirectory(Server.MapPath(caminho));
 
                         // Cria pastas Agenda
-                        String agCaminho = "/Imagens/Agenda/" + SessionMocks.IdAssinante.ToString() + "/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
+                        String agCaminho = "/Imagens/Agenda/" + usuarioLogado.ASSI_CD_ID.ToString() + "/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
                         Directory.CreateDirectory(Server.MapPath(agCaminho));
                     }
 
                     // Sucesso
                     listaMaster = new List<TAREFA>();
-                    SessionMocks.listaTarefa = null;
-                    SessionMocks.idVolta = item.TARE_CD_ID;
+                    Session["ListaTarefa"] = null;
+                    Session["IdVolta"] = item.TARE_CD_ID;
+                    Session["PeriTarefa"] = null;
 
                     if (Session["FileQueueTarefa"] != null)
                     {
@@ -568,7 +593,7 @@ namespace ERP_Condominios_Solution.Controllers
                         Session["FileQueueTarefa"] = null;
                     }
 
-                    if (SessionMocks.voltaKanban == 1)
+                    if ((Int32)Session["VoltaKanban"] == 1)
                     {
                         return RedirectToAction("MontarTelaTarefaKanban");
                     }
@@ -590,13 +615,27 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpGet]
         public ActionResult EditarTarefa(Int32 id)
         {
-            if (SessionMocks.UserCredentials == null)
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            
             // Prepara view
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(), "TITR_CD_ID", "TITR_NM_NOME");
-            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Pendente", Value = "1" });
             status.Add(new SelectListItem() { Text = "Em Andamento", Value = "2" });
@@ -613,8 +652,8 @@ namespace ERP_Condominios_Solution.Controllers
 
             TAREFA item = baseApp.GetItemById(id);
             objetoAntes = item;
-            SessionMocks.tarefa = item;
-            SessionMocks.idVolta = id;
+            Session["Tarefa"] = item;
+            Session["IdVolta"] = id;
             ViewBag.Status = (item.TARE_IN_STATUS == 1 ? "Pendente" : (item.TARE_IN_STATUS == 2 ? "Em Andamento" : (item.TARE_IN_STATUS == 3 ? "Suspensa" : (item.TARE_IN_STATUS == 4 ? "Cancelada" : "Encerrada"))));
             ViewBag.StatusCor = (item.TARE_IN_STATUS == 1 ? "red-bg" : (item.TARE_IN_STATUS == 2 ? "blue-bg" : (item.TARE_IN_STATUS == 2 ? "blue-bg" : (item.TARE_IN_STATUS == 3 ? "yellow-bg" : "navy-bg"))));
             ViewBag.Prior = (item.TARE_IN_PRIORIDADE == 1 ? "Normal" : (item.TARE_IN_PRIORIDADE == 2 ? "Baixa" : (item.TARE_IN_PRIORIDADE == 3 ? "Alta" : "Urgente")));
@@ -626,12 +665,13 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpPost]
         public ActionResult EditarTarefa(TarefaViewModel vm)
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(), "TITR_CD_ID", "TITR_NM_NOME");
-            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Pendente", Value = "1" });
             status.Add(new SelectListItem() { Text = "Em Andamento", Value = "2" });
@@ -650,26 +690,26 @@ namespace ERP_Condominios_Solution.Controllers
                 try
                 {
                     // Executa a operação
-                    USUARIO usuarioLogado = SessionMocks.UserCredentials;
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     TAREFA item = Mapper.Map<TarefaViewModel, TAREFA>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
                     if (volta == 1)
                     {
-                        ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0095", CultureInfo.CurrentCulture));
+                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
                     if (volta == 2)
                     {
-                        ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0096", CultureInfo.CurrentCulture));
+                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
 
                     // Sucesso
                     listaMaster = new List<TAREFA>();
-                    SessionMocks.listaTarefa = null;
-                    if (SessionMocks.voltaKanban == 1)
+                    Session["ListaTarefa"] = null;
+                    if ((Int32)Session["VoltaKanban"] == 1)
                     {
                         return RedirectToAction("MontarTelaTarefaKanban");
                     }
@@ -712,21 +752,20 @@ namespace ERP_Condominios_Solution.Controllers
             try
             {
                 // Executa a operação
-                USUARIO usuarioLogado = SessionMocks.UserCredentials;
+                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                 Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                 // Verifica retorno
                 if (volta == 1)
                 {
-                    return Json(SystemBR_Resource.ResourceManager.GetString("M0095", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
                 }
                 if (volta == 2)
                 {
-                    return Json(SystemBR_Resource.ResourceManager.GetString("M0096", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
                 }
 
-                SessionMocks.listaTarefa = null;
-
+                Session["ListaTarefa"] = null;
                 return Json("SUCCESS");
             }
             catch (Exception ex)
@@ -737,65 +776,26 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditarTarefaCompartilhada(Int32 id)
+        public ActionResult ExcluirTarefa(Int32 id)
         {
-            if (SessionMocks.UserCredentials == null)
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            // Prepara view
-            TAREFA item = baseApp.GetItemById(id);
-            objetoAntes = item;
-            SessionMocks.tarefa = item;
-            SessionMocks.idVolta = id;
-            TarefaViewModel vm = Mapper.Map<TAREFA, TarefaViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public ActionResult EditarTarefaCompartilhada(TarefaViewModel vm)
-        {
-            if (SessionMocks.UserCredentials == null)
+            if ((USUARIO)Session["UserCredentials"] != null)
             {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Executa a operação
-                    USUARIO usuarioLogado = SessionMocks.UserCredentials;
-                    TAREFA item = Mapper.Map<TarefaViewModel, TAREFA>(vm);
-                    Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
+                usuario = (USUARIO)Session["UserCredentials"];
 
-                    // Verifica retorno
-
-                    // Sucesso
-                    listaMaster = new List<TAREFA>();
-                    SessionMocks.listaTarefa = null;
-                    return RedirectToAction("MontarTelaTarefa");
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Message = ex.Message;
-                    return View(vm);
-                }
+                // Verfifica permissão
             }
             else
             {
-                return View(vm);
-            }
-        }
-
-        [HttpGet]
-        public ActionResult ExcluirTarefa(Int32 id)
-        {
-            if (SessionMocks.UserCredentials == null)
-            {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            USUARIO usu = SessionMocks.UserCredentials;
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
             TAREFA tarefa = baseApp.GetItemById(id);
             TAREFA item = new TAREFA();
             item.TARE_CD_ID = tarefa.TARE_CD_ID;
@@ -811,26 +811,36 @@ namespace ERP_Condominios_Solution.Controllers
             item.TARE_TX_OBSERVACOES = tarefa.TARE_TX_OBSERVACOES;
             item.TARE_NM_LOCAL = tarefa.TARE_NM_LOCAL;
             item.TARE_IN_AVISA = tarefa.TARE_IN_AVISA;
-            item.TARE_CD_USUA_1 = tarefa.TARE_CD_USUA_1;
-            item.TARE_CD_USUA_2 = tarefa.TARE_CD_USUA_2;
-            item.TARE_CD_USUA_3 = tarefa.TARE_CD_USUA_3;
             item.ASSI_CD_ID = tarefa.ASSI_CD_ID;
             objetoAntes = tarefa;
             item.TARE_IN_ATIVO = 0;
-            Int32 volta = baseApp.ValidateDelete(item, usu);
+            Int32 volta = baseApp.ValidateDelete(item, usuario);
             listaMaster = new List<TAREFA>();
-            SessionMocks.listaTarefa = null;
+            Session["ListaTarefa"] = null;
             return RedirectToAction("MontarTelaTarefa");
         }
 
         [HttpGet]
         public ActionResult ReativarTarefa(Int32 id)
         {
-            if (SessionMocks.UserCredentials == null)
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            USUARIO usu = SessionMocks.UserCredentials;
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
             TAREFA tarefa = baseApp.GetItemById(id);
             TAREFA item = new TAREFA();
             item.TARE_CD_ID = tarefa.TARE_CD_ID;
@@ -846,15 +856,12 @@ namespace ERP_Condominios_Solution.Controllers
             item.TARE_TX_OBSERVACOES = tarefa.TARE_TX_OBSERVACOES;
             item.TARE_NM_LOCAL = tarefa.TARE_NM_LOCAL;
             item.TARE_IN_AVISA = tarefa.TARE_IN_AVISA;
-            item.TARE_CD_USUA_1 = tarefa.TARE_CD_USUA_1;
-            item.TARE_CD_USUA_2 = tarefa.TARE_CD_USUA_2;
-            item.TARE_CD_USUA_3 = tarefa.TARE_CD_USUA_3;
             item.ASSI_CD_ID = tarefa.ASSI_CD_ID;
             objetoAntes = tarefa;
             item.TARE_IN_ATIVO = 1;
-            Int32 volta = baseApp.ValidateReativar(item, usu);
+            Int32 volta = baseApp.ValidateReativar(item, usuario);
             listaMaster = new List<TAREFA>();
-            SessionMocks.listaTarefa = null;
+            Session["ListaTarefa"] = null;
             return RedirectToAction("MontarTelaTarefa");
         }
 
@@ -882,27 +889,27 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpPost]
         public ActionResult UploadFileQueueTarefa(FileQueue file)
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
             if (file == null)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0076", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
-            TAREFA item = baseApp.GetById(SessionMocks.idVolta);
-            USUARIO usu = SessionMocks.UserCredentials;
+            TAREFA item = baseApp.GetById((Int32)Session["IdVolta"]);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = file.Name;
 
-            if (fileName.Length > 100)
+            if (fileName.Length > 250)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0015", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
-            String caminho = "/Imagens/" + SessionMocks.IdAssinante.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + usu.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.File.WriteAllBytes(path, file.Contents);
 
@@ -941,27 +948,27 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpPost]
         public ActionResult UploadFileTarefa(HttpPostedFileBase file)
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
             if (file == null)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0076", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
-            TAREFA item = baseApp.GetById(SessionMocks.idVolta);
-            USUARIO usu = SessionMocks.UserCredentials;
+            TAREFA item = baseApp.GetById((Int32)Session["IdVolta"]);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = Path.GetFileName(file.FileName);
 
             if (fileName.Length > 100)
             {
-                ModelState.AddModelError("", SystemBR_Resource.ResourceManager.GetString("M0015", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
-            String caminho = "/Imagens/" + SessionMocks.IdAssinante.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + usu.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             file.SaveAs(path);
 
@@ -1026,7 +1033,7 @@ namespace ERP_Condominios_Solution.Controllers
 
         public ActionResult VoltarAnexoTarefa()
         {
-            return RedirectToAction("EditarTarefa", new { id = SessionMocks.idVolta });
+            return RedirectToAction("EditarTarefa", new { id = (Int32)Session["IdVolta"] });
         }
 
         public ActionResult VerKanbanTarefa()
@@ -1036,7 +1043,7 @@ namespace ERP_Condominios_Solution.Controllers
 
         public ActionResult GerarRelatorioLista()
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
@@ -1044,8 +1051,8 @@ namespace ERP_Condominios_Solution.Controllers
             String data = DateTime.Today.Date.ToShortDateString();
             data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
             String nomeRel = "TarefaLista" + "_" + data + ".pdf";
-            List<TAREFA> lista = SessionMocks.listaTarefa;
-            TAREFA filtro = SessionMocks.filtroTarefa;
+            List<TAREFA> lista = (List<TAREFA>)Session["ListaTarefa"];
+            TAREFA filtro = (TAREFA)Session["FiltroTarefa"];
             Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
@@ -1140,13 +1147,6 @@ namespace ERP_Condominios_Solution.Controllers
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
             cell = new PdfPCell(new Paragraph("Realizada", meuFont))
-            {
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                HorizontalAlignment = Element.ALIGN_LEFT
-            };
-            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-            table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Compartilhada", meuFont))
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE,
                 HorizontalAlignment = Element.ALIGN_LEFT
@@ -1266,24 +1266,6 @@ namespace ERP_Condominios_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
-                if(SessionMocks.UserCredentials.USUA_CD_ID == item.TARE_CD_USUA_1 || SessionMocks.UserCredentials.USUA_CD_ID == item.TARE_CD_USUA_2 || SessionMocks.UserCredentials.USUA_CD_ID == item.TARE_CD_USUA_3)
-                {
-                    cell = new PdfPCell(new Paragraph("Sim", meuFont))
-                    {
-                        VerticalAlignment = Element.ALIGN_MIDDLE,
-                        HorizontalAlignment = Element.ALIGN_LEFT
-                    };
-                    table.AddCell(cell);
-                }
-                else
-                {
-                    cell = new PdfPCell(new Paragraph("Não", meuFont))
-                    {
-                        VerticalAlignment = Element.ALIGN_MIDDLE,
-                        HorizontalAlignment = Element.ALIGN_LEFT
-                    };
-                    table.AddCell(cell);
-                }
             }
             pdfDoc.Add(table);
 
@@ -1394,7 +1376,7 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpGet]
         public ActionResult VerAnexoTarefa(Int32 id)
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
@@ -1405,12 +1387,12 @@ namespace ERP_Condominios_Solution.Controllers
 
         public ActionResult IncluirAcompanhamento()
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            TAREFA item = baseApp.GetItemById(SessionMocks.idVolta);
-            USUARIO usuarioLogado = SessionMocks.UserCredentials;
+            TAREFA item = baseApp.GetItemById((Int32)Session["IdVolta"]);
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             TAREFA_ACOMPANHAMENTO coment = new TAREFA_ACOMPANHAMENTO();
             TarefaAcompanhamentoViewModel vm = Mapper.Map<TAREFA_ACOMPANHAMENTO, TarefaAcompanhamentoViewModel>(coment);
             vm.TAAC_DT_ACOMPANHAMENTO = DateTime.Now;
@@ -1425,7 +1407,7 @@ namespace ERP_Condominios_Solution.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult IncluirAcompanhamento(TarefaAcompanhamentoViewModel vm)
         {
-            if (SessionMocks.UserCredentials == null)
+            if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
@@ -1435,8 +1417,8 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     // Executa a operação
                     TAREFA_ACOMPANHAMENTO item = Mapper.Map<TarefaAcompanhamentoViewModel, TAREFA_ACOMPANHAMENTO>(vm);
-                    USUARIO usuarioLogado = SessionMocks.UserCredentials;
-                    TAREFA not = baseApp.GetItemById(SessionMocks.idVolta);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    TAREFA not = baseApp.GetItemById((Int32)Session["IdVolta"]);
 
                     item.USUARIO = null;
                     not.TAREFA_ACOMPANHAMENTO.Add(item);
@@ -1446,7 +1428,7 @@ namespace ERP_Condominios_Solution.Controllers
                     // Verifica retorno
 
                     // Sucesso
-                    return RedirectToAction("EditarTarefa", new { id = SessionMocks.idVolta });
+                    return RedirectToAction("EditarTarefa", new { id = (Int32)Session["IdVolta"] });
                 }
                 catch (Exception ex)
                 {

@@ -160,6 +160,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data de conclusão inferior a data de cadastro.
+        /// </summary>
+        internal static string M0013 {
+            get {
+                return ResourceManager.GetString("M0013", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data de conclusão maior que a data corrente.
+        /// </summary>
+        internal static string M0014 {
+            get {
+                return ResourceManager.GetString("M0014", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum registro atendeu ao filtro especificado.
         /// </summary>
         internal static string M0016 {
@@ -187,6 +205,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
+        /// </summary>
+        internal static string M0058 {
+            get {
+                return ResourceManager.GetString("M0058", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {
@@ -210,6 +237,24 @@ namespace ERP_Condominios_Solution.App_Start {
         internal static string M0075 {
             get {
                 return ResourceManager.GetString("M0075", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Você tem notificações não lidas até esta data.
+        /// </summary>
+        internal static string M0093 {
+            get {
+                return ResourceManager.GetString("M0093", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Você tem tarefas pendentes até esta data.
+        /// </summary>
+        internal static string M0094 {
+            get {
+                return ResourceManager.GetString("M0094", resourceCulture);
             }
         }
         

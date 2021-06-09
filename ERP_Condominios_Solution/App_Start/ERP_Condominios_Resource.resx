@@ -150,6 +150,12 @@
   <data name="M0012" xml:space="preserve">
     <value>Usuário cadastrado mas sem acesso ao sistema. Consulte a administração.</value>
   </data>
+  <data name="M0013" xml:space="preserve">
+    <value>Data de conclusão inferior a data de cadastro</value>
+  </data>
+  <data name="M0014" xml:space="preserve">
+    <value>Data de conclusão maior que a data corrente</value>
+  </data>
   <data name="M0016" xml:space="preserve">
     <value>Nenhum registro atendeu ao filtro especificado</value>
   </data>
@@ -159,6 +165,9 @@
   <data name="M0024" xml:space="preserve">
     <value>Nome do arquivo muito longo</value>
   </data>
+  <data name="M0058" xml:space="preserve">
+    <value>Tarefa ja cadastrada</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>
@@ -167,6 +176,12 @@
   </data>
   <data name="M0075" xml:space="preserve">
     <value>Confirmação da senha não pode ser em branco</value>
+  </data>
+  <data name="M0093" xml:space="preserve">
+    <value>Você tem notificações não lidas até esta data</value>
+  </data>
+  <data name="M0094" xml:space="preserve">
+    <value>Você tem tarefas pendentes até esta data</value>
   </data>
   <data name="M0109" xml:space="preserve">
     <value>O login não pode ficar em branco</value>

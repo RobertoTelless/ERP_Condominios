@@ -2886,6 +2886,9 @@
     <Content Include="Views\Tarefa\MontarTelaTarefaKanban.cshtml" />
     <Content Include="Views\Tarefa\MontarTelaTarefa.cshtml" />
     <Content Include="Views\Tarefa\IncluirTarefa.cshtml" />
+    <Content Include="Views\Tarefa\EditarTarefa.cshtml" />
+    <Content Include="Views\Tarefa\VerAnexoTarefa.cshtml" />
+    <Content Include="Views\Tarefa\IncluirAcompanhamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
