@@ -39,8 +39,10 @@ namespace EntitiesServices.Model
             this.LOG = new HashSet<LOG>();
             this.MATERIAL = new HashSet<MATERIAL>();
             this.MATERIAL_MOVIMENTO = new HashSet<MATERIAL_MOVIMENTO>();
+            this.NOTICIA = new HashSet<NOTICIA>();
             this.NOTIFICACAO = new HashSet<NOTIFICACAO>();
             this.OCORRENCIA = new HashSet<OCORRENCIA>();
+            this.PERIODICIDADE_TAREFA = new HashSet<PERIODICIDADE_TAREFA>();
             this.RESERVA = new HashSet<RESERVA>();
             this.SOLICITACAO_MUDANCA = new HashSet<SOLICITACAO_MUDANCA>();
             this.SUBGRUPO = new HashSet<SUBGRUPO>();
@@ -50,13 +52,13 @@ namespace EntitiesServices.Model
             this.TIPO_MATERIAL = new HashSet<TIPO_MATERIAL>();
             this.TIPO_TAREFA = new HashSet<TIPO_TAREFA>();
             this.TIPO_UNIDADE = new HashSet<TIPO_UNIDADE>();
+            this.TIPO_VAGA = new HashSet<TIPO_VAGA>();
             this.TORRE = new HashSet<TORRE>();
             this.UNIDADE = new HashSet<UNIDADE>();
             this.UNIDADE_MATERIAL = new HashSet<UNIDADE_MATERIAL>();
             this.USUARIO = new HashSet<USUARIO>();
+            this.VAGA = new HashSet<VAGA>();
             this.VEICULO = new HashSet<VEICULO>();
-            this.PERIODICIDADE_TAREFA = new HashSet<PERIODICIDADE_TAREFA>();
-            this.NOTICIA = new HashSet<NOTICIA>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -124,9 +126,13 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATERIAL_MOVIMENTO> MATERIAL_MOVIMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NOTICIA> NOTICIA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTIFICACAO> NOTIFICACAO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OCORRENCIA> OCORRENCIA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RESERVA> RESERVA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -146,6 +152,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TIPO_UNIDADE> TIPO_UNIDADE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TIPO_VAGA> TIPO_VAGA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TORRE> TORRE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UNIDADE> UNIDADE { get; set; }
@@ -154,10 +162,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USUARIO> USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VAGA> VAGA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NOTICIA> NOTICIA { get; set; }
     }
 }

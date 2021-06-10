@@ -80,6 +80,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<OCORRENCIA_ANEXO> OCORRENCIA_ANEXO { get; set; }
         public virtual DbSet<OCORRENCIA_COMENTARIO> OCORRENCIA_COMENTARIO { get; set; }
         public virtual DbSet<PERFIL> PERFIL { get; set; }
+        public virtual DbSet<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
         public virtual DbSet<RESERVA> RESERVA { get; set; }
         public virtual DbSet<RESERVA_ANEXO> RESERVA_ANEXO { get; set; }
         public virtual DbSet<RESERVA_COMENTARIO> RESERVA_COMENTARIO { get; set; }
@@ -105,6 +106,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<TIPO_PESSOA> TIPO_PESSOA { get; set; }
         public virtual DbSet<TIPO_TAREFA> TIPO_TAREFA { get; set; }
         public virtual DbSet<TIPO_UNIDADE> TIPO_UNIDADE { get; set; }
+        public virtual DbSet<TIPO_VAGA> TIPO_VAGA { get; set; }
         public virtual DbSet<TIPO_VEICULO> TIPO_VEICULO { get; set; }
         public virtual DbSet<TORRE> TORRE { get; set; }
         public virtual DbSet<UF> UF { get; set; }
@@ -118,6 +120,5 @@ namespace EntitiesServices.Model
         public virtual DbSet<VAGA> VAGA { get; set; }
         public virtual DbSet<VEICULO> VEICULO { get; set; }
         public virtual DbSet<VEICULO_ANEXO> VEICULO_ANEXO { get; set; }
-        public virtual DbSet<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
     }
 }

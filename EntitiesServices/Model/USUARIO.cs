@@ -58,7 +58,6 @@ namespace EntitiesServices.Model
         public Nullable<int> CAUS_CD_ID { get; set; }
         public Nullable<int> CARG_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
-        public Nullable<int> COLA_CD_ID { get; set; }
         public string USUA_NM_NOME { get; set; }
         public string USUA_NM_LOGIN { get; set; }
         public string USUA_NM_EMAIL { get; set; }
@@ -66,14 +65,20 @@ namespace EntitiesServices.Model
         public string USUA_NR_TELEFONE { get; set; }
         public string USUA_NR_CELULAR { get; set; }
         public string USUA_NR_WHATSAPP { get; set; }
-        public Nullable<int> USUA_IN_RESPONSAVEL { get; set; }
         public string USUA_NM_SENHA { get; set; }
         public string USUA_NM_SENHA_CONFIRMA { get; set; }
         public string USUA_NM_NOVA_SENHA { get; set; }
         public Nullable<int> USUA_IN_BLOQUEADO { get; set; }
         public Nullable<int> USUA_IN_PROVISORIO { get; set; }
+        public Nullable<int> USUA_IN_RESPONSAVEL { get; set; }
         public Nullable<int> USUA_IN_LOGIN_PROVISORIO { get; set; }
+        public Nullable<int> USUA_IN_SISTEMA { get; set; }
+        public Nullable<int> USUA_IN_MORADOR { get; set; }
+        public Nullable<int> USUA_IN_PROPRIETARIO { get; set; }
+        public Nullable<int> USUA_IN_FUNCIONARIO { get; set; }
+        public Nullable<int> USUA_IN_PORTARIA { get; set; }
         public Nullable<int> USUA_IN_ATIVO { get; set; }
+        public Nullable<int> USUA_IN_LOGADO { get; set; }
         public Nullable<System.DateTime> USUA_DT_BLOQUEADO { get; set; }
         public Nullable<System.DateTime> USUA_DT_ALTERACAO { get; set; }
         public Nullable<System.DateTime> USUA_DT_TROCA_SENHA { get; set; }
@@ -82,19 +87,15 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> USUA_DT_CADASTRO { get; set; }
         public Nullable<int> USUA_NR_ACESSOS { get; set; }
         public Nullable<int> USUA_NR_FALHAS { get; set; }
-        public string USUA_TX_OBSERVACOES { get; set; }
         public string USUA_AQ_FOTO { get; set; }
-        public Nullable<int> USUA_IN_LOGADO { get; set; }
         public string USUA_NR_CPF { get; set; }
         public string USUA_NR_RG { get; set; }
+        public Nullable<System.DateTime> USUA_DT_NASCIMENTO { get; set; }
         public Nullable<System.DateTime> USUA_DT_ENTRADA { get; set; }
         public Nullable<System.DateTime> USUA_DT_SAIDA { get; set; }
         public string USUA_DS_MOTIVO_SAIDA { get; set; }
-        public Nullable<int> USUA_IN_PROPRIETARIO { get; set; }
         public string USUA_DS_JUSTIFICATIVA { get; set; }
-        public Nullable<int> USUA_IN_SISTEMA { get; set; }
-        public Nullable<int> USUA_IN_MORADOR { get; set; }
-        public Nullable<int> USUA_IN_FUNCIONARIO { get; set; }
+        public string USUA_TX_OBSERVACOES { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }

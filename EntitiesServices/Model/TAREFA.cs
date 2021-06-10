@@ -27,6 +27,7 @@ namespace EntitiesServices.Model
         public Nullable<int> ASSI_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
         public Nullable<int> TITR_CD_ID { get; set; }
+        public Nullable<int> PETA_CD_ID { get; set; }
         public System.DateTime TARE_DT_CADASTRO { get; set; }
         public string TARE_NM_TITULO { get; set; }
         public string TARE_DS_DESCRICAO { get; set; }
@@ -38,10 +39,10 @@ namespace EntitiesServices.Model
         public string TARE_TX_OBSERVACOES { get; set; }
         public string TARE_NM_LOCAL { get; set; }
         public Nullable<int> TARE_IN_AVISA { get; set; }
-        public Nullable<int> PETA_CD_ID { get; set; }
         public Nullable<int> TARE_NR_PERIODICIDADE_QUANTIDADE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
+        public virtual PERIODICIDADE_TAREFA PERIODICIDADE_TAREFA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TAREFA_ACOMPANHAMENTO> TAREFA_ACOMPANHAMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,6 +53,5 @@ namespace EntitiesServices.Model
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TAREFA_VINCULO> TAREFA_VINCULO { get; set; }
-        public virtual PERIODICIDADE_TAREFA PERIODICIDADE_TAREFA { get; set; }
     }
 }

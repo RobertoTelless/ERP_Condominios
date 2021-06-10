@@ -17,6 +17,8 @@ namespace EntitiesServices.Model
         public int USCE_CD_ID { get; set; }
         public int USUA_CD_ID { get; set; }
         public System.DateTime USCE_DT_MARCACAO { get; set; }
+        public int USCE_IN_DIRECAO { get; set; }
+        public int USCE_IN_ATIVO { get; set; }
     
         public virtual USUARIO USUARIO { get; set; }
     }

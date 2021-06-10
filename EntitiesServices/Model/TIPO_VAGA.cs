@@ -12,22 +12,21 @@ namespace EntitiesServices.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class TIPO_UNIDADE
+    public partial class TIPO_VAGA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TIPO_UNIDADE()
+        public TIPO_VAGA()
         {
-            this.UNIDADE = new HashSet<UNIDADE>();
+            this.VAGA = new HashSet<VAGA>();
         }
     
-        public int TIUN_CD_ID { get; set; }
+        public int TIVA_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
-        public string TIUN_NM_NOME { get; set; }
-        public Nullable<int> TIUN_IN_ATIVO { get; set; }
-        public Nullable<decimal> TIUN_NR_AREA { get; set; }
+        public string TIVA_NM_NOME { get; set; }
+        public int TIVA_IN_ATIVO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UNIDADE> UNIDADE { get; set; }
+        public virtual ICollection<VAGA> VAGA { get; set; }
     }
 }

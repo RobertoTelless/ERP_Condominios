@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SystemBR_Presentation.ViewModels
+namespace ERP_Condominios_Solution.ViewModels
 {
     public class UsuarioAnexoViewModel
     {

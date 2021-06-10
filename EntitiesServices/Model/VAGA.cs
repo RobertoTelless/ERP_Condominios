@@ -21,13 +21,17 @@ namespace EntitiesServices.Model
         }
     
         public int VAGA_CD_ID { get; set; }
-        public int UNID_CD_ID { get; set; }
+        public int ASSI_CD_ID { get; set; }
+        public int TIVA_CD_ID { get; set; }
+        public Nullable<int> UNID_CD_ID { get; set; }
         public string VAGA_NR_ANDAR { get; set; }
         public string VAGA_NR_NUMERO { get; set; }
         public Nullable<int> VAGA_IN_ATIVO { get; set; }
         public Nullable<System.DateTime> VAGA_DT_ATRIBUICAO { get; set; }
         public string VAGA_DS_JUSTIFICATIVA { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
+        public virtual TIPO_VAGA TIPO_VAGA { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }

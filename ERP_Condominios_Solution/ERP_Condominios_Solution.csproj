@@ -280,6 +280,7 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
@@ -293,12 +294,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\CategoriaAgendaViewModel.cs" />
+    <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />
     <Compile Include="ViewModels\NoticiaViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
     <Compile Include="ViewModels\TarefaViewModel.cs" />
+    <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioLoginViewModel.cs" />
     <Compile Include="ViewModels\UsuarioViewModel.cs" />
   </ItemGroup>
@@ -2894,6 +2897,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Imagens\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Log\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
