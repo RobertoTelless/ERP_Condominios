@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -147,6 +147,8 @@
             <PropertyRef Name="ASSI_CD_ID" />
           </Key>
           <Property Name="ASSI_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TICO_CD_ID" Type="int" />
+          <Property Name="TIPE_CD_ID" Type="int" />
           <Property Name="ASSI_NM_NOME" Type="varchar" MaxLength="50" />
           <Property Name="ASSI_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="ASSI_DT_INICIO" Type="date" />
@@ -154,15 +156,28 @@
           <Property Name="ASSI_IN_STATUS" Type="int" />
           <Property Name="ASSI_NM_EMAIL" Type="varchar" MaxLength="150" />
           <Property Name="ASSI_NM_RAZAO_SOCIAL" Type="varchar" MaxLength="250" />
-          <Property Name="TIPE_CD_ID" Type="int" />
           <Property Name="ASSI_NR_CNPJ" Type="varchar" MaxLength="20" />
           <Property Name="ASSI_NR_CPF" Type="varchar" MaxLength="20" />
           <Property Name="ASSI_TX_OBSERVACOES" Type="text" />
           <Property Name="ASSI_NM_ENDERECO" Type="varchar" MaxLength="100" />
+          <Property Name="ASSI_NR_NUMERO" Type="varchar" MaxLength="20" />
           <Property Name="ASSI_NM_BAIRRO" Type="varchar" MaxLength="50" />
           <Property Name="ASSI_NM_CIDADE" Type="varchar" MaxLength="50" />
           <Property Name="UF_CD_ID" Type="int" />
           <Property Name="ASSI_NR_CEP" Type="varchar" MaxLength="10" />
+          <Property Name="ASSI_AQ_FOTO" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="ASSINANTE_ANEXO">
+          <Key>
+            <PropertyRef Name="ASAN_CD_ID" />
+          </Key>
+          <Property Name="ASAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ASAN_NM_TITULO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ASAN_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="ASAN_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="ASAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="ASAN_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AUTORIZACAO_ACESSO">
           <Key>
@@ -1009,6 +1024,14 @@
           <Property Name="TIAM_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="TIAM_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="TIPO_CONDOMINIO">
+          <Key>
+            <PropertyRef Name="TICO_CD_ID" />
+          </Key>
+          <Property Name="TICO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TICO_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TICO_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TIPO_DOCUMENTO">
           <Key>
             <PropertyRef Name="TIDO_CD_ID" />
@@ -1573,6 +1596,30 @@
             </Principal>
             <Dependent Role="AMBIENTE">
               <PropertyRef Name="TIAM_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSINANTE_ANEXO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="ASSINANTE_ANEXO" Type="Self.ASSINANTE_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE_ANEXO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ASSINANTE_TIPO_CONDOMINIO">
+          <End Role="TIPO_CONDOMINIO" Type="Self.TIPO_CONDOMINIO" Multiplicity="0..1" />
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CONDOMINIO">
+              <PropertyRef Name="TICO_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE">
+              <PropertyRef Name="TICO_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3256,6 +3303,7 @@
           <EntitySet Name="AMBIENTE_FINALIDADE" EntityType="Self.AMBIENTE_FINALIDADE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AMBIENTE_IMAGEM" EntityType="Self.AMBIENTE_IMAGEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE" EntityType="Self.ASSINANTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ASSINANTE_ANEXO" EntityType="Self.ASSINANTE_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUTORIZACAO_ACESSO" EntityType="Self.AUTORIZACAO_ACESSO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_AGENDA" EntityType="Self.CATEGORIA_AGENDA" Schema="dbo" store:Type="Tables" />
@@ -3318,6 +3366,7 @@
           <EntitySet Name="TEMPLATE" EntityType="Self.TEMPLATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_AGENDA" EntityType="Self.TIPO_AGENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_AMBIENTE" EntityType="Self.TIPO_AMBIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_CONDOMINIO" EntityType="Self.TIPO_CONDOMINIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_ENCOMENDA" EntityType="Self.TIPO_ENCOMENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_GRUPO" EntityType="Self.TIPO_GRUPO" Schema="dbo" store:Type="Tables" />
@@ -3427,6 +3476,14 @@
           <AssociationSet Name="FK_AMBIENTE_TIPO_AMBIENTE" Association="Self.FK_AMBIENTE_TIPO_AMBIENTE">
             <End Role="TIPO_AMBIENTE" EntitySet="TIPO_AMBIENTE" />
             <End Role="AMBIENTE" EntitySet="AMBIENTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSINANTE_ANEXO_ASSINANTE" Association="Self.FK_ASSINANTE_ANEXO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ASSINANTE_ANEXO" EntitySet="ASSINANTE_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ASSINANTE_TIPO_CONDOMINIO" Association="Self.FK_ASSINANTE_TIPO_CONDOMINIO">
+            <End Role="TIPO_CONDOMINIO" EntitySet="TIPO_CONDOMINIO" />
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
           </AssociationSet>
           <AssociationSet Name="FK_ASSINANTE_TIPO_PESSOA" Association="Self.FK_ASSINANTE_TIPO_PESSOA">
             <End Role="TIPO_PESSOA" EntitySet="TIPO_PESSOA" />
@@ -3985,8 +4042,7 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERP_CondominioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -4222,6 +4278,11 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="USUARIO" />
           <NavigationProperty Name="VAGA" Relationship="Self.FK_VAGA_ASSINANTE" FromRole="ASSINANTE" ToRole="VAGA" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_ASSINANTE" FromRole="ASSINANTE" ToRole="VEICULO" />
+          <Property Name="TICO_CD_ID" Type="Int32" />
+          <NavigationProperty Name="TIPO_CONDOMINIO" Relationship="ERP_CondominioModel.FK_ASSINANTE_TIPO_CONDOMINIO" FromRole="ASSINANTE" ToRole="TIPO_CONDOMINIO" />
+          <NavigationProperty Name="ASSINANTE_ANEXO" Relationship="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" FromRole="ASSINANTE" ToRole="ASSINANTE_ANEXO" />
+          <Property Name="ASSI_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ASSI_AQ_FOTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AUTORIZACAO_ACESSO">
           <Key>
@@ -8291,7 +8352,63 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
             <End Role="VEICULO_ANEXO" EntitySet="VEICULO_ANEXO" />
           </AssociationSet>
+          <EntitySet Name="TIPO_CONDOMINIO" EntityType="ERP_CondominioModel.TIPO_CONDOMINIO" />
+          <AssociationSet Name="FK_ASSINANTE_TIPO_CONDOMINIO" Association="ERP_CondominioModel.FK_ASSINANTE_TIPO_CONDOMINIO">
+            <End Role="TIPO_CONDOMINIO" EntitySet="TIPO_CONDOMINIO" />
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+          </AssociationSet>
+          <EntitySet Name="ASSINANTE_ANEXO" EntityType="ERP_CondominioModel.ASSINANTE_ANEXO" />
+          <AssociationSet Name="FK_ASSINANTE_ANEXO_ASSINANTE" Association="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="ASSINANTE_ANEXO" EntitySet="ASSINANTE_ANEXO" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="TIPO_CONDOMINIO">
+          <Key>
+            <PropertyRef Name="TICO_CD_ID" />
+          </Key>
+          <Property Name="TICO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TICO_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TICO_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_ASSINANTE_TIPO_CONDOMINIO" FromRole="TIPO_CONDOMINIO" ToRole="ASSINANTE" />
+        </EntityType>
+        <Association Name="FK_ASSINANTE_TIPO_CONDOMINIO">
+          <End Type="ERP_CondominioModel.TIPO_CONDOMINIO" Role="TIPO_CONDOMINIO" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CONDOMINIO">
+              <PropertyRef Name="TICO_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE">
+              <PropertyRef Name="TICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ASSINANTE_ANEXO">
+          <Key>
+            <PropertyRef Name="ASAN_CD_ID" />
+          </Key>
+          <Property Name="ASAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ASAN_NM_TITULO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ASAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ASAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="ASAN_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ASAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" FromRole="ASSINANTE_ANEXO" ToRole="ASSINANTE" />
+        </EntityType>
+        <Association Name="FK_ASSINANTE_ANEXO_ASSINANTE">
+          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.ASSINANTE_ANEXO" Role="ASSINANTE_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="ASSINANTE_ANEXO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8448,6 +8565,9 @@
           <EntitySetMapping Name="ASSINANTE">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ASSINANTE">
               <MappingFragment StoreEntitySet="ASSINANTE">
+                <ScalarProperty Name="ASSI_AQ_FOTO" ColumnName="ASSI_AQ_FOTO" />
+                <ScalarProperty Name="ASSI_NR_NUMERO" ColumnName="ASSI_NR_NUMERO" />
+                <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="ASSI_NM_NOME" ColumnName="ASSI_NM_NOME" />
                 <ScalarProperty Name="ASSI_IN_ATIVO" ColumnName="ASSI_IN_ATIVO" />
@@ -9697,6 +9817,28 @@
                 <ScalarProperty Name="VEAN_DT_ANEXO" ColumnName="VEAN_DT_ANEXO" />
                 <ScalarProperty Name="VEAN_AQ_ARQUIVO" ColumnName="VEAN_AQ_ARQUIVO" />
                 <ScalarProperty Name="VEAN_IN_ATIVO" ColumnName="VEAN_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_CONDOMINIO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_CONDOMINIO">
+              <MappingFragment StoreEntitySet="TIPO_CONDOMINIO">
+                <ScalarProperty Name="TICO_IN_ATIVO" ColumnName="TICO_IN_ATIVO" />
+                <ScalarProperty Name="TICO_NM_NOME" ColumnName="TICO_NM_NOME" />
+                <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ASSINANTE_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.ASSINANTE_ANEXO">
+              <MappingFragment StoreEntitySet="ASSINANTE_ANEXO">
+                <ScalarProperty Name="ASAN_IN_ATIVO" ColumnName="ASAN_IN_ATIVO" />
+                <ScalarProperty Name="ASAN_AQ_ARQUIVO" ColumnName="ASAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="ASAN_IN_TIPO" ColumnName="ASAN_IN_TIPO" />
+                <ScalarProperty Name="ASAN_DT_ANEXO" ColumnName="ASAN_DT_ANEXO" />
+                <ScalarProperty Name="ASAN_NM_TITULO" ColumnName="ASAN_NM_TITULO" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="ASAN_CD_ID" ColumnName="ASAN_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

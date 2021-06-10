@@ -20,5 +20,12 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<ASSINANTE> GetAllItens();
         List<ASSINANTE> GetAllItensAdm();
         List<ASSINANTE> ExecuteFilter(Int32 tipo, String nome);
+        List<TIPO_PESSOA> GetAllTiposPessoa();
+        List<UF> GetAllUF();
+        List<TIPO_CONDOMINIO> GetAllTiposCondominio();
+        List<TIPO_UNIDADE> GetAllTiposUnidade(Int32 idAss);
+        List<TIPO_VAGA> GetAllTiposVaga(Int32 idAss);
+        ASSINANTE_ANEXO GetAnexoById(Int32 id);
+        UF GetUFBySigla(String sigla);
     }
 }

@@ -196,6 +196,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Extensão de arquivo não suportada.
+        /// </summary>
+        internal static string M0020 {
+            get {
+                return ResourceManager.GetString("M0020", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nome do arquivo muito longo.
         /// </summary>
         internal static string M0024 {

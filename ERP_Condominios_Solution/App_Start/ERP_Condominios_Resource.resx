@@ -162,6 +162,9 @@
   <data name="M0019" xml:space="preserve">
     <value>Nenhum arquivo selecionado</value>
   </data>
+  <data name="M0020" xml:space="preserve">
+    <value>Extensão de arquivo não suportada</value>
+  </data>
   <data name="M0024" xml:space="preserve">
     <value>Nome do arquivo muito longo</value>
   </data>

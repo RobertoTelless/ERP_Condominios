@@ -59,6 +59,7 @@ namespace EntitiesServices.Model
             this.USUARIO = new HashSet<USUARIO>();
             this.VAGA = new HashSet<VAGA>();
             this.VEICULO = new HashSet<VEICULO>();
+            this.ASSINANTE_ANEXO = new HashSet<ASSINANTE_ANEXO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -78,6 +79,9 @@ namespace EntitiesServices.Model
         public string ASSI_NM_CIDADE { get; set; }
         public Nullable<int> UF_CD_ID { get; set; }
         public string ASSI_NR_CEP { get; set; }
+        public Nullable<int> TICO_CD_ID { get; set; }
+        public string ASSI_NR_NUMERO { get; set; }
+        public string ASSI_AQ_FOTO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }
@@ -165,5 +169,8 @@ namespace EntitiesServices.Model
         public virtual ICollection<VAGA> VAGA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
+        public virtual TIPO_CONDOMINIO TIPO_CONDOMINIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
     }
 }

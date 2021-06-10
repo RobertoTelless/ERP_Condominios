@@ -20,13 +20,24 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IAssinanteRepository _baseRepository;
         private readonly ILogRepository _logRepository;
+        private readonly ITipoPessoaRepository _tpRepository;
+        private readonly IUFRepository _ufRepository;
+        private readonly ITipoCondominioRepository _tcRepository;
+        private readonly ITipoUnidadeRepository _tuRepository;
+        private readonly ITipoVagaRepository _tvRepository;
+        private readonly IAssinanteAnexoRepository _anexoRepository;
         protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
-        public AssinanteService(IAssinanteRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
+        public AssinanteService(IAssinanteRepository baseRepository, ILogRepository logRepository, ITipoPessoaRepository tpRepository, IUFRepository ufRepository, ITipoCondominioRepository tcRepository, ITipoUnidadeRepository tuRepository, ITipoVagaRepository tvRepository, IAssinanteAnexoRepository anexoRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
-
+            _tpRepository = tpRepository;
+            _ufRepository = ufRepository;
+            _tcRepository = tcRepository;
+            _tuRepository = tuRepository;
+            _tvRepository = tvRepository;
+            _anexoRepository = anexoRepository;
         }
 
         public ASSINANTE CheckExist(ASSINANTE conta)
@@ -41,6 +52,12 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
+        public UF GetUFBySigla(String sigla)
+        {
+            UF item = _ufRepository.GetItemBySigla(sigla);
+            return item;
+        }
+
         public List<ASSINANTE> GetAllItens()
         {
             return _baseRepository.GetAllItens();
@@ -49,6 +66,36 @@ namespace ModelServices.EntitiesServices
         public List<ASSINANTE> GetAllItensAdm()
         {
             return _baseRepository.GetAllItensAdm();
+        }
+
+        public List<TIPO_PESSOA> GetAllTiposPessoa()
+        {
+            return _tpRepository.GetAllItens();
+        }
+
+        public List<TIPO_CONDOMINIO> GetAllTiposCondominio()
+        {
+            return _tcRepository.GetAllItens();
+        }
+
+        public List<TIPO_UNIDADE> GetAllTiposUnidade(Int32 idAss)
+        {
+            return _tuRepository.GetAllItens(idAss);
+        }
+
+        public List<TIPO_VAGA> GetAllTiposVaga(Int32 idAss)
+        {
+            return _tvRepository.GetAllItens(idAss);
+        }
+
+        public List<UF> GetAllUF()
+        {
+            return _ufRepository.GetAllItens();
+        }
+
+        public ASSINANTE_ANEXO GetAnexoById(Int32 id)
+        {
+            return _anexoRepository.GetItemById(id);
         }
 
         public List<ASSINANTE> ExecuteFilter(Int32 tipo, String nome)

@@ -203,6 +203,7 @@
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
     <Compile Include="Interfaces\External\IECT_Services.cs" />
+    <Compile Include="Interfaces\Repositories\IAssinanteAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
@@ -220,6 +221,9 @@
     <Compile Include="Interfaces\Repositories\ITarefaNotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITemplateRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoVagaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoUnidadeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoCondominioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
@@ -268,6 +272,9 @@
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ASSINANTE.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ASSINANTE_ANEXO.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AUTORIZACAO_ACESSO.cs">
@@ -469,6 +476,9 @@
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_AMBIENTE.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_CONDOMINIO.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_DOCUMENTO.cs">

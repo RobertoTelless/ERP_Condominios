@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AssinanteAnexoRepository.cs" />
     <Compile Include="Repositories\AgendaAnexoRepository.cs" />
     <Compile Include="Repositories\AgendaRepository.cs" />
     <Compile Include="Repositories\AssinanteRepository.cs" />
@@ -202,6 +203,9 @@
     <Compile Include="Repositories\TarefaNotificacaoRepository.cs" />
     <Compile Include="Repositories\TarefaRepository.cs" />
     <Compile Include="Repositories\TemplateRepository.cs" />
+    <Compile Include="Repositories\TipoVagaRepository.cs" />
+    <Compile Include="Repositories\TipoUnidadeRepository.cs" />
+    <Compile Include="Repositories\TipoCondominioRepository.cs" />
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />

@@ -18,5 +18,12 @@ namespace ApplicationServices.Interfaces
         List<ASSINANTE> GetAllItensAdm();
         ASSINANTE GetItemById(Int32 id);
         Int32 ExecuteFilter(Int32 tipo, String nome, out List<ASSINANTE> objeto);
+        List<TIPO_PESSOA> GetAllTiposPessoa();
+        List<UF> GetAllUF();
+        List<TIPO_CONDOMINIO> GetAllTiposCondominio();
+        List<TIPO_UNIDADE> GetAllTiposUnidade(Int32 idAss);
+        List<TIPO_VAGA> GetAllTiposVaga(Int32 idAss);
+        ASSINANTE_ANEXO GetAnexoById(Int32 id);
+        UF GetUFBySigla(String sigla);
     }
 }

@@ -45,6 +45,42 @@ namespace ApplicationServices.Services
             return item;
         }
 
+        public UF GetUFBySigla(String sigla)
+        {
+            UF item = _baseService.GetUFBySigla(sigla);
+            return item;
+        }
+
+        public List<TIPO_PESSOA> GetAllTiposPessoa()
+        {
+            return _baseService.GetAllTiposPessoa();
+        }
+
+        public ASSINANTE_ANEXO GetAnexoById(Int32 id)
+        {
+            return _baseService.GetAnexoById(id);
+        }
+
+        public List<TIPO_CONDOMINIO> GetAllTiposCondominio()
+        {
+            return _baseService.GetAllTiposCondominio();
+        }
+
+        public List<TIPO_UNIDADE> GetAllTiposUnidade(Int32 idAss)
+        {
+            return _baseService.GetAllTiposUnidade(idAss);
+        }
+
+        public List<TIPO_VAGA> GetAllTiposVaga(Int32 idAss)
+        {
+            return _baseService.GetAllTiposVaga(idAss);
+        }
+
+        public List<UF> GetAllUF()
+        {
+            return _baseService.GetAllUF();
+        }
+
         public Int32 ExecuteFilter(Int32 tipo, String nome, out List<ASSINANTE> objeto)
         {
             try
