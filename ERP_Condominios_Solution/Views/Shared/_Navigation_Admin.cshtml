@@ -215,7 +215,7 @@
                 <li class="@Html.IsSelected(controller: "BaseAdmin")">
                     <a href="@Url.Action("CarregarBase", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Administração</span> <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                        <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Dados do Condomínio</a></li>
+                        <li class="@Html.IsSelected(action: "MontarTelaCondominio")"><a href="@Url.Action("MontarTelaCondominio", "Condominio")">Dados do Condomínio</a></li>
                         <li class="@Html.IsSelected(action: "MontarTelaLog")"><a href="@Url.Action("MontarTelaLog", "Administracao")">Auditoria</a></li>
                         <li class="@Html.IsSelected(action: "MontarTelaUsuario")"><a href="@Url.Action("MontarTelaUsuario", "Administracao")">Usuários</a></li>
                         <li class="@Html.IsSelected(action: "MontarTelaNotificacaoGeral")"><a href="@Url.Action("MontarTelaNotificacaoGeral", "Notificacao")">Notificações</a></li>
