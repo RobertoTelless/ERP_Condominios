@@ -359,5 +359,45 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("VoltarAnexoCondominio");
         }
 
+        public ActionResult VerUnidade(Int32 idUnidade)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaUnidade"] = 2;
+            return RedirectToAction("EditarUnidade", "Unidade", new { id = idUnidade });
+        }
+
+        public ActionResult VerVaga(Int32 idVaga)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaVaga"] = 2;
+            return RedirectToAction("EditarVaga", "Vaga", new { id = idVaga });
+        }
+
+        public ActionResult VerEntradaSaida(Int32 idES)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaEntradaSaida"] = 2;
+            return RedirectToAction("EditarEntradaSaida", "EntradaSaida", new { id = idES});
+        }
+
+        public ActionResult VerControleVeiculo(Int32 idCV)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["VoltaControleVeiculo"] = 2;
+            return RedirectToAction("EditarControleVeiculo", "ControleVeiculo", new { id = idCV});
+        }
+
     }
 }

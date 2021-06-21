@@ -178,17 +178,17 @@
                                                         @Html.ValidationMessageFor(m => m.ASSI_NR_NUMERO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Bairro
+                                                        Bairro*
                                                         @Html.TextBoxFor(m => m.ASSI_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
                                                         @Html.ValidationMessageFor(m => m.ASSI_NM_BAIRRO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Cidade
+                                                        Cidade*
                                                         @Html.TextBoxFor(m => m.ASSI_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
                                                         @Html.ValidationMessageFor(m => m.ASSI_NM_CIDADE, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        UF
+                                                        UF*
                                                         @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
                                                         @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
                                                     </div>
@@ -212,11 +212,13 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach (var cond in (List<EntitiesServices.Model.FORNECEDOR_QUADRO_SOCIETARIO>)ViewBag.QuadroSoci)
+                                                                    @foreach (var cond in Model.CORPO_DIRETIVO)
                                                                     {
                                                                         <tr>
-                                                                            <td>@cond.FOQS_NM_QUALIFICACAO</td>
-                                                                            <td>@cond.FOQS_NM_NOME</td>
+                                                                            <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
+                                                                            <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                            <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
+                                                                            <td>@cond.USUARIO.USUA_NR_CELULAR</td>
                                                                         </tr>
                                                                     }
                                                                 </tbody>
@@ -226,7 +228,7 @@
                                                 }
                                             </div>
                                             <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Fornecedor", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                                @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
                                             </div>
                                         }
                                     </div>
@@ -342,17 +344,17 @@
                                                         @Html.ValidationMessageFor(m => m.ASSI_NR_NUMERO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Bairro
+                                                        Bairro*
                                                         @Html.TextBoxFor(m => m.ASSI_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
                                                         @Html.ValidationMessageFor(m => m.ASSI_NM_BAIRRO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Cidade
+                                                        Cidade*
                                                         @Html.TextBoxFor(m => m.ASSI_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
                                                         @Html.ValidationMessageFor(m => m.ASSI_NM_CIDADE, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        UF
+                                                        UF*
                                                         @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
                                                         @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
                                                     </div>
@@ -376,11 +378,13 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach (var cond in (List<EntitiesServices.Model.FORNECEDOR_QUADRO_SOCIETARIO>)ViewBag.QuadroSoci)
+                                                                    @foreach (var cond in Model.CORPO_DIRETIVO)
                                                                     {
                                                                         <tr>
-                                                                            <td>@cond.FOQS_NM_QUALIFICACAO</td>
-                                                                            <td>@cond.FOQS_NM_NOME</td>
+                                                                            <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
+                                                                            <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                            <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
+                                                                            <td>@cond.USUARIO.USUA_NR_CELULAR</td>
                                                                         </tr>
                                                                     }
                                                                 </tbody>
@@ -390,7 +394,7 @@
                                                 }
                                             </div>
                                             <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Fornecedor", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                                @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
                                             </div>
                                         }
                                     </div>
@@ -409,7 +413,7 @@
                                                     <div class="form-group">
                                                         <div class="col-lg-12 col-md-12 col-xs-12">
                                                             <input style="float: left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                            <input style="float: left;" type="submit" value="Incluir Logotipo/Foto do Fornecedor" class="btn btn-sm btn-success" />
+                                                            <input style="float: left;" type="submit" value="Incluir Foto do Condomínio" class="btn btn-sm btn-success" />
                                                         </div>
                                                     </div>
                                                 }
@@ -499,50 +503,145 @@
                                 </div>
                             </div>
 
+                            @*Unidades*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaUnidade", "Unidade")" class="pull-left btn-link"><u>Unidades</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.UNIDADE.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tipo</th>
+                                                                    <th>Número</th>
+                                                                    <th>Moradores</th>
+                                                                    <th>Veículos</th>
+                                                                    <th>Alugada?</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.UNIDADE.OrderBy(a => a.UNID_NR_NUMERO)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.TIPO_UNIDADE.TIUN_NM_NOME</td>
+                                                                        <td>@cond.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.USUARIO.Count</td>
+                                                                        <td>@cond.VEICULO.Count</td>
+                                                                        @if (cond.UNID_IN_ALUGADA == 1)
+                                                                        {
+                                                                            <td>Sim</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>Não</td>
+                                                                        }
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.UNID_CD_ID, "VerUnidade", "fa-search", "Ver Unidade")
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-
-
-
+                            @*Vagas*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaVaga", "Vaga")" class="pull-left btn-link"><u>Vagas</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.VAGA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tipo</th>
+                                                                    <th>Andar</th>
+                                                                    <th>Número</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Data de Atribuição</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.VAGA.OrderBy(a => a.VAGA_NR_NUMERO)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.TIPO_VAGA.TIVA_NM_NOME</td>
+                                                                        <td>@cond.VAGA_NR_ANDAR</td>
+                                                                        <td>@cond.VAGA_NR_NUMERO</td>
+                                                                        <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.VAGA_DT_ATRIBUICAO.Value.ToShortDateString()</td>
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.VAGA_CD_ID, "VerVaga", "fa-search", "Ver Vaga")
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             @*Observações*@
                             <div id="tab-5" class="tab-pane">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("EditarFornecedor", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("MontarTelaCondominio", "Condominio", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                    @Html.HiddenFor(m => m.CAFO_CD_ID)
-                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
-                                                    @Html.HiddenFor(m => m.FORN_AQ_FOTO)
-                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
-                                                    @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
-                                                    @Html.HiddenFor(m => m.FORN_IN_ATIVO)
-                                                    @Html.HiddenFor(m => m.FORN_IN_TIPO_PESSOA)
-                                                    @Html.HiddenFor(m => m.FORN_NM_BAIRRO)
-                                                    @Html.HiddenFor(m => m.FORN_NM_CIDADE)
-                                                    @Html.HiddenFor(m => m.FORN_NM_EMAIL)
-                                                    @Html.HiddenFor(m => m.FORN_NM_ENDERECO)
-                                                    @Html.HiddenFor(m => m.FORN_NM_NOME)
-                                                    @Html.HiddenFor(m => m.FORN_NM_RAZAO)
-                                                    @Html.HiddenFor(m => m.FORN_NM_REDES_SOCIAIS)
-                                                    @Html.HiddenFor(m => m.FORN_NM_TELEFONES)
-                                                    @Html.HiddenFor(m => m.FORN_NR_CEP)
-                                                    @Html.HiddenFor(m => m.FORN_NR_CNPJ)
-                                                    @Html.HiddenFor(m => m.FORN_NR_CPF)
-                                                    @Html.HiddenFor(m => m.UF_CD_ID)
-                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.ASSI_DT_INICIO)
+                                                    @Html.HiddenFor(m => m.ASSI_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.ASSI_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ASSI_IN_TIPO)
+                                                    @Html.HiddenFor(m => m.ASSI_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.ASSI_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.ASSI_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.ASSI_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.ASSI_NM_NOME)
+                                                    @Html.HiddenFor(m => m.ASSI_NM_RAZAO_SOCIAL)
+                                                    @Html.HiddenFor(m => m.ASSI_NR_CEP)
+                                                    @Html.HiddenFor(m => m.ASSI_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.ASSI_NR_CPF)
+                                                    @Html.HiddenFor(m => m.ASSI_NR_NUMERO)
+                                                    @Html.HiddenFor(m => m.TICO_CD_ID)
                                                     @Html.HiddenFor(m => m.TIPE_CD_ID)
-                                                    @Html.HiddenFor(m => m.FORN_NR_INSCRICAO_ESTADUAL)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
                                                     Observações
-                                                    @Html.TextAreaFor(m => m.FORN_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1175px; height: 400px;", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.FORN_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                    @Html.TextAreaFor(m => m.ASSI_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_TX_OBSERVACOES, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma Edição de Fornecedor", htmlAttributes: new { id = "basictoast" })
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição das Observações", htmlAttributes: new { id = "basictoast" })
                                         </div>
                                     }
                                 </div>
@@ -552,74 +651,47 @@
                             <div id="tab-6" class="tab-pane">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-lg-3">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5>Pedidos de Compras</h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    <h1 class="no-margins">@ViewBag.Compras</h1>
-                                                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
-                                                    <small>Pedidos de Compras</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="ibox">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5>Evolução de Pedidos</h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    <h5>Total Acumulado</h5>
-                                                    <div id="sparkline1"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-lg-6">
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
                                                     <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaPedidoCompra", "Compra")" class="pull-left btn-link"><u>Últimos Pedidos de Compra</u></a></h5>
+                                                    <h5><a href="@Url.Action("MontarTelaEntradaSaida", "EntradaSaida")" class="pull-left btn-link"><u>Entradas & Saídas</u></a></h5>
                                                 </div>
                                                 <div class="ibox-content">
-                                                    @if (Model.ITEM_PEDIDO_COMPRA.Count > 0)
+                                                    @if (Model.ENTRADA_SAIDA != null && Model.ENTRADA_SAIDA.Count > 0)
                                                     {
                                                         <table class="table table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Número/Nome</th>
-                                                                    <th>Emissão</th>
-                                                                    <th>Valor</th>
-                                                                    <th>Status</th>
+                                                                    <th>Data/Hora Entrada</th>
+                                                                    <th>Data/Hora Saída</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Nome</th>
+                                                                    <th>Documento</th>
+                                                                    <th></th>
+                                                                    <th class="td-one-action">Ações</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var cond in (Model.ITEM_PEDIDO_COMPRA.OrderByDescending(a => a.PEDIDO_COMPRA.PECO_DT_DATA).Take(5)))
+                                                                @foreach (var cond in (Model.ENTRADA_SAIDA.OrderByDescending(a => a.ENSA_DT_ENTRADA).Take(5)))
                                                                 {
                                                                     <tr>
-                                                                        <td>@cond.PEDIDO_COMPRA.PECO_NM_NOME</td>
-                                                                        <td>@cond.PEDIDO_COMPRA.PECO_DT_DATA.Value.ToShortDateString()</td>
-                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.ITPC_VL_PRECO_SELECIONADO == null ? 0 : cond.ITPC_VL_PRECO_SELECIONADO.Value)</td>
-                                                                        @if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 1)
+                                                                        <td>@cond.ENSA_DT_ENTRADA</td>
+                                                                        <td>@cond.ENSA_DT_SAIDA</td>
+                                                                        <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.ENSA_NM_NOME</td>
+                                                                        <td>@cond.ENSA_NR_DOCUMENTO</td>
+                                                                        @if (!String.IsNullOrEmpty(cond.ENSA_AQ_FOTO))
                                                                         {
-                                                                            <td>Em Emissão</td>
+                                                                            <td><img src="@Url.Content(cond.ENSA_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.ENSA_NM_NOME', '@Url.Content(cond.ENSA_AQ_FOTO)')"></td>
                                                                         }
-                                                                        else if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 2)
+                                                                        else
                                                                         {
-                                                                            <td>Em Aprovação</td>
+                                                                            <td><img src="~/Images/a8.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.ENSA_NM_NOME', '~/Images/a8.jpg')"></td>
                                                                         }
-                                                                        else if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 3)
-                                                                        {
-                                                                            <td>Aprovado</td>
-                                                                        }
-                                                                        else if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 4)
-                                                                        {
-                                                                            <td>Cancelado</td>
-                                                                        }
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.ENSA_CD_ID, "VerEntradaSaida", "fa-search", "Ver Entrada/Saída")
+                                                                        </td>
                                                                     </tr>
                                                                 }
                                                             </tbody>
@@ -632,30 +704,34 @@
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
                                                     <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaCP", "ContaPagar")" class="pull-left btn-link"><u>Últimas Contas a Pagar</u></a></h5>
+                                                    <h5><a href="@Url.Action("MontarTelaControleVeiculo", "ControleVeiculo")" class="pull-left btn-link"><u>Controle de Veículos</u></a></h5>
                                                 </div>
                                                 <div class="ibox-content">
-                                                    @if (Model.CONTA_PAGAR.Count > 0)
+                                                    @if (Model.CONTROLE_VEICULO != null && Model.CONTROLE_VEICULO.Count > 0)
                                                     {
                                                         <table class="table table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Número/Nome</th>
-                                                                    <th>Vencimento</th>
-                                                                    <th>Valor</th>
-                                                                    <th>Atraso</th>
+                                                                    <th>Data/Hora Entrada</th>
+                                                                    <th>Data/Hora Saída</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Placa</th>
+                                                                    <th>Marca/Modelo</th>
+                                                                    <th class="td-one-action">Ações</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var cond in (Model.CONTA_PAGAR.OrderByDescending(a => a.CAPA_DT_LANCAMENTO).Take(5)))
+                                                                @foreach (var cond in (Model.CONTROLE_VEICULO.OrderByDescending(a => a.COVE_DT_ENTRADA).Take(5)))
                                                                 {
                                                                     <tr>
-                                                                        <td>@cond.CAPA_NR_DOCUMENTO</td>
-                                                                        <td>@cond.CAPA_DT_VENCIMENTO.Value.ToShortDateString()</td>
-                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CAPA_VL_VALOR.Value)</td>
-                                                                        <td>@cond.CAPA_NR_ATRASO</td>
-
-
+                                                                        <td>@cond.COVE_DT_ENTRADA</td>
+                                                                        <td>@cond.COVE_DT_SAIDA</td>
+                                                                        <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.COVE_NM_PLACA</td>
+                                                                        <td>@cond.COVE_NM_MARCA @cond.COVE_NM_MODELO</td>
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.COVE_CD_ID, "VerControleVeiculo", "fa-search", "Ver Controle Veículo")
+                                                                        </td>
                                                                     </tr>
                                                                 }
                                                             </tbody>
@@ -672,7 +748,7 @@
                 </div>
                 <div class="form-group">
                     <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "Fornecedor")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBase", controller: "Condominio")
                 </div>
             </div>
         </div>
@@ -746,35 +822,6 @@
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('body').addClass('light-navbar');
-
-            var id = @Model.FORN_CD_ID;
-
-            var data = {
-                id: id
-            }
-
-            $.ajax({
-                url: '../GetValorGrafico'
-                , type: 'POST'
-                , data: data
-                , success: function (r) {
-                    console.log(r);
-                    $("#sparkline1").sparkline([r.m3, r.m2, r.m1], {
-                        type: 'line',
-                        width: '100%',
-                        height: '60',
-                        lineColor: '#1ab394',
-                        fillColor: "#ffffff"
-                    });
-                }
-            });
-
-        });
-    </script>
-    <script type="text/javascript">
         function ValidaDiv(valPessoa) {
             if (valPessoa == '2') {
                 $("#PF").hide();
@@ -815,9 +862,9 @@
 
             //$('select#rt option:selected').removeAttr('selected');
             $('#is').val('');
-            $('#CLIE_VL_SALDO').val('');
-            $('#CLIE_NR_INSCRICAO_ESTADUAL').val('');
-            $('#CLIE_NR_INSCRICAO_MUNICIPAL').val('');
+        //    $('#CLIE_VL_SALDO').val('');
+        //    $('#CLIE_NR_INSCRICAO_ESTADUAL').val('');
+        //    $('#CLIE_NR_INSCRICAO_MUNICIPAL').val('');
         }
 
         function LimpaPF() {
@@ -835,27 +882,17 @@
             $(btn).attr("disabled", "disabled");
 
             $.ajax({
-                url: '../Cliente/PesquisaCEP_Javascript'
+                url: '../Condominio/PesquisaCEP_Javascript'
                 , type: 'POST'
                 , data: data
                 , success: function (r) {
-                    if (tipoEnd == 1) {
-                        $('#endereco').val(r.CLIE_NM_ENDERECO);
-                        $('#nmr').val(r.CLIE_NR_NUMERO);
-                        $('#bairro').val(r.CLIE_NM_BAIRRO);
-                        $('#cidade').val(r.CLIE_NM_CIDADE);
+                    $('#endereco').val(r.ASSI_NM_ENDERECO);
+                    $('#nmr').val(r.ASSI_NR_NUMERO);
+                    $('#bairro').val(r.ASSI_NM_BAIRRO);
+                    $('#cidade').val(r.ASSI_NM_CIDADE);
 
-                        $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
-                        $('#btnBuscaCep').removeAttr("disabled");
-                    } else if (tipoEnd == 2) {
-                        $('#endEntrega').val(r.CLIE_NM_ENDERECO_ENTREGA);
-                        $('#bairroEntrega').val(r.CLIE_NM_BAIRRO_ENTREGA);
-                        $('#cidEntrega').val(r.CLIE_NM_CIDADE_ENTREGA);
-                        $('#nmrEntrega').val(r.CLIE_NR_NUMERO_ENTREGA);
-
-                        $('#ufEntrega').val(r.CLIE_SG_UF_ENTREGA);
-                        $('#btnBuscaCepEntrega').removeAttr("disabled");
-                    }
+                    $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
+                    $('#btnBuscaCep').removeAttr("disabled");
                 }
             });
         }
@@ -978,9 +1015,9 @@
                 , data: data
                 , success: function (r) {
                     if (tipoEnd == 1) {
-                        $('#endereco').val(r.FORN_NM_ENDERECO);
-                        $('#bairro').val(r.FORN_NM_BAIRRO);
-                        $('#cidade').val(r.FORN_NM_CIDADE);
+                        $('#endereco').val(r.ASSI_NM_ENDERECO);
+                        $('#bairro').val(r.ASSI_NM_BAIRRO);
+                        $('#cidade').val(r.ASSI_NM_CIDADE);
 
                         $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
                         $('#btnBuscaCep').removeAttr("disabled");
