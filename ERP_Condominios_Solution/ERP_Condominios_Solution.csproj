@@ -2829,6 +2829,7 @@
     <Content Include="TemplatesHTML\CRALTLAN\CRALTLAN.html" />
     <Content Include="TemplatesHTML\CRPARREC\CRPARREC.html" />
     <Content Include="TemplatesHTML\FINPATR1\FINPATR1.html" />
+    <Content Include="Views\Log\MontarTelaLog.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2897,13 +2898,15 @@
     <Content Include="Views\Tarefa\IncluirAcompanhamento.cshtml" />
     <Content Include="Views\Condominio\MontarTelaCondominio.cshtml" />
     <Content Include="Views\Condominio\VerAnexoCondominio.cshtml" />
+    <Content Include="Views\Log\VerLog.cshtml" />
+    <Content Include="Views\Log\MontarTelaLogGerencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Imagens\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Log\" />
     <Folder Include="Views\Usuario\" />
+    <Folder Include="Views\ZZ\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
