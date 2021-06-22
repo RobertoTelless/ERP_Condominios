@@ -14,8 +14,11 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(UNIDADE item, UNIDADE itemAntes);
         Int32 ValidateDelete(UNIDADE item, USUARIO usuario);
         Int32 ValidateReativar(UNIDADE item, USUARIO usuario);
-        List<UNIDADE> GetAllItens();
-        List<UNIDADE> GetAllItensAdm();
+
+        UNIDADE CheckExist(UNIDADE item, Int32 idAss);
         UNIDADE GetItemById(Int32 id);
+        List<UNIDADE> GetAllItens(Int32 idAss);
+        List<UNIDADE> GetAllItensAdm(Int32 idAss);
+        Int32 ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss, out List<UNIDADE> objeto);
     }
 }

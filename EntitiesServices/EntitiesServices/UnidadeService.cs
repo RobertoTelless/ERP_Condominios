@@ -20,12 +20,18 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IUnidadeRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
+        }
+
+        public UNIDADE CheckExist(UNIDADE tarefa, Int32 idAss)
+        {
+            UNIDADE item = _baseRepository.CheckExist(tarefa, idAss);
+            return item;
         }
 
         public UNIDADE GetItemById(Int32 id)
@@ -34,14 +40,14 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<UNIDADE> GetAllItens()
+        public List<UNIDADE> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<UNIDADE> GetAllItensAdm()
+        public List<UNIDADE> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
     
         public Int32 Create(UNIDADE item, LOG log)
@@ -142,5 +148,10 @@ namespace ModelServices.EntitiesServices
             }
         }
 
+        public List<UNIDADE> ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss)
+        {
+            return _baseRepository.ExecuteFilter(numero, torre, idTipo, alugada, idAss);
+
+        }
     }
 }

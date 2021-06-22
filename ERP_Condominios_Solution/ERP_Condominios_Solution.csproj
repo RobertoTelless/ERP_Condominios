@@ -285,6 +285,7 @@
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
+    <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\UnidadeViewModel.cs" />
     <Compile Include="ViewModels\TarefaViewModel.cs" />
     <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
     <Compile Include="ViewModels\UsuarioLoginViewModel.cs" />
@@ -2905,6 +2907,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Imagens\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Unidade\" />
     <Folder Include="Views\Usuario\" />
     <Folder Include="Views\ZZ\" />
   </ItemGroup>

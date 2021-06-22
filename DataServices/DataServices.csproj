@@ -209,6 +209,7 @@
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />
+    <Compile Include="Repositories\UnidadeRepository.cs" />
     <Compile Include="Repositories\UsuarioAnexoRepository.cs" />
     <Compile Include="Repositories\UsuarioRepository.cs" />
   </ItemGroup>
