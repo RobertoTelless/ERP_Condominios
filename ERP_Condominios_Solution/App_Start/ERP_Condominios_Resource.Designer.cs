@@ -187,6 +187,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Unidade já cadastrada.
+        /// </summary>
+        internal static string M0017 {
+            get {
+                return ResourceManager.GetString("M0017", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa unidade. Existem informações vinculadas a ela.
+        /// </summary>
+        internal static string M0018 {
+            get {
+                return ResourceManager.GetString("M0018", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum arquivo selecionado.
         /// </summary>
         internal static string M0019 {

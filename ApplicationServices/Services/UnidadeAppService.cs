@@ -51,6 +51,18 @@ namespace ApplicationServices.Services
             return lista;
         }
 
+        public List<TIPO_UNIDADE> GetAllTipos(Int32 idAss)
+        {
+            List<TIPO_UNIDADE> lista = _baseService.GetAllTipos(idAss);
+            return lista;
+        }
+
+        public List<TORRE> GetAllTorres(Int32 idAss)
+        {
+            List<TORRE> lista = _baseService.GetAllTorres(idAss);
+            return lista;
+        }
+
         public Int32 ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss, out List<UNIDADE> objeto)
         {
             try

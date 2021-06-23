@@ -21,13 +21,17 @@ namespace ModelServices.EntitiesServices
         private readonly IUnidadeRepository _baseRepository;
         private readonly ILogRepository _logRepository;
         private readonly IUnidadeAnexoRepository _anexoRepository;
+        private readonly ITipoUnidadeRepository _tuRepository;
+        private readonly ITorreRepository _toRepository;
         protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
-        public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository, IUnidadeAnexoRepository anexoRepository) : base(baseRepository)
+        public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository, IUnidadeAnexoRepository anexoRepository, ITipoUnidadeRepository tuRepository, ITorreRepository toRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
             _anexoRepository = anexoRepository;
+            _tuRepository = tuRepository;
+            _toRepository = toRepository;
         }
 
         public UNIDADE CheckExist(UNIDADE tarefa, Int32 idAss)
@@ -56,7 +60,17 @@ namespace ModelServices.EntitiesServices
         {
             return _baseRepository.GetAllItensAdm(idAss);
         }
-    
+
+        public List<TIPO_UNIDADE> GetAllTipos(Int32 idAss)
+        {
+            return _tuRepository.GetAllItens(idAss);
+        }
+
+        public List<TORRE> GetAllTorres(Int32 idAss)
+        {
+            return _toRepository.GetAllItens(idAss);
+        }
+
         public Int32 Create(UNIDADE item, LOG log)
         {
             using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))

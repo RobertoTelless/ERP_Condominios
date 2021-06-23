@@ -159,6 +159,12 @@
   <data name="M0016" xml:space="preserve">
     <value>Nenhum registro atendeu ao filtro especificado</value>
   </data>
+  <data name="M0017" xml:space="preserve">
+    <value>Unidade já cadastrada</value>
+  </data>
+  <data name="M0018" xml:space="preserve">
+    <value>Não é possível excluir essa unidade. Existem informações vinculadas a ela</value>
+  </data>
   <data name="M0019" xml:space="preserve">
     <value>Nenhum arquivo selecionado</value>
   </data>

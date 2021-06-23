@@ -22,5 +22,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<UNIDADE> GetAllItensAdm(Int32 idAss);
         List<UNIDADE> ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss);
         UNIDADE_ANEXO GetAnexoById(Int32 id);
+        List<TIPO_UNIDADE> GetAllTipos(Int32 idAss);
+        List<TORRE> GetAllTorres(Int32 idAss);
     }
 }

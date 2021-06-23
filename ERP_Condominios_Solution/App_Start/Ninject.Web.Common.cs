@@ -123,6 +123,9 @@ namespace Presentation.Start
             kernel.Bind<ITipoUnidadeRepository>().To<TipoUnidadeRepository>();
             kernel.Bind<ITipoVagaRepository>().To<TipoVagaRepository>();
             kernel.Bind<IUnidadeRepository>().To<UnidadeRepository>();
+            kernel.Bind<IUnidadeAnexoRepository>().To<UnidadeAnexoRepository>();
+            kernel.Bind<ITorreRepository>().To<TorreRepository>();
+
         }
     }
 }

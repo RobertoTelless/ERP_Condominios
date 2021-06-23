@@ -2902,12 +2902,15 @@
     <Content Include="Views\Condominio\VerAnexoCondominio.cshtml" />
     <Content Include="Views\Log\VerLog.cshtml" />
     <Content Include="Views\Log\MontarTelaLogGerencia.cshtml" />
+    <Content Include="Views\Unidade\MontarTelaUnidade.cshtml" />
+    <Content Include="Views\Unidade\IncluirUnidade.cshtml" />
+    <Content Include="Views\Unidade\EditarUnidade.cshtml" />
+    <Content Include="Views\Unidade\VerAnexoUnidade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Imagens\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Unidade\" />
     <Folder Include="Views\Usuario\" />
     <Folder Include="Views\ZZ\" />
   </ItemGroup>
