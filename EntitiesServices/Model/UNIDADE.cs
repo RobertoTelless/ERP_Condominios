@@ -29,6 +29,7 @@ namespace EntitiesServices.Model
             this.USUARIO = new HashSet<USUARIO>();
             this.VAGA = new HashSet<VAGA>();
             this.VEICULO = new HashSet<VEICULO>();
+            this.UNIDADE_ANEXO = new HashSet<UNIDADE_ANEXO>();
         }
     
         public int UNID_CD_ID { get; set; }
@@ -68,5 +69,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<VAGA> VAGA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UNIDADE_ANEXO> UNIDADE_ANEXO { get; set; }
     }
 }

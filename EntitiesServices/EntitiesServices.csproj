@@ -214,6 +214,7 @@
     <Compile Include="Interfaces\Repositories\ILogRepository.cs" />
     <Compile Include="Interfaces\Repositories\INoticiaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\INoticiaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IUnidadeAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\INotificacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\INotificacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPerfilRepository.cs" />
@@ -521,6 +522,9 @@
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UNIDADE.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\UNIDADE_ANEXO.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UNIDADE_MATERIAL.cs">

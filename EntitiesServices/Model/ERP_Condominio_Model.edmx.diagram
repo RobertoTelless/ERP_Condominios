@@ -265,6 +265,8 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_TIPO_CONDOMINIO" />
         <EntityTypeShape EntityType="ERP_CondominioModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="103.625" />
         <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE_ANEXO" Width="1.5" PointX="12.75" PointY="155" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

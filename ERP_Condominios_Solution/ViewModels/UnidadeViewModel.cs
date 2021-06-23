@@ -51,6 +51,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public virtual ICollection<VAGA> VAGA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
+        public virtual ICollection<UNIDADE_ANEXO> UNIDADE_ANEXO { get; set; }
 
     }
 }

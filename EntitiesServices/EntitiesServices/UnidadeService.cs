@@ -20,12 +20,14 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IUnidadeRepository _baseRepository;
         private readonly ILogRepository _logRepository;
+        private readonly IUnidadeAnexoRepository _anexoRepository;
         protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
-        public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
+        public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository, IUnidadeAnexoRepository anexoRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
+            _anexoRepository = anexoRepository;
         }
 
         public UNIDADE CheckExist(UNIDADE tarefa, Int32 idAss)
@@ -38,6 +40,11 @@ namespace ModelServices.EntitiesServices
         {
             UNIDADE item = _baseRepository.GetItemById(id);
             return item;
+        }
+
+        public UNIDADE_ANEXO GetAnexoById(Int32 id)
+        {
+            return _anexoRepository.GetItemById(id);
         }
 
         public List<UNIDADE> GetAllItens(Int32 idAss)

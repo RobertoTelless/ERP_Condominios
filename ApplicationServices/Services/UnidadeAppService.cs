@@ -45,6 +45,34 @@ namespace ApplicationServices.Services
             return item;
         }
 
+        public UNIDADE_ANEXO GetAnexoById(Int32 id)
+        {
+            UNIDADE_ANEXO lista = _baseService.GetAnexoById(id);
+            return lista;
+        }
+
+        public Int32 ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss, out List<UNIDADE> objeto)
+        {
+            try
+            {
+                objeto = new List<UNIDADE>();
+                Int32 volta = 0;
+
+                // Processa filtro
+                objeto = _baseService.ExecuteFilter(numero, torre, idTipo, alugada, idAss);
+                if (objeto.Count == 0)
+                {
+                    volta = 1;
+                }
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
         public Int32 ValidateCreate(UNIDADE item, USUARIO usuario)
         {
             try

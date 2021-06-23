@@ -20,5 +20,6 @@ namespace ApplicationServices.Interfaces
         List<UNIDADE> GetAllItens(Int32 idAss);
         List<UNIDADE> GetAllItensAdm(Int32 idAss);
         Int32 ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss, out List<UNIDADE> objeto);
+        UNIDADE_ANEXO GetAnexoById(Int32 id);
     }
 }

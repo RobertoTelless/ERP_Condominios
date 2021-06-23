@@ -1151,6 +1151,18 @@
           <Property Name="UNID_NM_NOME_TORRE" Type="varchar" MaxLength="50" />
           <Property Name="UNID_NM_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
         </EntityType>
+        <EntityType Name="UNIDADE_ANEXO">
+          <Key>
+            <PropertyRef Name="UNAN_CD_ID" />
+          </Key>
+          <Property Name="UNAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UNID_CD_ID" Type="int" Nullable="false" />
+          <Property Name="UNAN_NM_TITULO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UNAN_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="UNAN_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="UNAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="UNAN_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UNIDADE_MATERIAL">
           <Key>
             <PropertyRef Name="UNMA_CD_ID" />
@@ -3027,6 +3039,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UNIDADE_ANEXO_UNIDADE">
+          <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="1" />
+          <End Role="UNIDADE_ANEXO" Type="Self.UNIDADE_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Principal>
+            <Dependent Role="UNIDADE_ANEXO">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UNIDADE_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="*" />
@@ -3380,6 +3404,7 @@
           <EntitySet Name="TORRE" EntityType="Self.TORRE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UF" EntityType="Self.UF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UNIDADE" EntityType="Self.UNIDADE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UNIDADE_ANEXO" EntityType="Self.UNIDADE_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UNIDADE_MATERIAL" EntityType="Self.UNIDADE_MATERIAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIO_ANEXO" EntityType="Self.USUARIO_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -3952,6 +3977,10 @@
           <AssociationSet Name="FK_TORRE_ASSINANTE" Association="Self.FK_TORRE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="TORRE" EntitySet="TORRE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UNIDADE_ANEXO_UNIDADE" Association="Self.FK_UNIDADE_ANEXO_UNIDADE">
+            <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="UNIDADE_ANEXO" EntitySet="UNIDADE_ANEXO" />
           </AssociationSet>
           <AssociationSet Name="FK_UNIDADE_ASSINANTE" Association="Self.FK_UNIDADE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -5440,6 +5469,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_UNIDADE" FromRole="UNIDADE" ToRole="USUARIO" />
           <NavigationProperty Name="VAGA" Relationship="Self.FK_VAGA_UNIDADE" FromRole="UNIDADE" ToRole="VAGA" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_UNIDADE" FromRole="UNIDADE" ToRole="VEICULO" />
+          <NavigationProperty Name="UNIDADE_ANEXO" Relationship="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" FromRole="UNIDADE" ToRole="UNIDADE_ANEXO" />
         </EntityType>
         <EntityType Name="UNIDADE_MATERIAL">
           <Key>
@@ -8362,6 +8392,11 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="ASSINANTE_ANEXO" EntitySet="ASSINANTE_ANEXO" />
           </AssociationSet>
+          <EntitySet Name="UNIDADE_ANEXO" EntityType="ERP_CondominioModel.UNIDADE_ANEXO" />
+          <AssociationSet Name="FK_UNIDADE_ANEXO_UNIDADE" Association="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE">
+            <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="UNIDADE_ANEXO" EntitySet="UNIDADE_ANEXO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TIPO_CONDOMINIO">
           <Key>
@@ -8406,6 +8441,31 @@
             </Principal>
             <Dependent Role="ASSINANTE_ANEXO">
               <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UNIDADE_ANEXO">
+          <Key>
+            <PropertyRef Name="UNAN_CD_ID" />
+          </Key>
+          <Property Name="UNAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UNID_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UNAN_NM_TITULO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UNAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UNAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="UNAN_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UNAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UNIDADE" Relationship="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" FromRole="UNIDADE_ANEXO" ToRole="UNIDADE" />
+        </EntityType>
+        <Association Name="FK_UNIDADE_ANEXO_UNIDADE">
+          <End Type="ERP_CondominioModel.UNIDADE" Role="UNIDADE" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.UNIDADE_ANEXO" Role="UNIDADE_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Principal>
+            <Dependent Role="UNIDADE_ANEXO">
+              <PropertyRef Name="UNID_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9839,6 +9899,19 @@
                 <ScalarProperty Name="ASAN_NM_TITULO" ColumnName="ASAN_NM_TITULO" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="ASAN_CD_ID" ColumnName="ASAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UNIDADE_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.UNIDADE_ANEXO">
+              <MappingFragment StoreEntitySet="UNIDADE_ANEXO">
+                <ScalarProperty Name="UNAN_IN_ATIVO" ColumnName="UNAN_IN_ATIVO" />
+                <ScalarProperty Name="UNAN_AQ_ARQUIVO" ColumnName="UNAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="UNAN_IN_TIPO" ColumnName="UNAN_IN_TIPO" />
+                <ScalarProperty Name="UNAN_DT_ANEXO" ColumnName="UNAN_DT_ANEXO" />
+                <ScalarProperty Name="UNAN_NM_TITULO" ColumnName="UNAN_NM_TITULO" />
+                <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
+                <ScalarProperty Name="UNAN_CD_ID" ColumnName="UNAN_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

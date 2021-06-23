@@ -195,6 +195,7 @@
     <Compile Include="Repositories\LogRepository.cs" />
     <Compile Include="Repositories\NoticiaComentarioRepository.cs" />
     <Compile Include="Repositories\NoticiaRepository.cs" />
+    <Compile Include="Repositories\UnidadeAnexoRepository.cs" />
     <Compile Include="Repositories\NotificacaoAnexoRepository.cs" />
     <Compile Include="Repositories\NotificacaoRepository.cs" />
     <Compile Include="Repositories\PerfilRepository.cs" />
