@@ -211,6 +211,8 @@
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />
+    <Compile Include="Repositories\VeiculoRepository.cs" />
+    <Compile Include="Repositories\VagaRepository.cs" />
     <Compile Include="Repositories\UnidadeRepository.cs" />
     <Compile Include="Repositories\UsuarioAnexoRepository.cs" />
     <Compile Include="Repositories\UsuarioRepository.cs" />

@@ -223,6 +223,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vaga já cadastrada.
+        /// </summary>
+        internal static string M0021 {
+            get {
+                return ResourceManager.GetString("M0021", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa vaga. Existem informações vinculadas a ela.
+        /// </summary>
+        internal static string M0022 {
+            get {
+                return ResourceManager.GetString("M0022", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nome do arquivo muito longo.
         /// </summary>
         internal static string M0024 {

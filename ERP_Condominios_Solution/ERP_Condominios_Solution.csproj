@@ -287,6 +287,7 @@
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\VagaController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
     <Compile Include="Extensions\WebMvcExtensions.cs" />
@@ -304,6 +305,7 @@
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\VagaViewModel.cs" />
     <Compile Include="ViewModels\UnidadeViewModel.cs" />
     <Compile Include="ViewModels\TarefaViewModel.cs" />
     <Compile Include="ViewModels\UsuarioAnexoViewModel.cs" />
@@ -2908,6 +2910,11 @@
     <Content Include="Views\Unidade\VerAnexoUnidade.cshtml" />
     <Content Include="Views\Unidade\VerUnidade.cshtml" />
     <Content Include="Views\Unidade\GerarNotificacaoUnidade.cshtml" />
+    <Content Include="Views\Vaga\MontarTelaVaga.cshtml" />
+    <Content Include="Views\Vaga\IncluirVaga.cshtml" />
+    <Content Include="Views\Vaga\EditarVaga.cshtml" />
+    <Content Include="Views\Vaga\VerVaga.cshtml" />
+    <Content Include="Views\Vaga\GerarNotificacaoVaga.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

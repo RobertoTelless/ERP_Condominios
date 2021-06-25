@@ -81,6 +81,7 @@ namespace Presentation.Start
             kernel.Bind<IAgendaAppService>().To<AgendaAppService>();
             kernel.Bind<IAssinanteAppService>().To<AssinanteAppService>();
             kernel.Bind<IUnidadeAppService>().To<UnidadeAppService>();
+            kernel.Bind<IVagaAppService>().To<VagaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -95,6 +96,7 @@ namespace Presentation.Start
             kernel.Bind<IAgendaService>().To<AgendaService>();
             kernel.Bind<IAssinanteService>().To<AssinanteService>();
             kernel.Bind<IUnidadeService>().To<UnidadeService>();
+            kernel.Bind<IVagaService>().To<VagaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -125,7 +127,8 @@ namespace Presentation.Start
             kernel.Bind<IUnidadeRepository>().To<UnidadeRepository>();
             kernel.Bind<IUnidadeAnexoRepository>().To<UnidadeAnexoRepository>();
             kernel.Bind<ITorreRepository>().To<TorreRepository>();
-
+            kernel.Bind<IVagaRepository>().To<VagaRepository>();
+            kernel.Bind<IVeiculoRepository>().To<VeiculoRepository>();
         }
     }
 }

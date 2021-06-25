@@ -29,6 +29,7 @@ namespace EntitiesServices.Model
         public Nullable<int> VAGA_IN_ATIVO { get; set; }
         public Nullable<System.DateTime> VAGA_DT_ATRIBUICAO { get; set; }
         public string VAGA_DS_JUSTIFICATIVA { get; set; }
+        public string VAGA_NM_EXIBE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual TIPO_VAGA TIPO_VAGA { get; set; }

@@ -1313,6 +1313,7 @@
           <Property Name="VAGA_IN_ATIVO" Type="int" />
           <Property Name="VAGA_DT_ATRIBUICAO" Type="date" />
           <Property Name="VAGA_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
+          <Property Name="VAGA_NM_EXIBE" Type="varchar" MaxLength="23" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="VEICULO">
           <Key>
@@ -5671,6 +5672,7 @@
           <NavigationProperty Name="TIPO_VAGA" Relationship="Self.FK_VAGA_TIPO_VAGA" FromRole="VAGA" ToRole="TIPO_VAGA" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_VAGA_UNIDADE" FromRole="VAGA" ToRole="UNIDADE" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_VAGA" FromRole="VAGA" ToRole="VEICULO" />
+          <Property Name="VAGA_NM_EXIBE" Type="String" MaxLength="23" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="VEICULO">
           <Key>
@@ -9837,6 +9839,7 @@
           <EntitySetMapping Name="VAGA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.VAGA">
               <MappingFragment StoreEntitySet="VAGA">
+                <ScalarProperty Name="VAGA_NM_EXIBE" ColumnName="VAGA_NM_EXIBE" />
                 <ScalarProperty Name="VAGA_CD_ID" ColumnName="VAGA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TIVA_CD_ID" ColumnName="TIVA_CD_ID" />

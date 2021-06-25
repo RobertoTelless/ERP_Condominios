@@ -171,6 +171,12 @@
   <data name="M0020" xml:space="preserve">
     <value>Extensão de arquivo não suportada</value>
   </data>
+  <data name="M0021" xml:space="preserve">
+    <value>Vaga já cadastrada</value>
+  </data>
+  <data name="M0022" xml:space="preserve">
+    <value>Não é possível excluir essa vaga. Existem informações vinculadas a ela</value>
+  </data>
   <data name="M0024" xml:space="preserve">
     <value>Nome do arquivo muito longo</value>
   </data>

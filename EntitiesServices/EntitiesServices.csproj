@@ -201,6 +201,7 @@
     <Compile Include="EntitiesServices\TarefaService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
+    <Compile Include="EntitiesServices\VagaService.cs" />
     <Compile Include="EntitiesServices\UnidadeService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
     <Compile Include="Interfaces\External\IECT_Services.cs" />
@@ -230,6 +231,8 @@
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IVeiculoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IVagaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUnidadeRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
@@ -244,6 +247,7 @@
     <Compile Include="Interfaces\Services\ITarefaService.cs" />
     <Compile Include="Interfaces\Services\ITemplateService.cs" />
     <Compile Include="Interfaces\Services\ITipoPessoaService.cs" />
+    <Compile Include="Interfaces\Services\IVagaService.cs" />
     <Compile Include="Interfaces\Services\IUnidadeService.cs" />
     <Compile Include="Interfaces\Services\IUsuarioService.cs" />
     <Compile Include="Model\AGENDA.cs">

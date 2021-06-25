@@ -126,6 +126,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensBanco"] = 0;
             Session["MensCondominio"] = 0;
             Session["MensUnidade"] = 0;
+            Session["MensVaga"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();
@@ -220,6 +221,10 @@ namespace ERP_Condominios_Solution.Controllers
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensUnidade"] == 2)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensVaga"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }

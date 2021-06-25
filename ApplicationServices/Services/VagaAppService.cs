@@ -15,14 +15,14 @@ using System.IO;
 
 namespace ApplicationServices.Services
 {
-    public class UnidadeAppService : AppServiceBase<UNIDADE>, IUnidadeAppService
+    public class VagaAppService : AppServiceBase<VAGA>, IVagaAppService
     {
-        private readonly IUnidadeService _baseService;
+        private readonly IVagaService _baseService;
         private readonly INotificacaoService _notiService;
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
 
-        public UnidadeAppService(IUnidadeService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService): base(baseService)
+        public VagaAppService(IVagaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
@@ -30,45 +30,45 @@ namespace ApplicationServices.Services
             _confService = confService;
         }
 
-        public UNIDADE CheckExist(UNIDADE unid, Int32 idAss)
+        public VAGA CheckExist(VAGA unid, Int32 idAss)
         {
-            UNIDADE item = _baseService.CheckExist(unid, idAss);
+            VAGA item = _baseService.CheckExist(unid, idAss);
             return item;
         }
 
-        public List<UNIDADE> GetAllItens(Int32 idAss)
+        public List<VAGA> GetAllItens(Int32 idAss)
         {
-            List<UNIDADE> lista = _baseService.GetAllItens(idAss);
+            List<VAGA> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<UNIDADE> GetAllItensAdm(Int32 idAss)
+        public List<VAGA> GetAllItensAdm(Int32 idAss)
         {
-            List<UNIDADE> lista = _baseService.GetAllItensAdm(idAss);
+            List<VAGA> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
-        public UNIDADE GetItemById(Int32 id)
+        public VAGA GetItemById(Int32 id)
         {
-            UNIDADE item = _baseService.GetItemById(id);
+            VAGA item = _baseService.GetItemById(id);
             return item;
         }
 
-        public UNIDADE_ANEXO GetAnexoById(Int32 id)
+        public List<TIPO_VAGA> GetAllTipos(Int32 idAss)
         {
-            UNIDADE_ANEXO lista = _baseService.GetAnexoById(id);
+            List<TIPO_VAGA> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
-        public List<TIPO_UNIDADE> GetAllTipos(Int32 idAss)
+        public List<UNIDADE> GetAllUnidades(Int32 idAss)
         {
-            List<TIPO_UNIDADE> lista = _baseService.GetAllTipos(idAss);
+            List<UNIDADE> lista = _baseService.GetAllUnidades(idAss);
             return lista;
         }
 
-        public List<TORRE> GetAllTorres(Int32 idAss)
+        public List<VEICULO> GetVeiculosUnidade(Int32 idUnid)
         {
-            List<TORRE> lista = _baseService.GetAllTorres(idAss);
+            List<VEICULO> lista = _baseService.GetVeiculosUnidade(idUnid);
             return lista;
         }
 
@@ -84,15 +84,15 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(String numero, Int32? torre, Int32? idTipo, Int32? alugada, Int32 idAss, out List<UNIDADE> objeto)
+        public Int32 ExecuteFilter(String numero, String andar, Int32? unid, Int32? idTipo, Int32 idAss, out List<VAGA> objeto)
         {
             try
             {
-                objeto = new List<UNIDADE>();
+                objeto = new List<VAGA>();
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(numero, torre, idTipo, alugada, idAss);
+                objeto = _baseService.ExecuteFilter(numero, andar, unid, idTipo, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -106,10 +106,27 @@ namespace ApplicationServices.Services
         }
 
 
-        public Int32 ValidateCreate(UNIDADE item, USUARIO usuario)
+        public Int32 ValidateCreate(VAGA item, USUARIO usuario)
         {
             try
             {
+                //Verifica Campos
+                if (item.TIPO_VAGA != null)
+                {
+                    item.TIPO_VAGA = null;
+                }
+                if (item.UNIDADE != null)
+                {
+                    item.UNIDADE = null;
+                }
+                if (item.ASSINANTE != null)
+                {
+                    item.ASSINANTE = null;
+                }
+                if (item.VEICULO != null)
+                {
+                    item.VEICULO = null;
+                }
 
                 // Verifica existencia prévia
                 if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
@@ -118,67 +135,8 @@ namespace ApplicationServices.Services
                 }
 
                 // Completa objeto
-                item.UNID_IN_ATIVO = 1;
+                item.VAGA_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.UNID_NM_NOME_TORRE = item.TORRE.TORR_NM_NOME;
-
-                //Verifica Campos
-                if (item.TIPO_UNIDADE != null)
-                {
-                    item.TIPO_UNIDADE = null;
-                }
-                if (item.USUARIO != null)
-                {
-                    item.USUARIO = null;
-                }
-                if (item.ASSINANTE != null)
-                {
-                    item.ASSINANTE = null;
-                }
-                if (item.ENCOMENDA != null)
-                {
-                    item.ENCOMENDA = null;
-                }
-                if (item.AMBIENTE_CHAVE != null)
-                {
-                    item.AMBIENTE_CHAVE = null;
-                }
-                if (item.AUTORIZACAO_ACESSO != null)
-                {
-                    item.AUTORIZACAO_ACESSO = null;
-                }
-                if (item.ENTRADA_SAIDA != null)
-                {
-                    item.ENTRADA_SAIDA = null;
-                }
-                if (item.LISTA_CONVIDADO != null)
-                {
-                    item.LISTA_CONVIDADO = null;
-                }
-                if (item.OCORRENCIA != null)
-                {
-                    item.OCORRENCIA = null;
-                }
-                if (item.RESERVA != null)
-                {
-                    item.RESERVA = null;
-                }
-                if (item.SOLICITACAO_MUDANCA != null)
-                {
-                    item.SOLICITACAO_MUDANCA = null;
-                }
-                if (item.VAGA != null)
-                {
-                    item.VAGA = null;
-                }
-                if (item.CONTROLE_VEICULO != null)
-                {
-                    item.CONTROLE_VEICULO = null;
-                }
-                if (item.VEICULO != null)
-                {
-                    item.VEICULO = null;
-                }
 
                 // Monta Log
                 LOG log = new LOG
@@ -186,9 +144,9 @@ namespace ApplicationServices.Services
                     LOG_DT_DATA = DateTime.Now,
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "AddUNID",
+                    LOG_NM_OPERACAO = "AddVAGA",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<UNIDADE>(item)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<VAGA>(item)
                 };
 
                 // Persiste
@@ -201,25 +159,20 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(UNIDADE item, UNIDADE itemAntes, USUARIO usuario)
+        public Int32 ValidateEdit(VAGA item, VAGA itemAntes, USUARIO usuario)
         {
             try
             {
-                // Completa objeto
-                item.UNID_IN_ATIVO = 1;
-                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.UNID_NM_NOME_TORRE = item.TORRE.TORR_NM_NOME;
-
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "EditUNID",
+                    LOG_NM_OPERACAO = "EditVAGA",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<UNIDADE>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<UNIDADE>(itemAntes)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<VAGA>(item),
+                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<VAGA>(itemAntes)
                 };
 
                 // Persiste
@@ -231,12 +184,11 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(UNIDADE item, UNIDADE itemAntes)
+        public Int32 ValidateEdit(VAGA item, VAGA itemAntes)
         {
             try
             {
                 // Persiste
-                item.UNID_NM_NOME_TORRE = item.TORRE.TORR_NM_NOME;
                 return _baseService.Edit(item);
             }
             catch (Exception ex)
@@ -245,62 +197,18 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateDelete(UNIDADE item, USUARIO usuario)
+        public Int32 ValidateDelete(VAGA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
-                if (item.USUARIO.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.AMBIENTE_CHAVE.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.AUTORIZACAO_ACESSO.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.ENCOMENDA.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.ENTRADA_SAIDA.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.LISTA_CONVIDADO.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.OCORRENCIA.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.RESERVA.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.SOLICITACAO_MUDANCA.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.VAGA.Count > 0)
-                {
-                    return 1;
-                }
-                if (item.CONTROLE_VEICULO.Count > 0)
-                {
-                    return 1;
-                }
                 if (item.VEICULO.Count > 0)
                 {
                     return 1;
                 }
 
                 // Acerta campos
-                item.UNID_IN_ATIVO = 0;
+                item.VAGA_IN_ATIVO = 0;
 
                 // Monta Log
                 LOG log = new LOG
@@ -309,8 +217,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "DeleUNID",
-                    LOG_TX_REGISTRO = "Unidade: " + item.UNID_NM_EXIBE
+                    LOG_NM_OPERACAO = "DeleVAGA",
+                    LOG_TX_REGISTRO = "Vaga: " + item.VAGA_NM_EXIBE
                 };
 
                 // Persiste
@@ -322,14 +230,14 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateReativar(UNIDADE item, USUARIO usuario)
+        public Int32 ValidateReativar(VAGA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
 
                 // Acerta campos
-                item.UNID_IN_ATIVO = 1;
+                item.VAGA_IN_ATIVO = 1;
 
                 // Monta Log
                 LOG log = new LOG
@@ -338,8 +246,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "ReatUNID",
-                    LOG_TX_REGISTRO = "Unidade: " + item.UNID_NM_EXIBE
+                    LOG_NM_OPERACAO = "ReatVAGA",
+                    LOG_TX_REGISTRO = "Vaga: " + item.VAGA_NM_EXIBE
                 };
 
                 // Persiste
@@ -351,7 +259,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario)
+        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, VAGA vaga)
         {
             try
             {
@@ -369,13 +277,13 @@ namespace ApplicationServices.Services
                     volta = _notiService.Create(item);
 
                     // Recupera template e-mail
-                    String header = _temService.GetByCode("NOTIUNID").TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode("NOTIUNID").TEMP_TX_CORPO;
-                    String footer = _temService.GetByCode("NOTIUNID").TEMP_TX_DADOS;
+                    String header = _temService.GetByCode("NOTIVAGA").TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode("NOTIVAGA").TEMP_TX_CORPO;
+                    String footer = _temService.GetByCode("NOTIVAGA").TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
-                    body = body.Replace("{unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
+                    body = body.Replace("{vaga}", vaga.VAGA_NM_EXIBE);
                     body = body.Replace("{data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
                     body = body.Replace("{assunto}", item.NOTI_NM_TITULO);
                     body = body.Replace("{texto}", item.NOTI_TX_TEXTO);
@@ -388,7 +296,7 @@ namespace ApplicationServices.Services
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
-                    mensagem.ASSUNTO = "NOTIFICAÇÃO";
+                    mensagem.ASSUNTO = "NOTIFICAÇÃO / VAGA";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = usuario.USUA_NM_EMAIL;
@@ -437,8 +345,7 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("UNIDSMS").TEMP_TX_CORPO;
-                texto = usuario.USUA_NM_NOME;
+                String texto = _temService.GetByCode("VAGASMS").TEMP_TX_CORPO;
 
                 // inicia processo
                 List<String> resposta = new List<string>();
