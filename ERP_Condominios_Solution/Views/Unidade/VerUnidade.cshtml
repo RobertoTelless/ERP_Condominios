@@ -15,7 +15,7 @@
                 <a href="@Url.Action("MontarTelaUnidade", "Unidade")">Unidades</a>
             </li>
             <li class="active">
-                <strong>Unidade - Edição</strong>
+                <strong>Unidade - Consulta</strong>
             </li>
         </ol>
         <br />
@@ -24,7 +24,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Unidade - Edição</h5>
+                    <h5>Unidade - Consulta</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -49,64 +49,65 @@
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
-                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Unidade")
-                        @Html.ButtonLinkIndex(text: "Emitir Notificação", action: "GerarNotificacaoUnidade", controller: "Unidade")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseUnidade", controller: "Unidade")
                     </div>
-                    @Html.AntiForgeryToken()
-                    @if (!ViewData.ModelState.IsValid)
-                    {
-                        <div class="alert alert-danger">
-                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                        </div>
-                    }
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Moradores & Veículos</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-4">Visitantes & Encomendas</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-5">Reservas & Mudanças</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-6">Listas de Convidados & Ocorrências</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-7">Resumo Financeiro</a></li>
+                            @if (ViewBag.Perfil == "POR")
+                            {
+                                <li class=""><a data-toggle="tab" href="#tab-4">Visitantes & Encomendas</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5">Reservas & Mudanças</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-6">Listas de Convidados & Ocorrências</a></li>
+                            }
+                            @if (ViewBag.Perfil == "MOR")
+                            {
+                                if (Model.UNID_CD_ID == ViewBag.Unidade)
+                                {
+                                    <li class=""><a data-toggle="tab" href="#tab-4">Visitantes & Encomendas</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-5">Reservas & Mudanças</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-6">Listas de Convidados & Ocorrências</a></li>
+                                }
+                            }
                         </ul>
                         <div class="tab-content">   
 
                             @*Dados Gerais*@
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("EditarUnidade", "Unidade", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("VerUnidade", "Unidade", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row" style="width: 100%;">
                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Tipo de Unidade*
-                                                        @Html.DropDownListFor(m => m.TIUN_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.TIUN_CD_ID, "", new { @style = "color:red" })
+                                                        Tipo de Unidade
+                                                        @Html.TextBoxFor(m => m.TIPO_UNIDADE.TIUN_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Torre*
-                                                        @Html.DropDownListFor(m => m.TORR_CD_ID, (SelectList)ViewBag.Torres, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.TORR_CD_ID, "", new { @style = "color:red" })
+                                                        Torre
+                                                        @Html.TextBoxFor(m => m.TORRE.TORR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Número*
-                                                        @Html.TextBoxFor(m => m.UNID_NR_NUMERO, new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.UNID_NR_NUMERO, "", new { @style = "color:red" })
+                                                        @Html.TextBoxFor(m => m.UNID_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                     </div>
                                                     <div class=" col-lg-3 col-md-3 col-xs-12">
                                                         Alugada*
-                                                        @Html.DropDownListFor(m => m.UNID_IN_ALUGADA, (SelectList)ViewBag.Alugada, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.UNID_IN_ALUGADA, "", new { @style = "color:red" })
+                                                        @if (Model.UNID_IN_ALUGADA == 1)
+                                                        {
+                                                            @Html.TextBox("alugada", "Sim", new { @class = "form-control", @readonly = "readonly" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TextBox("alugada", "Não", new { @class = "form-control", @readonly = "readonly" })
+                                                        }
                                                     </div>
                                                 </div>
                                                 <br />
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma edição de Unidade", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
                                         </div>
                                     }
                                 </div>
@@ -169,12 +170,6 @@
                                                                 </tbody>
                                                             </table>
                                                         }
-                                                        <div class="form-group">
-                                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 }
                                             </div>
@@ -191,7 +186,7 @@
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
                                                     <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaUsuario", "Usuario")" class="pull-left btn-link"><u>Moradores</u></a></h5>
+                                                    <h5>Moradores</h5>
                                                 </div>
                                                 <div class="ibox-content">
                                                     @if (Model.USUARIO.Count > 0)
@@ -232,7 +227,7 @@
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
                                                     <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaVeiculos", "Veiculo")" class="pull-left btn-link"><u>Veículos da Unidade</u></a></h5>
+                                                    <h5>Veículos da Unidade</h5>
                                                 </div>
                                                 <div class="ibox-content">
                                                     @if (Model.VEICULO.Count > 0)
@@ -265,283 +260,277 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                            @*Visitantes e Encomendas*@
-                            <div id="tab-4" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaEntradaSaida", "EntradaSaida")" class="pull-left btn-link"><u>Visitantes</u></a></h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    @if (Model.ENTRADA_SAIDA.Count > 0)
-                                                    {
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Nome</th>
-                                                                    <th>Entrada</th>
-                                                                    <th>Saída</th>
-                                                                    <th>Responsável</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.ENTRADA_SAIDA.OrderByDescending(a => a.ENSA_DT_ENTRADA)).Take(5))
-                                                                {
+
+                            @if (ViewBag.Perfil == "POR" || (ViewBag.Perfil == "MOR" & ViewBag.Unidade == Model.UNID_CD_ID))
+                            {                       
+                                @*Visitantes e Encomendas*@
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">Hoje</span>
+                                                        <h5>Visitantes</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        @if (Model.ENTRADA_SAIDA.Count > 0)
+                                                        {
+                                                            <table class="table table-hover">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>@cond.ENSA_NM_NOME</td>
-                                                                        <td>@cond.ENSA_DT_ENTRADA</td>
-                                                                        <td>@cond.ENSA_DT_SAIDA</td>
-                                                                        <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                        <th>Nome</th>
+                                                                        <th>Entrada</th>
+                                                                        <th>Saída</th>
+                                                                        <th>Responsável</th>
                                                                     </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.ENTRADA_SAIDA.OrderByDescending(a => a.ENSA_DT_ENTRADA)).Take(5))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.ENSA_NM_NOME</td>
+                                                                            <td>@cond.ENSA_DT_ENTRADA</td>
+                                                                            <td>@cond.ENSA_DT_SAIDA</td>
+                                                                            <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")" class="pull-left btn-link"><u>Encomendas</u></a></h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    @if (Model.ENCOMENDA.Count > 0)
-                                                    {
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Tipo</th>
-                                                                    <th>Data</th>
-                                                                    <th>Entrega</th>
-                                                                    <th>Código</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.ENCOMENDA.OrderByDescending(a => a.ENCO_DT_CHEGADA)).Take(5))
-                                                                {
+                                            <div class="col-lg-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">Hoje</span>
+                                                        <h5>Encomendas</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        @if (Model.ENCOMENDA.Count > 0)
+                                                        {
+                                                            <table class="table table-hover">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>@cond.TIPO_ENCOMENDA.TIEN_NM_NOME</td>
-                                                                        <td>@cond.ENCO_DT_CHEGADA</td>
-                                                                        <td>@cond.ENCO_DT_ENTREGA</td>
-                                                                        <td>@cond.ENCO_CD_CODIGO</td>
+                                                                        <th>Tipo</th>
+                                                                        <th>Data</th>
+                                                                        <th>Entrega</th>
+                                                                        <th>Código</th>
                                                                     </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            @*Reservas e Mudanças*@
-                            <div id="tab-5" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaReserva", "Reserva")" class="pull-left btn-link"><u>Reservas</u></a></h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    @if (Model.RESERVA.Count > 0)
-                                                    {
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Ambiente</th>
-                                                                    <th>Data</th>
-                                                                    <th>Confirmada</th>
-                                                                    <th>Paga</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.RESERVA.OrderByDescending(a => a.RESE_DT_EVENTO)).Take(5))
-                                                                {
-                                                                    <tr>
-                                                                        <td>@cond.AMBIENTE.AMBI_NM_AMBIENTE</td>
-                                                                        <td>@cond.RESE_DT_EVENTO.ToShortDateString()</td>
-                                                                        @if (cond.RESE_IN_CONFIRMADA == 1)
-                                                                        {
-                                                                            <td>Sim</td>
-                                                                        }
-                                                                        else 
-                                                                        {
-                                                                            <td>Não</td>
-                                                                        }
-                                                                        @if (cond.RESE_IN_PAGA == 1)
-                                                                        {
-                                                                            <td>Sim</td>
-                                                                        }
-                                                                        else 
-                                                                        {
-                                                                            <td>Não</td>
-                                                                        }
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaMudanca", "Mudanca")" class="pull-left btn-link"><u>Mudanças</u></a></h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    @if (Model.SOLICITACAO_MUDANCA.Count > 0)
-                                                    {
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Data</th>
-                                                                    <th>Tipo</th>
-                                                                    <th>Aprovada</th>
-                                                                    <th>Executada</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.SOLICITACAO_MUDANCA.OrderByDescending(a => a.SOMU_DT_MUDANCA)).Take(5))
-                                                                {
-                                                                    <tr>
-                                                                        <td>@cond.SOMU_DT_MUDANCA.ToShortDateString()</td>
-                                                                        @if (cond.SOMU_IN_ENTRADA_SAIDA == 1)
-                                                                        {
-                                                                            <td>Entrada</td>
-                                                                        }
-                                                                        else 
-                                                                        {
-                                                                            <td>Saída</td>
-                                                                        }
-                                                                        @if (cond.SOMU_IN_APROVACAO == 1)
-                                                                        {
-                                                                            <td>Sim</td>
-                                                                        }
-                                                                        else 
-                                                                        {
-                                                                            <td>Não</td>
-                                                                        }
-                                                                        @if (cond.SOMU_IN_EXECUTADA == 1)
-                                                                        {
-                                                                            <td>Sim</td>
-                                                                        }
-                                                                        else 
-                                                                        {
-                                                                            <td>Não</td>
-                                                                        }
-                                                                    </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.ENCOMENDA.OrderByDescending(a => a.ENCO_DT_CHEGADA)).Take(5))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.TIPO_ENCOMENDA.TIEN_NM_NOME</td>
+                                                                            <td>@cond.ENCO_DT_CHEGADA</td>
+                                                                            <td>@cond.ENCO_DT_ENTREGA</td>
+                                                                            <td>@cond.ENCO_CD_CODIGO</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         
-                            @*Lista de Convidados e Ocorrencias*@
-                            <div id="tab-6" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaListaConvidado", "ListaConvidado")" class="pull-left btn-link"><u>Lista de Convidados</u></a></h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    @if (Model.LISTA_CONVIDADO.Count > 0)
-                                                    {
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Nome</th>
-                                                                    <th>Data</th>
-                                                                    <th>Reserva</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.LISTA_CONVIDADO.OrderByDescending(a => a.LICO_DT_EVENTO)).Take(5))
-                                                                {
+                                @*Reservas e Mudanças*@
+                                <div id="tab-5" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">Hoje</span>
+                                                        <h5>Reservas</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        @if (Model.RESERVA.Count > 0)
+                                                        {
+                                                            <table class="table table-hover">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>@cond.LICO_NM_LISTA</td>
-                                                                        <td>@cond.LICO_DT_EVENTO.ToShortDateString()</td>
-                                                                        @if (cond.RESERVA == null)
-                                                                        {
-                                                                            <td>-</td>
-                                                                        }
-                                                                        else 
-                                                                        {
-                                                                            <td>@cond.RESERVA.RESE_NM_NOME</td>
-                                                                        }
+                                                                        <th>Ambiente</th>
+                                                                        <th>Data</th>
+                                                                        <th>Confirmada</th>
+                                                                        <th>Paga</th>
                                                                     </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.RESERVA.OrderByDescending(a => a.RESE_DT_EVENTO)).Take(5))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.AMBIENTE.AMBI_NM_AMBIENTE</td>
+                                                                            <td>@cond.RESE_DT_EVENTO.ToShortDateString()</td>
+                                                                            @if (cond.RESE_IN_CONFIRMADA == 1)
+                                                                            {
+                                                                                <td>Sim</td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td>Não</td>
+                                                                            }
+                                                                            @if (cond.RESE_IN_PAGA == 1)
+                                                                            {
+                                                                                <td>Sim</td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td>Não</td>
+                                                                            }
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="ibox float-e-margins">
-                                                <div class="ibox-title">
-                                                    <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaOcorrencia", "Ocorrencia")" class="pull-left btn-link"><u>Ocorrências</u></a></h5>
-                                                </div>
-                                                <div class="ibox-content">
-                                                    @if (Model.OCORRENCIA.Count > 0)
-                                                    {
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Data</th>
-                                                                    <th>Categoria</th>
-                                                                    <th>Título</th>
-                                                                    <th>Comentários</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach (var cond in (Model.OCORRENCIA.OrderByDescending(a => a.OCOR_DT_OCORRENCIA)).Take(5))
-                                                                {
+                                            <div class="col-lg-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">Hoje</span>
+                                                        <h5>Mudanças</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        @if (Model.SOLICITACAO_MUDANCA.Count > 0)
+                                                        {
+                                                            <table class="table table-hover">
+                                                                <thead>
                                                                     <tr>
-                                                                        <td>@cond.OCOR_DT_OCORRENCIA.ToShortDateString()</td>
-                                                                        <td>@cond.CATEGORIA_OCORRENCIA.CAOC_NM_NOME</td>
-                                                                        <td>@cond.OCOR_NM_TITULO</td>
-                                                                        <td>@cond.OCORRENCIA_COMENTARIO.Count</td>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th>Aprovada</th>
+                                                                        <th>Executada</th>
                                                                     </tr>
-                                                                }
-                                                            </tbody>
-                                                        </table>
-                                                    }
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.SOLICITACAO_MUDANCA.OrderByDescending(a => a.SOMU_DT_MUDANCA)).Take(5))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.SOMU_DT_MUDANCA.ToShortDateString()</td>
+                                                                            @if (cond.SOMU_IN_ENTRADA_SAIDA == 1)
+                                                                            {
+                                                                                <td>Entrada</td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td>Saída</td>
+                                                                            }
+                                                                            @if (cond.SOMU_IN_APROVACAO == 1)
+                                                                            {
+                                                                                <td>Sim</td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td>Não</td>
+                                                                            }
+                                                                            @if (cond.SOMU_IN_EXECUTADA == 1)
+                                                                            {
+                                                                                <td>Sim</td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td>Não</td>
+                                                                            }
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         
-                            @*Resumo financeiro*@
-                            <div id="tab-7" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <h4>Em Desenvolvimento</h4>
+                                @*Lista de Convidados e Ocorrencias*@
+                                <div id="tab-6" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">Hoje</span>
+                                                        <h5>Lista de Convidados</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        @if (Model.LISTA_CONVIDADO.Count > 0)
+                                                        {
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Nome</th>
+                                                                        <th>Data</th>
+                                                                        <th>Reserva</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.LISTA_CONVIDADO.OrderByDescending(a => a.LICO_DT_EVENTO)).Take(5))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.LICO_NM_LISTA</td>
+                                                                            <td>@cond.LICO_DT_EVENTO.ToShortDateString()</td>
+                                                                            @if (cond.RESERVA == null)
+                                                                            {
+                                                                                <td>-</td>
+                                                                            }
+                                                                            else 
+                                                                            {
+                                                                                <td>@cond.RESERVA.RESE_NM_NOME</td>
+                                                                            }
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="ibox float-e-margins">
+                                                    <div class="ibox-title">
+                                                        <span class="label label-primary pull-right">Hoje</span>
+                                                        <h5>Ocorrências</h5>
+                                                    </div>
+                                                    <div class="ibox-content">
+                                                        @if (Model.OCORRENCIA.Count > 0)
+                                                        {
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Data</th>
+                                                                        <th>Categoria</th>
+                                                                        <th>Título</th>
+                                                                        <th>Comentários</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.OCORRENCIA.OrderByDescending(a => a.OCOR_DT_OCORRENCIA)).Take(5))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.OCOR_DT_OCORRENCIA.ToShortDateString()</td>
+                                                                            <td>@cond.CATEGORIA_OCORRENCIA.CAOC_NM_NOME</td>
+                                                                            <td>@cond.OCOR_NM_TITULO</td>
+                                                                            <td>@cond.OCORRENCIA_COMENTARIO.Count</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>                     
+                            }
                         </div>
                     </div>
                 </div>

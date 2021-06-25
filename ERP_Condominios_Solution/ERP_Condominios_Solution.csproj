@@ -2906,6 +2906,8 @@
     <Content Include="Views\Unidade\IncluirUnidade.cshtml" />
     <Content Include="Views\Unidade\EditarUnidade.cshtml" />
     <Content Include="Views\Unidade\VerAnexoUnidade.cshtml" />
+    <Content Include="Views\Unidade\VerUnidade.cshtml" />
+    <Content Include="Views\Unidade\GerarNotificacaoUnidade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

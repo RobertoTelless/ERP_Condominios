@@ -23,15 +23,19 @@ namespace ModelServices.EntitiesServices
         private readonly IUnidadeAnexoRepository _anexoRepository;
         private readonly ITipoUnidadeRepository _tuRepository;
         private readonly ITorreRepository _toRepository;
+        private readonly ICategoriaNotificacaoRepository _cnRepository;
+        private readonly IUsuarioRepository _usuRepository;
         protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
-        public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository, IUnidadeAnexoRepository anexoRepository, ITipoUnidadeRepository tuRepository, ITorreRepository toRepository) : base(baseRepository)
+        public UnidadeService(IUnidadeRepository baseRepository, ILogRepository logRepository, IUnidadeAnexoRepository anexoRepository, ITipoUnidadeRepository tuRepository, ITorreRepository toRepository, ICategoriaNotificacaoRepository cnRepository, IUsuarioRepository usuRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
             _anexoRepository = anexoRepository;
             _tuRepository = tuRepository;
             _toRepository = toRepository;
+            _cnRepository = cnRepository;
+            _usuRepository = usuRepository;
         }
 
         public UNIDADE CheckExist(UNIDADE tarefa, Int32 idAss)
@@ -69,6 +73,16 @@ namespace ModelServices.EntitiesServices
         public List<TORRE> GetAllTorres(Int32 idAss)
         {
             return _toRepository.GetAllItens(idAss);
+        }
+
+        public List<CATEGORIA_NOTIFICACAO> GetAllCatNotificacao(Int32 idAss)
+        {
+            return _cnRepository.GetAllItens(idAss);
+        }
+
+        public List<USUARIO> GetAllUsuarios(Int32 idAss)
+        {
+            return _usuRepository.GetAllItens(idAss);
         }
 
         public Int32 Create(UNIDADE item, LOG log)

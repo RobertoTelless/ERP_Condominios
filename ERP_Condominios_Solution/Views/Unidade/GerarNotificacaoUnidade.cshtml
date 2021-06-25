@@ -1,5 +1,5 @@
 ﻿@using Presentation.Extensions
-@model ERP_Condominios_Solution.ViewModels.UnidadeViewModel
+@model ERP_Condominios_Solution.ViewModels.NotificacaoViewModel
 @{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title">
@@ -12,8 +12,11 @@
             <li>
                 <a href="@Url.Action("MontarTelaUnidade", "Unidade")">Unidades</a>
             </li>
+            <li>
+                <a href="@Url.Action("EditarUnidade", "Unidade")">Unidade - Edição</a>
+            </li>
             <li class="active">
-                <strong>Unidades - Inclusão</strong>
+                <strong>Unidade - Gerar Notificação</strong>
             </li>
         </ol>
         <br />
@@ -22,7 +25,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Unidades - Inclusão</h5>
+                    <h5>Unidade - Gerar Notificação</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -54,80 +57,76 @@
                         </div>
                     }
                     <div class="tabs-container">
-                        @using (Html.BeginForm("IncluirUnidade", "Unidade", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        @using (Html.BeginForm("GerarNotificacaoUnidade", "Unidade", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
                             <div class="form-group">
                                 <br />
                                 <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Unidade</button>
-                                @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseUnidade", controller: "Unidade")
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoUnidade", controller: "Unidade")
                             </div>
 
                             <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Notificação</a></li>
                             </ul>
 
                             <div class="tab-content">
-                                @*Dados Gerais*@
+                                @*Notificação*@
                                 <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-5 col-md-5 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                    @Html.HiddenFor(m => m.UNID_IN_ATIVO)
-                                                    @Html.HiddenFor(m => m.UNID_IN_ALUGADA)
-                                                    Tipo de Unidade*
-                                                    @Html.DropDownListFor(m => m.TIUN_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.TIUN_CD_ID, "", new { @style = "color:red" })
+                                                    @Html.HiddenFor(m => m.NOTI_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.NOTI_IN_NIVEL)
+                                                    @Html.HiddenFor(m => m.NOTI_IN_VISTA)
+                                                    @Html.HiddenFor(m => m.NOTI_IN_ORIGEM)
+                                                    @Html.HiddenFor(m => m.NOTI_IN_STATUS)
+                                                    Destino*
+                                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Torre*
-                                                    @Html.DropDownListFor(m => m.TORR_CD_ID, (SelectList)ViewBag.Torres, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.TORR_CD_ID, "", new { @style = "color:red" })
+                                                    Categoria*
+                                                    @Html.DropDownListFor(m => m.CANO_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CANO_CD_ID, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Número*
-                                                    @Html.TextBoxFor(m => m.UNID_NR_NUMERO, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.UNID_NR_NUMERO, "", new { @style = "color:red" })
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                                    Título*
+                                                    @Html.TextBoxFor(m => m.NOTI_NM_TITULO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.NOTI_NM_TITULO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data Emissão*
+                                                    @Html.TextBoxFor(m => m.NOTI_DT_EMISSAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data" })
+                                                    @Html.ValidationMessageFor(m => m.NOTI_DT_EMISSAO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data Validade*
+                                                    @Html.TextBoxFor(m => m.NOTI_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data1" })
+                                                    @Html.ValidationMessageFor(m => m.NOTI_DT_VALIDADE, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Conteúdo da Notificação
+                                                    @Html.TextAreaFor(m => m.NOTI_TX_TEXTO, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.NOTI_TX_TEXTO, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                @*Imagens - Foto e Anexos*@
-                                <div id="tab-2" class="tab-pane">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <hr />
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <h4>Anexos</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
-                                                <br />
-                                                <div class="form-group">
-                                                    <div class="ibox-content">
-                                                        <br />
-                                                        <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="myFiles">
-                                                            <thead style="background-color:lightsteelblue">
-                                                                <tr>
-                                                                    <td>Nome</td>
-                                                                    <td>Tipo</td>
-                                                                    <td>Ações</td>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody></tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Unidade</button>
-                                    @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseUnidade", controller: "Unidade")
+                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Notificação</button>
+                                    @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarAnexoUnidade", controller: "Unidade")
                                 </div>
                             </div>
                         }

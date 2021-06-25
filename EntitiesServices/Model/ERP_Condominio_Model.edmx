@@ -287,6 +287,8 @@
           <Property Name="CONF_NR_REFRESH_NOTIFICACAO" Type="int" />
           <Property Name="CONF_NR_NUMERO_CONSELHEIROS" Type="int" />
           <Property Name="CONF_NR_CORPO_DIRETIVO_PERIODO" Type="int" />
+          <Property Name="CONF_SG_LOGIN_SMS" Type="varchar" MaxLength="50" />
+          <Property Name="CONF_SG_SENHA_SMS" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CONFIGURACAO_ASSOCIACAO">
           <Key>
@@ -4441,6 +4443,8 @@
           <Property Name="CONF_NR_CORPO_DIRETIVO_PERIODO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CONFIGURACAO_ASSOCIACAO" Relationship="Self.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" FromRole="CONFIGURACAO" ToRole="CONFIGURACAO_ASSOCIACAO" />
+          <Property Name="CONF_SG_LOGIN_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONF_SG_SENHA_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="CONFIGURACAO_ASSOCIACAO">
           <Key>
@@ -8752,6 +8756,8 @@
           <EntitySetMapping Name="CONFIGURACAO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
+                <ScalarProperty Name="CONF_SG_SENHA_SMS" ColumnName="CONF_SG_SENHA_SMS" />
+                <ScalarProperty Name="CONF_SG_LOGIN_SMS" ColumnName="CONF_SG_LOGIN_SMS" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CONF_NR_FALHAS_DIA" ColumnName="CONF_NR_FALHAS_DIA" />

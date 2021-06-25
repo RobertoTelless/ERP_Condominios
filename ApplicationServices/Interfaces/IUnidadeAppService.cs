@@ -14,6 +14,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(UNIDADE item, UNIDADE itemAntes);
         Int32 ValidateDelete(UNIDADE item, USUARIO usuario);
         Int32 ValidateReativar(UNIDADE item, USUARIO usuario);
+        Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario);
 
         UNIDADE CheckExist(UNIDADE item, Int32 idAss);
         UNIDADE GetItemById(Int32 id);
@@ -23,5 +24,7 @@ namespace ApplicationServices.Interfaces
         UNIDADE_ANEXO GetAnexoById(Int32 id);
         List<TIPO_UNIDADE> GetAllTipos(Int32 idAss);
         List<TORRE> GetAllTorres(Int32 idAss);
+        List<CATEGORIA_NOTIFICACAO> GetAllCatNotificacao(Int32 idAss);
+        List<USUARIO> GetAllUsuarios(Int32 idAss);
     }
 }

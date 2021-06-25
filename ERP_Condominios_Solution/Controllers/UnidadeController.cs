@@ -99,6 +99,10 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Title = "Unidades";
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIUN_CD_ID", "TIUN_NM_NOME");
             ViewBag.Torres = new SelectList(baseApp.GetAllTorres(idAss), "TORR_CD_ID", "TORR_NM_NOME");
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Alugada = new SelectList(status, "Value", "Text");
 
             // Indicadores
             ViewBag.Unids = ((List<UNIDADE>)Session["ListaUnidade"]).Count;
@@ -236,6 +240,10 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara listas
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIUN_CD_ID", "TIUN_NM_NOME");
             ViewBag.Torres = new SelectList(baseApp.GetAllTorres(idAss), "TORR_CD_ID", "TORR_NM_NOME");
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Alugada = new SelectList(status, "Value", "Text");
 
             // Prepara view
             UNIDADE item = new UNIDADE();
@@ -255,6 +263,10 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIUN_CD_ID", "TIUN_NM_NOME");
             ViewBag.Torres = new SelectList(baseApp.GetAllTorres(idAss), "TORR_CD_ID", "TORR_NM_NOME");
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Alugada = new SelectList(status, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
@@ -339,6 +351,10 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIUN_CD_ID", "TIUN_NM_NOME");
             ViewBag.Torres = new SelectList(baseApp.GetAllTorres(idAss), "TORR_CD_ID", "TORR_NM_NOME");
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Alugada = new SelectList(status, "Value", "Text");
 
             if ((Int32)Session["MensUnidade"] == 5)
             {
@@ -353,6 +369,7 @@ namespace ERP_Condominios_Solution.Controllers
             objetoAntes = item;
             Session["Unidade"] = item;
             Session["IdVolta"] = id;
+            Session["IdUnidade"] = id;
             UnidadeViewModel vm = Mapper.Map<UNIDADE, UnidadeViewModel>(item);
             return View(vm);
         }
@@ -367,6 +384,10 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIUN_CD_ID", "TIUN_NM_NOME");
             ViewBag.Torres = new SelectList(baseApp.GetAllTorres(idAss), "TORR_CD_ID", "TORR_NM_NOME");
+            List<SelectListItem> status = new List<SelectListItem>();
+            status.Add(new SelectListItem() { Text = "Sim", Value = "1" });
+            status.Add(new SelectListItem() { Text = "Não", Value = "2" });
+            ViewBag.Alugada = new SelectList(status, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
@@ -394,6 +415,43 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        [HttpGet]
+        public ActionResult VerUnidade(Int32 id)
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                {
+                    Session["MensUnidade"] = 2;
+                    return RedirectToAction("MontarTelaUnidade", "Unidade");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Unidade = usuario.UNID_CD_ID;
+
+            // Prepara view
+            UNIDADE item = baseApp.GetItemById(id);
+            objetoAntes = item;
+            Session["Unidade"] = item;
+            Session["IdVolta"] = id;
+            UnidadeViewModel vm = Mapper.Map<UNIDADE, UnidadeViewModel>(item);
+            return View(vm);
         }
 
         [HttpGet]
@@ -666,6 +724,125 @@ namespace ERP_Condominios_Solution.Controllers
             objetoAntes = item;
             Int32 volta = baseApp.ValidateEdit(item, objetoAntes);
             return RedirectToAction("VoltarAnexoUnidade");
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaMorador()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                {
+                    Session["MensUnidade"] = 2;
+                    return RedirectToAction("MontarTelaUnidade", "Unidade");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Int32 idUnidade = (Int32)Session["IdUnidade"];
+            UNIDADE unidade = (UNIDADE)Session["Unidade"];
+
+            // Prepara view
+            List<USUARIO> lista = unidade.USUARIO.ToList();
+            Session["ListaUsuario"] = lista;
+            return RedirectToAction("MontarTelaUsuario", "Usuario");
+        }
+
+        [HttpGet]
+        public ActionResult GerarNotificacaoUnidade()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                {
+                    Session["MensUnidade"] = 2;
+                    return RedirectToAction("MontarTelaUnidade", "Unidade");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Int32 unidade = (Int32)Session["IdUnidade"];
+            List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == unidade).ToList();
+
+            // Prepara view
+            ViewBag.Cats = new SelectList(baseApp.GetAllCatNotificacao(idAss), "CANO_CD_ID", "CANO_NM_NOME");
+            ViewBag.Usuarios = new SelectList(lista, "USUA_CD_ID", "USUA_NM_NOME");
+
+            NOTIFICACAO item = new NOTIFICACAO();
+            NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
+            vm.NOTI_DT_EMISSAO = DateTime.Today.Date;
+            vm.ASSI_CD_ID = idAss;
+            vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+            vm.NOTI_IN_ATIVO = 1;
+            vm.NOTI_IN_NIVEL = 1;
+            vm.NOTI_IN_ORIGEM = 1;
+            vm.NOTI_IN_STATUS = 1;
+            vm.NOTI_IN_VISTA = 0;
+            vm.NOTI_NM_TITULO = "Notificação para Morador";
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult GerarNotificacaoUnidade(NotificacaoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Int32 unidade = (Int32)Session["IdUnidade"];
+            List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == unidade).ToList();
+            ViewBag.Cats = new SelectList(baseApp.GetAllCatNotificacao(idAss), "CANO_CD_ID", "CANO_NM_NOME");
+            ViewBag.Usuarios = new SelectList(lista, "USUA_CD_ID", "USUA_NM_NOME");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    NOTIFICACAO item = Mapper.Map<NotificacaoViewModel, NOTIFICACAO>(vm);
+                    Int32 volta = baseApp.GerarNotificacao(item, usuarioLogado);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMaster = new List<UNIDADE>();
+                    return RedirectToAction("VoltarBaseUnidade");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
         }
     }
 }

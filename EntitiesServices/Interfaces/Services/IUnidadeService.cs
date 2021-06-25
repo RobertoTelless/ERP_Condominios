@@ -24,5 +24,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         UNIDADE_ANEXO GetAnexoById(Int32 id);
         List<TIPO_UNIDADE> GetAllTipos(Int32 idAss);
         List<TORRE> GetAllTorres(Int32 idAss);
+        List<CATEGORIA_NOTIFICACAO> GetAllCatNotificacao(Int32 idAss);
+        List<USUARIO> GetAllUsuarios(Int32 idAss);
     }
 }
