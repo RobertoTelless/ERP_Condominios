@@ -288,6 +288,7 @@
     <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VagaController.cs" />
+    <Compile Include="Controllers\VeiculoController.cs" />
     <Compile Include="Extensions\HMTLHelperExtensions.cs" />
     <Compile Include="Extensions\MVCButtonExtensions.cs" />
     <Compile Include="Extensions\WebMvcExtensions.cs" />
@@ -305,6 +306,7 @@
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\VeiculoViewModel.cs" />
     <Compile Include="ViewModels\VagaViewModel.cs" />
     <Compile Include="ViewModels\UnidadeViewModel.cs" />
     <Compile Include="ViewModels\TarefaViewModel.cs" />
@@ -2915,6 +2917,12 @@
     <Content Include="Views\Vaga\EditarVaga.cshtml" />
     <Content Include="Views\Vaga\VerVaga.cshtml" />
     <Content Include="Views\Vaga\GerarNotificacaoVaga.cshtml" />
+    <Content Include="Views\Veiculo\MontarTelaVeiculo.cshtml" />
+    <Content Include="Views\Veiculo\IncluirVeiculo.cshtml" />
+    <Content Include="Views\Veiculo\EditarVeiculo.cshtml" />
+    <Content Include="Views\Veiculo\VerVeiculo.cshtml" />
+    <Content Include="Views\Veiculo\VerAnexoVeiculo.cshtml" />
+    <Content Include="Views\Veiculo\GerarNotificacaoVeiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

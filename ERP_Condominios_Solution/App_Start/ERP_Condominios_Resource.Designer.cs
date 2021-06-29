@@ -241,11 +241,29 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Veículo já cadastrado.
+        /// </summary>
+        internal static string M0023 {
+            get {
+                return ResourceManager.GetString("M0023", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Nome do arquivo muito longo.
         /// </summary>
         internal static string M0024 {
             get {
                 return ResourceManager.GetString("M0024", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir esse veículo. Existem informações vinculadas a ele.
+        /// </summary>
+        internal static string M0025 {
+            get {
+                return ResourceManager.GetString("M0025", resourceCulture);
             }
         }
         

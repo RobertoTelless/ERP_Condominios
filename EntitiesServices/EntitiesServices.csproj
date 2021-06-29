@@ -201,6 +201,7 @@
     <Compile Include="EntitiesServices\TarefaService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
+    <Compile Include="EntitiesServices\VeiculoService.cs" />
     <Compile Include="EntitiesServices\VagaService.cs" />
     <Compile Include="EntitiesServices\UnidadeService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITorreRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaNotificacaoRepository.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Interfaces\Repositories\ILogRepository.cs" />
     <Compile Include="Interfaces\Repositories\INoticiaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\INoticiaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IVeiculoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUnidadeAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\INotificacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\INotificacaoRepository.cs" />
@@ -247,6 +250,7 @@
     <Compile Include="Interfaces\Services\ITarefaService.cs" />
     <Compile Include="Interfaces\Services\ITemplateService.cs" />
     <Compile Include="Interfaces\Services\ITipoPessoaService.cs" />
+    <Compile Include="Interfaces\Services\IVeiculoService.cs" />
     <Compile Include="Interfaces\Services\IVagaService.cs" />
     <Compile Include="Interfaces\Services\IUnidadeService.cs" />
     <Compile Include="Interfaces\Services\IUsuarioService.cs" />
