@@ -1337,6 +1337,7 @@
           <Property Name="VEIC_IN_CONFIRMA_VAGA" Type="int" />
           <Property Name="VEIC_DT_CONFIRMACAO" Type="date" />
           <Property Name="VEIC_AQ_FOTO" Type="varchar" MaxLength="250" />
+          <Property Name="VEIC_NM_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" Nullable="false" />
         </EntityType>
         <EntityType Name="VEICULO_ANEXO">
           <Key>
@@ -5702,6 +5703,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="VEICULO" ToRole="USUARIO" />
           <NavigationProperty Name="VAGA" Relationship="Self.FK_VEICULO_VAGA" FromRole="VEICULO" ToRole="VAGA" />
           <NavigationProperty Name="VEICULO_ANEXO" Relationship="Self.FK_VEICULO_ANEXO_VEICULO" FromRole="VEICULO" ToRole="VEICULO_ANEXO" />
+          <Property Name="VEIC_NM_EXIBE" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="VEICULO_ANEXO">
           <Key>
@@ -9855,6 +9857,7 @@
           <EntitySetMapping Name="VEICULO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.VEICULO">
               <MappingFragment StoreEntitySet="VEICULO">
+                <ScalarProperty Name="VEIC_NM_EXIBE" ColumnName="VEIC_NM_EXIBE" />
                 <ScalarProperty Name="VEIC_CD_ID" ColumnName="VEIC_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />

@@ -557,7 +557,8 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     NOTIFICACAO item = Mapper.Map<NotificacaoViewModel, NOTIFICACAO>(vm);
-                    Int32 volta = baseApp.GerarNotificacao(item, usuarioLogado);
+                    VAGA vaga = (VAGA)Session["Vaga"];
+                    Int32 volta = baseApp.GerarNotificacao(item, vm.USUARIO, vaga, "NOTIVAGA");
 
                     // Verifica retorno
 
@@ -576,5 +577,44 @@ namespace ERP_Condominios_Solution.Controllers
                 return View(vm);
             }
         }
+
+        [HttpPost]
+        public ActionResult AtribuirVaga(VagaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVA_CD_ID", "TIVA_NM_NOME");
+            ViewBag.Unids = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    VAGA item = Mapper.Map<VagaViewModel, VAGA>(vm);
+                    Int32 volta = baseApp.ValidateAtribuicao(item, objetoAntes, usuarioLogado);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMaster = new List<VAGA>();
+                    Session["MensVaga"] = 0;
+                    return RedirectToAction("VoltarBaseVaga");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
     }
 }

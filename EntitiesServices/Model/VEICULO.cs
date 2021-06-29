@@ -38,6 +38,7 @@ namespace EntitiesServices.Model
         public Nullable<int> VEIC_IN_CONFIRMA_VAGA { get; set; }
         public Nullable<System.DateTime> VEIC_DT_CONFIRMACAO { get; set; }
         public string VEIC_AQ_FOTO { get; set; }
+        public string VEIC_NM_EXIBE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual TIPO_VEICULO TIPO_VEICULO { get; set; }

@@ -14,7 +14,8 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(VAGA item, VAGA itemAntes);
         Int32 ValidateDelete(VAGA item, USUARIO usuario);
         Int32 ValidateReativar(VAGA item, USUARIO usuario);
-        Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario);
+        Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, VAGA vaga, String template);
+        Int32 ValidateAtribuicao(VAGA item, VAGA itemAntes, USUARIO usuario);
 
         VAGA CheckExist(VAGA item, Int32 idAss);
         VAGA GetItemById(Int32 id);

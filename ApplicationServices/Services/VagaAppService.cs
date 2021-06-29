@@ -197,6 +197,45 @@ namespace ApplicationServices.Services
             }
         }
 
+        public Int32 ValidateAtribuicao(VAGA item, VAGA itemAntes, USUARIO usuario)
+        {
+            try
+            {
+                // Monta Log
+                LOG log = new LOG
+                {
+                    LOG_DT_DATA = DateTime.Now,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                    USUA_CD_ID = usuario.USUA_CD_ID,
+                    LOG_NM_OPERACAO = "EditVAGA",
+                    LOG_IN_ATIVO = 1,
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<VAGA>(item),
+                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<VAGA>(itemAntes)
+                };
+
+                // Persiste
+                Int32 volta = _baseService.Edit(item, log);
+
+                // Emite notificação e SMS
+                NOTIFICACAO not = new NOTIFICACAO();
+                not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                not.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                not.NOTI_IN_ATIVO = 1;
+                not.NOTI_IN_NIVEL = 1;
+                not.NOTI_IN_ORIGEM = 1;
+                not.NOTI_IN_STATUS = 1;
+                not.NOTI_IN_VISTA = 0;
+                not.NOTI_NM_TITULO = "Notificação para Morador / Atribuição de Vaga";
+                volta = GerarNotificacao(not, usuario, item, "ATRIVAGA");
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateDelete(VAGA item, USUARIO usuario)
         {
             try
@@ -259,7 +298,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, VAGA vaga)
+        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, VAGA vaga, String template)
         {
             try
             {
@@ -277,9 +316,9 @@ namespace ApplicationServices.Services
                     volta = _notiService.Create(item);
 
                     // Recupera template e-mail
-                    String header = _temService.GetByCode("NOTIVAGA").TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode("NOTIVAGA").TEMP_TX_CORPO;
-                    String footer = _temService.GetByCode("NOTIVAGA").TEMP_TX_DADOS;
+                    String header = _temService.GetByCode(template).TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode(template).TEMP_TX_CORPO;
+                    String footer = _temService.GetByCode(template).TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
