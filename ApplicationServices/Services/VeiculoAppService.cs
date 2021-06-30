@@ -128,6 +128,7 @@ namespace ApplicationServices.Services
                     return 1;
                 }
 
+
                 // Completa objeto
                 item.VEIC_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;

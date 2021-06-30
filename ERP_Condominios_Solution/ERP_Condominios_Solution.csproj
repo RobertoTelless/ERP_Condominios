@@ -2929,7 +2929,6 @@
     <Folder Include="Imagens\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Usuario\" />
-    <Folder Include="Views\ZZ\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

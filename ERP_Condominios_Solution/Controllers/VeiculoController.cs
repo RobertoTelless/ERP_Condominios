@@ -721,6 +721,114 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("VoltarAnexoVeiculo");
         }
 
+        [HttpPost]
+        public ActionResult UploadFotoQueueVeiculo(FileQueue file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdVolta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensVeiculo"] = 5;
+                return RedirectToAction("VoltarAnexoVeiculo");
+            }
+
+            VEICULO item = baseApp.GetById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = file.Name;
+            if (fileName.Length > 250)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensVeiculo"] = 6;
+                return RedirectToAction("VoltarAnexoVeiculo");
+            }
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Veiculo/" + item.VEIC_CD_ID.ToString() + "/Anexos/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            System.IO.File.WriteAllBytes(path, file.Contents);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Checa extensão
+            if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
+            {
+                // Salva arquivo
+                System.IO.File.WriteAllBytes(path, file.Contents);
+
+                // Gravar registro
+                item.VEIC_AQ_FOTO = "~" + caminho + fileName;
+                objeto = item;
+                Int32 volta = baseApp.ValidateEdit(item, objeto);
+            }
+            else
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensVeiculo"] = 6;
+                return RedirectToAction("VoltarAnexoVeiculo");
+            }
+            return RedirectToAction("VoltarAnexoVeiculo");
+        }
+
+        [HttpPost]
+        public ActionResult UploadFotoVeiculo(HttpPostedFileBase file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdVolta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensVeiculo"] = 5;
+                return RedirectToAction("VoltarAnexoVeiculo");
+            }
+
+            VEICULO item = baseApp.GetById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = Path.GetFileName(file.FileName);
+            if (fileName.Length > 250)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensVeiculo"] = 6;
+                return RedirectToAction("VoltarAnexoVeiculo");
+            }
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Veiculo/" + item.VEIC_CD_ID.ToString() + "/Anexos/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            file.SaveAs(path);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Checa extensão
+            if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
+            {
+                // Salva arquivo
+                file.SaveAs(path);
+
+                // Gravar registro
+                item.VEIC_AQ_FOTO = "~" + caminho + fileName;
+                objeto = item;
+                Int32 volta = baseApp.ValidateEdit(item, objeto);
+            }
+            else
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensVeiculo"] = 6;
+                return RedirectToAction("VoltarAnexoVeiculo");
+            }
+            return RedirectToAction("VoltarAnexoVeiculo");
+        }
+
         [HttpGet]
         public ActionResult GerarNotificacaoVeiculo()
         {
