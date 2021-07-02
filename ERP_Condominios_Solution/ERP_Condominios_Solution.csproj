@@ -280,6 +280,8 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CondominioController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
+    <Compile Include="Controllers\FornecedorController.cs" />
+    <Compile Include="Controllers\FornecedorNovoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
@@ -302,6 +304,8 @@
     <Compile Include="ViewModels\CategoriaAgendaViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />
+    <Compile Include="ViewModels\FornecedorViewModel.cs" />
+    <Compile Include="ViewModels\FornecedorContatoViewModel.cs" />
     <Compile Include="ViewModels\NoticiaViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
@@ -2923,6 +2927,27 @@
     <Content Include="Views\Veiculo\VerVeiculo.cshtml" />
     <Content Include="Views\Veiculo\VerAnexoVeiculo.cshtml" />
     <Content Include="Views\Veiculo\GerarNotificacaoVeiculo.cshtml" />
+    <Content Include="Views\Fornecedor\MontarTelaFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\IncluirFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\EditarFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\ReativarFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\ExcluirFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerCardsFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\VerAnexoFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\EditarContatoFornecedor.cshtml" />
+    <Content Include="Views\Fornecedor\IncluirContatoFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\MontarTelaFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\IncluirFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\EditarFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\VerFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\ExcluirFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\ReativarFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\VerCardsFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\VerAnexoFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\EditarContatoFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\IncluirContatoFornecedor.cshtml" />
+    <Content Include="Views\FornecedorNovo\VerFornecedorInativos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

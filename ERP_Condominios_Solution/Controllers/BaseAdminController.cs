@@ -108,6 +108,7 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["Perfis"] = baseApp.GetAllPerfis();
                 Session["Usuarios"] = usuApp.GetAllUsuarios(idAss);
                 Session["TiposPessoas"] = tpApp.GetAllItens();
+                Session["UFs"] = tpApp.GetAllItens();
             }
             Session["MensTarefa"] = 0;
             Session["MensNoticia"] = 0;

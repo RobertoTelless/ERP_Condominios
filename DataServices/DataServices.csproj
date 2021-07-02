@@ -190,8 +190,13 @@
     <Compile Include="Repositories\AgendaRepository.cs" />
     <Compile Include="Repositories\AssinanteRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />
+    <Compile Include="Repositories\CategoriaFornecedorRepository.cs" />
     <Compile Include="Repositories\CategoriaNotificacaoRepository.cs" />
     <Compile Include="Repositories\ConfiguracaoRepository.cs" />
+    <Compile Include="Repositories\FornecedorAnexoRepository.cs" />
+    <Compile Include="Repositories\FornecedorCnpjRepository.cs" />
+    <Compile Include="Repositories\FornecedorContatoRepository.cs" />
+    <Compile Include="Repositories\FornecedorRepository.cs" />
     <Compile Include="Repositories\LogRepository.cs" />
     <Compile Include="Repositories\NoticiaComentarioRepository.cs" />
     <Compile Include="Repositories\NoticiaRepository.cs" />

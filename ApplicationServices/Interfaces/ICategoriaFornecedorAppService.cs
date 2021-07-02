@@ -13,8 +13,9 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(CATEGORIA_FORNECEDOR item, CATEGORIA_FORNECEDOR itemAntes, USUARIO usuario);
         Int32 ValidateDelete(CATEGORIA_FORNECEDOR item, USUARIO usuario);
         Int32 ValidateReativar(CATEGORIA_FORNECEDOR item, USUARIO usuario);
-        List<CATEGORIA_FORNECEDOR> GetAllItens();
+
+        List<CATEGORIA_FORNECEDOR> GetAllItens(Int32 idAss);
         CATEGORIA_FORNECEDOR GetItemById(Int32 id);
-        List<CATEGORIA_FORNECEDOR> GetAllItensAdm();
+        List<CATEGORIA_FORNECEDOR> GetAllItensAdm(Int32 idAss);
     }
 }

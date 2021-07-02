@@ -9,7 +9,7 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IFornecedorAnexoRepository : IRepositoryBase<FORNECEDOR_ANEXO>
     {
-        List<FORNECEDOR_ANEXO> GetAllItens();
+        List<FORNECEDOR_ANEXO> GetAllItens(Int32 idAss);
         FORNECEDOR_ANEXO GetItemById(Int32 id);
     }
 }

@@ -83,6 +83,9 @@ namespace Presentation.Start
             kernel.Bind<IUnidadeAppService>().To<UnidadeAppService>();
             kernel.Bind<IVagaAppService>().To<VagaAppService>();
             kernel.Bind<IVeiculoAppService>().To<VeiculoAppService>();
+            kernel.Bind<ICategoriaFornecedorAppService>().To<CategoriaFornecedorAppService>();
+            kernel.Bind<IFornecedorAppService>().To<FornecedorAppService>();
+            kernel.Bind<IFornecedorCnpjAppService>().To<FornecedorCnpjAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -99,6 +102,9 @@ namespace Presentation.Start
             kernel.Bind<IUnidadeService>().To<UnidadeService>();
             kernel.Bind<IVagaService>().To<VagaService>();
             kernel.Bind<IVeiculoService>().To<VeiculoService>();
+            kernel.Bind<ICategoriaFornecedorService>().To<CategoriaFornecedorService>();
+            kernel.Bind<IFornecedorService>().To<FornecedorService>();
+            kernel.Bind<IFornecedorCnpjService>().To<FornecedorCnpjService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -133,6 +139,11 @@ namespace Presentation.Start
             kernel.Bind<IVeiculoRepository>().To<VeiculoRepository>();
             kernel.Bind<ITipoVeiculoRepository>().To<TipoVeiculoRepository>();
             kernel.Bind<IVeiculoAnexoRepository>().To<VeiculoAnexoRepository>();
+            kernel.Bind<ICategoriaFornecedorRepository>().To<CategoriaFornecedorRepository>();
+            kernel.Bind<IFornecedorRepository>().To<FornecedorRepository>();
+            kernel.Bind<IFornecedorAnexoRepository>().To<FornecedorAnexoRepository>();
+            kernel.Bind<IFornecedorCnpjRepository>().To<FornecedorCnpjRepository>();
+            kernel.Bind<IFornecedorContatoRepository>().To<FornecedorContatoRepository>();
 
         }
     }

@@ -21,9 +21,9 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<FORNECEDOR> GetAllItens()
+        public List<FORNECEDOR> GetAllItens(Int32 idAss)
         {
-            List<FORNECEDOR> lista = _baseService.GetAllItens();
+            List<FORNECEDOR> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
@@ -38,9 +38,9 @@ namespace ApplicationServices.Services
             return _baseService.GetUFbySigla(sigla);
         }
 
-        public List<FORNECEDOR> GetAllItensAdm()
+        public List<FORNECEDOR> GetAllItensAdm(Int32 idAss)
         {
-            List<FORNECEDOR> lista = _baseService.GetAllItensAdm();
+            List<FORNECEDOR> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -56,15 +56,15 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public FORNECEDOR CheckExist(FORNECEDOR conta)
+        public FORNECEDOR CheckExist(FORNECEDOR conta, Int32 idAss)
         {
-            FORNECEDOR item = _baseService.CheckExist(conta);
+            FORNECEDOR item = _baseService.CheckExist(conta, idAss);
             return item;
         }
 
-        public List<CATEGORIA_FORNECEDOR> GetAllTipos()
+        public List<CATEGORIA_FORNECEDOR> GetAllTipos(Int32 idAss)
         {
-            List<CATEGORIA_FORNECEDOR> lista = _baseService.GetAllTipos();
+            List<CATEGORIA_FORNECEDOR> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
@@ -74,7 +74,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? catId, String nome, String cpf, String cnpj, String email, String cidade, Int32? uf, String rede, Int32? ativo, out List<FORNECEDOR> objeto)
+        public Int32 ExecuteFilter(Int32? catId, String razao, String nome, String cpf, String cnpj, String email, String cidade, Int32? uf, String rede, Int32? ativo, Int32 idAss, out List<FORNECEDOR> objeto)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(catId, nome, cpf, cnpj, email, cidade, uf, rede, ativo);
+                objeto = _baseService.ExecuteFilter(catId, razao, nome, cpf, cnpj, email, cidade, uf, rede, ativo, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -95,7 +95,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ExecuteFilterSemPedido(String nome, String cidade, Int32? uf, out List<FORNECEDOR> objeto)
+        public Int32 ExecuteFilterSemPedido(String nome, String cidade, Int32? uf, Int32 idAss, out List<FORNECEDOR> objeto)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilterSemPedido(nome, cidade, uf);
+                objeto = _baseService.ExecuteFilterSemPedido(nome, cidade, uf, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -121,19 +121,19 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
 
                 // Completa objeto
                 item.FORN_IN_ATIVO = 1;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Checa endereço
-                if (String.IsNullOrEmpty(item.FORN_NM_ENDERECO))
+                if (String.IsNullOrEmpty(item.FORM_NM_ENDERECO))
                 {
-                    item.FORN_NM_ENDERECO = "-";
+                    item.FORM_NM_ENDERECO = "-";
                 }
                 if (String.IsNullOrEmpty(item.FORN_NM_BAIRRO))
                 {
@@ -156,7 +156,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddFORN",
                     LOG_IN_ATIVO = 1,
@@ -178,9 +178,9 @@ namespace ApplicationServices.Services
             try
             {
                 // Checa endereço
-                if (String.IsNullOrEmpty(item.FORN_NM_ENDERECO))
+                if (String.IsNullOrEmpty(item.FORM_NM_ENDERECO))
                 {
-                    item.FORN_NM_ENDERECO = "-";
+                    item.FORM_NM_ENDERECO = "-";
                 }
                 if (String.IsNullOrEmpty(item.FORN_NM_BAIRRO))
                 {
@@ -204,7 +204,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditFORN",
                     LOG_IN_ATIVO = 1,
@@ -226,9 +226,9 @@ namespace ApplicationServices.Services
             try
             {
                 // Checa endereço
-                if (String.IsNullOrEmpty(item.FORN_NM_ENDERECO))
+                if (String.IsNullOrEmpty(item.FORM_NM_ENDERECO))
                 {
-                    item.FORN_NM_ENDERECO = "-";
+                    item.FORM_NM_ENDERECO = "-";
                 }
                 if (String.IsNullOrEmpty(item.FORN_NM_BAIRRO))
                 {
@@ -258,10 +258,10 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica integridade referencial
-                if (item.CONTA_PAGAR.Count > 0 || item.EQUIPAMENTO_MANUTENCAO.Count > 0)
-                {
-                    return 1;
-                }
+                //if (item.CONTA_PAGAR.Count > 0 || item.EQUIPAMENTO_MANUTENCAO.Count > 0)
+                //{
+                //    return 1;
+                //}
                
                 // Acerta campos
                 item.FORN_IN_ATIVO = 0;
@@ -270,7 +270,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelFORN",
@@ -299,7 +299,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatFORN",

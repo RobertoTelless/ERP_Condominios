@@ -186,6 +186,12 @@
   <data name="M0025" xml:space="preserve">
     <value>Não é possível excluir esse veículo. Existem informações vinculadas a ele</value>
   </data>
+  <data name="M0026" xml:space="preserve">
+    <value>Fornecedor já cadastrado</value>
+  </data>
+  <data name="M0027" xml:space="preserve">
+    <value>Não é possível excluir esse fornecedor. Existem informações vinculadas a ele</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

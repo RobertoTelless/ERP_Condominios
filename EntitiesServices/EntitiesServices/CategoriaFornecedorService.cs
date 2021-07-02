@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly ICategoriaFornecedorRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public CategoriaFornecedorService(ICategoriaFornecedorRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -35,14 +35,14 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<CATEGORIA_FORNECEDOR> GetAllItens()
+        public List<CATEGORIA_FORNECEDOR> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<CATEGORIA_FORNECEDOR> GetAllItensAdm()
+        public List<CATEGORIA_FORNECEDOR> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public Int32 Create(CATEGORIA_FORNECEDOR item, LOG log)

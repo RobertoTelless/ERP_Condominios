@@ -13,7 +13,7 @@ namespace DataServices.Repositories
 {
     public class FornecedorAnexoRepository : RepositoryBase<FORNECEDOR_ANEXO>, IFornecedorAnexoRepository
     {
-        public List<FORNECEDOR_ANEXO> GetAllItens()
+        public List<FORNECEDOR_ANEXO> GetAllItens(Int32 idAss)
         {
             return Db.FORNECEDOR_ANEXO.ToList();
         }

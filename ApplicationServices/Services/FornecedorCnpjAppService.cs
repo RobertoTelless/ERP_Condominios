@@ -21,15 +21,15 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public FORNECEDOR_QUADRO_SOCIETARIO CheckExist(FORNECEDOR_QUADRO_SOCIETARIO fqs)
+        public FORNECEDOR_QUADRO_SOCIETARIO CheckExist(FORNECEDOR_QUADRO_SOCIETARIO fqs, Int32 idAss)
         {
-            FORNECEDOR_QUADRO_SOCIETARIO item = _baseService.CheckExist(fqs);
+            FORNECEDOR_QUADRO_SOCIETARIO item = _baseService.CheckExist(fqs, idAss);
             return item;
         }
 
-        public List<FORNECEDOR_QUADRO_SOCIETARIO> GetAllItens()
+        public List<FORNECEDOR_QUADRO_SOCIETARIO> GetAllItens(Int32 idAss)
         {
-            List<FORNECEDOR_QUADRO_SOCIETARIO> lista = _baseService.GetAllItens();
+            List<FORNECEDOR_QUADRO_SOCIETARIO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 

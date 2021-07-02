@@ -25,7 +25,7 @@ namespace ModelServices.EntitiesServices
         private readonly ITipoPessoaRepository _pesRepository;
         private readonly IFornecedorContatoRepository _contRepository;
         private readonly IUFRepository _ufRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public FornecedorService(IFornecedorRepository baseRepository, ILogRepository logRepository, ICategoriaFornecedorRepository tipoRepository, IFornecedorAnexoRepository anexoRepository, ITipoPessoaRepository pesRepository, IFornecedorContatoRepository contRepository, IUFRepository ufRepository) : base(baseRepository)
         {
@@ -38,9 +38,9 @@ namespace ModelServices.EntitiesServices
             _ufRepository = ufRepository;
         }
 
-        public FORNECEDOR CheckExist(FORNECEDOR conta)
+        public FORNECEDOR CheckExist(FORNECEDOR conta, Int32 idAss)
         {
-            FORNECEDOR item = _baseRepository.CheckExist(conta);
+            FORNECEDOR item = _baseRepository.CheckExist(conta, idAss);
             return item;
         }
 
@@ -60,9 +60,9 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<FORNECEDOR> GetAllItens()
+        public List<FORNECEDOR> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
         public List<UF> GetAllUF()
@@ -70,14 +70,14 @@ namespace ModelServices.EntitiesServices
             return _ufRepository.GetAllItens();
         }
 
-        public List<FORNECEDOR> GetAllItensAdm()
+        public List<FORNECEDOR> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<CATEGORIA_FORNECEDOR> GetAllTipos()
+        public List<CATEGORIA_FORNECEDOR> GetAllTipos(Int32 idAss)
         {
-            return _tipoRepository.GetAllItens();
+            return _tipoRepository.GetAllItens(idAss);
         }
 
         public FORNECEDOR_ANEXO GetAnexoById(Int32 id)
@@ -85,15 +85,15 @@ namespace ModelServices.EntitiesServices
             return _anexoRepository.GetItemById(id);
         }
 
-        public List<FORNECEDOR> ExecuteFilter(Int32? catId, String nome, String cpf, String cnpj, String email, String cidade, Int32? uf, String rede, Int32? ativo)
+        public List<FORNECEDOR> ExecuteFilter(Int32? catId, String razao, String nome, String cpf, String cnpj, String email, String cidade, Int32? uf, String rede, Int32? ativo, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(catId, nome, cpf, cnpj, email, cidade, uf, rede, ativo);
+            return _baseRepository.ExecuteFilter(catId, razao, nome, cpf, cnpj, email, cidade, uf, rede, ativo, idAss);
 
         }
 
-        public List<FORNECEDOR> ExecuteFilterSemPedido(String nome, String cidade, Int32? uf)
+        public List<FORNECEDOR> ExecuteFilterSemPedido(String nome, String cidade, Int32? uf, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilterSemPedido(nome, cidade, uf);
+            return _baseRepository.ExecuteFilterSemPedido(nome, cidade, uf, idAss);
         }
 
         public Int32 Create(FORNECEDOR item, LOG log)

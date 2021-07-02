@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IFornecedorCnpjRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public FornecedorCnpjService(IFornecedorCnpjRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -28,15 +28,15 @@ namespace ModelServices.EntitiesServices
             _logRepository = logRepository;
         }
 
-        public FORNECEDOR_QUADRO_SOCIETARIO CheckExist(FORNECEDOR_QUADRO_SOCIETARIO fqs)
+        public FORNECEDOR_QUADRO_SOCIETARIO CheckExist(FORNECEDOR_QUADRO_SOCIETARIO fqs, Int32 idAss)
         {
-            FORNECEDOR_QUADRO_SOCIETARIO item = _baseRepository.CheckExist(fqs);
+            FORNECEDOR_QUADRO_SOCIETARIO item = _baseRepository.CheckExist(fqs, idAss);
             return item;
         }
 
-        public List<FORNECEDOR_QUADRO_SOCIETARIO> GetAllItens()
+        public List<FORNECEDOR_QUADRO_SOCIETARIO> GetAllItens(Int32 idAss)
         {
-            List<FORNECEDOR_QUADRO_SOCIETARIO> lista = _baseRepository.GetAllItens();
+            List<FORNECEDOR_QUADRO_SOCIETARIO> lista = _baseRepository.GetAllItens(idAss);
             return lista;
         }
 
