@@ -267,6 +267,23 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" />
         <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE_ANEXO" Width="1.5" PointX="12.75" PointY="155" />
         <AssociationConnector Association="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="15" PointY="98.625" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO" Width="1.5" PointX="12.75" PointY="74.125" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO_ANEXO" Width="1.5" PointX="15" PointY="77.25" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="13.5" PointY="105.625" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="62.875" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_CATEGORIA_PRODUTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_ANEXO_PRODUTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_PRODUTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_TELEFONE_UF" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

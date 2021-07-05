@@ -661,6 +661,26 @@
           <Property Name="MAMO_QN_ANTES" Type="int" />
           <Property Name="MAMO_QN_DEPOIS" Type="int" />
         </EntityType>
+        <EntityType Name="MOVIMENTO_ESTOQUE_PRODUTO">
+          <Key>
+            <PropertyRef Name="MOEP_CD_ID" />
+          </Key>
+          <Property Name="MOEP_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="MOEP_DT_MOVIMENTO" Type="date" Nullable="false" />
+          <Property Name="MOEP_IN_TIPO_MOVIMENTO" Type="int" Nullable="false" />
+          <Property Name="MOEP_QN_QUANTIDADE" Type="int" Nullable="false" />
+          <Property Name="MOEP_IN_ORIGEM" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MOEP_IN_CHAVE_ORIGEM" Type="int" Nullable="false" />
+          <Property Name="MOEP_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="MOEP_DS_JUSTIFICATIVA" Type="text" />
+          <Property Name="MOEP_QN_ANTES" Type="int" />
+          <Property Name="MOEP_QN_DEPOIS" Type="int" />
+          <Property Name="MOEP_QN_ALTERADA" Type="int" />
+          <Property Name="MOEP_IN_OPERACAO" Type="int" />
+        </EntityType>
         <EntityType Name="NOTICIA">
           <Key>
             <PropertyRef Name="NOTC_CD_ID" />
@@ -786,6 +806,66 @@
           <Property Name="PETA_NR_DIAS" Type="int" Nullable="false" />
           <Property Name="PETA_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="PRODUTO">
+          <Key>
+            <PropertyRef Name="PROD_CD_ID" />
+          </Key>
+          <Property Name="PROD_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CAPR_CD_ID" Type="int" />
+          <Property Name="SCPR_CD_ID" Type="int" />
+          <Property Name="UNID_CD_ID" Type="int" />
+          <Property Name="PROD_NM_NOME" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="PROD_DS_DESCRICAO" Type="varchar" MaxLength="1000" />
+          <Property Name="PROD_QN_QUANTIDADE_MINIMA" Type="int" Nullable="false" />
+          <Property Name="PROD_QN_QUANTIDADE_INICIAL" Type="int" Nullable="false" />
+          <Property Name="PROD_QN_ESTOQUE" Type="int" Nullable="false" />
+          <Property Name="PROD_DT_ULTIMA_MOVIMENTACAO" Type="datetime" />
+          <Property Name="PROD_IN_AVISA_MINIMO" Type="int" Nullable="false" />
+          <Property Name="PROD_DT_CADASTRO" Type="datetime" Nullable="false" />
+          <Property Name="PROD_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="PROD_AQ_FOTO" Type="varchar" MaxLength="250" />
+          <Property Name="PROD_CD_CODIGO" Type="varchar" MaxLength="20" />
+          <Property Name="PROD_VL_PRECO_VENDA" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_VL_PRECO_PROMOCAO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_DS_INFORMACOES" Type="varchar" MaxLength="1000" />
+          <Property Name="PROD_QN_QUANTIDADE_MAXIMA" Type="int" />
+          <Property Name="PROD_QN_RESERVA_ESTOQUE" Type="int" />
+          <Property Name="PROD_NR_REFERENCIA" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_NM_LOCALIZACAO_ESTOQUE" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_VL_CUSTO" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_TX_OBSERVACOES" Type="text" />
+          <Property Name="PROD_NM_MARCA" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_NM_MODELO" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_NM_REFERENCIA_FABRICANTE" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_NM_FABRICANTE" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_NR_BARCODE" Type="varchar" MaxLength="50" />
+          <Property Name="PROD_QR_QRCODE" Type="varchar" MaxLength="250" />
+          <Property Name="PROD_DS_JUSTIFICATIVA" Type="text" />
+          <Property Name="PROD_QN_NOVA_CONTAGEM" Type="int" />
+          <Property Name="PROD_QN_CONTAGEM" Type="int" />
+        </EntityType>
+        <EntityType Name="PRODUTO_ANEXO">
+          <Key>
+            <PropertyRef Name="PRAN_CD_ID" />
+          </Key>
+          <Property Name="PRAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRAN_NM_TITULO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PRAN_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="PRAN_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="PRAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="PRAN_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUTO_FORNECEDOR">
+          <Key>
+            <PropertyRef Name="PRFO_CD_ID" />
+          </Key>
+          <Property Name="PRFO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="int" Nullable="false" />
+          <Property Name="FORN_CD_ID" Type="int" Nullable="false" />
+          <Property Name="PRFO_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="RESERVA">
           <Key>
             <PropertyRef Name="RESE_CD_ID" />
@@ -903,6 +983,16 @@
           <Property Name="SOMV_DS_TEXTO" Type="varchar" MaxLength="5000" />
           <Property Name="SOMV_DS_RESPOSTA" Type="varchar" MaxLength="5000" />
         </EntityType>
+        <EntityType Name="SUBCATEGORIA_PRODUTO">
+          <Key>
+            <PropertyRef Name="SCPR_CD_ID" />
+          </Key>
+          <Property Name="SCPR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CAPR_CD_ID" Type="int" />
+          <Property Name="SCPR_NM_NOME" Type="varchar" MaxLength="50" />
+          <Property Name="SCPR_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="SUBGRUPO">
           <Key>
             <PropertyRef Name="SUBG_CD_ID" />
@@ -991,6 +1081,12 @@
           <Property Name="TELE_NR_WHATSAPP" Type="varchar" MaxLength="50" />
           <Property Name="TELE_NM_EMAIL" Type="varchar" MaxLength="150" />
           <Property Name="TELE_IN_ATIVO" Type="int" />
+          <Property Name="TELE_NM_ENDERECO" Type="varchar" MaxLength="50" />
+          <Property Name="TELE_NM_BAIRRO" Type="varchar" MaxLength="50" />
+          <Property Name="TELE_NM_CIDADE" Type="varchar" MaxLength="50" />
+          <Property Name="UF_CD_ID" Type="int" />
+          <Property Name="TELE_NR_CEP" Type="varchar" MaxLength="10" />
+          <Property Name="TELE_TX_OBSERVACOES" Type="text" />
         </EntityType>
         <EntityType Name="TEMPLATE">
           <Key>
@@ -2407,6 +2503,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="MOVIMENTO_ESTOQUE_PRODUTO" Type="Self.MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="MOVIMENTO_ESTOQUE_PRODUTO" Type="Self.MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_NOTICIA_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="NOTICIA" Type="Self.NOTICIA" Multiplicity="*" />
@@ -2584,6 +2704,90 @@
             </Principal>
             <Dependent Role="PERIODICIDADE_TAREFA">
               <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_ANEXO_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="PRODUTO_ANEXO" Type="Self.PRODUTO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_ANEXO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_CATEGORIA_PRODUTO">
+          <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_FORNECEDOR_FORNECEDOR">
+          <End Role="FORNECEDOR" Type="Self.FORNECEDOR" Multiplicity="1" />
+          <End Role="PRODUTO_FORNECEDOR" Type="Self.PRODUTO_FORNECEDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_FORNECEDOR_PRODUTO">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="PRODUTO_FORNECEDOR" Type="Self.PRODUTO_FORNECEDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_FORNECEDOR">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_SUBCATEGORIA_PRODUTO">
+          <End Role="SUBCATEGORIA_PRODUTO" Type="Self.SUBCATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBCATEGORIA_PRODUTO">
+              <PropertyRef Name="SCPR_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="SCPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_UNIDADE">
+          <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="0..1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="UNID_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2791,6 +2995,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SUBCATEGORIA_PRODUTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="SUBCATEGORIA_PRODUTO" Type="Self.SUBCATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="SUBCATEGORIA_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO">
+          <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Role="SUBCATEGORIA_PRODUTO" Type="Self.SUBCATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Principal>
+            <Dependent Role="SUBCATEGORIA_PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SUBGRUPO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="SUBGRUPO" Type="Self.SUBGRUPO" Multiplicity="*" />
@@ -2968,6 +3196,18 @@
             </Principal>
             <Dependent Role="TELEFONE">
               <PropertyRef Name="CATE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TELEFONE_UF">
+          <End Role="UF" Type="Self.UF" Multiplicity="0..1" />
+          <End Role="TELEFONE" Type="Self.TELEFONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UF">
+              <PropertyRef Name="UF_CD_ID" />
+            </Principal>
+            <Dependent Role="TELEFONE">
+              <PropertyRef Name="UF_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3368,6 +3608,7 @@
           <EntitySet Name="MATERIAL_ANEXO" EntityType="Self.MATERIAL_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIAL_FORNECEDOR" EntityType="Self.MATERIAL_FORNECEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIAL_MOVIMENTO" EntityType="Self.MATERIAL_MOVIMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MOVIMENTO_ESTOQUE_PRODUTO" EntityType="Self.MOVIMENTO_ESTOQUE_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICIA" EntityType="Self.NOTICIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTICIA_COMENTARIO" EntityType="Self.NOTICIA_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NOTIFICACAO" EntityType="Self.NOTIFICACAO" Schema="dbo" store:Type="Tables" />
@@ -3377,6 +3618,9 @@
           <EntitySet Name="OCORRENCIA_COMENTARIO" EntityType="Self.OCORRENCIA_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERFIL" EntityType="Self.PERFIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PERIODICIDADE_TAREFA" EntityType="Self.PERIODICIDADE_TAREFA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTO" EntityType="Self.PRODUTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTO_ANEXO" EntityType="Self.PRODUTO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUTO_FORNECEDOR" EntityType="Self.PRODUTO_FORNECEDOR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESERVA" EntityType="Self.RESERVA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESERVA_ANEXO" EntityType="Self.RESERVA_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RESERVA_COMENTARIO" EntityType="Self.RESERVA_COMENTARIO" Schema="dbo" store:Type="Tables" />
@@ -3384,6 +3628,7 @@
           <EntitySet Name="SOLICITACAO_MUDANCA_ANEXO" EntityType="Self.SOLICITACAO_MUDANCA_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOLICITACAO_MUDANCA_COMENTARIO" EntityType="Self.SOLICITACAO_MUDANCA_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SOLICITACAO_MUDANCA_MOVIMENTO" EntityType="Self.SOLICITACAO_MUDANCA_MOVIMENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUBCATEGORIA_PRODUTO" EntityType="Self.SUBCATEGORIA_PRODUTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBGRUPO" EntityType="Self.SUBGRUPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAREFA" EntityType="Self.TAREFA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAREFA_ACOMPANHAMENTO" EntityType="Self.TAREFA_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
@@ -3770,6 +4015,14 @@
             <End Role="UNIDADE_MATERIAL" EntitySet="UNIDADE_MATERIAL" />
             <End Role="MATERIAL" EntitySet="MATERIAL" />
           </AssociationSet>
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_NOTICIA_ASSINANTE" Association="Self.FK_NOTICIA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="NOTICIA" EntitySet="NOTICIA" />
@@ -3829,6 +4082,34 @@
           <AssociationSet Name="FK_PERIODICIDADE_TAREFA_ASSINANTE" Association="Self.FK_PERIODICIDADE_TAREFA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="PERIODICIDADE_TAREFA" EntitySet="PERIODICIDADE_TAREFA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_ANEXO_PRODUTO" Association="Self.FK_PRODUTO_ANEXO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_ANEXO" EntitySet="PRODUTO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_ASSINANTE" Association="Self.FK_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_CATEGORIA_PRODUTO" Association="Self.FK_PRODUTO_CATEGORIA_PRODUTO">
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_FORNECEDOR_FORNECEDOR" Association="Self.FK_PRODUTO_FORNECEDOR_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="PRODUTO_FORNECEDOR" EntitySet="PRODUTO_FORNECEDOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_FORNECEDOR_PRODUTO" Association="Self.FK_PRODUTO_FORNECEDOR_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_FORNECEDOR" EntitySet="PRODUTO_FORNECEDOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_SUBCATEGORIA_PRODUTO" Association="Self.FK_PRODUTO_SUBCATEGORIA_PRODUTO">
+            <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_UNIDADE" Association="Self.FK_PRODUTO_UNIDADE">
+            <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_RESERVA_AMBIENTE" Association="Self.FK_RESERVA_AMBIENTE">
             <End Role="AMBIENTE" EntitySet="AMBIENTE" />
@@ -3898,6 +4179,14 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="SOLICITACAO_MUDANCA" EntitySet="SOLICITACAO_MUDANCA" />
           </AssociationSet>
+          <AssociationSet Name="FK_SUBCATEGORIA_PRODUTO_ASSINANTE" Association="Self.FK_SUBCATEGORIA_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" Association="Self.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO">
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+            <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_SUBGRUPO_ASSINANTE" Association="Self.FK_SUBGRUPO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
@@ -3956,6 +4245,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_TELEFONE_CATEGORIA_TELEFONE" Association="Self.FK_TELEFONE_CATEGORIA_TELEFONE">
             <End Role="CATEGORIA_TELEFONE" EntitySet="CATEGORIA_TELEFONE" />
+            <End Role="TELEFONE" EntitySet="TELEFONE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TELEFONE_UF" Association="Self.FK_TELEFONE_UF">
+            <End Role="UF" EntitySet="UF" />
             <End Role="TELEFONE" EntitySet="TELEFONE" />
           </AssociationSet>
           <AssociationSet Name="FK_TEMPLATE_ASSINANTE" Association="Self.FK_TEMPLATE_ASSINANTE">
@@ -4316,6 +4609,9 @@
           <NavigationProperty Name="ASSINANTE_ANEXO" Relationship="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" FromRole="ASSINANTE" ToRole="ASSINANTE_ANEXO" />
           <Property Name="ASSI_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ASSI_AQ_FOTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MOVIMENTO_ESTOQUE_PRODUTO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" FromRole="ASSINANTE" ToRole="MOVIMENTO_ESTOQUE_PRODUTO" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_ASSINANTE" FromRole="ASSINANTE" ToRole="PRODUTO" />
+          <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" FromRole="ASSINANTE" ToRole="SUBCATEGORIA_PRODUTO" />
         </EntityType>
         <EntityType Name="AUTORIZACAO_ACESSO">
           <Key>
@@ -4404,6 +4700,8 @@
           <Property Name="CAPR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CAPR_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CAPR_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="PRODUTO" />
+          <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
         </EntityType>
         <EntityType Name="CATEGORIA_TELEFONE">
           <Key>
@@ -4668,6 +4966,7 @@
           <NavigationProperty Name="TIPO_PESSOA" Relationship="Self.FK_FORNECEDOR_TIPO_PESSOA" FromRole="FORNECEDOR" ToRole="TIPO_PESSOA" />
           <NavigationProperty Name="UF" Relationship="Self.FK_FORNECEDOR_UF" FromRole="FORNECEDOR" ToRole="UF" />
           <NavigationProperty Name="MATERIAL_FORNECEDOR" Relationship="Self.FK_MATERIAL_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="MATERIAL_FORNECEDOR" />
+          <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="PRODUTO_FORNECEDOR" />
         </EntityType>
         <EntityType Name="FORNECEDOR_ANEXO">
           <Key>
@@ -5284,6 +5583,13 @@
           <Property Name="TELE_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_TELEFONE_ASSINANTE" FromRole="TELEFONE" ToRole="ASSINANTE" />
           <NavigationProperty Name="CATEGORIA_TELEFONE" Relationship="Self.FK_TELEFONE_CATEGORIA_TELEFONE" FromRole="TELEFONE" ToRole="CATEGORIA_TELEFONE" />
+          <Property Name="TELE_NM_ENDERECO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELE_NM_BAIRRO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TELE_NM_CIDADE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UF_CD_ID" Type="Int32" />
+          <Property Name="TELE_NR_CEP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TELE_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UF" Relationship="ERP_CondominioModel.FK_TELEFONE_UF" FromRole="TELEFONE" ToRole="UF" />
         </EntityType>
         <EntityType Name="TEMPLATE">
           <Key>
@@ -5446,6 +5752,7 @@
           <Property Name="UF_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_ASSINANTE_UF" FromRole="UF" ToRole="ASSINANTE" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_FORNECEDOR_UF" FromRole="UF" ToRole="FORNECEDOR" />
+          <NavigationProperty Name="TELEFONE" Relationship="ERP_CondominioModel.FK_TELEFONE_UF" FromRole="UF" ToRole="TELEFONE" />
         </EntityType>
         <EntityType Name="UNIDADE">
           <Key>
@@ -5476,6 +5783,7 @@
           <NavigationProperty Name="VAGA" Relationship="Self.FK_VAGA_UNIDADE" FromRole="UNIDADE" ToRole="VAGA" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_UNIDADE" FromRole="UNIDADE" ToRole="VEICULO" />
           <NavigationProperty Name="UNIDADE_ANEXO" Relationship="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" FromRole="UNIDADE" ToRole="UNIDADE_ANEXO" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_UNIDADE" FromRole="UNIDADE" ToRole="PRODUTO" />
         </EntityType>
         <EntityType Name="UNIDADE_MATERIAL">
           <Key>
@@ -8405,6 +8713,59 @@
             <End Role="UNIDADE" EntitySet="UNIDADE" />
             <End Role="UNIDADE_ANEXO" EntitySet="UNIDADE_ANEXO" />
           </AssociationSet>
+          <EntitySet Name="MOVIMENTO_ESTOQUE_PRODUTO" EntityType="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" />
+          <EntitySet Name="PRODUTO" EntityType="ERP_CondominioModel.PRODUTO" />
+          <EntitySet Name="PRODUTO_ANEXO" EntityType="ERP_CondominioModel.PRODUTO_ANEXO" />
+          <EntitySet Name="PRODUTO_FORNECEDOR" EntityType="ERP_CondominioModel.PRODUTO_FORNECEDOR" />
+          <EntitySet Name="SUBCATEGORIA_PRODUTO" EntityType="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" />
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_ASSINANTE" Association="ERP_CondominioModel.FK_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBCATEGORIA_PRODUTO_ASSINANTE" Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_CATEGORIA_PRODUTO" Association="ERP_CondominioModel.FK_PRODUTO_CATEGORIA_PRODUTO">
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO">
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+            <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_FORNECEDOR_FORNECEDOR" Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="PRODUTO_FORNECEDOR" EntitySet="PRODUTO_FORNECEDOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_ANEXO_PRODUTO" Association="ERP_CondominioModel.FK_PRODUTO_ANEXO_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_ANEXO" EntitySet="PRODUTO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_FORNECEDOR_PRODUTO" Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_PRODUTO">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="PRODUTO_FORNECEDOR" EntitySet="PRODUTO_FORNECEDOR" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_SUBCATEGORIA_PRODUTO" Association="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO">
+            <End Role="SUBCATEGORIA_PRODUTO" EntitySet="SUBCATEGORIA_PRODUTO" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_UNIDADE" Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE">
+            <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TELEFONE_UF" Association="ERP_CondominioModel.FK_TELEFONE_UF">
+            <End Role="UF" EntitySet="UF" />
+            <End Role="TELEFONE" EntitySet="TELEFONE" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TIPO_CONDOMINIO">
           <Key>
@@ -8474,6 +8835,255 @@
             </Principal>
             <Dependent Role="UNIDADE_ANEXO">
               <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MOVIMENTO_ESTOQUE_PRODUTO">
+          <Key>
+            <PropertyRef Name="MOEP_CD_ID" />
+          </Key>
+          <Property Name="MOEP_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="MOEP_DT_MOVIMENTO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MOEP_IN_TIPO_MOVIMENTO" Type="Int32" Nullable="false" />
+          <Property Name="MOEP_QN_QUANTIDADE" Type="Int32" Nullable="false" />
+          <Property Name="MOEP_IN_ORIGEM" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MOEP_IN_CHAVE_ORIGEM" Type="Int32" Nullable="false" />
+          <Property Name="MOEP_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="MOEP_DS_JUSTIFICATIVA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MOEP_QN_ANTES" Type="Int32" />
+          <Property Name="MOEP_QN_DEPOIS" Type="Int32" />
+          <Property Name="MOEP_QN_ALTERADA" Type="Int32" />
+          <Property Name="MOEP_IN_OPERACAO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="PRODUTO">
+          <Key>
+            <PropertyRef Name="PROD_CD_ID" />
+          </Key>
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CAPR_CD_ID" Type="Int32" />
+          <Property Name="SCPR_CD_ID" Type="Int32" />
+          <Property Name="UNID_CD_ID" Type="Int32" />
+          <Property Name="PROD_NM_NOME" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_DS_DESCRICAO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_QN_QUANTIDADE_MINIMA" Type="Int32" Nullable="false" />
+          <Property Name="PROD_QN_QUANTIDADE_INICIAL" Type="Int32" Nullable="false" />
+          <Property Name="PROD_QN_ESTOQUE" Type="Int32" Nullable="false" />
+          <Property Name="PROD_DT_ULTIMA_MOVIMENTACAO" Type="DateTime" Precision="3" />
+          <Property Name="PROD_IN_AVISA_MINIMO" Type="Int32" Nullable="false" />
+          <Property Name="PROD_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PROD_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="PROD_AQ_FOTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_CD_CODIGO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_VL_PRECO_VENDA" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_VL_PRECO_PROMOCAO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_DS_INFORMACOES" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_QN_QUANTIDADE_MAXIMA" Type="Int32" />
+          <Property Name="PROD_QN_RESERVA_ESTOQUE" Type="Int32" />
+          <Property Name="PROD_NR_REFERENCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_NM_LOCALIZACAO_ESTOQUE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_VL_CUSTO" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PROD_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_NM_MARCA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_NM_MODELO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_NM_REFERENCIA_FABRICANTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_NM_FABRICANTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_NR_BARCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_QR_QRCODE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_DS_JUSTIFICATIVA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PROD_QN_NOVA_CONTAGEM" Type="Int32" />
+          <Property Name="PROD_QN_CONTAGEM" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_PRODUTO_ASSINANTE" FromRole="PRODUTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_CATEGORIA_PRODUTO" FromRole="PRODUTO" ToRole="CATEGORIA_PRODUTO" />
+          <NavigationProperty Name="MOVIMENTO_ESTOQUE_PRODUTO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" FromRole="PRODUTO" ToRole="MOVIMENTO_ESTOQUE_PRODUTO" />
+          <NavigationProperty Name="PRODUTO_ANEXO" Relationship="ERP_CondominioModel.FK_PRODUTO_ANEXO_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_ANEXO" />
+          <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_FORNECEDOR" />
+          <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" FromRole="PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
+          <NavigationProperty Name="UNIDADE" Relationship="ERP_CondominioModel.FK_PRODUTO_UNIDADE" FromRole="PRODUTO" ToRole="UNIDADE" />
+        </EntityType>
+        <EntityType Name="PRODUTO_ANEXO">
+          <Key>
+            <PropertyRef Name="PRAN_CD_ID" />
+          </Key>
+          <Property Name="PRAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRAN_NM_TITULO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PRAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PRAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="PRAN_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="PRAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_ANEXO_PRODUTO" FromRole="PRODUTO_ANEXO" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="PRODUTO_FORNECEDOR">
+          <Key>
+            <PropertyRef Name="PRFO_CD_ID" />
+          </Key>
+          <Property Name="PRFO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PROD_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="FORN_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PRFO_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FORNECEDOR" Relationship="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="PRODUTO_FORNECEDOR" ToRole="FORNECEDOR" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_PRODUTO" FromRole="PRODUTO_FORNECEDOR" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="SUBCATEGORIA_PRODUTO">
+          <Key>
+            <PropertyRef Name="SCPR_CD_ID" />
+          </Key>
+          <Property Name="SCPR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CAPR_CD_ID" Type="Int32" />
+          <Property Name="SCPR_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SCPR_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" FromRole="SUBCATEGORIA_PRODUTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" FromRole="SUBCATEGORIA_PRODUTO" ToRole="CATEGORIA_PRODUTO" />
+          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" FromRole="SUBCATEGORIA_PRODUTO" ToRole="PRODUTO" />
+        </EntityType>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE">
+          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Role="MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_ASSINANTE">
+          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBCATEGORIA_PRODUTO_ASSINANTE">
+          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" Role="SUBCATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="SUBCATEGORIA_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_CATEGORIA_PRODUTO">
+          <End Type="ERP_CondominioModel.CATEGORIA_PRODUTO" Role="CATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO">
+          <End Type="ERP_CondominioModel.CATEGORIA_PRODUTO" Role="CATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" Role="SUBCATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Principal>
+            <Dependent Role="SUBCATEGORIA_PRODUTO">
+              <PropertyRef Name="CAPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_FORNECEDOR_FORNECEDOR">
+          <End Type="ERP_CondominioModel.FORNECEDOR" Role="FORNECEDOR" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.PRODUTO_FORNECEDOR" Role="PRODUTO_FORNECEDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Role="MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_ANEXO_PRODUTO">
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.PRODUTO_ANEXO" Role="PRODUTO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_ANEXO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_FORNECEDOR_PRODUTO">
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.PRODUTO_FORNECEDOR" Role="PRODUTO_FORNECEDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO_FORNECEDOR">
+              <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_SUBCATEGORIA_PRODUTO">
+          <End Type="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" Role="SUBCATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBCATEGORIA_PRODUTO">
+              <PropertyRef Name="SCPR_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="SCPR_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_UNIDADE">
+          <End Type="ERP_CondominioModel.UNIDADE" Role="UNIDADE" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TELEFONE_UF">
+          <End Type="ERP_CondominioModel.UF" Role="UF" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.TELEFONE" Role="TELEFONE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UF">
+              <PropertyRef Name="UF_CD_ID" />
+            </Principal>
+            <Dependent Role="TELEFONE">
+              <PropertyRef Name="UF_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9516,6 +10126,12 @@
           <EntitySetMapping Name="TELEFONE">
             <EntityTypeMapping TypeName="ERP_CondominioModel.TELEFONE">
               <MappingFragment StoreEntitySet="TELEFONE">
+                <ScalarProperty Name="TELE_TX_OBSERVACOES" ColumnName="TELE_TX_OBSERVACOES" />
+                <ScalarProperty Name="TELE_NR_CEP" ColumnName="TELE_NR_CEP" />
+                <ScalarProperty Name="UF_CD_ID" ColumnName="UF_CD_ID" />
+                <ScalarProperty Name="TELE_NM_CIDADE" ColumnName="TELE_NM_CIDADE" />
+                <ScalarProperty Name="TELE_NM_BAIRRO" ColumnName="TELE_NM_BAIRRO" />
+                <ScalarProperty Name="TELE_NM_ENDERECO" ColumnName="TELE_NM_ENDERECO" />
                 <ScalarProperty Name="TELE_CD_ID" ColumnName="TELE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CATE_CD_ID" ColumnName="CATE_CD_ID" />
@@ -9924,6 +10540,101 @@
                 <ScalarProperty Name="UNAN_NM_TITULO" ColumnName="UNAN_NM_TITULO" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
                 <ScalarProperty Name="UNAN_CD_ID" ColumnName="UNAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MOVIMENTO_ESTOQUE_PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO">
+              <MappingFragment StoreEntitySet="MOVIMENTO_ESTOQUE_PRODUTO">
+                <ScalarProperty Name="MOEP_IN_OPERACAO" ColumnName="MOEP_IN_OPERACAO" />
+                <ScalarProperty Name="MOEP_QN_ALTERADA" ColumnName="MOEP_QN_ALTERADA" />
+                <ScalarProperty Name="MOEP_QN_DEPOIS" ColumnName="MOEP_QN_DEPOIS" />
+                <ScalarProperty Name="MOEP_QN_ANTES" ColumnName="MOEP_QN_ANTES" />
+                <ScalarProperty Name="MOEP_DS_JUSTIFICATIVA" ColumnName="MOEP_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="MOEP_IN_ATIVO" ColumnName="MOEP_IN_ATIVO" />
+                <ScalarProperty Name="MOEP_IN_CHAVE_ORIGEM" ColumnName="MOEP_IN_CHAVE_ORIGEM" />
+                <ScalarProperty Name="MOEP_IN_ORIGEM" ColumnName="MOEP_IN_ORIGEM" />
+                <ScalarProperty Name="MOEP_QN_QUANTIDADE" ColumnName="MOEP_QN_QUANTIDADE" />
+                <ScalarProperty Name="MOEP_IN_TIPO_MOVIMENTO" ColumnName="MOEP_IN_TIPO_MOVIMENTO" />
+                <ScalarProperty Name="MOEP_DT_MOVIMENTO" ColumnName="MOEP_DT_MOVIMENTO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="MOEP_CD_ID" ColumnName="MOEP_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO">
+              <MappingFragment StoreEntitySet="PRODUTO">
+                <ScalarProperty Name="PROD_QN_CONTAGEM" ColumnName="PROD_QN_CONTAGEM" />
+                <ScalarProperty Name="PROD_QN_NOVA_CONTAGEM" ColumnName="PROD_QN_NOVA_CONTAGEM" />
+                <ScalarProperty Name="PROD_DS_JUSTIFICATIVA" ColumnName="PROD_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="PROD_QR_QRCODE" ColumnName="PROD_QR_QRCODE" />
+                <ScalarProperty Name="PROD_NR_BARCODE" ColumnName="PROD_NR_BARCODE" />
+                <ScalarProperty Name="PROD_NM_FABRICANTE" ColumnName="PROD_NM_FABRICANTE" />
+                <ScalarProperty Name="PROD_NM_REFERENCIA_FABRICANTE" ColumnName="PROD_NM_REFERENCIA_FABRICANTE" />
+                <ScalarProperty Name="PROD_NM_MODELO" ColumnName="PROD_NM_MODELO" />
+                <ScalarProperty Name="PROD_NM_MARCA" ColumnName="PROD_NM_MARCA" />
+                <ScalarProperty Name="PROD_TX_OBSERVACOES" ColumnName="PROD_TX_OBSERVACOES" />
+                <ScalarProperty Name="PROD_VL_CUSTO" ColumnName="PROD_VL_CUSTO" />
+                <ScalarProperty Name="PROD_NM_LOCALIZACAO_ESTOQUE" ColumnName="PROD_NM_LOCALIZACAO_ESTOQUE" />
+                <ScalarProperty Name="PROD_NR_REFERENCIA" ColumnName="PROD_NR_REFERENCIA" />
+                <ScalarProperty Name="PROD_QN_RESERVA_ESTOQUE" ColumnName="PROD_QN_RESERVA_ESTOQUE" />
+                <ScalarProperty Name="PROD_QN_QUANTIDADE_MAXIMA" ColumnName="PROD_QN_QUANTIDADE_MAXIMA" />
+                <ScalarProperty Name="PROD_DS_INFORMACOES" ColumnName="PROD_DS_INFORMACOES" />
+                <ScalarProperty Name="PROD_VL_PRECO_PROMOCAO" ColumnName="PROD_VL_PRECO_PROMOCAO" />
+                <ScalarProperty Name="PROD_VL_PRECO_VENDA" ColumnName="PROD_VL_PRECO_VENDA" />
+                <ScalarProperty Name="PROD_CD_CODIGO" ColumnName="PROD_CD_CODIGO" />
+                <ScalarProperty Name="PROD_AQ_FOTO" ColumnName="PROD_AQ_FOTO" />
+                <ScalarProperty Name="PROD_IN_ATIVO" ColumnName="PROD_IN_ATIVO" />
+                <ScalarProperty Name="PROD_DT_CADASTRO" ColumnName="PROD_DT_CADASTRO" />
+                <ScalarProperty Name="PROD_IN_AVISA_MINIMO" ColumnName="PROD_IN_AVISA_MINIMO" />
+                <ScalarProperty Name="PROD_DT_ULTIMA_MOVIMENTACAO" ColumnName="PROD_DT_ULTIMA_MOVIMENTACAO" />
+                <ScalarProperty Name="PROD_QN_ESTOQUE" ColumnName="PROD_QN_ESTOQUE" />
+                <ScalarProperty Name="PROD_QN_QUANTIDADE_INICIAL" ColumnName="PROD_QN_QUANTIDADE_INICIAL" />
+                <ScalarProperty Name="PROD_QN_QUANTIDADE_MINIMA" ColumnName="PROD_QN_QUANTIDADE_MINIMA" />
+                <ScalarProperty Name="PROD_DS_DESCRICAO" ColumnName="PROD_DS_DESCRICAO" />
+                <ScalarProperty Name="PROD_NM_NOME" ColumnName="PROD_NM_NOME" />
+                <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
+                <ScalarProperty Name="SCPR_CD_ID" ColumnName="SCPR_CD_ID" />
+                <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO_ANEXO">
+              <MappingFragment StoreEntitySet="PRODUTO_ANEXO">
+                <ScalarProperty Name="PRAN_IN_ATIVO" ColumnName="PRAN_IN_ATIVO" />
+                <ScalarProperty Name="PRAN_AQ_ARQUIVO" ColumnName="PRAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="PRAN_IN_TIPO" ColumnName="PRAN_IN_TIPO" />
+                <ScalarProperty Name="PRAN_DT_ANEXO" ColumnName="PRAN_DT_ANEXO" />
+                <ScalarProperty Name="PRAN_NM_TITULO" ColumnName="PRAN_NM_TITULO" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="PRAN_CD_ID" ColumnName="PRAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTO_FORNECEDOR">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO_FORNECEDOR">
+              <MappingFragment StoreEntitySet="PRODUTO_FORNECEDOR">
+                <ScalarProperty Name="PRFO_IN_ATIVO" ColumnName="PRFO_IN_ATIVO" />
+                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
+                <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
+                <ScalarProperty Name="PRFO_CD_ID" ColumnName="PRFO_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUBCATEGORIA_PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.SUBCATEGORIA_PRODUTO">
+              <MappingFragment StoreEntitySet="SUBCATEGORIA_PRODUTO">
+                <ScalarProperty Name="SCPR_IN_ATIVO" ColumnName="SCPR_IN_ATIVO" />
+                <ScalarProperty Name="SCPR_NM_NOME" ColumnName="SCPR_NM_NOME" />
+                <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="SCPR_CD_ID" ColumnName="SCPR_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

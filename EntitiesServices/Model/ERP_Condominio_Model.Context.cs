@@ -123,5 +123,10 @@ namespace EntitiesServices.Model
         public virtual DbSet<TIPO_CONDOMINIO> TIPO_CONDOMINIO { get; set; }
         public virtual DbSet<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
         public virtual DbSet<UNIDADE_ANEXO> UNIDADE_ANEXO { get; set; }
+        public virtual DbSet<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
+        public virtual DbSet<PRODUTO> PRODUTO { get; set; }
+        public virtual DbSet<PRODUTO_ANEXO> PRODUTO_ANEXO { get; set; }
+        public virtual DbSet<PRODUTO_FORNECEDOR> PRODUTO_FORNECEDOR { get; set; }
+        public virtual DbSet<SUBCATEGORIA_PRODUTO> SUBCATEGORIA_PRODUTO { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace MvcMapping.Mappers
             CreateMap<TarefaAcompanhamentoViewModel, TAREFA_ACOMPANHAMENTO>();
             CreateMap<VagaViewModel, VAGA>();
             CreateMap<VeiculoViewModel, VEICULO>();
-
+            CreateMap<TelefoneViewModel, TELEFONE>();
         }
     }
 }

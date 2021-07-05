@@ -23,8 +23,15 @@ namespace EntitiesServices.Model
         public string TELE_NR_WHATSAPP { get; set; }
         public string TELE_NM_EMAIL { get; set; }
         public Nullable<int> TELE_IN_ATIVO { get; set; }
+        public string TELE_NM_ENDERECO { get; set; }
+        public string TELE_NM_BAIRRO { get; set; }
+        public string TELE_NM_CIDADE { get; set; }
+        public Nullable<int> UF_CD_ID { get; set; }
+        public string TELE_NR_CEP { get; set; }
+        public string TELE_TX_OBSERVACOES { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_TELEFONE CATEGORIA_TELEFONE { get; set; }
+        public virtual UF UF { get; set; }
     }
 }

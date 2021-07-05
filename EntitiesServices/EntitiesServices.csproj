@@ -192,9 +192,11 @@
     <Compile Include="Attributes\DataAnteriorAttribute.cs" />
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
+    <Compile Include="EntitiesServices\TelefoneService.cs" />
     <Compile Include="EntitiesServices\FornecedorService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
     <Compile Include="EntitiesServices\NoticiaService.cs" />
@@ -214,9 +216,11 @@
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaTelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITorreRepository.cs" />
@@ -249,9 +253,11 @@
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
     <Compile Include="Interfaces\Services\IAgendaService.cs" />
     <Compile Include="Interfaces\Services\IAssinanteService.cs" />
+    <Compile Include="Interfaces\Services\ICategoriaTelefoneService.cs" />
     <Compile Include="Interfaces\Services\ICategoriaFornecedorService.cs" />
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />
+    <Compile Include="Interfaces\Services\ITelefoneService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorService.cs" />
     <Compile Include="Interfaces\Services\ILogService.cs" />
     <Compile Include="Interfaces\Services\INoticiaService.cs" />
@@ -424,6 +430,9 @@
     <Compile Include="Model\MATERIAL_MOVIMENTO.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\MOVIMENTO_ESTOQUE_PRODUTO.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\NOTICIA.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
@@ -451,6 +460,15 @@
     <Compile Include="Model\PERIODICIDADE_TAREFA.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\PRODUTO.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_ANEXO.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PRODUTO_FORNECEDOR.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\RESERVA.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
@@ -470,6 +488,9 @@
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SOLICITACAO_MUDANCA_MOVIMENTO.cs">
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SUBCATEGORIA_PRODUTO.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SUBGRUPO.cs">

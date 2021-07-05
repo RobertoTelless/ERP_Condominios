@@ -286,6 +286,7 @@
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
+    <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VagaController.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\AssinanteViewModel.cs" />
     <Compile Include="ViewModels\CategoriaAgendaViewModel.cs" />
+    <Compile Include="ViewModels\TelefoneViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />
     <Compile Include="ViewModels\FornecedorViewModel.cs" />
@@ -2947,6 +2949,8 @@
     <Content Include="Views\FornecedorNovo\EditarContatoFornecedor.cshtml" />
     <Content Include="Views\FornecedorNovo\IncluirContatoFornecedor.cshtml" />
     <Content Include="Views\FornecedorNovo\VerFornecedorInativos.cshtml" />
+    <Content Include="Views\Telefone\MontarTelaTelefone.cshtml" />
+    <Content Include="Views\Telefone\IncluirTelefone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

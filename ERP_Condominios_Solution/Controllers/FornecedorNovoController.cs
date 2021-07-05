@@ -82,7 +82,7 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
-                [HttpPost]
+        [HttpPost]
         public JsonResult BuscaNomeRazao(String nome)
         {
             Int32 isRazao = 0;
@@ -205,7 +205,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
         }
 
-                [HttpPost]
+        [HttpPost]
         public JsonResult PesquisaCNPJ(string cnpj)
         {
             List<FORNECEDOR_QUADRO_SOCIETARIO> lstQs = new List<FORNECEDOR_QUADRO_SOCIETARIO>();
@@ -509,7 +509,7 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("MontarTelaFornecedor");
         }
 
-                [HttpGet]
+        [HttpGet]
         public ActionResult IncluirFornecedor()
         {
             // Verifica se tem usuario logado

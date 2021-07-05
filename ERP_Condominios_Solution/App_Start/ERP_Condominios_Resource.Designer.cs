@@ -286,6 +286,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Telefone já cadastrado.
+        /// </summary>
+        internal static string M0028 {
+            get {
+                return ResourceManager.GetString("M0028", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {
