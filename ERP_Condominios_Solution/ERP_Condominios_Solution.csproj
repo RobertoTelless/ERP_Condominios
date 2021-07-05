@@ -280,7 +280,6 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CondominioController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
-    <Compile Include="Controllers\FornecedorController.cs" />
     <Compile Include="Controllers\FornecedorNovoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />

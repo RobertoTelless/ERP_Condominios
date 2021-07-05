@@ -381,9 +381,11 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Fornecedores = ((List<FORNECEDOR>)Session["ListaFornecedor"]).Count;
             //SessionMocks.listaCP = cpApp.GetItensAtrasoFornecedor().ToList();
             //ViewBag.Atrasos = SessionMocks.listaCP.Select(x => x.FORN_CD_ID).Distinct().ToList().Count;
+            ViewBag.Atrasos = 0;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Inativos = fornApp.GetAllItensAdm(idAss).Where(p => p.FORN_IN_ATIVO == 0).ToList().Count;
             //ViewBag.SemPedidos = fornApp.GetAllItens().Where(p => p.ITEM_PEDIDO_COMPRA.Count == 0 || p.ITEM_PEDIDO_COMPRA == null).ToList().Count;
+            ViewBag.SemPedidos = 0;
             List<SelectListItem> ativo = new List<SelectListItem>();
             ativo.Add(new SelectListItem() { Text = "Ativo", Value = "1" });
             ativo.Add(new SelectListItem() { Text = "Inativo", Value = "0" });
@@ -685,6 +687,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.QuadroSoci = fcnpjApp.GetByFornecedor(item);
             objetoFornAntes = item;
             //ViewBag.Compras = item.ITEM_PEDIDO_COMPRA.Count;
+            ViewBag.Compras = 12;
             Session["Fornecedor"] = item;
             Session["IdVolta"] = id;
             Session["IdFornecedor"] = id;

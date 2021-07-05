@@ -1,7 +1,1184 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_Condominios_Solution.ViewModels.FornecedorViewModel
 @{
-    ViewBag.Title = "EditarFornecedor";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
 
-<h2>EditarFornecedor</h2>
+    @using (Html.BeginForm("EnviarSmsFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+    { 
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enviar SMS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      @Html.Hidden("id", null, new { id = "idForn" })
+                      Mensagem
+                      @Html.TextBox("mensagem", null, new { @style = "height: 200px;", @class = "form-control" })
+                  </div>
+                  <div class="modal-footer">
+                      @Html.ButtonActionSubmit("Enviar")
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+    }
 
+    <div class="page-title">
+        <h3 class="title">Fornecedores</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaFornecedor", "FornecedorNovo")">Fornecedores</a>
+            </li>
+            <li class="active">
+                <strong>Fornecedor - Edição</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Fornecedor - Edição</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <br />
+                        <span class="btn btn-sm btn-warning" onclick="MudaIdForn('@Model.FORN_CD_ID')" data-toggle="modal" data-target="#exampleModal">Enviar SMS</span>
+                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "FornecedorNovo")
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "FornecedorNovo")
+                    </div>
+                    @Html.AntiForgeryToken()
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            @if (ViewBag.Incluir == 0)
+                            {
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-prod">Produtos Vinculados</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Imagens</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">Endereços</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Contatos</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5">Observações</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-6">Indicadores</a></li>
+                            }
+                            else
+                            {
+                                <li class=""><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-prod">Materiais Vinculados</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Logo & Anexos</a></li>
+                                <li class="active"><a data-toggle="tab" href="#tab-3">Endereços</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Contatos</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5">Observações</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-6">Indicadores</a></li>
+                            }
+                        </ul>
+                        <div class="tab-content">
+
+                            @*Dados Gerais*@
+                            @if (ViewBag.Incluir == 0)
+                            {
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        @using (Html.BeginForm("EditarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                        {
+                                            <div class="row" style="width: 100%;">
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    <div style="text-align: center; margin-top: 25px; line-height: 10px;">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_AQ_FOTO)
+                                                        @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.FORN_NM_BAIRRO)
+                                                        @Html.HiddenFor(m => m.FORN_NM_CIDADE)
+                                                        @Html.HiddenFor(m => m.FORM_NM_ENDERECO)
+                                                        @Html.HiddenFor(m => m.FORN_NR_TELEFONE)
+                                                        @Html.HiddenFor(m => m.FORN_NR_CEP)
+                                                        @Html.HiddenFor(m => m.UF_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
+                                                        @if (!String.IsNullOrEmpty(Model.FORN_AQ_FOTO))
+                                                        {
+                                                            <img src="@Url.Content(Model.FORN_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                        }
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-11">
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            Nome*
+                                                            @Html.TextBoxFor(m => m.FORN_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.FORN_NM_NOME, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Tipo de Pessoa*
+                                                            @Html.TextBoxFor(m => m.TIPO_PESSOA.TIPE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                            @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            Categoria*
+                                                            @Html.DropDownListFor(m => m.CAFO_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.CAFO_CD_ID, "", new { @style = "color:red" })
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        @if (Model.TIPE_CD_ID == 1)
+                                                        {
+                                                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                                                CPF
+                                                                @Html.TextBoxFor(m => m.FORN_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
+                                                                @Html.ValidationMessageFor(m => m.FORN_NR_CPF, "", new { @style = "color:red" })
+                                                            </div>
+                                                        }
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            Razão Social
+                                                            @Html.TextBoxFor(m => m.FORN_NM_RAZAO_SOCIAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                            @Html.ValidationMessageFor(m => m.FORN_NM_RAZAO_SOCIAL, "", new { @style = "color:red" })
+                                                        </div>
+                                                        @if (Model.TIPE_CD_ID == 2)
+                                                        {
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                CNPJ
+                                                                @Html.TextBoxFor(m => m.FORN_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true, @readonly = "readonly" })
+                                                                @Html.ValidationMessageFor(m => m.FORN_NR_CPF, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Inscrição Estadual
+                                                                @Html.TextBoxFor(m => m.FORN_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                                @Html.ValidationMessageFor(m => m.FORN_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                                Situação
+                                                                @Html.TextBoxFor(m => m.FORN_NM_SITUACAO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                                @Html.ValidationMessageFor(m => m.FORN_NM_SITUACAO, "", new { @style = "color:red" })
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                @if (Model.TIPE_CD_ID == 2)
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            <hr />
+                                                            <h4>Quadro Societário</h4>
+                                                            <br />
+                                                            <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="tblQs">
+                                                                <thead style="background-color:lightblue">
+                                                                    <tr>
+                                                                        <th>Qualificação</th>
+                                                                        <th>Nome</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (List<EntitiesServices.Model.FORNECEDOR_QUADRO_SOCIETARIO>)ViewBag.QuadroSoci)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.FOQS_NM_QUALIFICACAO</td>
+                                                                            <td>@cond.FOQS_NM_NOME</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma edição de Fornecedor", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="tab-1" class="tab-pane">
+                                    <div class="panel-body">
+                                        @using (Html.BeginForm("EditarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                        {
+                                        <div class="row">
+                                            <div class="form-group">
+                                                @if (!String.IsNullOrEmpty(Model.FORN_AQ_FOTO))
+                                                {
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+                                                        <img src="@Url.Content(Model.FORN_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.FORN_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.FORM_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.FORN_NR_TELEFONE)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CEP)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    Categoria*
+                                                    @Html.DropDownListFor(m => m.CAFO_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAFO_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Tipo de Pessoa*
+                                                    @Html.TextBoxFor(m => m.TIPO_PESSOA.TIPE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Nome*
+                                                    @Html.TextBoxFor(m => m.FORN_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FORN_NM_NOME, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12" id="razao">
+                                                    Razão Social
+                                                    @Html.TextBoxFor(m => m.FORN_NM_RAZAO_SOCIAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @Html.ValidationMessageFor(m => m.FORN_NM_RAZAO_SOCIAL, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            @if (Model.TIPE_CD_ID == 1)
+                                            {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PF">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        CPF
+                                                        @Html.TextBoxFor(m => m.FORN_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NR_CPF, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PJ">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        CNPJ
+                                                        @Html.TextBoxFor(m => m.FORN_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true, @readonly = "readonly" })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NR_CPF, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Inscrição Estadual
+                                                        @Html.TextBoxFor(m => m.FORN_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            <hr />
+                                                            <h4>Quadro Societário</h4>
+                                                            <br />
+                                                            <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="tblQs">
+                                                                <thead style="background-color:lightblue">
+                                                                    <tr>
+                                                                        <th>Qualificação</th>
+                                                                        <th>Nome</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (List<EntitiesServices.Model.FORNECEDOR_QUADRO_SOCIETARIO>)ViewBag.QuadroSoci)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.FOQS_NM_QUALIFICACAO</td>
+                                                                            <td>@cond.FOQS_NM_NOME</td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma edição de Fornecedor", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                            @*Produtos Vinculados*@
+                            <div id="tab-prod" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Materiais Vinculados</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.MATERIAL_FORNECEDOR.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Nome</th>
+                                                                    <th>Marca</th>
+                                                                    <th>Código</th>
+                                                                    <th>Modelo</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.MATERIAL_FORNECEDOR.OrderBy(a => a.MATERIAL.MATE_NM_NOME)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.MATERIAL.MATE_NM_NOME</td>
+                                                                        <td>@cond.MATERIAL.MATE_NM_MARCA</td>
+                                                                        <td>@cond.MATERIAL.MATE_NR_BARCODE</td>
+                                                                        <td>@cond.MATERIAL.MATE_NM_MODELO</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-10 col-md-10 col-xs-12">
+                                            <div class="form-group">
+                                                <h4>Logotipo</h4>
+                                                @using (Html.BeginForm("UploadFotoFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            <input style="float: left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                            <input style="float: left;" type="submit" value="Incluir Logotipo" class="btn btn-sm btn-success" />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    @if (!String.IsNullOrEmpty(Model.FORN_AQ_FOTO))
+                                                    {
+                                                        <img src="@Url.Content(Model.FORN_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <h4>Anexos do Fornecedor</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.FORNECEDOR_ANEXO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.FORNECEDOR_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.FOAN_NM_TITULO</td>
+                                                                            <td>@cond.FOAN_DT_ANEXO.Value.ToShortDateString()</td>
+                                                                            @if (cond.FOAN_IN_TIPO == 1)
+                                                                            {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else if (cond.FOAN_IN_TIPO == 2)
+                                                                            {
+                                                                                <td>Vídeo</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.FOAN_IN_TIPO == 1 || cond.FOAN_IN_TIPO == 2)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.FOAN_CD_ID, "VerAnexoFornecedor", "fa-camera", "Visualizar")
+                                                                                }
+                                                                                @if (cond.FOAN_IN_TIPO == 3)
+                                                                                {
+                                                                                    <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.FOAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank" ></a>
+                                                                                }
+                                                                                @Html.TableLinkDetails(cond.FOAN_CD_ID, "DownloadFornecedor", "fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Endereços*@
+                            @if (ViewBag.Incluir == 0)
+                            {
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        @using (Html.BeginForm("EditarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                        {
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <h4>Endereço Principal</h4>
+                                                        <br />
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.CAFO_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_NR_INSCRICAO_ESTADUAL)
+                                                        @Html.HiddenFor(m => m.FORN_AQ_FOTO)
+                                                        @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.FORN_NM_EMAIL)
+                                                        @Html.HiddenFor(m => m.FORN_NM_NOME)
+                                                        @Html.HiddenFor(m => m.FORN_NM_RAZAO_SOCIAL)
+                                                        @Html.HiddenFor(m => m.FORN_NR_TELEFONE)
+                                                        @Html.HiddenFor(m => m.FORN_NR_CNPJ)
+                                                        @Html.HiddenFor(m => m.FORN_NR_CPF)
+                                                        @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
+                                                        @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                        CEP
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(m => m.FORN_NR_CEP, new { @class = "form-control", autofocus = true, @id = "cep" })
+                                                            @Html.ValidationMessageFor(m => m.FORN_NR_CEP, "", new { @style = "color:red" })
+                                                            <span class="input-group-btn">
+                                                                <span class="btn btn-warning btn-sm" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 1)">Buscar CEP</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        Endereço
+                                                        @Html.TextBoxFor(m => m.FORM_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
+                                                        @Html.ValidationMessageFor(m => m.FORM_NM_ENDERECO, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Bairro
+                                                        @Html.TextBoxFor(m => m.FORN_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NM_BAIRRO, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Cidade
+                                                        @Html.TextBoxFor(m => m.FORN_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NM_CIDADE, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        UF
+                                                        @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
+                                                        @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Fornecedor", htmlAttributes: new { id = "basictoast" })
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="tab-3" class="tab-pane active">
+                                    <div class="panel-body">
+                                        @using (Html.BeginForm("EditarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                        {
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <h4>Endereço Principal</h4>
+                                                        <br />
+                                                        CEP
+                                                        <div class="input-group">
+                                                            @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                            @Html.HiddenFor(m => m.CAFO_CD_ID)
+                                                            @Html.HiddenFor(m => m.FORN_NR_INSCRICAO_ESTADUAL)
+                                                            @Html.HiddenFor(m => m.FORN_AQ_FOTO)
+                                                            @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                            @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
+                                                            @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                            @Html.HiddenFor(m => m.FORN_NM_EMAIL)
+                                                            @Html.HiddenFor(m => m.FORN_NM_NOME)
+                                                            @Html.HiddenFor(m => m.FORN_NM_RAZAO_SOCIAL)
+                                                            @Html.HiddenFor(m => m.FORN_NR_TELEFONE)
+                                                            @Html.HiddenFor(m => m.FORN_NR_CNPJ)
+                                                            @Html.HiddenFor(m => m.FORN_NR_CPF)
+                                                            @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
+                                                            @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                            @Html.TextBoxFor(m => m.FORN_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.FORN_NR_CEP, "", new { @style = "color:red" })
+                                                            <span class="input-group-btn">
+                                                                <span class="btn btn-warning btn-sm" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 1)">Buscar CEP</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        Endereço
+                                                        @Html.TextBoxFor(m => m.FORM_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
+                                                        @Html.ValidationMessageFor(m => m.FORM_NM_ENDERECO, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Bairro
+                                                        @Html.TextBoxFor(m => m.FORN_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NM_BAIRRO, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Cidade
+                                                        @Html.TextBoxFor(m => m.FORN_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
+                                                        @Html.ValidationMessageFor(m => m.FORN_NM_CIDADE, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        UF
+                                                        @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
+                                                        @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Fornecedor", htmlAttributes: new { id = "basictoast" })
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            }
+
+                            @*Contatos*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAFO_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_NR_INSCRICAO_ESTADUAL)
+                                                    @Html.HiddenFor(m => m.FORN_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.FORM_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_NOME)
+                                                    @Html.HiddenFor(m => m.FORN_NM_RAZAO_SOCIAL)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CEP)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CPF)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    E-Mail*
+                                                    @Html.TextBoxFor(m => m.FORN_NM_EMAIL, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FORN_NM_EMAIL, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Telefone
+                                                    @Html.TextBoxFor(m => m.FORN_NR_TELEFONE, new { @class = "form-control", autofocus = true, @id = "tel" })
+                                                    @Html.ValidationMessageFor(m => m.FORN_NR_TELEFONE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Celular
+                                                    @Html.TextBoxFor(m => m.FORN_NR_CELULAR, new { @class = "form-control", autofocus = true, id = "cel" })
+                                                    @Html.ValidationMessageFor(m => m.FORN_NR_CELULAR, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    WhatsApp
+                                                    @Html.TextBoxFor(m => m.FORN_NR_WHATSAPP, new { @class = "form-control", autofocus = true, id = "wpp" })
+                                                    @Html.ValidationMessageFor(m => m.FORN_NR_WHATSAPP, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição de Fornecedor", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                    <div class="row">
+                                        <hr />
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Contatos</h4>
+                                                <br />
+                                                @if (Model.FORNECEDOR_CONTATO.Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Nome</th>
+                                                                <th>Cargo</th>
+                                                                <th>E-Mail</th>
+                                                                <th>Telefone</th>
+                                                                <th>Ativo</th>
+                                                                <th class="td-one-action">Ações</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (Model.FORNECEDOR_CONTATO))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.FOCO_NM_NOME</td>
+                                                                    <td>@cond.FOCO_NM_CARGO</td>
+                                                                    <td>@cond.FOCO_NM_EMAIL</td>
+                                                                    <td>@cond.FOCO_NR_TELEFONES</td>
+                                                                    @if (cond.FOCO_IN_ATIVO == 1)
+                                                                    {
+                                                                        <td>Sim</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>Não</td>
+                                                                    }
+                                                                    <td class="td-one-action">
+                                                                        @Html.TableLinkDetails(cond.FOCO_CD_ID, "EditarContatoFornecedor", "fa-edit", "Editar/Consultar Contato")
+                                                                        @if (cond.FOCO_IN_ATIVO == 1)
+                                                                        {
+                                                                            @Html.TableLinkDetails(cond.FOCO_CD_ID, "ExcluirContatoFornecedor", "fa-trash-o", "Desativar Contato")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @Html.TableLinkDetails(cond.FOCO_CD_ID, "ReativarContatoFornecedor", "fa-refresh", "Reativar Contato")
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Novo Contato", action: "IncluirContatoFornecedor", controller: "FornecedorNovo")
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Observações*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAFO_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.FORN_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.FORM_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.FORN_NM_NOME)
+                                                    @Html.HiddenFor(m => m.FORN_NM_RAZAO_SOCIAL)
+                                                    @Html.HiddenFor(m => m.FORN_NR_TELEFONE)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CEP)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.FORN_NR_CPF)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_NR_INSCRICAO_ESTADUAL)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.FORN_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 400px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FORN_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição de Fornecedor", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Indicadores*@
+                            <div id="tab-6" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Pedidos de Compras</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <h1 class="no-margins">@ViewBag.Compras</h1>
+                                                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                                                    <small>Pedidos de Compras</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="ibox">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Evolução de Pedidos</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <h5>Total Acumulado</h5>
+                                                    <div id="sparkline1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaPedidoCompra", "Compra")" class="pull-left btn-link"><u>Últimos Pedidos de Compra</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.ITEM_PEDIDO_COMPRA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Número/Nome</th>
+                                                                    <th>Emissão</th>
+                                                                    <th>Valor</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.ITEM_PEDIDO_COMPRA.OrderByDescending(a => a.PEDIDO_COMPRA.PECO_DT_DATA).Take(5)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.PEDIDO_COMPRA.PECO_NM_NOME</td>
+                                                                        <td>@cond.PEDIDO_COMPRA.PECO_DT_DATA.Value.ToShortDateString()</td>
+                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.ITPC_VL_PRECO_SELECIONADO == null ? 0 : cond.ITPC_VL_PRECO_SELECIONADO.Value)</td>
+                                                                        @if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 1)
+                                                                        {
+                                                                            <td>Em Emissão</td>
+                                                                        }
+                                                                        else if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 2)
+                                                                        {
+                                                                            <td>Em Aprovação</td>
+                                                                        }
+                                                                        else if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 3)
+                                                                        {
+                                                                            <td>Aprovado</td>
+                                                                        }
+                                                                        else if (cond.PEDIDO_COMPRA.PECO_IN_STATUS == 4)
+                                                                        {
+                                                                            <td>Cancelado</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaCP", "ContaPagar")" class="pull-left btn-link"><u>Últimas Contas a Pagar</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.CONTA_PAGAR.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Número/Nome</th>
+                                                                    <th>Vencimento</th>
+                                                                    <th>Valor</th>
+                                                                    <th>Atraso</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CONTA_PAGAR.OrderByDescending(a => a.CAPA_DT_LANCAMENTO).Take(5)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.CAPA_NR_DOCUMENTO</td>
+                                                                        <td>@cond.CAPA_DT_VENCIMENTO.Value.ToShortDateString()</td>
+                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.CAPA_VL_VALOR.Value)</td>
+                                                                        <td>@cond.CAPA_NR_ATRASO</td>
+
+
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "FornecedorNovo")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $('#tel').mask("(99) 9999-9999");
+            $('#cel').mask("(99) 99999-9999");
+            $('#wpp').mask("(99) 99999-9999");
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            var id = @Model.FORN_CD_ID;
+
+            var data = {
+                id: id
+            }
+
+            $.ajax({
+                url: '../GetValorGrafico'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    console.log(r);
+                    $("#sparkline1").sparkline([r.m3, r.m2, r.m1], {
+                        type: 'line',
+                        width: '100%',
+                        height: '60',
+                        lineColor: '#1ab394',
+                        fillColor: "#ffffff"
+                    });
+                }
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#PF").hide();
+                    $("#PJ").show();
+                    $("#razao").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $("#PJ").hide();
+                    $("#PF").show();
+                    $("#razao").hide();
+                }
+                else if (this.value == '4') {
+                    $("#PF").show();
+                    $("#PJ").hide();
+                    $("#razao").hide();
+                }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else {
+                    $("#PJ").hide();
+                    $("#PF").hide();
+                    $("#razao").hide();
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(docuFORN_CD_IDent).FORN_CD_IDeady(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    <script>
+        function PesquisaCep(cep, btn, tipoEnd) {
+            data = {
+                cep: cep
+                , tipoEnd: tipoEnd
+            }
+
+            $('#btnBuscaCep').attr("disabled", "disabled");
+
+            $.ajax({
+                url: '../PesquisaCEP_Javascript'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    if (tipoEnd == 1) {
+                        $('#endereco').val(r.FORM_NM_ENDERECO);
+                        $('#bairro').val(r.FORN_NM_BAIRRO);
+                        $('#cidade').val(r.FORN_NM_CIDADE);
+
+                        $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
+                        $('#btnBuscaCep').removeAttr("disabled");
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function MudaIdForn(id) {
+            $('#idForn').val(id);
+        }
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
