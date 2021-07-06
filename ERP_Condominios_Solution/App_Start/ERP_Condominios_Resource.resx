@@ -195,6 +195,12 @@
   <data name="M0028" xml:space="preserve">
     <value>Telefone já cadastrado</value>
   </data>
+  <data name="M0029" xml:space="preserve">
+    <value>Ambiente já cadastrado</value>
+  </data>
+  <data name="M0030" xml:space="preserve">
+    <value>Não é possível excluir esse ambiente. Existem informações vinculadas a ele</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

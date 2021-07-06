@@ -295,6 +295,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ambiente já cadastrado.
+        /// </summary>
+        internal static string M0029 {
+            get {
+                return ResourceManager.GetString("M0029", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir esse ambiente. Existem informações vinculadas a ele.
+        /// </summary>
+        internal static string M0030 {
+            get {
+                return ResourceManager.GetString("M0030", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {
