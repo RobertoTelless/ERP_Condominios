@@ -190,6 +190,7 @@
     <Compile Include="Interfaces\ICategoriaTelefoneAppService.cs" />
     <Compile Include="Interfaces\ICategoriaFornecedorAppService.cs" />
     <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
+    <Compile Include="Interfaces\IAmbienteAppService.cs" />
     <Compile Include="Interfaces\ITelefoneAppService.cs" />
     <Compile Include="Interfaces\IFornecedorAppService.cs" />
     <Compile Include="Interfaces\IFornecedorCnpjAppService.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Services\CategoriaTelefoneAppService.cs" />
     <Compile Include="Services\CategoriaFornecedorAppService.cs" />
     <Compile Include="Services\ConfiguracaoAppService.cs" />
+    <Compile Include="Services\AmbienteAppService.cs" />
     <Compile Include="Services\TelefoneAppService.cs" />
     <Compile Include="Services\FornecedorAppService.cs" />
     <Compile Include="Services\FornecedorCnpjAppService.cs" />

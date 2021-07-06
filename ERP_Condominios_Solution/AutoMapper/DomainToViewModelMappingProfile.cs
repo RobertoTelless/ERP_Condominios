@@ -35,6 +35,9 @@ namespace MvcMapping.Mappers
             CreateMap<VAGA, VagaViewModel>();
             CreateMap<VEICULO, VeiculoViewModel>();
             CreateMap<TELEFONE, TelefoneViewModel>();
+            CreateMap<AMBIENTE, AmbienteViewModel>();
+            CreateMap<AMBIENTE_CHAVE, AmbienteChaveViewModel>();
+            CreateMap<AMBIENTE_CUSTO, AmbienteCustoViewModel>();
         }
     }
 }

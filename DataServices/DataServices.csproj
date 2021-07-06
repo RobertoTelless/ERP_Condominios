@@ -185,6 +185,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AmbienteCustoRepository.cs" />
+    <Compile Include="Repositories\AmbienteImagemRepository.cs" />
     <Compile Include="Repositories\AssinanteAnexoRepository.cs" />
     <Compile Include="Repositories\AgendaAnexoRepository.cs" />
     <Compile Include="Repositories\AgendaRepository.cs" />
@@ -197,11 +199,14 @@
     <Compile Include="Repositories\FornecedorAnexoRepository.cs" />
     <Compile Include="Repositories\FornecedorCnpjRepository.cs" />
     <Compile Include="Repositories\FornecedorContatoRepository.cs" />
+    <Compile Include="Repositories\AmbienteRepository.cs" />
     <Compile Include="Repositories\TelefoneRepository.cs" />
     <Compile Include="Repositories\FornecedorRepository.cs" />
     <Compile Include="Repositories\LogRepository.cs" />
     <Compile Include="Repositories\NoticiaComentarioRepository.cs" />
     <Compile Include="Repositories\NoticiaRepository.cs" />
+    <Compile Include="Repositories\AmbienteChaveRepository.cs" />
+    <Compile Include="Repositories\TipoAmbienteRepository.cs" />
     <Compile Include="Repositories\TipoVeiculoRepository.cs" />
     <Compile Include="Repositories\TorreRepository.cs" />
     <Compile Include="Repositories\VeiculoAnexoRepository.cs" />

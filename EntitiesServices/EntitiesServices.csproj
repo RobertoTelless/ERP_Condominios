@@ -196,6 +196,7 @@
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
+    <Compile Include="EntitiesServices\AmbienteService.cs" />
     <Compile Include="EntitiesServices\TelefoneService.cs" />
     <Compile Include="EntitiesServices\FornecedorService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
@@ -211,6 +212,8 @@
     <Compile Include="EntitiesServices\UnidadeService.cs" />
     <Compile Include="EntitiesServices\UsuarioService.cs" />
     <Compile Include="Interfaces\External\IECT_Services.cs" />
+    <Compile Include="Interfaces\Repositories\IAmbienteImagemRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAmbienteCustoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
@@ -219,9 +222,12 @@
     <Compile Include="Interfaces\Repositories\ICategoriaTelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorCnpjRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAmbienteChaveRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAmbienteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoAmbienteRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITorreRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaAgendaRepository.cs" />
@@ -257,6 +263,7 @@
     <Compile Include="Interfaces\Services\ICategoriaFornecedorService.cs" />
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />
+    <Compile Include="Interfaces\Services\IAmbienteService.cs" />
     <Compile Include="Interfaces\Services\ITelefoneService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorService.cs" />
     <Compile Include="Interfaces\Services\ILogService.cs" />

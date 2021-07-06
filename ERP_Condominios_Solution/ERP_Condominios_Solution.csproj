@@ -300,8 +300,11 @@
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AgendaViewModel.cs" />
+    <Compile Include="ViewModels\AmbienteChaveViewModel.cs" />
     <Compile Include="ViewModels\AssinanteViewModel.cs" />
     <Compile Include="ViewModels\CategoriaAgendaViewModel.cs" />
+    <Compile Include="ViewModels\AmbienteViewModel.cs" />
+    <Compile Include="ViewModels\AmbienteCustoViewModel.cs" />
     <Compile Include="ViewModels\TelefoneViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />

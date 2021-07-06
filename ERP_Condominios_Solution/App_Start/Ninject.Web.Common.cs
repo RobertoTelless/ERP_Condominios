@@ -87,6 +87,7 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorAppService>().To<FornecedorAppService>();
             kernel.Bind<IFornecedorCnpjAppService>().To<FornecedorCnpjAppService>();
             kernel.Bind<ITelefoneAppService>().To<TelefoneAppService>();
+            kernel.Bind<IAmbienteAppService>().To<AmbienteAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -107,6 +108,7 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorService>().To<FornecedorService>();
             kernel.Bind<IFornecedorCnpjService>().To<FornecedorCnpjService>();
             kernel.Bind<ITelefoneService>().To<TelefoneService>();
+            kernel.Bind<IAmbienteService>().To<AmbienteService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -141,13 +143,18 @@ namespace Presentation.Start
             kernel.Bind<IVeiculoRepository>().To<VeiculoRepository>();
             kernel.Bind<ITipoVeiculoRepository>().To<TipoVeiculoRepository>();
             kernel.Bind<IVeiculoAnexoRepository>().To<VeiculoAnexoRepository>();
-            kernel.Bind<ICategoriaFornecedorRepository>().To<Categoria      FornecedorRepository>();
+            kernel.Bind<ICategoriaFornecedorRepository>().To<CategoriaFornecedorRepository>();
             kernel.Bind<IFornecedorRepository>().To<FornecedorRepository>();
             kernel.Bind<IFornecedorAnexoRepository>().To<FornecedorAnexoRepository>();
             kernel.Bind<IFornecedorCnpjRepository>().To<FornecedorCnpjRepository>();
             kernel.Bind<IFornecedorContatoRepository>().To<FornecedorContatoRepository>();
             kernel.Bind<ITelefoneRepository>().To<TelefoneRepository>();
             kernel.Bind<ICategoriaTelefoneRepository>().To<CategoriaTelefoneRepository>();
+            kernel.Bind<ITipoAmbienteRepository>().To<TipoAmbienteRepository>();
+            kernel.Bind<IAmbienteRepository>().To<AmbienteRepository>();
+            kernel.Bind<IAmbienteChaveRepository>().To<AmbienteChaveRepository>();
+            kernel.Bind<IAmbienteCustoRepository>().To<AmbienteCustoRepository>();
+            kernel.Bind<IAmbienteImagemRepository>().To<AmbienteImagemRepository>();
 
         }
     }
