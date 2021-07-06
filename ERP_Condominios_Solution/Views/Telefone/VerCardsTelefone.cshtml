@@ -1,0 +1,192 @@
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.TELEFONE
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Telefones</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaTelefone", "Telefone")">Telefones</a>
+            </li>
+            <li class="active">
+                <strong>Telefones</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>           
+            
+                @using (Html.BeginForm("FiltrarTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                    Categoria 
+                                    @Html.DropDownListFor(m => m.CATE_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control" })                            
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-5ths">
+                                    Nome
+                                    @Html.TextBoxFor(m => m.TELE_NM_NOME, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                    Telefone
+                                    @Html.TextBoxFor(m => m.TELE_NR_TELEFONE, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                    Celular
+                                    @Html.TextBoxFor(m => m.TELE_NR_CELULAR, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    E-Mail
+                                    @Html.TextBoxFor(m => m.TELE_NM_EMAIL, new { @class = "form-control", autofocus = true })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Cidade
+                                    @Html.TextBoxFor(m => m.TELE_NM_CIDADE, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                    UF
+                                    @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control" })                            
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    @Html.ButtonActionSubmit(text: "Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Telefone", action: "RetirarFiltroTelefone")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Telefone", action: "MostrarTudoTelefone")
+                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                    {
+                                        @Html.ButtonLinkIndex(text: "Novo Telefone", controller: "Telefone", action: "IncluirTelefone")
+                                    }
+                                    @Html.ButtonLinkIndex(text: "Exibir Lista dos Telefones", controller: "Telefone", action: "MontarTelaTelefone")
+                                    @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Telefone", action: "GerarRelatorioLista")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Telefone", action: "Voltar")
+                                </div>
+                            </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Telefones</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.TELEFONE>).Count > 0)
+                            {
+                                foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.TELEFONE>))
+                                {
+                                    <div class="col-lg-4">
+                                        <div style="height: 250px;" class="contact-box">
+                                            <a href="@Url.Action("VerTelefone", "Telefone", new { id = cond.TELE_CD_ID })">
+                                                <div class="col-sm-12">
+                                                    <h3><strong>@cond.TELE_NM_NOME</strong></h3>
+                                                    <p><i class="fa fa-map-marker"></i> @cond.TELE_NM_EMAIL</p>
+                                                    <address>
+                                                        @cond.TELE_NM_ENDERECO<br>
+                                                        @cond.TELE_NM_BAIRRO @cond.TELE_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
+                                                        @cond.TELE_NR_CEP<br>
+                                                        <abbr title="Telefone">P:</abbr> @cond.TELE_NR_TELEFONE
+                                                        <abbr title="Celular">P:</abbr> @cond.TELE_NR_CELULAR
+                                                    </address>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }   
+                            }
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

@@ -175,11 +175,11 @@
                                     Cidade
                                     @Html.TextBoxFor(m => m.FORN_NM_CIDADE, new { @class = "form-control", autofocus = true })
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                <div class="col-lg-1 col-md-1 col-xs-12">
                                     UF
                                     @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control" })                            
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-xs-12">
                                     Ativo?
                                     @Html.DropDownListFor(m => m.FORN_IN_ATIVO, (SelectList)ViewBag.Ativos, new { @class = "form-control" })                            
                                 </div>
@@ -325,7 +325,7 @@
     @Scripts.Render("~/plugins/jasnyBootstrap")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     
-    @*<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
 
             $('.dataTables-example').DataTable({
@@ -344,19 +344,19 @@
                             $(win.document.body).css('font-size', '10px');
 
                             $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
                         }
                     }
                 ]
 
             });
 
-           
+
 
         });
 
-    </script>*@
+    </script>
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");

@@ -2928,16 +2928,6 @@
     <Content Include="Views\Veiculo\VerVeiculo.cshtml" />
     <Content Include="Views\Veiculo\VerAnexoVeiculo.cshtml" />
     <Content Include="Views\Veiculo\GerarNotificacaoVeiculo.cshtml" />
-    <Content Include="Views\Fornecedor\MontarTelaFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\IncluirFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\EditarFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\VerFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\ReativarFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\ExcluirFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\VerCardsFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\VerAnexoFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\EditarContatoFornecedor.cshtml" />
-    <Content Include="Views\Fornecedor\IncluirContatoFornecedor.cshtml" />
     <Content Include="Views\FornecedorNovo\MontarTelaFornecedor.cshtml" />
     <Content Include="Views\FornecedorNovo\IncluirFornecedor.cshtml" />
     <Content Include="Views\FornecedorNovo\EditarFornecedor.cshtml" />
@@ -2951,6 +2941,9 @@
     <Content Include="Views\FornecedorNovo\VerFornecedorInativos.cshtml" />
     <Content Include="Views\Telefone\MontarTelaTelefone.cshtml" />
     <Content Include="Views\Telefone\IncluirTelefone.cshtml" />
+    <Content Include="Views\Telefone\EditarTelefone.cshtml" />
+    <Content Include="Views\Telefone\VerTelefone.cshtml" />
+    <Content Include="Views\Telefone\VerCardsTelefone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

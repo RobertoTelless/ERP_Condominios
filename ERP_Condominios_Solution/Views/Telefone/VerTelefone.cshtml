@@ -15,7 +15,7 @@
                 <a href="@Url.Action("MontarTelaTelefone", "Telefone")">Telefones</a>
             </li>
             <li class="active">
-                <strong>Telefone - Inclusão</strong>
+                <strong>Telefone - Consulta</strong>
             </li>
         </ol>
         <br />
@@ -24,7 +24,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Telefone - Inclusão</h5>
+                    <h5>Telefone - Consulta</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -56,7 +56,7 @@
                         </div>
                     }
                     <div class="tabs-container">
-                        @using (Html.BeginForm("IncluirTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        @using (Html.BeginForm("VerTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
 
                             <ul class="nav nav-tabs">
@@ -74,36 +74,31 @@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.TELE_IN_ATIVO)
-                                                    Categoria*
-                                                    @Html.DropDownListFor(m => m.CATE_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.CATE_CD_ID, "", new { @style = "color:red" })
+                                                    @Html.HiddenFor(m => m.TELE_CD_ID)
+                                                    Categoria
+                                                    @Html.TextBoxFor(m => m.CATEGORIA_TELEFONE.CATE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Nome*
-                                                    @Html.TextBoxFor(m => m.TELE_NM_NOME, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NM_NOME, "", new { @style = "color:red" })
+                                                    Nome
+                                                    @Html.TextBoxFor(m => m.TELE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-2 col-md-2 col-xs-12" id="razao">
                                                     Telefone
-                                                    @Html.TextBoxFor(m => m.TELE_NR_TELEFONE, new { @class = "form-control", autofocus = true, id = "tel" })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NR_TELEFONE, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NR_TELEFONE, new { @class = "form-control", autofocus = true, id = "tel", @readonly="readonly" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Celular
-                                                    @Html.TextBoxFor(m => m.TELE_NR_CELULAR, new { @class = "form-control", autofocus = true,  id = "cel"  })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NR_CELULAR, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NR_CELULAR, new { @class = "form-control", autofocus = true,  id = "cel", @readonly="readonly"  })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     WhatsApp
-                                                    @Html.TextBoxFor(m => m.TELE_NR_WHATSAPP, new { @class = "form-control", autofocus = true,  id = "wh"  })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NR_WHATSAPP, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NR_WHATSAPP, new { @class = "form-control", autofocus = true,  id = "wh", @readonly="readonly"  })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     E-Mail
-                                                    @Html.TextBoxFor(m => m.TELE_NM_EMAIL, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NM_EMAIL, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NM_EMAIL, new { @class = "form-control", autofocus = true, @readonly="readonly"  })
                                                 </div>
                                             </div>
                                         </div>
@@ -117,11 +112,7 @@
                                             <div class="form-group" style="margin: 0 -15px 0 -15px;" id="containerCep">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     CEP
-                                                    @Html.TextBoxFor(m => m.TELE_NR_CEP, new { @class = "form-control", autofocus = true, @id = "cep" })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NR_CEP, "", new { @style = "color:red" })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    <span class="btn btn-warning btn-sm" style="margin-bottom: -45px;" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 1)">Buscar CEP</span>
+                                                    @Html.TextBoxFor(m => m.TELE_NR_CEP, new { @class = "form-control", autofocus = true, @id = "cep", @readonly="readonly" })
                                                 </div>
                                             </div>
                                         </div>
@@ -129,23 +120,19 @@
                                             <div class="form-group" style="margin: 30px -15px 0 -15px;" id="containerEnd">
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                                     Endereço
-                                                    @Html.TextBoxFor(m => m.TELE_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NM_ENDERECO, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco", @readonly="readonly" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Bairro
-                                                    @Html.TextBoxFor(m => m.TELE_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NM_BAIRRO, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro", @readonly="readonly" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Cidade
-                                                    @Html.TextBoxFor(m => m.TELE_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
-                                                    @Html.ValidationMessageFor(m => m.TELE_NM_CIDADE, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.TELE_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade", @readonly="readonly" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     UF
-                                                    @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
-                                                    @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.UF.UF_SG_SIGLA, new { @class = "form-control", autofocus = true, @id = "uf", @readonly="readonly" })
                                                 </div>
                                             </div>
                                         </div>
@@ -159,8 +146,7 @@
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Observações
-                                                    @Html.TextAreaFor(m => m.TELE_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.TELE_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                    @Html.TextAreaFor(m => m.TELE_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true, @readonly="readonly" })
                                                 </div>
                                             </div>
                                         </div>
@@ -168,8 +154,6 @@
                                 </div>
                                 <div class="form-group">
                                     <br />
-                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Telefone</button>
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTelefone", controller: "Telefone")
                                 </div>
                             </div>
@@ -254,7 +238,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Inclusão em andamento!')
+                toastr.success('Edição em andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();

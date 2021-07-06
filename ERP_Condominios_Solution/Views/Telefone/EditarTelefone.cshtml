@@ -15,7 +15,7 @@
                 <a href="@Url.Action("MontarTelaTelefone", "Telefone")">Telefones</a>
             </li>
             <li class="active">
-                <strong>Telefone - Inclusão</strong>
+                <strong>Telefone - Edição</strong>
             </li>
         </ol>
         <br />
@@ -24,7 +24,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Telefone - Inclusão</h5>
+                    <h5>Telefone - Edição</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -56,7 +56,7 @@
                         </div>
                     }
                     <div class="tabs-container">
-                        @using (Html.BeginForm("IncluirTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        @using (Html.BeginForm("EditarTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
 
                             <ul class="nav nav-tabs">
@@ -74,6 +74,7 @@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.TELE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.TELE_CD_ID)
                                                     Categoria*
                                                     @Html.DropDownListFor(m => m.CATE_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CATE_CD_ID, "", new { @style = "color:red" })
@@ -169,7 +170,7 @@
                                 <div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Telefone</button>
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma edição de Telefone</button>
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTelefone", controller: "Telefone")
                                 </div>
                             </div>
@@ -254,7 +255,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Inclusão em andamento!')
+                toastr.success('Edição em andamento!')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
