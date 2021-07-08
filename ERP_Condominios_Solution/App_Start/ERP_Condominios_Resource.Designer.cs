@@ -340,6 +340,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Autorização já cadastrada para essa unidade.
+        /// </summary>
+        internal static string M0034 {
+            get {
+                return ResourceManager.GetString("M0034", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa autorização/restrição. Existem informações vinculadas a ela.
+        /// </summary>
+        internal static string M0035 {
+            get {
+                return ResourceManager.GetString("M0035", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {

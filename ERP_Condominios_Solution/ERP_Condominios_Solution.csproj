@@ -278,6 +278,7 @@
     <Compile Include="AutoMapper\ViewModelToDomainMappingProfile.cs" />
     <Compile Include="Controllers\AgendaController.cs" />
     <Compile Include="Controllers\AmbienteController.cs" />
+    <Compile Include="Controllers\AutorizacaoController.cs" />
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CondominioController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
@@ -2960,6 +2961,13 @@
     <Content Include="Views\Ambiente\IncluirAmbienteCusto.cshtml" />
     <Content Include="Views\Ambiente\EditarAmbienteChave.cshtml" />
     <Content Include="Views\Ambiente\IncluirAmbienteChave.cshtml" />
+    <Content Include="Views\Autorizacao\MontarTelaAutorizacao.cshtml" />
+    <Content Include="Views\Autorizacao\IncluirAutorizacao.cshtml" />
+    <Content Include="Views\Autorizacao\EditarAutorizacao.cshtml" />
+    <Content Include="Views\Autorizacao\VerAutorizacao.cshtml" />
+    <Content Include="Views\Autorizacao\ExcluirAutorizacao.cshtml" />
+    <Content Include="Views\Autorizacao\ReativarAutorizacao.cshtml" />
+    <Content Include="Views\Autorizacao\VerAnexoAutorizacao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

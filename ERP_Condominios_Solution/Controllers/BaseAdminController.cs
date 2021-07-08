@@ -132,6 +132,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensFornecedor"] = 0;
             Session["MensTelefone"] = 0;
             Session["MensAmbiente"] = 0;
+            Session["MensAutorizacao"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();
@@ -174,6 +175,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["NumAgendasHoje"] = ((List<AGENDA>)Session["AgendasHoje"]).Count;
 
             Session["Logs"] = usu.LOG.Count;
+            Session["Autorizacoes"] = usu.AUTORIZACAO_ACESSO.Count;
 
             String frase = String.Empty;
             String nome = usu.USUA_NM_NOME.Substring(0, usu.USUA_NM_NOME.IndexOf(" "));
@@ -246,6 +248,10 @@ namespace ERP_Condominios_Solution.Controllers
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensAmbiente"] == 2)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensAutorizacao"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }

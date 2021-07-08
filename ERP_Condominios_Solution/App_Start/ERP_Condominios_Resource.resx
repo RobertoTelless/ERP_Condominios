@@ -210,6 +210,12 @@
   <data name="M0033" xml:space="preserve">
     <value>Data de entrega da chave maior que a data corrente</value>
   </data>
+  <data name="M0034" xml:space="preserve">
+    <value>Autorização já cadastrada para essa unidade</value>
+  </data>
+  <data name="M0035" xml:space="preserve">
+    <value>Não é possível excluir essa autorização/restrição. Existem informações vinculadas a ela</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>
