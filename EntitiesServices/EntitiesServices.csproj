@@ -191,6 +191,7 @@
     <Compile Include="Attributes\CustomValidationCPFAttribute.cs" />
     <Compile Include="Attributes\DataAnteriorAttribute.cs" />
     <Compile Include="EntitiesServices\AgendaService.cs" />
+    <Compile Include="EntitiesServices\AutorizacaoService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
     <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
@@ -214,10 +215,14 @@
     <Compile Include="Interfaces\External\IECT_Services.cs" />
     <Compile Include="Interfaces\Repositories\IAmbienteImagemRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAmbienteCustoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAutorizacaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoDocumentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IGrauParentescoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaTelefoneRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFornecedorAnexoRepository.cs" />
@@ -258,6 +263,7 @@
     <Compile Include="Interfaces\Repositories\IUsuarioAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUsuarioRepository.cs" />
     <Compile Include="Interfaces\Services\IAgendaService.cs" />
+    <Compile Include="Interfaces\Services\IAutorizacaoService.cs" />
     <Compile Include="Interfaces\Services\IAssinanteService.cs" />
     <Compile Include="Interfaces\Services\ICategoriaTelefoneService.cs" />
     <Compile Include="Interfaces\Services\ICategoriaFornecedorService.cs" />

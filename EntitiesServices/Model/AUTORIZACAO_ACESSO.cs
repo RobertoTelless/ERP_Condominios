@@ -38,6 +38,7 @@ namespace EntitiesServices.Model
         public Nullable<System.DateTime> AUAC_DT_LIMITE { get; set; }
         public string AUAC_DS_OBSERVACOES { get; set; }
         public int AUAC_IN_ATIVO { get; set; }
+        public Nullable<System.DateTime> AUAC_DT_INICIO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual GRAU_PARENTESCO GRAU_PARENTESCO { get; set; }

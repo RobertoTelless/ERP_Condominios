@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IAgendaAppService.cs" />
+    <Compile Include="Interfaces\IAutorizacaoAppService.cs" />
     <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Interfaces\IAssinanteAppService.cs" />
     <Compile Include="Interfaces\ICategoriaTelefoneAppService.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Interfaces\IUsuarioAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AgendaAppService.cs" />
+    <Compile Include="Services\AutorizacaoAppService.cs" />
     <Compile Include="Services\AppServiceBase.cs" />
     <Compile Include="Services\AssinanteAppService.cs" />
     <Compile Include="Services\CategoriaTelefoneAppService.cs" />

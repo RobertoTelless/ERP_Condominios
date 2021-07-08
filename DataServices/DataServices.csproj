@@ -187,10 +187,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AmbienteCustoRepository.cs" />
     <Compile Include="Repositories\AmbienteImagemRepository.cs" />
+    <Compile Include="Repositories\AutorizacaoRepository.cs" />
     <Compile Include="Repositories\AssinanteAnexoRepository.cs" />
     <Compile Include="Repositories\AgendaAnexoRepository.cs" />
     <Compile Include="Repositories\AgendaRepository.cs" />
     <Compile Include="Repositories\AssinanteRepository.cs" />
+    <Compile Include="Repositories\AutorizacaoAnexoRepository.cs" />
+    <Compile Include="Repositories\TipoDocumentoRepository.cs" />
+    <Compile Include="Repositories\GrauParentescoRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />
     <Compile Include="Repositories\CategoriaFornecedorRepository.cs" />
     <Compile Include="Repositories\CategoriaTelefoneRepository.cs" />

@@ -88,6 +88,7 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorCnpjAppService>().To<FornecedorCnpjAppService>();
             kernel.Bind<ITelefoneAppService>().To<TelefoneAppService>();
             kernel.Bind<IAmbienteAppService>().To<AmbienteAppService>();
+            kernel.Bind<IAutorizacaoAppService>().To<AutorizacaoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -109,6 +110,7 @@ namespace Presentation.Start
             kernel.Bind<IFornecedorCnpjService>().To<FornecedorCnpjService>();
             kernel.Bind<ITelefoneService>().To<TelefoneService>();
             kernel.Bind<IAmbienteService>().To<AmbienteService>();
+            kernel.Bind<IAutorizacaoService>().To<AutorizacaoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -155,6 +157,10 @@ namespace Presentation.Start
             kernel.Bind<IAmbienteChaveRepository>().To<AmbienteChaveRepository>();
             kernel.Bind<IAmbienteCustoRepository>().To<AmbienteCustoRepository>();
             kernel.Bind<IAmbienteImagemRepository>().To<AmbienteImagemRepository>();
+            kernel.Bind<ITipoDocumentoRepository>().To<TipoDocumentoRepository>();
+            kernel.Bind<IGrauParentescoRepository>().To<GrauParentescoRepository>();
+            kernel.Bind<IAutorizacaoAnexoRepository>().To<AutorizacaoAnexoRepository>();
+            kernel.Bind<IAutorizacaoRepository>().To<AutorizacaoRepository>();
 
         }
     }

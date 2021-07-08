@@ -196,7 +196,7 @@
           <Property Name="AUAC_IN_AVISO" Type="int" Nullable="false" />
           <Property Name="AUAC_IN_PERMANENTE" Type="int" Nullable="false" />
           <Property Name="AUAC_IN_TIPO" Type="int" />
-          <Property Name="AUAC_DT_VISITA" Type="date" />
+          <Property Name="AUAC_DT_INICIO" Type="date" />
           <Property Name="AUAC_DT_LIMITE" Type="date" />
           <Property Name="AUAC_DS_OBSERVACOES" Type="varchar" MaxLength="250" />
           <Property Name="AUAC_IN_ATIVO" Type="int" Nullable="false" />
@@ -4670,6 +4670,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_AUTORIZACAO_ACESSO_USUARIO" FromRole="AUTORIZACAO_ACESSO" ToRole="USUARIO" />
           <NavigationProperty Name="ENTRADA_SAIDA" Relationship="Self.FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO" FromRole="AUTORIZACAO_ACESSO" ToRole="ENTRADA_SAIDA" />
           <NavigationProperty Name="AUTORIZACAO_ACESSO_ANEXO" Relationship="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" FromRole="AUTORIZACAO_ACESSO" ToRole="AUTORIZACAO_ACESSO_ANEXO" />
+          <Property Name="AUAC_DT_INICIO" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="CARGO">
           <Key>
@@ -9329,6 +9330,7 @@
           <EntitySetMapping Name="AUTORIZACAO_ACESSO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.AUTORIZACAO_ACESSO">
               <MappingFragment StoreEntitySet="AUTORIZACAO_ACESSO">
+                <ScalarProperty Name="AUAC_DT_INICIO" ColumnName="AUAC_DT_INICIO" />
                 <ScalarProperty Name="AUAC_CD_ID" ColumnName="AUAC_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
@@ -9342,7 +9344,6 @@
                 <ScalarProperty Name="AUAC_IN_AVISO" ColumnName="AUAC_IN_AVISO" />
                 <ScalarProperty Name="AUAC_IN_PERMANENTE" ColumnName="AUAC_IN_PERMANENTE" />
                 <ScalarProperty Name="AUAC_IN_TIPO" ColumnName="AUAC_IN_TIPO" />
-                <ScalarProperty Name="AUAC_DT_VISITA" ColumnName="AUAC_DT_VISITA" />
                 <ScalarProperty Name="AUAC_DT_LIMITE" ColumnName="AUAC_DT_LIMITE" />
                 <ScalarProperty Name="AUAC_DS_OBSERVACOES" ColumnName="AUAC_DS_OBSERVACOES" />
                 <ScalarProperty Name="AUAC_IN_ATIVO" ColumnName="AUAC_IN_ATIVO" />
