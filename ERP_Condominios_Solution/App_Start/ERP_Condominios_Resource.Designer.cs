@@ -313,6 +313,33 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A chave deste ambiente está cedida à outra unidade e ainda não foi devolvida.
+        /// </summary>
+        internal static string M0031 {
+            get {
+                return ResourceManager.GetString("M0031", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Impossível editar um registro de chave de ambiente já encerrado.
+        /// </summary>
+        internal static string M0032 {
+            get {
+                return ResourceManager.GetString("M0032", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data de entrega da chave maior que a data corrente.
+        /// </summary>
+        internal static string M0033 {
+            get {
+                return ResourceManager.GetString("M0033", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {

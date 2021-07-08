@@ -1,7 +1,819 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_Condominios_Solution.ViewModels.AmbienteViewModel
 @{
-    ViewBag.Title = "VerAmbiente";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-title">
+        <h3 class="title">Ambientes</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaAmbiente", "Ambiente")">Ambientes</a>
+            </li>
+            <li class="active">
+                <strong>Ambiente - Consulta</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Ambiente - Consulta</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
 
-<h2>VerAmbiente</h2>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Ambiente")
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseAmbiente", controller: "Ambiente")
+                    </div>
+                    @Html.AntiForgeryToken()
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-7">Reservas Vinculadas</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Imagens & Anexos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Preços</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Chaves</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Descrição</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-6">Indicadores</a></li>
+                        </ul>
+                        <div class="tab-content">
 
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("VerAmbiente", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row" style="width: 100%;">
+                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div style="text-align: center; margin-top: 25px; line-height: 10px;">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.AMBI_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.AMBI_AQ_LISTA)
+                                                    @Html.HiddenFor(m => m.AMBI_AQ_NORMAS_USO)
+                                                    @Html.HiddenFor(m => m.AMBI_CD_ID)
+                                                    @Html.HiddenFor(m => m.AMBI_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.AMBI_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.AMBI_NM_DESCRICAO)
+                                                    @if (!String.IsNullOrEmpty(Model.AMBI_AQ_FOTO))
+                                                    {
+                                                        <img src="@Url.Content(Model.AMBI_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.AMBI_NM_AMBIENTE', '@Url.Content(Model.AMBI_AQ_FOTO)')">                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.AMBI_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.AMBI_IN_ATIVO)
+                                                        Tipo de Ambiente*
+                                                        @Html.TextBoxFor(m => m.TIPO_AMBIENTE.TIAM_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-xs-12" id="razao">
+                                                        Nome*
+                                                        @Html.TextBoxFor(m => m.AMBI_NM_AMBIENTE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Lotação*
+                                                        @Html.TextBoxFor(m => m.AMBI_NR_LOTACAO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Início*
+                                                        @Html.TextBoxFor(m => m.AMBI_HR_INICIO, new { @class = "form-control", autofocus = true, @id = "inicio", @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Término*
+                                                        @Html.TextBoxFor(m => m.AMBI_HR_FINAL, new { @class = "form-control", autofocus = true, @id = "Termino", @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Tem Chave?
+                                                        @Html.DropDownListFor(m => m.AMBI_IN_CHAVE, (SelectList)ViewBag.Chave, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12" id="razao">
+                                                        Gratuito?
+                                                        @Html.DropDownListFor(m => m.AMBI_IN_GRATUITO, (SelectList)ViewBag.Gratuito, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Dias de Reserva
+                                                        @Html.TextBoxFor(m => m.AMBI_NR_DIAS_CHAVE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Reservas Vinculados*@
+                            <div id="tab-7" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Reservas Vinculadas</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.RESERVA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Data</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Finalidade</th>
+                                                                    <th>Status</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.RESERVA.OrderByDescending(a => a.RESE_DT_EVENTO)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.RESE_DT_EVENTO.ToShortDateString()</td>
+                                                                        <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.FINALIDADE_RESERVA.FIRE_NM_NOME</td>
+                                                                        @if (cond.RESE_IN_STATUS == 1)
+                                                                        {
+                                                                            <td>Em Aprovação</td>
+                                                                        }
+                                                                        else if (cond.RESE_IN_STATUS == 2)
+                                                                        {
+                                                                            <td>Aprovada</td>
+                                                                        }
+                                                                        else if (cond.RESE_IN_STATUS == 3)
+                                                                        {
+                                                                            <td>Liberada</td>
+                                                                        }
+                                                                        else if (cond.RESE_IN_STATUS == 4)
+                                                                        {
+                                                                            <td>Realizada</td>
+                                                                        }
+                                                                        else if (cond.RESE_IN_STATUS == 5)
+                                                                        {
+                                                                            <td>Cancelada</td>
+                                                                        }
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.RESE_CD_ID, "VerReserva", "fa-edit", "Consultar")
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Ir para Reservas", action: "MontarTelaReservas", controller: "Reserva")
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    @if (!String.IsNullOrEmpty(Model.AMBI_AQ_FOTO))
+                                                    {
+                                                        <img src="@Url.Content(Model.AMBI_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                            <div class="form-group">
+                                                <h4>Normas de Uso</h4>
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Norma de Uso
+                                                    @Html.TextBoxFor(m => m.AMBI_AQ_NORMAS_USO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                            <div class="form-group">
+                                                <h4>Lista de Material</h4>
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Lista de Material
+                                                    @Html.TextBoxFor(m => m.AMBI_AQ_LISTA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                            <h4>Anexos</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileAmbiente", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.AMBIENTE_IMAGEM.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.AMBIENTE_IMAGEM))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.AMIN_NM_TITULO</td>
+                                                                            <td>@cond.AMIM_DT_CADASTRO.ToShortDateString()</td>
+                                                                            @if (cond.AMIM_IN_TIPO == 1)
+                                                                            {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else if (cond.AMIM_IN_TIPO == 2)
+                                                                            {
+                                                                                <td>Vídeo</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.AMIM_IN_TIPO == 1 || cond.AMIM_IN_TIPO == 2)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.AMIM_CD_ID, "VerAnexoAmbiente", "fa-camera", "Visualizar")
+                                                                                }
+                                                                                @if (cond.AMIM_IN_TIPO == 3)
+                                                                                {
+                                                                                    <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.AMIM_NM_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank" ></a>
+                                                                                }
+                                                                                @Html.TableLinkDetails(cond.AMIM_CD_ID, "DownloadAmbiente", "fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Preços*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Preços</h4>
+                                                <br />
+                                                @if (Model.AMBIENTE_CUSTO.Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Nome</th>
+                                                                <th>Valor Base</th>
+                                                                <th>Valor Reduzido</th>
+                                                                <th>Valor Hora</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (Model.AMBIENTE_CUSTO))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.AMCU_DS_DESCRICAO</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_BASE)</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_REDUZIDO.Value)</td>
+                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_HORA)</td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Chaves*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Movimentação de Chaves</h4>
+                                                <br />
+                                                @if (Model.AMBIENTE_CHAVE.Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Data Entrega</th>
+                                                                <th>Unidade</th>
+                                                                <th>Usuário</th>
+                                                                <th>Data Prevista</th>
+                                                                <th>Data Devolução</th>
+                                                                <th></th>
+                                                                @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
+                                                                {
+                                                                    <th class="td-one-action">Ações</th>
+                                                                }
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (Model.AMBIENTE_CHAVE))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.AMCH_DT_ENTREGA.ToShortDateString()</td>
+                                                                    <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                    <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                    <td>@cond.AMCH_DT_PREVISTA.ToShortDateString()</td>
+                                                                    <td>@cond.AMCH_DT_DEVOLUCAO.Value.ToShortDateString()</td>
+                                                                    @if (cond.AMCH_DT_DEVOLUCAO != null)
+                                                                    {
+                                                                        <td><span class="badge badge-primary">Devolvida</span></td>
+                                                                    }
+                                                                    else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA >= DateTime.Today.Date)
+                                                                    {
+                                                                        <td><span class="badge badge-warning">Pendente</span></td>
+                                                                    }
+                                                                    else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA < DateTime.Today.Date)
+                                                                    {
+                                                                        <td><span class="badge badge-danger">Em Atraso</span></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td></td>
+                                                                    }  
+                                                                    @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
+                                                                    {
+                                                                        <td class="td-one-action">
+                                                                            @if (cond.AMCH_DT_DEVOLUCAO == null)
+                                                                            {
+                                                                                @Html.TableLinkDetails(cond.AMCH_CD_ID, "DevolverAmbienteChave", "fa-reply", "Devolução")
+                                                                            }
+                                                                        </td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
+                                    {
+                                        <div class="form-group">
+                                            @Html.ButtonLinkIndex(text: "Incluir Nova Entrega de Chave", action: "IncluirAmbienteChave", controller: "Ambiente")
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Descrição*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("VerAmbiente", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.AMBI_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.AMBI_AQ_LISTA)
+                                                    @Html.HiddenFor(m => m.AMBI_AQ_NORMAS_USO)
+                                                    @Html.HiddenFor(m => m.AMBI_CD_ID)
+                                                    @Html.HiddenFor(m => m.AMBI_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.AMBI_HR_FINAL)
+                                                    @Html.HiddenFor(m => m.AMBI_HR_INICIO)
+                                                    @Html.HiddenFor(m => m.AMBI_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.AMBI_IN_CHAVE)
+                                                    @Html.HiddenFor(m => m.AMBI_IN_GRATUITO)
+                                                    @Html.HiddenFor(m => m.AMBI_NM_AMBIENTE)
+                                                    @Html.HiddenFor(m => m.AMBI_NR_DIAS_CHAVE)
+                                                    @Html.HiddenFor(m => m.AMBI_NR_LOTACAO)
+                                                    @Html.HiddenFor(m => m.TIAM_CD_ID)
+                                                    Descrição
+                                                    @Html.TextAreaFor(m => m.AMBI_NM_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true, @readonly="readonly" })
+                                                    @Html.ValidationMessageFor(m => m.AMBI_NM_DESCRICAO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Indicadores*@
+                            <div id="tab-6" class="tab-pane">
+                                <div class="panel-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "FornecedorNovo")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de Preço?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de Preço?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+
+    <script>
+        $(function () {
+            limpaModalChave();
+        });
+
+        function limpaModalChave() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluirChave(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de Chave?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativarChave(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de Chave?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+
+
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $('#tel').mask("(99) 9999-9999");
+            $('#cel').mask("(99) 99999-9999");
+            $('#wpp').mask("(99) 99999-9999");
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            var id = @Model.AMBI_CD_ID;
+
+            var data = {
+                id: id
+            }
+
+            $.ajax({
+                url: '../GetValorGrafico'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    console.log(r);
+                    $("#sparkline1").sparkline([r.m3, r.m2, r.m1], {
+                        type: 'line',
+                        width: '100%',
+                        height: '60',
+                        lineColor: '#1ab394',
+                        fillColor: "#ffffff"
+                    });
+                }
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#PF").hide();
+                    $("#PJ").show();
+                    $("#razao").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $("#PJ").hide();
+                    $("#PF").show();
+                    $("#razao").hide();
+                }
+                else if (this.value == '4') {
+                    $("#PF").show();
+                    $("#PJ").hide();
+                    $("#razao").hide();
+                }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else {
+                    $("#PJ").hide();
+                    $("#PF").hide();
+                    $("#razao").hide();
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(docuFORN_CD_IDent).FORN_CD_IDeady(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    <script>
+        function PesquisaCep(cep, btn, tipoEnd) {
+            data = {
+                cep: cep
+                , tipoEnd: tipoEnd
+            }
+
+            $('#btnBuscaCep').attr("disabled", "disabled");
+
+            $.ajax({
+                url: '../PesquisaCEP_Javascript'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    if (tipoEnd == 1) {
+                        $('#endereco').val(r.FORM_NM_ENDERECO);
+                        $('#bairro').val(r.FORN_NM_BAIRRO);
+                        $('#cidade').val(r.FORN_NM_CIDADE);
+
+                        $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
+                        $('#btnBuscaCep').removeAttr("disabled");
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function MudaIdForn(id) {
+            $('#idForn').val(id);
+        }
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public AUTORIZACAO_ACESSO()
         {
             this.ENTRADA_SAIDA = new HashSet<ENTRADA_SAIDA>();
+            this.AUTORIZACAO_ACESSO_ANEXO = new HashSet<AUTORIZACAO_ACESSO_ANEXO>();
         }
     
         public int AUAC_CD_ID { get; set; }
@@ -45,5 +46,7 @@ namespace EntitiesServices.Model
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ENTRADA_SAIDA> ENTRADA_SAIDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AUTORIZACAO_ACESSO_ANEXO> AUTORIZACAO_ACESSO_ANEXO { get; set; }
     }
 }

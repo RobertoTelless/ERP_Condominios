@@ -201,6 +201,18 @@
           <Property Name="AUAC_DS_OBSERVACOES" Type="varchar" MaxLength="250" />
           <Property Name="AUAC_IN_ATIVO" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="AUTORIZACAO_ACESSO_ANEXO">
+          <Key>
+            <PropertyRef Name="AAAN_CD_ID" />
+          </Key>
+          <Property Name="AAAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUAC_CD_ID" Type="int" Nullable="false" />
+          <Property Name="AAAN_NM_TITULO" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AAAN_DT_ANEXO" Type="date" Nullable="false" />
+          <Property Name="AAAN_IN_TIPO" Type="int" Nullable="false" />
+          <Property Name="AAAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
+          <Property Name="AAAN_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="CARGO">
           <Key>
             <PropertyRef Name="CARG_CD_ID" />
@@ -1756,6 +1768,18 @@
             </Principal>
             <Dependent Role="ASSINANTE">
               <PropertyRef Name="UF_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO">
+          <End Role="AUTORIZACAO_ACESSO" Type="Self.AUTORIZACAO_ACESSO" Multiplicity="1" />
+          <End Role="AUTORIZACAO_ACESSO_ANEXO" Type="Self.AUTORIZACAO_ACESSO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUTORIZACAO_ACESSO">
+              <PropertyRef Name="AUAC_CD_ID" />
+            </Principal>
+            <Dependent Role="AUTORIZACAO_ACESSO_ANEXO">
+              <PropertyRef Name="AUAC_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3573,6 +3597,7 @@
           <EntitySet Name="ASSINANTE" EntityType="Self.ASSINANTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ASSINANTE_ANEXO" EntityType="Self.ASSINANTE_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AUTORIZACAO_ACESSO" EntityType="Self.AUTORIZACAO_ACESSO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AUTORIZACAO_ACESSO_ANEXO" EntityType="Self.AUTORIZACAO_ACESSO_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_AGENDA" EntityType="Self.CATEGORIA_AGENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORIA_FORNECEDOR" EntityType="Self.CATEGORIA_FORNECEDOR" Schema="dbo" store:Type="Tables" />
@@ -3766,6 +3791,10 @@
           <AssociationSet Name="FK_ASSINANTE_UF" Association="Self.FK_ASSINANTE_UF">
             <End Role="UF" EntitySet="UF" />
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" Association="Self.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO">
+            <End Role="AUTORIZACAO_ACESSO" EntitySet="AUTORIZACAO_ACESSO" />
+            <End Role="AUTORIZACAO_ACESSO_ANEXO" EntitySet="AUTORIZACAO_ACESSO_ANEXO" />
           </AssociationSet>
           <AssociationSet Name="FK_AUTORIZACAO_ACESSO_ASSINANTE" Association="Self.FK_AUTORIZACAO_ACESSO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -4640,6 +4669,7 @@
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_AUTORIZACAO_ACESSO_UNIDADE" FromRole="AUTORIZACAO_ACESSO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_AUTORIZACAO_ACESSO_USUARIO" FromRole="AUTORIZACAO_ACESSO" ToRole="USUARIO" />
           <NavigationProperty Name="ENTRADA_SAIDA" Relationship="Self.FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO" FromRole="AUTORIZACAO_ACESSO" ToRole="ENTRADA_SAIDA" />
+          <NavigationProperty Name="AUTORIZACAO_ACESSO_ANEXO" Relationship="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" FromRole="AUTORIZACAO_ACESSO" ToRole="AUTORIZACAO_ACESSO_ANEXO" />
         </EntityType>
         <EntityType Name="CARGO">
           <Key>
@@ -8766,6 +8796,11 @@
             <End Role="UF" EntitySet="UF" />
             <End Role="TELEFONE" EntitySet="TELEFONE" />
           </AssociationSet>
+          <EntitySet Name="AUTORIZACAO_ACESSO_ANEXO" EntityType="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO" />
+          <AssociationSet Name="FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO">
+            <End Role="AUTORIZACAO_ACESSO" EntitySet="AUTORIZACAO_ACESSO" />
+            <End Role="AUTORIZACAO_ACESSO_ANEXO" EntitySet="AUTORIZACAO_ACESSO_ANEXO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="TIPO_CONDOMINIO">
           <Key>
@@ -9084,6 +9119,31 @@
             </Principal>
             <Dependent Role="TELEFONE">
               <PropertyRef Name="UF_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AUTORIZACAO_ACESSO_ANEXO">
+          <Key>
+            <PropertyRef Name="AAAN_CD_ID" />
+          </Key>
+          <Property Name="AAAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AUAC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="AAAN_NM_TITULO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AAAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AAAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="AAAN_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AAAN_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" FromRole="AUTORIZACAO_ACESSO_ANEXO" ToRole="AUTORIZACAO_ACESSO" />
+        </EntityType>
+        <Association Name="FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO">
+          <End Type="ERP_CondominioModel.AUTORIZACAO_ACESSO" Role="AUTORIZACAO_ACESSO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO" Role="AUTORIZACAO_ACESSO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AUTORIZACAO_ACESSO">
+              <PropertyRef Name="AUAC_CD_ID" />
+            </Principal>
+            <Dependent Role="AUTORIZACAO_ACESSO_ANEXO">
+              <PropertyRef Name="AUAC_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10635,6 +10695,19 @@
                 <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="SCPR_CD_ID" ColumnName="SCPR_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AUTORIZACAO_ACESSO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO">
+              <MappingFragment StoreEntitySet="AUTORIZACAO_ACESSO_ANEXO">
+                <ScalarProperty Name="AAAN_IN_ATIVO" ColumnName="AAAN_IN_ATIVO" />
+                <ScalarProperty Name="AAAN_AQ_ARQUIVO" ColumnName="AAAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="AAAN_IN_TIPO" ColumnName="AAAN_IN_TIPO" />
+                <ScalarProperty Name="AAAN_DT_ANEXO" ColumnName="AAAN_DT_ANEXO" />
+                <ScalarProperty Name="AAAN_NM_TITULO" ColumnName="AAAN_NM_TITULO" />
+                <ScalarProperty Name="AUAC_CD_ID" ColumnName="AUAC_CD_ID" />
+                <ScalarProperty Name="AAAN_CD_ID" ColumnName="AAAN_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

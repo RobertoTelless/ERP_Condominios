@@ -283,6 +283,12 @@ namespace ApplicationServices.Services
         {
             try
             {
+                // Critica
+                if (item.AMCH_DT_ENTREGA > DateTime.Today.Date)
+                {
+                    return 1;
+                }
+
                 // Persiste
                 item.AMCH_IN_ATIVO = 1;
                 Int32 volta = _baseService.CreateAmbienteChave(item);

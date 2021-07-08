@@ -404,6 +404,18 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
+            if ((Int32)Session["MensAmbiente"] == 7)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0031", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensAmbiente"] == 8)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0032", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensAmbiente"] == 9)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0033", CultureInfo.CurrentCulture));
+            }
 
             AMBIENTE item = fornApp.GetItemById(id);
             objetoFornAntes = item;
@@ -927,6 +939,90 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("VoltarAnexoAmbiente");
         }
 
+        [HttpPost]
+        public ActionResult UploadNormaUso(HttpPostedFileBase file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdVolta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensAmbiente"] = 5;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+            AMBIENTE item = fornApp.GetById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = Path.GetFileName(file.FileName);
+            if (fileName.Length > 250)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensAmbiente"] = 6;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Ambiente/" + item.AMBI_CD_ID.ToString() + "/Anexos/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            file.SaveAs(path);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Gravar registro
+            item.AMBI_AQ_NORMAS_USO = "~" + caminho + fileName;
+            objetoFornAntes = item;
+            Int32 volta = fornApp.ValidateEdit(item, objetoFornAntes);
+            listaMasterForn = new List<AMBIENTE>();
+            Session["ListaAmbiente"] = null;
+            return RedirectToAction("VoltarAnexoAmbiente");
+        }
+
+        [HttpPost]
+        public ActionResult UploadListaMaterial(HttpPostedFileBase file)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idNot = (Int32)Session["IdVolta"];
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            if (file == null)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensAmbiente"] = 5;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+            AMBIENTE item = fornApp.GetById(idNot);
+            USUARIO usu = (USUARIO)Session["UserCredentials"];
+            var fileName = Path.GetFileName(file.FileName);
+            if (fileName.Length > 250)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensAmbiente"] = 6;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Ambiente/" + item.AMBI_CD_ID.ToString() + "/Anexos/";
+            String path = Path.Combine(Server.MapPath(caminho), fileName);
+            file.SaveAs(path);
+
+            //Recupera tipo de arquivo
+            extensao = Path.GetExtension(fileName);
+            String a = extensao;
+
+            // Gravar registro
+            item.AMBI_AQ_LISTA = "~" + caminho + fileName;
+            objetoFornAntes = item;
+            Int32 volta = fornApp.ValidateEdit(item, objetoFornAntes);
+            listaMasterForn = new List<AMBIENTE>();
+            Session["ListaAmbiente"] = null;
+            return RedirectToAction("VoltarAnexoAmbiente");
+        }
+
         [HttpGet]
         public ActionResult EditarAmbienteCusto(Int32 id)
         {
@@ -1055,10 +1151,18 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+
+            // Verifica
+            AMBIENTE_CHAVE ch = fornApp.GetAmbienteChaveById(id);
+            if (ch.AMCH_DT_DEVOLUCAO != null)
+            {
+                Session["MensAmbiente"] = 8;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+
             // Prepara view
-            AMBIENTE_CHAVE item = fornApp.GetAmbienteChaveById(id);
             objetoFornAntes = (AMBIENTE)Session["Ambiente"];
-            AmbienteChaveViewModel vm = Mapper.Map<AMBIENTE_CHAVE, AmbienteChaveViewModel>(item);
+            AmbienteChaveViewModel vm = Mapper.Map<AMBIENTE_CHAVE, AmbienteChaveViewModel>(ch);
             return View(vm);
         }
 
@@ -1129,11 +1233,27 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Verifica chave
+            AMBIENTE amb = (AMBIENTE)Session["Ambiente"];
+            if (amb.AMBIENTE_CHAVE.Where(p => p.AMCH_DT_DEVOLUCAO == null).ToList().Count > 0)
+            {
+                Session["MensAmbiente"] = 7;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+
+            // Listas
+            ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE).ToList(), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME).ToList(), "USUA_CD_ID", "USUA_NM_NOME");
+
             // Prepara view
             USUARIO usuario = (USUARIO)Session["UserCredentials"];
             AMBIENTE_CHAVE item = new AMBIENTE_CHAVE();
             AmbienteChaveViewModel vm = Mapper.Map<AMBIENTE_CHAVE, AmbienteChaveViewModel>(item);
             vm.AMBI_CD_ID = (Int32)Session["IdVolta"];
+            vm.AMCH_DT_ENTREGA = DateTime.Today.Date;
+            vm.AMCH_DT_PREVISTA = DateTime.Today.Date.AddDays(5);
             vm.AMCH_IN_ATIVO = 1;
             return View(vm);
         }
@@ -1154,7 +1274,15 @@ namespace ERP_Condominios_Solution.Controllers
                     AMBIENTE_CHAVE item = Mapper.Map<AmbienteChaveViewModel, AMBIENTE_CHAVE>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = fornApp.ValidateCreateAmbienteChave(item);
+
                     // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensAmbiente"] = 9;
+                        return RedirectToAction("VoltarAnexoAmbiente");
+                    }
+
+                    Session["MensAmbiente"] = 0;
                     return RedirectToAction("VoltarAnexoAmbiente");
                 }
                 catch (Exception ex)
@@ -1169,13 +1297,34 @@ namespace ERP_Condominios_Solution.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult FiltrarUsuarioUnidade(Int32? id)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            var listaUsuarios = fornApp.GetAllUsuarios(idAss);
 
+            // Filtro para caso o placeholder seja selecionado
+            if (id != null)
+            {
+                listaUsuarios = listaUsuarios.Where(x => x.UNID_CD_ID == id).ToList();
+            }
 
+            return Json(listaUsuarios.Select(x => new { x.USUA_CD_ID, x.USUA_NM_NOME }));
+        }
 
+        [HttpPost]
+        public JsonResult FiltrarUnidadeUsuario(Int32? id)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            var listaFiltrada = fornApp.GetAllUnidades(idAss);
 
+            // Filtro para caso o placeholder seja selecionado
+            if (id != null)
+            {
+                listaFiltrada = listaFiltrada.Where(x => x.USUARIO.Any(s => s.USUA_CD_ID == id)).ToList();
+            }
 
-
-
-
+            return Json(listaFiltrada.Select(x => new { x.UNID_CD_ID, x.UNID_NM_EXIBE }));
+        }
     }
 }

@@ -201,6 +201,15 @@
   <data name="M0030" xml:space="preserve">
     <value>Não é possível excluir esse ambiente. Existem informações vinculadas a ele</value>
   </data>
+  <data name="M0031" xml:space="preserve">
+    <value>A chave deste ambiente está cedida à outra unidade e ainda não foi devolvida</value>
+  </data>
+  <data name="M0032" xml:space="preserve">
+    <value>Impossível editar um registro de chave de ambiente já encerrado</value>
+  </data>
+  <data name="M0033" xml:space="preserve">
+    <value>Data de entrega da chave maior que a data corrente</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

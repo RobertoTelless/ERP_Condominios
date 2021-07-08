@@ -284,6 +284,8 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" />
         <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TELEFONE_UF" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO" Width="1.5" PointX="17" PointY="105.625" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
