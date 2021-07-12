@@ -288,6 +288,8 @@ namespace ERP_Condominios_Solution.Controllers
                     // Cria pastas
                     String caminho = "/Imagens/" + idAss.ToString() + "/Veiculo/" + item.VEIC_CD_ID.ToString() + "/Anexos/";
                     Directory.CreateDirectory(Server.MapPath(caminho));
+                    caminho = "/Imagens/" + idAss.ToString() + "/Veiculo/" + item.VEIC_CD_ID.ToString() + "/Fotos/";
+                    Directory.CreateDirectory(Server.MapPath(caminho));
 
                     // Anexos
                     if (Session["FileQueueVeiculo"] != null)

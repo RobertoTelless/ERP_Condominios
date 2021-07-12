@@ -1438,7 +1438,7 @@
           <Property Name="VEIC_DS_DESCRICAO" Type="varchar" MaxLength="250" />
           <Property Name="VEIC_NM_COR" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="VEIC_NR_ANO" Type="varchar" MaxLength="10" />
-          <Property Name="VEIC_DS_OBSERVACOES" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="VEIC_DS_OBSERVACOES" Type="varchar" MaxLength="500" />
           <Property Name="VEIC_DS_JUSTIFICATIVA" Type="varchar" MaxLength="250" />
           <Property Name="VEIC_DT_CADASTRO" Type="datetime" Nullable="false" />
           <Property Name="VEIC_IN_ATIVO" Type="int" Nullable="false" />
@@ -6029,7 +6029,7 @@
           <Property Name="VEIC_DS_DESCRICAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="VEIC_NM_COR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="VEIC_NR_ANO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="VEIC_DS_OBSERVACOES" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VEIC_DS_OBSERVACOES" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="VEIC_DS_JUSTIFICATIVA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="VEIC_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="VEIC_IN_ATIVO" Type="Int32" Nullable="false" />

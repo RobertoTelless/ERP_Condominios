@@ -657,6 +657,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\1\Noticias\1\Fotos\162596622360ea468f148f4_1625966223_3x2_lg.jpg" />
+    <Content Include="Imagens\1\Noticias\2\Fotos\_117875883_cuba-esposa-promo05.png" />
+    <Content Include="Imagens\1\Usuario\1\Fotos\FotoOficial.jpg" />
+    <Content Include="Imagens\1\Usuario\2\Fotos\FotoCouve.jpg" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\1.png" />
     <Content Include="Images\5.png" />
@@ -2971,7 +2975,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Imagens\" />
+    <Folder Include="Imagens\1\Agenda\1\Anexos\" />
+    <Folder Include="Imagens\1\Ambiente\1\Anexos\" />
+    <Folder Include="Imagens\1\Ambiente\1\Fotos\" />
+    <Folder Include="Imagens\1\Ambiente\2\Anexos\" />
+    <Folder Include="Imagens\1\Ambiente\2\Fotos\" />
+    <Folder Include="Imagens\1\Condominio\1\Anexos\" />
+    <Folder Include="Imagens\1\Condominio\1\Fotos\" />
+    <Folder Include="Imagens\1\Notificacao\1\Anexos\" />
+    <Folder Include="Imagens\1\Notificacao\2\Anexos\" />
+    <Folder Include="Imagens\1\Tarefa\1\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\1\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\2\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\3\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\4\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\5\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\6\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\7\Anexos\" />
+    <Folder Include="Imagens\1\Usuario\1\Anexos\" />
+    <Folder Include="Imagens\1\Usuario\2\Anexos\" />
+    <Folder Include="Imagens\1\Veiculo\2\Anexos\" />
+    <Folder Include="Imagens\1\Veiculo\2\Fotos\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>
