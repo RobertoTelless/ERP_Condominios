@@ -21,6 +21,7 @@ namespace EntitiesServices.Model
             this.AGENDA_CONDOMINIO = new HashSet<AGENDA_CONDOMINIO>();
             this.AMBIENTE = new HashSet<AMBIENTE>();
             this.AMBIENTE_CHAVE = new HashSet<AMBIENTE_CHAVE>();
+            this.ASSINANTE_ANEXO = new HashSet<ASSINANTE_ANEXO>();
             this.AUTORIZACAO_ACESSO = new HashSet<AUTORIZACAO_ACESSO>();
             this.CARGO = new HashSet<CARGO>();
             this.CATEGORIA_AGENDA = new HashSet<CATEGORIA_AGENDA>();
@@ -39,12 +40,15 @@ namespace EntitiesServices.Model
             this.LOG = new HashSet<LOG>();
             this.MATERIAL = new HashSet<MATERIAL>();
             this.MATERIAL_MOVIMENTO = new HashSet<MATERIAL_MOVIMENTO>();
+            this.MOVIMENTO_ESTOQUE_PRODUTO = new HashSet<MOVIMENTO_ESTOQUE_PRODUTO>();
             this.NOTICIA = new HashSet<NOTICIA>();
             this.NOTIFICACAO = new HashSet<NOTIFICACAO>();
             this.OCORRENCIA = new HashSet<OCORRENCIA>();
             this.PERIODICIDADE_TAREFA = new HashSet<PERIODICIDADE_TAREFA>();
+            this.PRODUTO = new HashSet<PRODUTO>();
             this.RESERVA = new HashSet<RESERVA>();
             this.SOLICITACAO_MUDANCA = new HashSet<SOLICITACAO_MUDANCA>();
+            this.SUBCATEGORIA_PRODUTO = new HashSet<SUBCATEGORIA_PRODUTO>();
             this.SUBGRUPO = new HashSet<SUBGRUPO>();
             this.TAREFA = new HashSet<TAREFA>();
             this.TELEFONE = new HashSet<TELEFONE>();
@@ -59,13 +63,11 @@ namespace EntitiesServices.Model
             this.USUARIO = new HashSet<USUARIO>();
             this.VAGA = new HashSet<VAGA>();
             this.VEICULO = new HashSet<VEICULO>();
-            this.ASSINANTE_ANEXO = new HashSet<ASSINANTE_ANEXO>();
-            this.MOVIMENTO_ESTOQUE_PRODUTO = new HashSet<MOVIMENTO_ESTOQUE_PRODUTO>();
-            this.PRODUTO = new HashSet<PRODUTO>();
-            this.SUBCATEGORIA_PRODUTO = new HashSet<SUBCATEGORIA_PRODUTO>();
         }
     
         public int ASSI_CD_ID { get; set; }
+        public Nullable<int> TICO_CD_ID { get; set; }
+        public Nullable<int> TIPE_CD_ID { get; set; }
         public string ASSI_NM_NOME { get; set; }
         public int ASSI_IN_ATIVO { get; set; }
         public Nullable<System.DateTime> ASSI_DT_INICIO { get; set; }
@@ -73,17 +75,15 @@ namespace EntitiesServices.Model
         public Nullable<int> ASSI_IN_STATUS { get; set; }
         public string ASSI_NM_EMAIL { get; set; }
         public string ASSI_NM_RAZAO_SOCIAL { get; set; }
-        public Nullable<int> TIPE_CD_ID { get; set; }
         public string ASSI_NR_CNPJ { get; set; }
         public string ASSI_NR_CPF { get; set; }
         public string ASSI_TX_OBSERVACOES { get; set; }
         public string ASSI_NM_ENDERECO { get; set; }
+        public string ASSI_NR_NUMERO { get; set; }
         public string ASSI_NM_BAIRRO { get; set; }
         public string ASSI_NM_CIDADE { get; set; }
         public Nullable<int> UF_CD_ID { get; set; }
         public string ASSI_NR_CEP { get; set; }
-        public Nullable<int> TICO_CD_ID { get; set; }
-        public string ASSI_NR_NUMERO { get; set; }
         public string ASSI_AQ_FOTO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -94,6 +94,9 @@ namespace EntitiesServices.Model
         public virtual ICollection<AMBIENTE> AMBIENTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AMBIENTE_CHAVE> AMBIENTE_CHAVE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
+        public virtual TIPO_CONDOMINIO TIPO_CONDOMINIO { get; set; }
         public virtual TIPO_PESSOA TIPO_PESSOA { get; set; }
         public virtual UF UF { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -133,6 +136,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MATERIAL_MOVIMENTO> MATERIAL_MOVIMENTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTICIA> NOTICIA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NOTIFICACAO> NOTIFICACAO { get; set; }
@@ -141,9 +146,13 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RESERVA> RESERVA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOLICITACAO_MUDANCA> SOLICITACAO_MUDANCA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SUBCATEGORIA_PRODUTO> SUBCATEGORIA_PRODUTO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUBGRUPO> SUBGRUPO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -172,14 +181,5 @@ namespace EntitiesServices.Model
         public virtual ICollection<VAGA> VAGA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
-        public virtual TIPO_CONDOMINIO TIPO_CONDOMINIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SUBCATEGORIA_PRODUTO> SUBCATEGORIA_PRODUTO { get; set; }
     }
 }

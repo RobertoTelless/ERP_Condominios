@@ -17,8 +17,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AUTORIZACAO_ACESSO()
         {
-            this.ENTRADA_SAIDA = new HashSet<ENTRADA_SAIDA>();
             this.AUTORIZACAO_ACESSO_ANEXO = new HashSet<AUTORIZACAO_ACESSO_ANEXO>();
+            this.ENTRADA_SAIDA = new HashSet<ENTRADA_SAIDA>();
         }
     
         public int AUAC_CD_ID { get; set; }
@@ -34,20 +34,19 @@ namespace EntitiesServices.Model
         public int AUAC_IN_AVISO { get; set; }
         public int AUAC_IN_PERMANENTE { get; set; }
         public Nullable<int> AUAC_IN_TIPO { get; set; }
-        public Nullable<System.DateTime> AUAC_DT_VISITA { get; set; }
+        public Nullable<System.DateTime> AUAC_DT_INICIO { get; set; }
         public Nullable<System.DateTime> AUAC_DT_LIMITE { get; set; }
         public string AUAC_DS_OBSERVACOES { get; set; }
         public int AUAC_IN_ATIVO { get; set; }
-        public Nullable<System.DateTime> AUAC_DT_INICIO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AUTORIZACAO_ACESSO_ANEXO> AUTORIZACAO_ACESSO_ANEXO { get; set; }
         public virtual GRAU_PARENTESCO GRAU_PARENTESCO { get; set; }
         public virtual TIPO_DOCUMENTO TIPO_DOCUMENTO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ENTRADA_SAIDA> ENTRADA_SAIDA { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AUTORIZACAO_ACESSO_ANEXO> AUTORIZACAO_ACESSO_ANEXO { get; set; }
     }
 }

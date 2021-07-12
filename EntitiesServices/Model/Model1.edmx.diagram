@@ -4,102 +4,111 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="867d51daa0834d26b0a2e07a8b642a3a" Name="Diagram1">
-        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA" Width="1.5" PointX="7.5" PointY="117.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="128.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_CONDOMINIO" Width="1.5" PointX="5.25" PointY="114.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_CONDOMINIO_ANEXO" Width="1.5" PointX="7.5" PointY="127.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_VINCULO" Width="1.5" PointX="17.75" PointY="124.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE" Width="1.5" PointX="10.25" PointY="116.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_CHAVE" Width="1.5" PointX="20.75" PointY="124.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_CUSTO" Width="1.5" PointX="12.5" PointY="130.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_FINALIDADE" Width="1.5" PointX="17.5" PointY="112.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_IMAGEM" Width="1.5" PointX="12.5" PointY="134.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.ASSINANTE" Width="1.5" PointX="3" PointY="113.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AUTORIZACAO_ACESSO" Width="1.5" PointX="14.75" PointY="118.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CARGO" Width="1.5" PointX="5.25" PointY="110.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="120" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="6" PointY="107.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="5.25" PointY="122.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_OCORRENCIA" Width="1.5" PointX="18.5" PointY="152.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_PRODUTO" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="125.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_USUARIO" Width="1.5" PointX="5.25" PointY="128.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="131.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CONFIGURACAO_ASSOCIACAO" Width="1.5" PointX="7.5" PointY="132.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CONTA_RECEBER" Width="1.5" PointX="21.5" PointY="153.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CONTROLE_VEICULO" Width="1.5" PointX="14.75" PointY="133.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CONVIDADO" Width="1.5" PointX="31.25" PointY="136" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.CORPO_DIRETIVO" Width="1.5" PointX="14.75" PointY="125.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.ENCOMENDA" Width="1.5" PointX="17.75" PointY="129.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.ENCOMENDA_ANEXO" Width="1.5" PointX="20" PointY="144" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.ENCOMENDA_COMENTARIO" Width="1.5" PointX="26" PointY="124.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.ENTRADA_SAIDA" Width="1.5" PointX="23" PointY="122.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FINALIDADE_RESERVA" Width="1.5" PointX="21.5" PointY="156.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORMA_ENTREGA" Width="1.5" PointX="15.5" PointY="152.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR" Width="1.5" PointX="8.25" PointY="107.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_ANEXO" Width="1.5" PointX="10.5" PointY="106.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="14.75" PointY="114" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_CONTATO" Width="1.5" PointX="10.5" PointY="103.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="17.75" PointY="115.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="10.5" PointY="99.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.FUNCAO_CORPO_DIRETIVO" Width="1.5" PointX="5.25" PointY="146.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.GRAU_PARENTESCO" Width="1.5" PointX="12.5" PointY="138.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.GRUPO" Width="1.5" PointX="10.25" PointY="124" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.LISTA_CONVIDADO" Width="1.5" PointX="29" PointY="135.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.LOG" Width="1.5" PointX="17.75" PointY="120.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL" Width="1.5" PointX="7.5" PointY="148.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL_ANEXO" Width="1.5" PointX="9.75" PointY="146.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL_FORNECEDOR" Width="1.5" PointX="15.5" PointY="130.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL_MOVIMENTO" Width="1.5" PointX="17.75" PointY="137" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.NOTICIA" Width="1.5" PointX="5.25" PointY="160.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.NOTICIA_COMENTARIO" Width="1.5" PointX="14.75" PointY="139.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.NOTIFICACAO" Width="1.5" PointX="20.75" PointY="118.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="23" PointY="118.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.OCORRENCIA" Width="1.5" PointX="20.75" PointY="129.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.OCORRENCIA_ANEXO" Width="1.5" PointX="23" PointY="145.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.OCORRENCIA_COMENTARIO" Width="1.5" PointX="26" PointY="120.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.PERFIL" Width="1.5" PointX="10.25" PointY="131.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="165.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.RESERVA" Width="1.5" PointX="23.75" PointY="136.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.RESERVA_ANEXO" Width="1.5" PointX="26" PointY="143.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.RESERVA_COMENTARIO" Width="1.5" PointX="29" PointY="124" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA" Width="1.5" PointX="20.75" PointY="135.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA_ANEXO" Width="1.5" PointX="23" PointY="150" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA_COMENTARIO" Width="1.5" PointX="29" PointY="127.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA_MOVIMENTO" Width="1.5" PointX="29" PointY="131.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.SUBGRUPO" Width="1.5" PointX="20.5" PointY="114.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA" Width="1.5" PointX="14.75" PointY="143.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="26" PointY="134.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_ANEXO" Width="1.5" PointX="17" PointY="148.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="26" PointY="138.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_VINCULO" Width="1.5" PointX="17" PointY="141.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TELEFONE" Width="1.5" PointX="7.5" PointY="123" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="168.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_AGENDA" Width="1.5" PointX="3" PointY="109.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_AMBIENTE" Width="1.5" PointX="8" PointY="104.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_DOCUMENTO" Width="1.5" PointX="12.5" PointY="141.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_ENCOMENDA" Width="1.5" PointX="15.5" PointY="154.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_GRUPO" Width="1.5" PointX="8" PointY="135.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_MATERIAL" Width="1.5" PointX="5.25" PointY="173" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_MENSAGEM" Width="1.5" PointX="15.5" PointY="109.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="118.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="176" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_UNIDADE" Width="1.5" PointX="5.25" PointY="178.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_VAGA" Width="1.5" PointX="5.25" PointY="182" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_VEICULO" Width="1.5" PointX="21.5" PointY="111.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TORRE" Width="1.5" PointX="5.25" PointY="184.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.UF" Width="1.5" PointX="0.75" PointY="115.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE" Width="1.5" PointX="10.5" PointY="150.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE_MATERIAL" Width="1.5" PointX="5.25" PointY="188" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO" Width="1.5" PointX="12.5" PointY="112.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_ANEXO" Width="1.5" PointX="14.75" PointY="172" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_CONTROLE_ENTRADA" Width="1.5" PointX="14.75" PointY="175.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_ESCALA_TRABALHO" Width="1.5" PointX="14.75" PointY="178.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="14.75" PointY="182" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.VAGA" Width="1.5" PointX="12.75" PointY="149.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.VEICULO" Width="1.5" PointX="23.75" PointY="129.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.VEICULO_ANEXO" Width="1.5" PointX="26" PointY="131" IsExpanded="true" />
+      <Diagram DiagramId="a65226a67d084bd0a986d34caebd2571" Name="Diagram1">
+        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA" Width="1.5" PointX="7.5" PointY="134.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="150.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_CONDOMINIO" Width="1.5" PointX="5.25" PointY="130.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_CONDOMINIO_ANEXO" Width="1.5" PointX="7.5" PointY="123.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AGENDA_VINCULO" Width="1.5" PointX="17.75" PointY="139.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE" Width="1.5" PointX="10.25" PointY="133.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_CHAVE" Width="1.5" PointX="17.75" PointY="151" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_CUSTO" Width="1.5" PointX="12.5" PointY="149.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_FINALIDADE" Width="1.5" PointX="17.5" PointY="142.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AMBIENTE_IMAGEM" Width="1.5" PointX="12.5" PointY="153.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.ASSINANTE" Width="1.5" PointX="3" PointY="129.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="125.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AUTORIZACAO_ACESSO" Width="1.5" PointX="8.25" PointY="126.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO" Width="1.5" PointX="10.5" PointY="123.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CARGO" Width="1.5" PointX="5.25" PointY="135.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="138.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="8" PointY="154.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="5.25" PointY="141.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_OCORRENCIA" Width="1.5" PointX="21.5" PointY="173" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_PRODUTO" Width="1.5" PointX="13" PointY="122.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="144.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_USUARIO" Width="1.5" PointX="5.25" PointY="147.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="150.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONFIGURACAO_ASSOCIACAO" Width="1.5" PointX="7.5" PointY="151" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONTA_RECEBER" Width="1.5" PointX="15.5" PointY="181.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONTROLE_VEICULO" Width="1.5" PointX="14.75" PointY="158.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONVIDADO" Width="1.5" PointX="28.25" PointY="138.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CORPO_DIRETIVO" Width="1.5" PointX="14.75" PointY="146.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.ENCOMENDA" Width="1.5" PointX="20.75" PointY="149.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.ENCOMENDA_ANEXO" Width="1.5" PointX="23" PointY="146.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.ENCOMENDA_COMENTARIO" Width="1.5" PointX="23" PointY="142.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.ENTRADA_SAIDA" Width="1.5" PointX="14.75" PointY="152" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FINALIDADE_RESERVA" Width="1.5" PointX="15.5" PointY="183.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORMA_ENTREGA" Width="1.5" PointX="18.5" PointY="175.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR" Width="1.5" PointX="10.25" PointY="140" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_ANEXO" Width="1.5" PointX="12.5" PointY="156.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="19.75" PointY="142.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_CONTATO" Width="1.5" PointX="12.5" PointY="160" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="19.75" PointY="135.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="12.5" PointY="163.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.FUNCAO_CORPO_DIRETIVO" Width="1.5" PointX="5.25" PointY="165" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.GRAU_PARENTESCO" Width="1.5" PointX="6" PointY="119.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.GRUPO" Width="1.5" PointX="11.25" PointY="126.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.LISTA_CONVIDADO" Width="1.5" PointX="26" PointY="145.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.LOG" Width="1.5" PointX="19.75" PointY="131" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL" Width="1.5" PointX="7.5" PointY="174.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL_ANEXO" Width="1.5" PointX="9.75" PointY="172.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL_FORNECEDOR" Width="1.5" PointX="17.5" PointY="164.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.MATERIAL_MOVIMENTO" Width="1.5" PointX="20.75" PointY="157.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="14.25" PointY="125.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.NOTICIA" Width="1.5" PointX="5.25" PointY="184.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.NOTICIA_COMENTARIO" Width="1.5" PointX="14.75" PointY="164.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.NOTIFICACAO" Width="1.5" PointX="22.75" PointY="136.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="25" PointY="137.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.OCORRENCIA" Width="1.5" PointX="23.75" PointY="150.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.OCORRENCIA_ANEXO" Width="1.5" PointX="26" PointY="151.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.OCORRENCIA_COMENTARIO" Width="1.5" PointX="26" PointY="141.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PERFIL" Width="1.5" PointX="10.25" PointY="153.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="189.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO" Width="1.5" PointX="15.25" PointY="131.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO_ANEXO" Width="1.5" PointX="17.5" PointY="135.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="20.5" PointY="139.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.RESERVA" Width="1.5" PointX="17.75" PointY="156" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.RESERVA_ANEXO" Width="1.5" PointX="20" PointY="169.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.RESERVA_COMENTARIO" Width="1.5" PointX="20" PointY="146" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA" Width="1.5" PointX="23.75" PointY="156.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA_ANEXO" Width="1.5" PointX="26" PointY="158.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA_COMENTARIO" Width="1.5" PointX="29" PointY="146.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SOLICITACAO_MUDANCA_MOVIMENTO" Width="1.5" PointX="29" PointY="142.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="15.25" PointY="142.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.SUBGRUPO" Width="1.5" PointX="17.5" PointY="130.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA" Width="1.5" PointX="14.75" PointY="169.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="17" PointY="147.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_ANEXO" Width="1.5" PointX="17" PointY="172.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="26" PointY="162.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TAREFA_VINCULO" Width="1.5" PointX="29" PointY="152.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TELEFONE" Width="1.5" PointX="7.5" PointY="139.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="205.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_AGENDA" Width="1.5" PointX="3" PointY="126.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_AMBIENTE" Width="1.5" PointX="8" PointY="145.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_CONDOMINIO" Width="1.5" PointX="0.75" PointY="132.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_DOCUMENTO" Width="1.5" PointX="6" PointY="116.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_ENCOMENDA" Width="1.5" PointX="18.5" PointY="178.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_GRUPO" Width="1.5" PointX="9" PointY="119.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_MATERIAL" Width="1.5" PointX="5.25" PointY="209.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_MENSAGEM" Width="1.5" PointX="17.5" PointY="127.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="138.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="212.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_UNIDADE" Width="1.5" PointX="5.25" PointY="215.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_VAGA" Width="1.5" PointX="5.25" PointY="218.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_VEICULO" Width="1.5" PointX="12.5" PointY="166.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TORRE" Width="1.5" PointX="5.25" PointY="221.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.UF" Width="1.5" PointX="0.75" PointY="135.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE" Width="1.5" PointX="10.5" PointY="176.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE_ANEXO" Width="1.5" PointX="12.75" PointY="178.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE_MATERIAL" Width="1.5" PointX="5.25" PointY="224.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO" Width="1.5" PointX="12.5" PointY="130.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_ANEXO" Width="1.5" PointX="14.75" PointY="190.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_CONTROLE_ENTRADA" Width="1.5" PointX="14.75" PointY="193.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_ESCALA_TRABALHO" Width="1.5" PointX="14.75" PointY="196.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="14.75" PointY="200.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.VAGA" Width="1.5" PointX="15.75" PointY="176.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.VEICULO" Width="1.5" PointX="20.75" PointY="162" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.VEICULO_ANEXO" Width="1.5" PointX="23" PointY="164.625" IsExpanded="true" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AGENDA_ANEXO_AGENDA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AGENDA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AGENDA_CATEGORIA_AGENDA" ManuallyRouted="false" />
@@ -123,6 +132,8 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_AMBIENTE_CHAVE_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AMBIENTE_CHAVE_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AMBIENTE_FINALIDADE_FINALIDADE_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_TIPO_CONDOMINIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_TIPO_PESSOA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_UF" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ASSINANTE" ManuallyRouted="false" />
@@ -143,12 +154,15 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_LOG_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_MATERIAL_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_MATERIAL_MOVIMENTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_NOTICIA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_NOTIFICACAO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_OCORRENCIA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_RESERVA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_SOLICITACAO_MUDANCA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_SUBGRUPO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TAREFA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TELEFONE_ASSINANTE" ManuallyRouted="false" />
@@ -163,6 +177,7 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_USUARIO_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VAGA_ASSINANTE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_GRAU_PARENTESCO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_TIPO_DOCUMENTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_UNIDADE" ManuallyRouted="false" />
@@ -172,6 +187,8 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_FORNECEDOR_CATEGORIA_FORNECEDOR" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_NOTIFICACAO_CATEGORIA_NOTIFICACAO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_OCORRENCIA_CATEGORIA_OCORRENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_CATEGORIA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TELEFONE_CATEGORIA_TELEFONE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_USUARIO_CATEGORIA_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" ManuallyRouted="false" />
@@ -200,6 +217,7 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_FORNECEDOR_TIPO_PESSOA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_FORNECEDOR_UF" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_MATERIAL_FORNECEDOR_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_FORNECEDOR_COMENTARIO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_FORNECEDOR_MENSAGEM_TIPO_MENSAGEM" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_FORNECEDOR_MENSAGEM_USUARIO" ManuallyRouted="false" />
@@ -215,6 +233,7 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_MATERIAL_TIPO_MATERIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_MATERIAL_UNIDADE_MATERIAL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_MATERIAL_MOVIMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_NOTICIA_COMENTARIO_NOTICIA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_NOTICIA_COMENTARIO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_NOTIFICACAO_ANEXO_NOTIFICACAO" ManuallyRouted="false" />
@@ -226,6 +245,10 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_OCORRENCIA_COMENTARIO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_USUARIO_PERFIL" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TAREFA_PERIODICIDADE_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_ANEXO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_RESERVA_ANEXO_RESERVA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_RESERVA_COMENTARIO_RESERVA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_RESERVA_UNIDADE" ManuallyRouted="false" />
@@ -247,10 +270,12 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TAREFA_NOTIFICACAO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_TAREFA_VINCULO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_TELEFONE_UF" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_UNIDADE_TIPO_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VAGA_TIPO_VAGA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_TIPO_VEICULO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_UNIDADE_TORRE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_USUARIO_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VAGA_UNIDADE" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_UNIDADE" ManuallyRouted="false" />
@@ -261,31 +286,6 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_VAGA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_ANEXO_VEICULO" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_CONDOMINIO" Width="1.5" PointX="3.375" PointY="0.875" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_TIPO_CONDOMINIO" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="103.625" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_ASSINANTE_ANEXO_ASSINANTE" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.UNIDADE_ANEXO" Width="1.5" PointX="12.75" PointY="155" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_UNIDADE_ANEXO_UNIDADE" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="15" PointY="98.625" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO" Width="1.5" PointX="12.75" PointY="74.125" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO_ANEXO" Width="1.5" PointX="15" PointY="77.25" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="13.5" PointY="105.625" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="62.875" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_CATEGORIA_PRODUTO" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_ANEXO_PRODUTO" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_FORNECEDOR_PRODUTO" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_TELEFONE_UF" />
-        <EntityTypeShape EntityType="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO" Width="1.5" PointX="17" PointY="105.625" />
-        <AssociationConnector Association="ERP_CondominioModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

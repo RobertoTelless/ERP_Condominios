@@ -36,7 +36,9 @@ namespace EntitiesServices.Model
         public virtual DbSet<AMBIENTE_FINALIDADE> AMBIENTE_FINALIDADE { get; set; }
         public virtual DbSet<AMBIENTE_IMAGEM> AMBIENTE_IMAGEM { get; set; }
         public virtual DbSet<ASSINANTE> ASSINANTE { get; set; }
+        public virtual DbSet<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
         public virtual DbSet<AUTORIZACAO_ACESSO> AUTORIZACAO_ACESSO { get; set; }
+        public virtual DbSet<AUTORIZACAO_ACESSO_ANEXO> AUTORIZACAO_ACESSO_ANEXO { get; set; }
         public virtual DbSet<CARGO> CARGO { get; set; }
         public virtual DbSet<CATEGORIA_AGENDA> CATEGORIA_AGENDA { get; set; }
         public virtual DbSet<CATEGORIA_FORNECEDOR> CATEGORIA_FORNECEDOR { get; set; }
@@ -72,6 +74,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<MATERIAL_ANEXO> MATERIAL_ANEXO { get; set; }
         public virtual DbSet<MATERIAL_FORNECEDOR> MATERIAL_FORNECEDOR { get; set; }
         public virtual DbSet<MATERIAL_MOVIMENTO> MATERIAL_MOVIMENTO { get; set; }
+        public virtual DbSet<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
         public virtual DbSet<NOTICIA> NOTICIA { get; set; }
         public virtual DbSet<NOTICIA_COMENTARIO> NOTICIA_COMENTARIO { get; set; }
         public virtual DbSet<NOTIFICACAO> NOTIFICACAO { get; set; }
@@ -81,6 +84,9 @@ namespace EntitiesServices.Model
         public virtual DbSet<OCORRENCIA_COMENTARIO> OCORRENCIA_COMENTARIO { get; set; }
         public virtual DbSet<PERFIL> PERFIL { get; set; }
         public virtual DbSet<PERIODICIDADE_TAREFA> PERIODICIDADE_TAREFA { get; set; }
+        public virtual DbSet<PRODUTO> PRODUTO { get; set; }
+        public virtual DbSet<PRODUTO_ANEXO> PRODUTO_ANEXO { get; set; }
+        public virtual DbSet<PRODUTO_FORNECEDOR> PRODUTO_FORNECEDOR { get; set; }
         public virtual DbSet<RESERVA> RESERVA { get; set; }
         public virtual DbSet<RESERVA_ANEXO> RESERVA_ANEXO { get; set; }
         public virtual DbSet<RESERVA_COMENTARIO> RESERVA_COMENTARIO { get; set; }
@@ -88,6 +94,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<SOLICITACAO_MUDANCA_ANEXO> SOLICITACAO_MUDANCA_ANEXO { get; set; }
         public virtual DbSet<SOLICITACAO_MUDANCA_COMENTARIO> SOLICITACAO_MUDANCA_COMENTARIO { get; set; }
         public virtual DbSet<SOLICITACAO_MUDANCA_MOVIMENTO> SOLICITACAO_MUDANCA_MOVIMENTO { get; set; }
+        public virtual DbSet<SUBCATEGORIA_PRODUTO> SUBCATEGORIA_PRODUTO { get; set; }
         public virtual DbSet<SUBGRUPO> SUBGRUPO { get; set; }
         public virtual DbSet<TAREFA> TAREFA { get; set; }
         public virtual DbSet<TAREFA_ACOMPANHAMENTO> TAREFA_ACOMPANHAMENTO { get; set; }
@@ -98,6 +105,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<TEMPLATE> TEMPLATE { get; set; }
         public virtual DbSet<TIPO_AGENDA> TIPO_AGENDA { get; set; }
         public virtual DbSet<TIPO_AMBIENTE> TIPO_AMBIENTE { get; set; }
+        public virtual DbSet<TIPO_CONDOMINIO> TIPO_CONDOMINIO { get; set; }
         public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         public virtual DbSet<TIPO_ENCOMENDA> TIPO_ENCOMENDA { get; set; }
         public virtual DbSet<TIPO_GRUPO> TIPO_GRUPO { get; set; }
@@ -111,6 +119,7 @@ namespace EntitiesServices.Model
         public virtual DbSet<TORRE> TORRE { get; set; }
         public virtual DbSet<UF> UF { get; set; }
         public virtual DbSet<UNIDADE> UNIDADE { get; set; }
+        public virtual DbSet<UNIDADE_ANEXO> UNIDADE_ANEXO { get; set; }
         public virtual DbSet<UNIDADE_MATERIAL> UNIDADE_MATERIAL { get; set; }
         public virtual DbSet<USUARIO> USUARIO { get; set; }
         public virtual DbSet<USUARIO_ANEXO> USUARIO_ANEXO { get; set; }
@@ -120,14 +129,5 @@ namespace EntitiesServices.Model
         public virtual DbSet<VAGA> VAGA { get; set; }
         public virtual DbSet<VEICULO> VEICULO { get; set; }
         public virtual DbSet<VEICULO_ANEXO> VEICULO_ANEXO { get; set; }
-        public virtual DbSet<TIPO_CONDOMINIO> TIPO_CONDOMINIO { get; set; }
-        public virtual DbSet<ASSINANTE_ANEXO> ASSINANTE_ANEXO { get; set; }
-        public virtual DbSet<UNIDADE_ANEXO> UNIDADE_ANEXO { get; set; }
-        public virtual DbSet<MOVIMENTO_ESTOQUE_PRODUTO> MOVIMENTO_ESTOQUE_PRODUTO { get; set; }
-        public virtual DbSet<PRODUTO> PRODUTO { get; set; }
-        public virtual DbSet<PRODUTO_ANEXO> PRODUTO_ANEXO { get; set; }
-        public virtual DbSet<PRODUTO_FORNECEDOR> PRODUTO_FORNECEDOR { get; set; }
-        public virtual DbSet<SUBCATEGORIA_PRODUTO> SUBCATEGORIA_PRODUTO { get; set; }
-        public virtual DbSet<AUTORIZACAO_ACESSO_ANEXO> AUTORIZACAO_ACESSO_ANEXO { get; set; }
     }
 }
