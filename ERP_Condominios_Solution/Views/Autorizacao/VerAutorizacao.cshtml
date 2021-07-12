@@ -111,7 +111,14 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Tipo
-                                                    @Html.DropDownListFor(m => m.AUAC_IN_TIPO, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @readonly = "readonly"  })
+                                                    @if (Model.AUAC_IN_TIPO == 1)
+                                                    {
+                                                        @Html.TextBox("tipo", "Autorização", new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.AUAC_IN_TIPO == 2)
+                                                    {
+                                                        @Html.TextBox("tipo", "Restrição", new { style = "color: red; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }                                            
                                                 </div>
                                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                                     Motivo
@@ -147,11 +154,25 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Permanente
-                                                    @Html.DropDownListFor(m => m.AUAC_IN_PERMANENTE, (SelectList)ViewBag.Permanente, "Selecionar", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @if (Model.AUAC_IN_PERMANENTE == 1)
+                                                    {
+                                                        @Html.TextBox("perm", "Sim", new { style = "color: brown; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.AUAC_IN_PERMANENTE == 2)
+                                                    {
+                                                        @Html.TextBox("perm", "Não", new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }                                            
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Aviso de Visita
-                                                    @Html.DropDownListFor(m => m.AUAC_IN_AVISO, (SelectList)ViewBag.Permanente, "Selecionar", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @if (Model.AUAC_IN_AVISO == 1)
+                                                    {
+                                                        @Html.TextBox("aviso", "Sim", new { style = "color: brown; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else if (Model.AUAC_IN_TIPO == 2)
+                                                    {
+                                                        @Html.TextBox("aviso", "Não", new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                    }                                            
                                                 </div>
                                             </div>
                                         </div>
