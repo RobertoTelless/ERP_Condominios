@@ -37,11 +37,11 @@ namespace ExternalServices
             Endereco endereco = null;
             try
             {
-                var ws = new WSCoreios.AtendeClienteClient();
+                var ws = new WSCorreios.AtendeClienteClient();
                 var resposta = ws.consultaCEP(CEP);
                 endereco = new Endereco();
                 endereco.ENDERECO = resposta.end;
-                endereco.NUMERO = resposta.complemento;
+                endereco.NUMERO = resposta.complemento2;
                 endereco.COMPLEMENTO = resposta.complemento2;
                 endereco.BAIRRO = resposta.bairro;
                 endereco.CIDADE = resposta.cidade;

@@ -382,5 +382,11 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EntitiesServices\EntitiesServices.csproj">
+      <Project>{888f90bf-96a5-4e1a-9a80-22140dd756c7}</Project>
+      <Name>EntitiesServices</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

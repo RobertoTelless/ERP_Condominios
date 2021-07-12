@@ -1,7 +1,560 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_Condominios_Solution.ViewModels.AutorizacaoViewModel
 @{
-    ViewBag.Title = "EditarAutorizacao";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Autorizações/Restrições</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorizações/Restrições</a>
+            </li>
+            <li class="active">
+                <strong>Autorizações/Restrições - Edição</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Autorizações/Restrições - Edição</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
 
-<h2>EditarAutorizacao</h2>
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Autorizacao")
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseAutorizacao", controller: "Autorizacao")
+                    </div>
+                    @Html.AntiForgeryToken()
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        @using (Html.BeginForm("EditarAutorizacao", "Autorizacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        {
 
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Fotos & Anexos</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">Registro de Visitas</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                @*Dados Gerais*@
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                @if (ViewBag.Perfil == "MOR")
+                                                {
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.AUAC_CD_ID)
+                                                        @Html.HiddenFor(m => m.AUAC_DS_OBSERVACOES)
+                                                        @Html.HiddenFor(m => m.AUAC_IN_ATIVO)
+                                                        Unidade
+                                                        @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-xs-12" id="razao">
+                                                        Usuário*
+                                                        @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true, @id = "usua" })
+                                                        @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.AUAC_IN_ATIVO)
+                                                        Unidade*
+                                                        @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarUsuarioUnidade($(this).val())", id = "unid" })
+                                                        @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-xs-12" id="razao">
+                                                        Usuário*
+                                                        @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarUnidadeUsuario($(this).val())", id = "usua" })
+                                                        @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                }
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Grau de Parentesco*
+                                                    @Html.DropDownListFor(m => m.GRPA_CD_ID, (SelectList)ViewBag.Graus, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.GRPA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Tipo*
+                                                    @Html.DropDownListFor(m => m.AUAC_IN_TIPO, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_IN_TIPO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-xs-12">
+                                                    Motivo
+                                                    @Html.TextBoxFor(m => m.AUAC_DS_MOTIVO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_DS_MOTIVO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Nome*
+                                                    @Html.TextBoxFor(m => m.AUAC_NM_VISITANTE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_NM_VISITANTE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Empresa
+                                                    @Html.TextBoxFor(m => m.AUAC_NM_EMPRESA, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_NM_EMPRESA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Documento
+                                                    @Html.TextBoxFor(m => m.AUAC_NR_DOCUMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_NR_DOCUMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Tipo de Documento
+                                                    @Html.DropDownListFor(m => m.TIDO_CD_ID, (SelectList)ViewBag.Docs, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.TIDO_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data Início*
+                                                    @Html.TextBoxFor(m => m.AUAC_DT_INICIO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data1" })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_DT_INICIO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12" id="razao">
+                                                    Data Limite*
+                                                    @Html.TextBoxFor(m => m.AUAC_DT_LIMITE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data2" })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_DT_LIMITE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Permanente
+                                                    @Html.DropDownListFor(m => m.AUAC_IN_PERMANENTE, (SelectList)ViewBag.Permanente, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_IN_PERMANENTE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Aviso de Visita
+                                                    @Html.DropDownListFor(m => m.AUAC_IN_AVISO, (SelectList)ViewBag.Permanente, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_IN_AVISO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Imagens - Foto e Anexos*@
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <hr />
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Anexos</h4>
+                                                <br />
+                                                <div class="form-group">
+                                                    @using (Html.BeginForm("UploadFileAutorizacao", "Autorizacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container2" }))
+                                                    {
+                                                        <div class="ibox-content">
+                                                            @if (Model.AUTORIZACAO_ACESSO_ANEXO.Count > 0)
+                                                            {
+                                                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                    <thead style="background-color:lightsteelblue">
+                                                                        <tr>
+                                                                            <th>Título</th>
+                                                                            <th>Data</th>
+                                                                            <th>Tipo</th>
+                                                                            <th class="td-one-action">Ações</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach (var cond in (Model.AUTORIZACAO_ACESSO_ANEXO))
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@cond.AAAN_NM_TITULO</td>
+                                                                                <td>@cond.AAAN_DT_ANEXO.ToShortDateString()</td>
+                                                                                @if (cond.AAAN_IN_TIPO == 1)
+                                                                                {
+                                                                                    <td>Imagem</td>
+                                                                                }
+                                                                                else if (cond.AAAN_IN_TIPO == 2)
+                                                                                {
+                                                                                    <td>Vídeo</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>Arquivo</td>
+                                                                                }
+                                                                                <td class="td-one-action">
+                                                                                    @if (cond.AAAN_IN_TIPO == 1 || cond.AAAN_IN_TIPO == 2)
+                                                                                    {
+                                                                                        @Html.TableLinkDetails(cond.AAAN_CD_ID, "VerAnexoAutorizacao", "fa-camera", "Visualizar")
+                                                                                    }
+                                                                                    @if (cond.AAAN_IN_TIPO == 3)
+                                                                                    {
+                                                                                        <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.AAAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank" ></a>
+                                                                                    }
+                                                                                    @Html.TableLinkDetails(cond.AAAN_CD_ID, "DownloadAutorizacao", "fa-download", "Download")
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            }
+                                                            <div class="form-group">
+                                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                    <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                    <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Visitas*@
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Visitas</h4>
+                                                    <br />
+                                                    @if (Model.ENTRADA_SAIDA.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <th>Entrada</th>
+                                                                    <th>Saída</th>
+                                                                    <th>Nome</th>
+                                                                    <th>Documento</th>
+                                                                    <th>Empresa</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.ENTRADA_SAIDA))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.ENSA_DT_ENTRADA</td>
+                                                                        <td>@cond.ENSA_DT_SAIDA</td>
+                                                                        <td>@cond.ENSA_NM_NOME</td>
+                                                                        <td>@cond.ENSA_NR_DOCUMENTO</td>
+                                                                        <td>@cond.ENSA_NM_EMPRESA</td>
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.ENSA_CD_ID, "VerEntradaSaida", "fa-search", "Consultar")
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Observações*@
+                                <div id="tab-7" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.AUAC_CD_ID)
+                                                    @Html.HiddenFor(m => m.AUAC_DS_MOTIVO)
+                                                    @Html.HiddenFor(m => m.AUAC_DT_INICIO)
+                                                    @Html.HiddenFor(m => m.AUAC_DT_LIMITE)
+                                                    @Html.HiddenFor(m => m.AUAC_DT_VISITA)
+                                                    @Html.HiddenFor(m => m.AUAC_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.AUAC_IN_AVISO)
+                                                    @Html.HiddenFor(m => m.AUAC_IN_PERMANENTE)
+                                                    @Html.HiddenFor(m => m.AUAC_IN_TIPO)
+                                                    @Html.HiddenFor(m => m.AUAC_NM_EMPRESA)
+                                                    @Html.HiddenFor(m => m.AUAC_NM_VISITANTE)
+                                                    @Html.HiddenFor(m => m.AUAC_NR_DOCUMENTO)
+                                                    @Html.HiddenFor(m => m.GRPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIDO_CD_ID)
+                                                    @Html.HiddenFor(m => m.UNID_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.AUAC_DS_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.AUAC_DS_OBSERVACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.ButtonActionSubmit(text: "Confirma edição de Autorização/Restrição", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $('#tel').mask("(99) 9999-9999");
+            $('#cel').mask("(99) 99999-9999");
+            $('#wpp').mask("(99) 99999-9999");
+            $('#data1').mask("99/99/9999");
+            $('#data2').mask("99/99/9999");
+        });
+    </script>
+
+   <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+
+    <script>
+        SendFilesV2('imgFornecedor', 'Autorizacao', 'UploadFileToSession');
+    </script>
+
+    <script>
+        function FiltrarUsuarioUnidade(UNID_CD_ID) {
+            var data = {
+                id: UNID_CD_ID
+            }
+
+            var objUsuario= $('select#usua');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Autorizacao/FiltrarUsuarioUnidade'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objUsuario.children('option').remove();
+                    objUsuario.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        objUsuario.append('<option value="' + e.USUA_CD_ID + '">' + e.USUA_NM_NOME + '</option>');
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+
+        function FiltrarUnidadeUsuario(USUA_CD_ID) {
+            var data = {
+                id: USUA_CD_ID
+            }
+
+            var objUnid = $('select#unid');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Autorizacao/FiltrarUnidadeUsuario'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objUnid.children('option').remove();
+                    objUnid.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        if (r.length > 1) {
+                            objCatProduto.append('<option value="' + e.UNID_CD_ID + '">' + e.UNID_NM_NOME + '</option>');
+                        } else {
+                            objCatProduto.append('<option selected="selected" value="' + e.UNID_CD_ID + '">' + e.UNID_NM_NOME + '</option>');
+                        }
+
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+    </script>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

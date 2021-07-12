@@ -108,7 +108,7 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
                 {
-                    listaMasterForn = listaMasterForn.Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID).ToList();
+                    listaMasterForn = listaMasterForn.Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
                 }
                 Session["ListaAutorizacao"] = listaMasterForn;
             }
@@ -257,7 +257,14 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara listas
             ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE), "UNID_CD_ID", "UNID_NM_EXIBE");
-            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            }
+            else
+            {
+                ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            }
             ViewBag.Graus = new SelectList(fornApp.GetAllGraus(idAss).OrderBy(x => x.GRPA_NM_NOME), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Docs = new SelectList(fornApp.GetAllTipos(idAss).OrderBy(x => x.TIDO_NM_NOME), "TIDO_CD_ID", "TIDO_NM_NOME");
             List<SelectListItem> tipo = new List<SelectListItem>();
@@ -279,6 +286,11 @@ namespace ERP_Condominios_Solution.Controllers
             AutorizacaoViewModel vm = Mapper.Map<AUTORIZACAO_ACESSO, AutorizacaoViewModel>(item);
             vm.AUAC_DT_INICIO = DateTime.Today.Date;
             vm.AUAC_DT_LIMITE = DateTime.Today.Date.AddDays(30);
+            if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                vm.UNID_CD_ID = usuario.UNID_CD_ID;
+                vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            }
             vm.AUAC_IN_AVISO = 1;
             vm.AUAC_IN_PERMANENTE = 2;
             vm.AUAC_IN_TIPO = 1;
@@ -897,5 +909,55 @@ namespace ERP_Condominios_Solution.Controllers
 
             return Json(listaFiltrada.Select(x => new { x.UNID_CD_ID, x.UNID_NM_EXIBE }));
         }
+
+        public ActionResult VerEntradaSaida(Int32 idEntrada)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+            //return RedirectToAction("VerEntradaSaida", "EntradaSaida");
+            return RedirectToAction("VerEntradaSaida", new { id = idEntrada });
+        }
+
+        public ActionResult IncluirEntradaSaida(Int32 id)
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+            return RedirectToAction("IncluirEntradaSaida", "EntradaSaida");
+        }
+
     }
 }
