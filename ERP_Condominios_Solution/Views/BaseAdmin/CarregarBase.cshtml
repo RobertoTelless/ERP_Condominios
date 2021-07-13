@@ -27,7 +27,7 @@
                         <div class="m-b-sm">
                             <img alt="image" class="img-circle" src="@Url.Content(Model.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 90px; max-width: 90px;">
                         </div>
-                        <p class="font-bold">@Model.CARGO.CARG_NM_NOME</p>
+                        <p class="font-bold">@((String)Session["NomeGreeting"])</p>
 
                         <div class="text-center">
                             @Html.ButtonLinkIndex(text: "Perfil", action: "MontarTelaPerfilUsuario", controller: "Usuario", buttonClass: "btn btn-xs btn-white")

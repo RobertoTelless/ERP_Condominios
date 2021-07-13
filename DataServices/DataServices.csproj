@@ -193,6 +193,10 @@
     <Compile Include="Repositories\AgendaRepository.cs" />
     <Compile Include="Repositories\AssinanteRepository.cs" />
     <Compile Include="Repositories\AutorizacaoAnexoRepository.cs" />
+    <Compile Include="Repositories\CategoriaOcorrenciaRepository.cs" />
+    <Compile Include="Repositories\OcorrenciaRepository.cs" />
+    <Compile Include="Repositories\OcorrenciaAnexoRepository.cs" />
+    <Compile Include="Repositories\OcorrenciaComentarioRepository.cs" />
     <Compile Include="Repositories\TipoDocumentoRepository.cs" />
     <Compile Include="Repositories\GrauParentescoRepository.cs" />
     <Compile Include="Repositories\CategoriaAgendaRepository.cs" />

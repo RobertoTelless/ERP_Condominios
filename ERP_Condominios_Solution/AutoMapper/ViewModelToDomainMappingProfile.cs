@@ -39,6 +39,8 @@ namespace MvcMapping.Mappers
             CreateMap<AmbienteChaveViewModel, AMBIENTE_CHAVE>();
             CreateMap<AmbienteCustoViewModel, AMBIENTE_CUSTO>();
             CreateMap<AutorizacaoViewModel, AUTORIZACAO_ACESSO>();
+            CreateMap<OcorrenciaViewModel, OCORRENCIA>();
+            CreateMap<OcorrenciaComentarioViewModel, OCORRENCIA_COMENTARIO>();
         }
     }
 }

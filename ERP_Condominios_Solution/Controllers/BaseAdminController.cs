@@ -110,6 +110,7 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["TiposPessoas"] = tpApp.GetAllItens();
                 Session["UFs"] = tpApp.GetAllItens();
             }
+
             Session["MensTarefa"] = 0;
             Session["MensNoticia"] = 0;
             Session["MensNotificacao"] = 0;
@@ -133,6 +134,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensTelefone"] = 0;
             Session["MensAmbiente"] = 0;
             Session["MensAutorizacao"] = 0;
+            Session["MensOcorrencia"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();
@@ -162,7 +164,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["Nome"] = usu.USUA_NM_NOME;
 
             Session["Noticias"] = notiApp.GetAllItensValidos(idAss);
-            Session["NoticiasNumero"] = ((List<NOTICIA>)Session["UserCredentials"]).Count;
+            Session["NoticiasNumero"] = ((List<NOTICIA>)Session["Noticias"]).Count;
 
             Session["ListaPendentes"] = tarApp.GetTarefaStatus(usu.USUA_CD_ID, 1);
             Session["TarefasPendentes"] = ((List<TAREFA>)Session["ListaPendentes"]).Count;
@@ -179,6 +181,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             String frase = String.Empty;
             String nome = usu.USUA_NM_NOME.Substring(0, usu.USUA_NM_NOME.IndexOf(" "));
+            Session["NomeGreeting"] = nome;
             if (DateTime.Now.Hour <= 12)
             {
                 frase = "Bom dia, " + nome;
@@ -252,6 +255,10 @@ namespace ERP_Condominios_Solution.Controllers
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensAutorizacao"] == 2)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensOcorrencia"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }

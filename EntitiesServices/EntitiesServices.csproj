@@ -198,6 +198,7 @@
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
     <Compile Include="EntitiesServices\AmbienteService.cs" />
+    <Compile Include="EntitiesServices\OcorrenciaService.cs" />
     <Compile Include="EntitiesServices\TelefoneService.cs" />
     <Compile Include="EntitiesServices\FornecedorService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
@@ -221,6 +222,10 @@
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaOcorrenciaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IOcorrenciaAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IOcorrenciaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoDocumentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrauParentescoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
@@ -270,6 +275,7 @@
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />
     <Compile Include="Interfaces\Services\IAmbienteService.cs" />
+    <Compile Include="Interfaces\Services\IOcorrenciaService.cs" />
     <Compile Include="Interfaces\Services\ITelefoneService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorService.cs" />
     <Compile Include="Interfaces\Services\ILogService.cs" />

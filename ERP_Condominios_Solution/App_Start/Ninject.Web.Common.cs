@@ -89,6 +89,7 @@ namespace Presentation.Start
             kernel.Bind<ITelefoneAppService>().To<TelefoneAppService>();
             kernel.Bind<IAmbienteAppService>().To<AmbienteAppService>();
             kernel.Bind<IAutorizacaoAppService>().To<AutorizacaoAppService>();
+            kernel.Bind<IOcorrenciaAppService>().To<OcorrenciaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -111,6 +112,7 @@ namespace Presentation.Start
             kernel.Bind<ITelefoneService>().To<TelefoneService>();
             kernel.Bind<IAmbienteService>().To<AmbienteService>();
             kernel.Bind<IAutorizacaoService>().To<AutorizacaoService>();
+            kernel.Bind<IOcorrenciaService>().To<OcorrenciaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -161,6 +163,10 @@ namespace Presentation.Start
             kernel.Bind<IGrauParentescoRepository>().To<GrauParentescoRepository>();
             kernel.Bind<IAutorizacaoAnexoRepository>().To<AutorizacaoAnexoRepository>();
             kernel.Bind<IAutorizacaoRepository>().To<AutorizacaoRepository>();
+            kernel.Bind<ICategoriaOcorrenciaRepository>().To<CategoriaOcorrenciaRepository>();
+            kernel.Bind<IOcorrenciaRepository>().To<OcorrenciaRepository>();
+            kernel.Bind<IOcorrenciaAnexoRepository>().To<OcorrenciaAnexoRepository>();
+            kernel.Bind<IOcorrenciaComentarioRepository>().To<OcorrenciaComentarioRepository>();
 
         }
     }

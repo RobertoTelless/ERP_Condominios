@@ -287,6 +287,7 @@
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
+    <Compile Include="Controllers\OcorrenciaController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
@@ -308,6 +309,8 @@
     <Compile Include="ViewModels\CategoriaAgendaViewModel.cs" />
     <Compile Include="ViewModels\AmbienteViewModel.cs" />
     <Compile Include="ViewModels\AmbienteCustoViewModel.cs" />
+    <Compile Include="ViewModels\OcorrenciaComentarioViewModel.cs" />
+    <Compile Include="ViewModels\OcorrenciaViewModel.cs" />
     <Compile Include="ViewModels\TelefoneViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\NoticiaComentarioViewModel.cs" />
@@ -2972,6 +2975,13 @@
     <Content Include="Views\Autorizacao\ExcluirAutorizacao.cshtml" />
     <Content Include="Views\Autorizacao\ReativarAutorizacao.cshtml" />
     <Content Include="Views\Autorizacao\VerAnexoAutorizacao.cshtml" />
+    <Content Include="Views\Ocorrencia\MontarTelaOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\IncluirOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\EditarOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\VerOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\ExcluirOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\ReativarOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\VerAnexoOcorrencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2984,6 +2994,7 @@
     <Folder Include="Imagens\1\Condominio\1\Fotos\" />
     <Folder Include="Imagens\1\Notificacao\1\Anexos\" />
     <Folder Include="Imagens\1\Notificacao\2\Anexos\" />
+    <Folder Include="Imagens\1\Ocorrencias\" />
     <Folder Include="Imagens\1\Tarefa\1\Anexos\" />
     <Folder Include="Imagens\1\Unidade\1\Anexos\" />
     <Folder Include="Imagens\1\Unidade\2\Anexos\" />
