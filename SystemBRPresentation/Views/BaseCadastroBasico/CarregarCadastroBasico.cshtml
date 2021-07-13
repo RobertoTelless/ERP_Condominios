@@ -1,0 +1,22 @@
+
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2 class="text-thin" style="color: darkgreen">Cadastros Básicos - Dashboard</h2>
+    </div>
+</div> 
+<div class="wraper container-fluid">
+
+</div>
+
+
+@if (ViewBag.Message != null)   
+   {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>   
+    }

@@ -1,0 +1,728 @@
+@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.ProdutoViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Produtos</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaProduto", "Cadastros")">Produtos</a>
+            </li>
+            <li class="active">
+                <strong>Produto - Inclusão</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    
+    @*TABS - PRINCIPAL*@
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Produto - Inclusão</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="tabs-container">
+                        @using (Html.BeginForm("IncluirProduto", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        {
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Estoque</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">Varejo</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Food Service</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5">Informações Tributárias</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-6">Expedição</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-7">E-Commerce</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-9">Custos & Preços</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-10">Observações</a></li>
+                            </ul>
+                            <div class="tab-content">
+
+                                @*Dados Gerais*@
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.PROD_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.PROD_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.PROD_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.PROD_AQ_FOTO)
+                                                    Categoria*
+                                                    <div class="input-group">
+                                                        @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                        @Html.ValidationMessageFor(m => m.CAPR_CD_ID, "", new { @style = "color:red" })
+                                                        <span class="input-group-btn">
+                                                            @Html.ButtonLinkIndex(text: "+", action: "IncluirCategoriaProduto", controller: "TabelasAuxiliares", buttonClass: "white", routeValues: new { id = 2 })
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Subcategoria
+                                                    <div class="input-group">
+                                                        @Html.DropDownListFor(m => m.SCPR_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                        @Html.ValidationMessageFor(m => m.SCPR_CD_ID, "", new { @style = "color:red" })
+                                                        <span class="input-group-btn">
+                                                            @Html.ButtonLinkIndex(text: "+", action: "IncluirSubCategoriaProduto", controller: "TabelasAuxiliares", buttonClass: "white", routeValues: new { id = 2 })
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Tipo de Produto*
+                                                    @Html.DropDownListFor(m => m.PROD_IN_TIPO_PRODUTO, (SelectList)ViewBag.TiposProduto, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                    @Html.ValidationMessageFor(m => m.PROD_IN_TIPO_PRODUTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Produto Composto
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.Composto, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.Composto, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Código
+                                                    @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_CD_CODIGO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-10 col-md-10 col-xs-12">
+                                                    Nome*
+                                                    @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NM_NOME, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Unidade
+                                                    <div class="input-group">
+                                                        @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                        @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
+                                                        <span class="input-group-btn">
+                                                            @Html.ButtonLinkIndex(text: "+", action: "IncluirUnidade", controller: "TabelasAuxiliares", buttonClass: "white", routeValues: new { id = 2 })
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Preço Venda
+                                                    @Html.TextBoxFor(m => m.PrecoVenda, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PrecoVenda, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Preço Promoção
+                                                    @Html.TextBoxFor(m => m.PrecoPromocao, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PrecoPromocao, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Garantia (dias)
+                                                    @Html.TextBoxFor(m => m.Garantia, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.Garantia, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição
+                                                    @Html.TextAreaFor(m => m.PROD_DS_DESCRICAO, new { @class = "form-control", style = "width: 1020px; height: 100px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Informações do Produto
+                                                    @Html.TextAreaFor(m => m.PROD_DS_INFORMACOES, new { @class = "form-control", style = "width: 1020px; height: 200px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_DS_INFORMACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Estoque*@
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Estoque Inicial
+                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_INICIAL, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_INICIAL, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Estoque Máximo
+                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, "", new { @style = "color:red" })
+                                                </div>                                              
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Estoque Mínimo
+                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MINIMA, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MINIMA, "", new { @style = "color:red" })
+                                                </div>                                              
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Reserva de Estoque
+                                                    @Html.TextBoxFor(m => m.PROD_QN_RESERVA_ESTOQUE, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_RESERVA_ESTOQUE, "", new { @style = "color:red" })
+                                                </div>                                              
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Aviso de Limite Mínimo
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.AvisaMinima, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.AvisaMinima, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Varejo*@
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Referência
+                                                    @Html.TextBoxFor(m => m.PROD_NR_REFERENCIA, new { @class = "form-control", @style = "color:green", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NR_REFERENCIA, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Food Service*@
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Balança PDV
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.BalancaPDV, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.BalancaPDV, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Balança Retaguarda
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.BalancaRetaguarda, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.BalancaRetaguarda, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Validade
+                                                    @Html.TextBoxFor(m => m.PROD_NR_VALIDADE, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NR_VALIDADE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Produto Tipo Combo
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.ProdutoTipoCombo, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.ProdutoTipoCombo, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Produto Opção Combo
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.ProdutoOpcaoCombo, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.ProdutoOpcaoCombo, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Divisão
+                                                    @Html.TextBoxFor(m => m.PROD_IN_DIVISAO, new { @class = "form-control touchspin1", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_IN_DIVISAO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Cobrar pelo Maior
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.CobrarMaior, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.CobrarMaior, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Gerar Arquivo Texto
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.ArquivoTexto, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.ArquivoTexto, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Informações Nutricionais
+                                                    @Html.TextAreaFor(m => m.PROD_DS_INFORMACAO_NUTRICIONAL, new { @class = "form-control", style = "width: 1040px; height: 200px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_DS_INFORMACAO_NUTRICIONAL, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+
+                                @*Informações Tributarias*@
+                                <div id="tab-5" class="tab-pane">
+                                    <div class="panel-body">
+                                        <h3>Em Desenvolvimento</h3>
+                                    </div>
+                                </div>
+
+                                @*Expedição*@
+                                <div id="tab-6" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Código GTIN/EAN
+                                                    @Html.TextBoxFor(m => m.PROD_CD_GTIN_EAN, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_CD_GTIN_EAN, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Localização do Estoque
+                                                    @Html.TextBoxFor(m => m.PROD_NM_LOCALIZACAO_ESTOQUE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NM_LOCALIZACAO_ESTOQUE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Peso Líquido (Kg)
+                                                    @Html.TextBoxFor(m => m.PROD_QN_PESO_LIQUIDO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_PESO_LIQUIDO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Peso Bruto (Kg)
+                                                    @Html.TextBoxFor(m => m.PROD_QN_PESO_BRUTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_PESO_BRUTO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Tipo de Embalagem
+                                                    @Html.DropDownListFor(m => m.PROD_IN_TIPO_EMBALAGEM, (SelectList)ViewBag.TiposEmbalagem, "Selecionar", new { @class = "form-control" })                            
+                                                    @Html.ValidationMessageFor(m => m.PROD_IN_TIPO_EMBALAGEM, "", new { @style = "color:red" })
+                                                </div>
+                                                <div id="altura" class="col-lg-2 col-md-2 col-xs-12">
+                                                    Altura (cm)
+                                                    @Html.TextBoxFor(m => m.PROD_NR_ALTURA, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NR_ALTURA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div id="largura" class="col-lg-2 col-md-2 col-xs-12">
+                                                    Largura (cm)
+                                                    @Html.TextBoxFor(m => m.PROD_NR_LARGURA, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NR_LARGURA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div id="comprimento" class="col-lg-2 col-md-2 col-xs-12">
+                                                    Comprimento (cm)
+                                                    @Html.TextBoxFor(m => m.PROD_NR_COMPRIMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NR_COMPRIMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div id="diametro" class="col-lg-2 col-md-2 col-xs-12">
+                                                    Diâmetro (cm)
+                                                    @Html.TextBoxFor(m => m.PROD_NR_DIAMETRO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_NR_DIAMETRO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+
+                                @*E-Commerce*@
+                                <div id="tab-7" class="tab-pane">
+                                    <div class="panel-body">
+                                        <h3>Em Desenvolvimento</h3>
+                                    </div>
+                                </div>
+
+                                @*Custos e Preços*@
+                                <div id="tab-9" class="tab-pane">
+                                    <div class="panel-body">
+                                        <h3>Em Desenvolvimento</h3>
+                                    </div>
+                                </div>
+
+                                @*Observações*@
+                                <div id="tab-10" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.PROD_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1040px; height: 400px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    @Html.ButtonActionSubmit(text: "Confirma inclusão de Produto", htmlAttributes: new { id = "basictoast" })
+                                    @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseProduto", controller: "Cadastros")
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(".touchspin1").TouchSpin({
+            min: 1,
+            max: 5,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(".touchspin2").TouchSpin({
+            min: 0,
+            max: 1000000000,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PROD_IN_TIPO_EMBALAGEM').change(function () {
+                var ddlValue = $(this).val();
+
+                if (ddlValue == "1")
+                {
+                    $('#largura').show();
+                    $('#comprimento').show();
+                    $('#altura').hide();
+                    $('#diametro').hide();
+                }
+                else if (ddlValue == "2")
+                {
+                    $('#largura').hide();
+                    $('#comprimento').show();
+                    $('#altura').show();
+                    $('#diametro').hide();
+                }
+                else if (ddlValue == "3")
+                {
+                    $('#largura').hide();
+                    $('#comprimento').show();
+                    $('#altura').hide();
+                    $('#diametro').show();
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ddlValue = $('#PROD_IN_TIPO_EMBALAGEM').val();
+
+            if (ddlValue == "1")
+            {
+                $('#largura').show();
+                $('#comprimento').show();
+                $('#altura').hide();
+                $('#diametro').hide();
+            }
+            else if (ddlValue == "2")
+            {
+                $('#largura').hide();
+                $('#comprimento').show();
+                $('#altura').show();
+                $('#diametro').hide();
+            }
+            else if (ddlValue == "3")
+            {
+                $('#largura').hide();
+                $('#comprimento').show();
+                $('#altura').hide();
+                $('#diametro').show();
+            }
+        });
+    </script>
+
+    @*<script type="text/javascript">
+        $(function () {
+            $("#CAPR_CD_ID").change(function () {
+
+                var cat = $("#CAPR_CD_ID").val();
+                $("#SCPR_CD_ID").empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetSubcategorias", "Cadastros")',
+                    data: { cat: cat },
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            $("#SCPR_CD_ID").append('<option value="'
+                                                 + value.SCPR_CD_ID + '">'
+                                                 + value.SCPR_NM_NOME + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Falha na carga da lista.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {   
+
+        $('#CAPR_CD_ID').change(function () {
+            var cat = $("#CAPR_CD_ID").val();
+            $("#SCPR_CD_ID").empty();
+
+            $.ajax({
+                url: '@Url.Action("GetSubcategorias", "Cadastros")',
+                type: 'POST',
+                data: { cat: cat },
+                datatype: 'json',
+                success: function (data) {
+                    var options = '';
+                    var category = $('#SCPR_CD_ID');
+                    $.each(data, function () {
+                        options += '<option value="' + this.SCPR_CD_ID + '">' + this.SCPR_NM_NOME + '</option>';
+                    });
+
+                    $('#SCPR_CD_ID').append(options);
+                },
+            });
+        });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Inclusão com sucesso!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options = "
+                        + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

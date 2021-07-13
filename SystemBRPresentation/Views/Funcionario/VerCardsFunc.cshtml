@@ -1,0 +1,209 @@
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.FUNCIONARIO
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Funcionários</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaFunc", "Funcionario")">Funcionários</a>
+            </li>
+            <li class="active">
+                <strong>Funcionários</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Funcionários</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@ViewBag.Func</h1>
+                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                    <small>Funcionários Cadastrados</small>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>           
+            
+                @using (Html.BeginForm("FiltrarFunc", "Funcionario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Situação
+                                    @Html.DropDownListFor(m => m.SITU_CD_ID, (SelectList)ViewBag.Situacao, "Selecionar", new { @class = "form-control" })                            
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Nome
+                                    @Html.TextBoxFor(m => m.FUNC_NM_NOME, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    CPF
+                                    @Html.TextBoxFor(m => m.FUNC_NR_CPF, new { @class = "form-control", @id="cpf", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    RG
+                                    @Html.TextBoxFor(m => m.FUNC_NR_RG, new { @class = "form-control", autofocus = true })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    Função
+                                    @Html.DropDownListFor(m => m.FNCA_CD_ID, (SelectList)ViewBag.Funcao, "Selecionar", new { @class = "form-control" })                            
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    @Html.ButtonActionSubmit(text: "Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Funcionario", action: "RetirarFiltroFunc")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Funcionario", action: "MostrarTudoFunc")
+                                    @Html.ButtonLinkIndex(text: "Novo Funcionário", controller: "Funcionario", action: "IncluirFunc")
+                                    @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Funcionario", action: "GerarRelatórioLista")
+                                    @Html.ButtonLinkIndex(text: "Exibir Lista de Funcionários", controller: "Funcionario", action: "MontarTelaFunc")
+                                </div>
+                            </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Funcionários</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.FUNCIONARIO>).Count > 0)
+                            {
+                                foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.FUNCIONARIO>))
+                                {
+                                    <div class="col-lg-4">
+                                        <div class="contact-box">
+                                            <a href="@Url.Action("EditarFunc", "Funcionario", new { id = cond.FUNC_CD_ID })">
+                                                <div class="col-sm-4">
+                                                    <div class="text-center">
+                                                        <img alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(cond.FUNC_AQ_FOTO)">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <h3><strong>@cond.FUNC_NM_NOME</strong></h3>
+                                                    <p><i class="fa fa-map-marker"></i> @cond.FUNCAO.FNCA_NM_NOME</p>
+                                                    <address>
+                                                        <strong>@cond.FUNC_NM_EMAIL</strong><br>
+                                                        @cond.FUNC_NM_ENDERECO<br>
+                                                        @if (cond.UF != null)
+	                                                    {
+                                                            @cond.FUNC_NM_BAIRRO @cond.FUNC_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
+                                                        }
+                                                        else
+                                                        {
+                                                            @cond.FUNC_NM_BAIRRO @cond.FUNC_NM_CIDADE<br>
+                                                        }
+                                                        @cond.FUNC_NR_CEP<br>
+                                                        <abbr title="Phone">P:</abbr> @cond.FUNC_NR_TELEFONE
+                                                    </address>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                }   
+                            }
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+   
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

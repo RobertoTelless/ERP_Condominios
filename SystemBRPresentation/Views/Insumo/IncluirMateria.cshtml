@@ -1,0 +1,732 @@
+@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.MateriaPrimaViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Insumos</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaMateria", "Insumo")">Insumos</a>
+            </li>
+            <li class="active">
+                <strong>Insumos - Inclusão</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    @*TABS - PRINCIPAL*@
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Insumos - Inclusão</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        @using (Html.BeginForm("IncluirMateria", "Insumo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        {
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Estoque</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">Custos & Preços</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Imagens</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-5">Observações</a></li>
+                            </ul>
+                            <div class="tab-content">
+
+                                @*Dados Gerais*@
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.MAPR_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MAPR_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.MAPR_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MAPR_AQ_FOTO)
+                                                    Categoria*
+                                                    <div class="input-group">
+                                                        @Html.DropDownListFor(m => m.CAMA_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarSubCategoriaMateria($(this).val())" })
+                                                        @Html.ValidationMessageFor(m => m.CAMA_CD_ID, "", new { @style = "color:red" })
+                                                        <span class="input-group-addon">
+                                                            @Html.TableLinkAction("IncluirCategoriaMateria", "Insumo", null, "glyphicon glyphicon-plus", "Adicionar Categoria")
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Subcategoria
+                                                    <div class="input-group">
+                                                        @Html.DropDownListFor(m => m.SCMP_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.SCMP_CD_ID, "", new { @style = "color:red" })
+                                                        <span class="input-group-addon">
+                                                            @Html.TableLinkAction("IncluirSubCategoriaMateria", "Insumo", null, "glyphicon glyphicon-plus", "Adicionar SubCategoria")
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-5 col-md-5 col-xs-12">
+                                                    Nome*
+                                                    @Html.TextBoxFor(m => m.MAPR_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_NM_NOME, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Unidade*
+                                                    @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data de Validade
+                                                    @Html.TextBoxFor(m => m.MAPR_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_DT_VALIDADE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Perda no Processo (%)
+                                                    @Html.TextBoxFor(m => m.MAPR_PERDA_PROCESSAMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_PERDA_PROCESSAMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Fator de Conversão
+                                                    @Html.TextBoxFor(m => m.MAPR_NR_FATOR_CONVERSAO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_NR_FATOR_CONVERSAO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Preço de Custo*
+                                                    @Html.TextBoxFor(m => m.MAPR_VL_CUSTO, "{0:n2}", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_VL_CUSTO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição
+                                                    @Html.TextAreaFor(m => m.MAPR_DS_DESCRICAO, new { @class = "form-control", style = "width: 1020px; height: 100px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Estoque*@
+                                <div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @Html.HiddenFor(x => x.MAPR_QN_QUANTIDADE_INICIAL)
+                                                    Estoque Máximo*
+                                                    @Html.TextBoxFor(m => m.MAPR_QN_ESTOQUE_MAXIMO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_QN_ESTOQUE_MAXIMO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Estoque Mínimo*
+                                                    @Html.TextBoxFor(m => m.MAPR_QN_QUANTIDADE_M, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_QN_QUANTIDADE_M, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Reserva de Estoque*
+                                                    @Html.TextBoxFor(m => m.MAPR_QN_RESERVA_ESTOQUE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_QN_RESERVA_ESTOQUE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Aviso de Limite Mínimo
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.AvisaMinima, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.AvisaMinima, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Custos e Preços*@
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <hr />
+                                            <h4>Incluir Nova Tabela</h4>
+                                            <br />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MAPR_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAMA_CD_ID)
+                                                    @Html.HiddenFor(m => m.MAPR_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.MAPR_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MAPR_NM_NOME)
+                                                    @Html.HiddenFor(m => m.MAPR_VL_CUSTO)
+                                                    @Html.HiddenFor(m => m.SCMA_CD_ID)
+                                                    Filial
+                                                    @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true, id = "fili" })
+                                                    @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Preço (R$)
+                                                    @Html.TextBoxFor(m => m.MPPR_VL_PRECO, new { @class = "form-control", autofocus = true, id = "preco" })
+                                                    @Html.ValidationMessageFor(m => m.MPPR_VL_PRECO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <br />
+                                                    <span class="btn btn-success btn-sm" onclick="incluiPrecoMateria($('select#fili option:selected').val(), $('select#fili option:selected').text(), $('#preco').val())">Incluir Preço</span>
+                                                    @*<span class="btn btn-warning btn-sm" onclick="IncluirInsumo()">teste</span>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="form-group" style="margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <table id="precos" style="width: 100%" class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th style="display: none">cd</th>
+                                                                <th>Filial</th>
+                                                                <th>Preço</th>
+                                                                <th class="td-one-action">Ações</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Imagens - Foto e Anexos*@
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div style="margin-left: 15px;" class="col-lg-12 col-md-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <h4>Logotipo/Foto do Insumo</h4><input type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="imgMateria" class="btn btn-sm btn-warning" multiple />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <hr />
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Anexos do Insumo</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                                <br />
+                                                <div class="form-group">
+                                                    <div class="ibox-content">
+                                                        <br />
+                                                        <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="myFiles">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <td>Nome</td>
+                                                                    <td>Tipo</td>
+                                                                    <td>Ações</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Observações*@
+                                <div id="tab-5" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.MAPR_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 400px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.MAPR_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button" onclick="IncluirInsumo()">Confirma inclusão de Insumo</button>
+                                    @Html.ButtonLinkIndex(text: "Cancelar", action: "MontarTelaMateria", controller: "Insumo")
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+        });
+    </script>*@
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(".touchspin1").TouchSpin({
+            min: 1,
+            max: 5,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PROD_IN_TIPO_EMBALAGEM').change(function () {
+                var ddlValue = $(this).val();
+
+                if (ddlValue == "1") {
+                    $('#largura').show();
+                    $('#comprimento').show();
+                    $('#altura').hide();
+                    $('#diametro').hide();
+                }
+                else if (ddlValue == "2") {
+                    $('#largura').hide();
+                    $('#comprimento').show();
+                    $('#altura').show();
+                    $('#diametro').hide();
+                }
+                else if (ddlValue == "3") {
+                    $('#largura').hide();
+                    $('#comprimento').show();
+                    $('#altura').hide();
+                    $('#diametro').show();
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ddlValue = $('#PROD_IN_TIPO_EMBALAGEM').val();
+
+            if (ddlValue == "1") {
+                $('#largura').show();
+                $('#comprimento').show();
+                $('#altura').hide();
+                $('#diametro').hide();
+            }
+            else if (ddlValue == "2") {
+                $('#largura').hide();
+                $('#comprimento').show();
+                $('#altura').show();
+                $('#diametro').hide();
+            }
+            else if (ddlValue == "3") {
+                $('#largura').hide();
+                $('#comprimento').show();
+                $('#altura').hide();
+                $('#diametro').show();
+            }
+        });
+    </script>
+
+    @*<script type="text/javascript">
+            $(function () {
+                $("#CAPR_CD_ID").change(function () {
+
+                    var cat = $("#CAPR_CD_ID").val();
+                    $("#SCPR_CD_ID").empty();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetSubcategorias", "Cadastros")',
+                        data: { cat: cat },
+                        dataType: 'json',
+                        success: function (data) {
+                            $.each(data, function (index, value) {
+                                $("#SCPR_CD_ID").append('<option value="'
+                                                     + value.SCPR_CD_ID + '">'
+                                                     + value.SCPR_NM_NOME + '</option>');
+                            });
+                        },
+                        error: function (ex) {
+                            alert('Falha na carga da lista.' + ex);
+                        }
+                    });
+                    return false;
+                })
+            });
+        </script>*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#CAPR_CD_ID').change(function () {
+                var cat = $("#CAPR_CD_ID").val();
+                $("#SCPR_CD_ID").empty();
+
+                $.ajax({
+                    url: '@Url.Action("GetSubcategorias", "Cadastros")',
+                    type: 'POST',
+                    data: { cat: cat },
+                    datatype: 'json',
+                    success: function (data) {
+                        var options = '';
+                        var category = $('#SCPR_CD_ID');
+                        $.each(data, function () {
+                            options += '<option value="' + this.SCPR_CD_ID + '">' + this.SCPR_NM_NOME + '</option>';
+                        });
+
+                        $('#SCPR_CD_ID').append(options);
+                    },
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Inclusão em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    <script>
+        function FiltrarSubCategoriaMateria(SCMP_CD_ID) {
+            var data = {
+                id: SCMP_CD_ID
+            }
+
+            var objSubCatProduto = $('select#SCMP_CD_ID');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Insumo/FiltrarSubCategoriaMateria'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objSubCatProduto.children('option').remove();
+                    objSubCatProduto.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        objSubCatProduto.append('<option value="' + e.SCMP_CD_ID + '">' + e.SCMP_NM_NOME + '</option>');
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        var listaPrecoTabela = [];
+
+        function incluiPrecoMateria(cdFilial, nmFilial, preco) {
+            var data = {
+                "FILI_CD_ID": cdFilial
+                , "MPPR_VL_PRECO": preco
+            }
+            //listaPrecoTabela.push(data);
+            //console.log(listaPrecoTabela);
+
+            $('#fili option:selected').prop('disabled', true);
+            $('#fili option:selected').css('background', 'lightgray');
+
+            $('table#precos td.dataTables_empty').closest('tr').remove();
+
+            $('table#precos tbody').append('<tr>'
+                + '<td style="display: none">' + cdFilial + '<input type="hidden" name="rowCdFili" id="rowCdFili' + cdFilial + '" value="' + cdFilial + '"></td>'
+                + '<td>' + nmFilial + '<input type="hidden" name="rowNmFili" id="rowNmFili' + cdFilial + '" value="' + nmFilial + '"></td>'
+                + '<td>' + preco + '<input type="hidden" name="rowPreco" id="rowPreco' + cdFilial + '" value="' + preco + '"></td>'
+                + '<td><span style="color: #337ab7; cursor: pointer;" class="fa fa-trash-o" onclick="apagaRow($(this), ' + cdFilial + ')"></span></td>'
+            );
+
+            $('select#fili').val($('select#fili option:first').val());
+            $('#preco').val('');
+
+            $.ajax({
+                url: '../Insumo/MontaListaPreco'
+                , data: data
+                , type: 'POST'
+            });
+        }
+
+        function apagaRow(td, cdFilial) {
+            var data = {
+                "FILI_CD_ID": cdFilial
+            }
+            //listaPrecoTabela = $.grep(listaPrecoTabela, function (e) { return e.FILI_CD_ID != cdFilial });
+            //console.log(listaPrecoTabela);
+
+            td.closest('tr').remove();
+
+            var fili = $('#fili option[value="' + cdFilial + '"]');
+            fili.prop('disabled', false);
+            fili.css('background', '');
+
+            if ($('table#precos tr').length == 1) {
+                $('table#precos tbody').append('<tr class="odd"><td valign="top" colspan="3" class="dataTables_empty">Nenhuma linha recuperada</td></tr>');
+            }
+
+            $.ajax({
+                url: '../Insumo/RemovePrecoTabela' //'../Compra/UploadFileToSession'
+                , data: data
+                , type: 'POST'
+            });
+        }
+    </script>
+
+    <script>
+        SendFilesV2('imgMateria', 'Insumo', 'UploadFileToSession');
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

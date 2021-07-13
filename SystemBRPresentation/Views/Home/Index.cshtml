@@ -1,0 +1,19 @@
+@using Presentation.Extensions
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h2 class="font-bold" style="color: darkgreen">Acesso ERP</h2>
+    </div>
+</div> 
+
+
+@if (ViewBag.Message != null)   
+   {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>   
+    }

@@ -1,0 +1,848 @@
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model SystemBRPresentation.ViewModels.InventarioViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Estoque</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Inventário</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Justificativa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Justificativa
+                    <textarea id="jus" class="form-control" style="width: 100%; height: 100px;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    @if (ViewBag.IsProdIns == 1)
+                    {
+                        <span class="btn btn-success btn-sm" onclick="AtualizaEstoqueProd()">Confirmar</span>
+                    }
+                    else
+                    {
+                        <span class="btn btn-success btn-sm" onclick="AtualizaEstoqueIns()">Confirmar</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="container-fluid" id="alert" style="display: none;">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="alert alert-danger" role="alert"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("FiltrarInventario", "Estoque", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    Produto/Insumo*
+                                    @Html.DropDownListFor(x => x.TIPO, (SelectList)ViewBag.ProdutoInsumo, "Selecionar", new { @class = "form-control", id = "filtroPM", onchange = "FiltrarModal($(this).val())" })
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Filtro Produto*@
+                        <div class="container-fluid" id="prodContainer">
+                            <div class="row">
+                                <h3>Produto</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Código de Barras
+                                    @Html.TextBoxFor(x => x.PRODUTO.PROD_NR_BARCODE, new { @class = "form-control", id = "cdBarras" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Código do Produto
+                                    @Html.TextBoxFor(x => x.PRODUTO.PROD_CD_CODIGO, new { @class = "form-control", id = "cdProd" })
+                                </div>
+                                @if (ViewBag.Perfil != "ADM")
+                                {
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        @Html.HiddenFor(x => x.FILI_CD_ID_P, new { @id = "cdFiliProd" })
+                                        Filial
+                                        @Html.TextBoxFor(x => x.MATERIA_PRIMA.FILIAL.FILI_NM_NOME, new { @class = "form-control", @readonly = "readonly", id = "filialProdUsu" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Filial
+                                        @Html.DropDownListFor(x => x.FILI_CD_ID_P, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", id = "filialProd" })
+                                    </div>
+                                }
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Categoria do Produto
+                                    @Html.DropDownListFor(x => x.PRODUTO.CAPR_CD_ID, (SelectList)ViewBag.CatProd, "Selecionar", new { @class = "form-control", id = "catProd", onchange = "FiltrarSubCategoriaProduto($(this).val())" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Subcategoria do Produto
+                                    @Html.DropDownListFor(x => x.PRODUTO.SCPR_CD_ID, (SelectList)ViewBag.SubCatProd, "Selecionar", new { @class = "form-control", id = "subProd", onchange = "FiltrarCategoriaProduto($(this).val())" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Nome
+                                    @Html.TextBoxFor(x => x.PRODUTO.PROD_NM_NOME, new { @class = "form-control", id = "nomeProd" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Marca
+                                    @Html.TextBoxFor(x => x.PRODUTO.PROD_NM_MARCA, new { @class = "form-control", id = "marcaProd" })
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+
+                        @*Filtro Insumo*@
+                        <div class="container-fluid" id="insContainer">
+                            <div class="row">
+                                <h3>Insumo</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Categoria do Insumo
+                                    @Html.DropDownListFor(x => x.MATERIA_PRIMA.CAMA_CD_ID, (SelectList)ViewBag.CatIns, "Selecionar", new { @class = "form-control", autofocus = true, id = "catIns", onchange = "FiltrarSubCategoriaInsumo($(this).val())" })
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Subcategoria do Insumo
+                                    @Html.DropDownListFor(x => x.MATERIA_PRIMA.SCMP_CD_ID, (SelectList)ViewBag.SubCatIns, "Selecionar", new { @class = "form-control", autofocus = true, id = "subIns", onchange = "FiltrarCategoriaInsumo($(this).val())" })
+                                </div>
+                                @if (ViewBag.Perfil != "ADM")
+                                {
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        @Html.HiddenFor(x => x.FILI_CD_ID_I, new { @id = "cdFiliIns" })
+                                        Filial
+                                        @Html.TextBoxFor(x => x.MATERIA_PRIMA.FILIAL.FILI_NM_NOME, new { @class = "form-control", @readonly = "readonly", id = "filialInsUsu" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        Filial
+                                        @Html.DropDownListFor(x => x.FILI_CD_ID_I, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", id = "filialIns" })
+                                    </div>
+                                }
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Nome
+                                    @Html.TextBoxFor(x => x.MATERIA_PRIMA.MAPR_NM_NOME, new { @class = "form-control", id = "nomeIns" })
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Descrição
+                                    @Html.TextBoxFor(x => x.MATERIA_PRIMA.MAPR_DS_DESCRICAO, new { @class = "form-control", id = "descIns" })
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Código
+                                    @Html.TextBoxFor(x => x.MATERIA_PRIMA.MAPR_CD_CODIGO, new { @class = "form-control", id = "cdIns" })
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    @Html.ButtonActionSubmit("Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroInventario")
+                                    @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioInventarioFiltro")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Inventário - Lançamentos</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            @*<li><a data-toggle="tab" href="#tab-2">Justificativa</a></li>*@
+                        </ul>
+
+                        <div class="tab-content">
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @if (ViewBag.ListaProd != null || ViewBag.ListaIns != null)
+                                    {
+                                        if (ViewBag.IsProdIns == 1)
+                                        {
+                                            if ((ViewBag.ListaProd as List<EntitiesServices.Model.PRODUTO_ESTOQUE_FILIAL>).Count > 0)
+                                            {
+                                                if (ViewBag.IsProdIns == 1)
+                                                {
+                                                    <div class="row">
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                                            Confirmar
+                                                        </button>
+                                                        @*<span class="btn btn-success btn-sm" onclick="AtualizaEstoqueProd()">Confirmar</span>*@
+                                                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaInventario", controller: "Estoque", buttonClass: "warning")
+                                                        <br />
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="row">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                            Confirmar
+                                                        </button>
+                                                        <span class="btn btn-success btn-sm" onclick="AtualizaEstoqueIns()">Confirmar</span>
+                                                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaInventario", controller: "Estoque", buttonClass: "warning")
+                                                        <br />
+                                                    </div>
+                                                }
+
+                                                <div class="row">
+                                                    <table id="tblProd" class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th style="display: none;"></th>
+                                                                <th>Nome</th>
+                                                                <th>Categoria</th>
+                                                                <th>Subcategoria</th>
+                                                                <th>Filial</th>
+                                                                <th>Quantidade em Estoque</th>
+                                                                <th>Quantidade Alterada</th>
+                                                                <th>Diferença</th>
+                                                                <th>Data da ultima movimentação</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaProd as List<EntitiesServices.Model.PRODUTO_ESTOQUE_FILIAL>))
+                                                            {
+                                                                <tr>
+                                                                    <td style="display: none;">
+                                                                        <input type="hidden" name="idPef" value="@cond.PREF_CD_ID" />
+                                                                        <input type="hidden" name="id" value="@cond.PROD_CD_ID" />
+                                                                        <input type="hidden" name="filial" value="@cond.FILI_CD_ID" />
+                                                                    </td>
+                                                                    <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                    <td>@cond.PRODUTO.CATEGORIA_PRODUTO.CAPR_NM_NOME</td>
+                                                                    <td>@cond.PRODUTO.SUBCATEGORIA_PRODUTO.SCPR_NM_NOME</td>
+                                                                    <td>@cond.FILIAL.FILI_NM_NOME</td>
+                                                                    <td>@cond.PREF_QN_ESTOQUE</td>
+                                                                    <td><input class="form-control" name="qtde" type="text" value="0" /></td>
+                                                                    @if (ViewBag.Diferenca == null)
+                                                                    {
+                                                                        <td>-</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (((List<System.Collections.Hashtable>)ViewBag.Diferenca).Where(x => (Int32)x["id"] == cond.PROD_CD_ID && (Int32)x["fili"] == cond.FILI_CD_ID).Select(x => x["val"]).FirstOrDefault() == null)
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>@(((List<System.Collections.Hashtable>)ViewBag.Diferenca).Where(x => (Int32)x["id"] == cond.PROD_CD_ID && (Int32)x["fili"] == cond.FILI_CD_ID).Select(x => x["val"]).FirstOrDefault())</td>
+                                                                        }
+                                                                    }
+                                                                    @if (cond.PREF_DT_ULTIMO_MOVIMENTO == null)
+                                                                    {
+                                                                        <td> - </td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@cond.PREF_DT_ULTIMO_MOVIMENTO.Value.ToShortDateString()</td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row">
+                                                    <br />
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                                        Confirmar
+                                                    </button>
+                                                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaInventario", controller: "Estoque", buttonClass: "warning")
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if ((ViewBag.ListaIns as List<EntitiesServices.Model.MATERIA_PRIMA_ESTOQUE_FILIAL>).Count > 0)
+                                            {
+                                                <div class="row">
+                                                    <table id="tblIns" class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th style="display: none;"></th>
+                                                                <th>Nome</th>
+                                                                <th>Categoria</th>
+                                                                <th>Subcategoria</th>
+                                                                <th>Quantidade em Estoque</th>
+                                                                <th>Quantidade Alterada</th>
+                                                                <th>Diferença</th>
+                                                                <th>Data da ultima movimentação</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (ViewBag.ListaIns as List<EntitiesServices.Model.MATERIA_PRIMA_ESTOQUE_FILIAL>))
+                                                            {
+                                                                <tr>
+                                                                    <td style="display: none;">
+                                                                        <input type="hidden" name="idMef" value="@cond.MPFE_CD_ID" />
+                                                                        <input type="hidden" name="id" value="@cond.MAPR_CD_ID" />
+                                                                        <input type="hidden" name="filial" value="@cond.FILI_CD_ID" />
+                                                                    </td>
+                                                                    <td>@cond.MATERIA_PRIMA.MAPR_NM_NOME</td>
+                                                                    <td>@cond.MATERIA_PRIMA.CATEGORIA_MATERIA.CAMA_NM_NOME</td>
+                                                                    <td>@(cond.MATERIA_PRIMA.SUBCATEGORIA_MATERIA == null ? "-" : cond.MATERIA_PRIMA.SUBCATEGORIA_MATERIA.SCMP_NM_NOME)</td>
+                                                                    <td>@cond.MPFE_QN_ESTOQUE</td>
+                                                                    <td><input class="form-control" name="qtde" type="text" value="0" /></td>
+                                                                    @if (ViewBag.Diferenca == null)
+                                                                    {
+                                                                        <td>-</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (((List<System.Collections.Hashtable>)ViewBag.Diferenca).Where(x => (Int32)x["id"] == cond.MAPR_CD_ID && (Int32)x["fili"] == cond.FILI_CD_ID).Select(x => x["val"]).FirstOrDefault() == null)
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td style="color: red;">@(((List<System.Collections.Hashtable>)ViewBag.Diferenca).Where(x => (Int32)x["id"] == cond.MAPR_CD_ID && (Int32)x["fili"] == cond.FILI_CD_ID).Select(x => x["val"]).FirstOrDefault())</td>
+                                                                        }
+                                                                    }
+                                                                    @if (cond.MPFE_DT_ULTIMO_MOVIMENTO == null)
+                                                                    {
+                                                                        <td> - </td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@cond.MPFE_DT_ULTIMO_MOVIMENTO.ToShortDateString()</td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row">
+                                                    <br />
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                                        Confirmar
+                                                    </button>
+                                                    @*<span class="btn btn-success btn-sm" onclick="AtualizaEstoqueIns()">Confirmar</span>*@
+                                                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaInventario", controller: "Estoque", buttonClass: "warning")
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        $('#filtroModal').modal({
+            backdrop: 'static'
+        });
+        $('#filtroModal').modal('show');
+
+        function FiltrarModal(val) {
+            if (val == 1) {
+                $('#prodContainer').show();
+                $('#insContainer').hide();
+
+                $('#catIns').val($("#catIns option:first").val());
+                $('#subIns').val($("#subIns option:first").val());
+                $('#filialIns').val($("#filialIns option:first").val());
+                $('#nomeIns').val('');
+                $('#descIns').val('');
+                $('#cdIns').val('');
+            } else if (val == 2) {
+                $('#insContainer').show();
+                $('#prodContainer').hide();
+
+                $('#cdBarras').val('');
+                $('#cdProd').val('');
+                $('#filialProd').val($("#filialProd option:first").val());
+                $('#catProd').val($("#catProd option:first").val());
+                $('#subProd').val($("#subProd option:first").val());
+                $('#nomeProd').val('');
+                $('#marcaProd').val('');
+            } else {
+                $('#insContainer').hide();
+                $('#prodContainer').hide();
+
+                $('#cdBarras').val('');
+                $('#cdProd').val('');
+                $('#filialProd').val($("#filialProd option:first").val());
+                $('#catProd').val($("#catProd option:first").val());
+                $('#subProd').val($("#subProd option:first").val());
+                $('#nomeProd').val('');
+                $('#marcaProd').val('');
+
+                $('#catIns').val($("#catIns option:first").val());
+                $('#subIns').val($("#subIns option:first").val());
+                $('#filialIns').val($("#filialIns option:first").val());
+                $('#nomeIns').val('');
+                $('#descIns').val('');
+                $('#cdIns').val('');
+            }
+        }
+
+        $(function () {
+            FiltrarModal($('#filtroPM').val());
+        });
+
+        function Filtrar() {
+            var pm = $('#filtroPM').val();
+
+            if (pm == "") {
+                $('#alert').find('.alert').html("Selecione Produto ou Insumo");
+                $('#alert').show();
+            } else {
+                var data = {}
+
+                if (pm == 1) {
+                    var item = {
+                        "CAPR_CD_ID": $('#catProd').val()
+                        , "PROD_CD_CODIGO": $('#cdProd').val()
+                        , "PROD_NM_MARCA": $('#marcaProd').val()
+                        , "PROD_NM_NOME": $('#nomeProd').val()
+                        , "PROD_NR_BARCODE": $('#cdBarras').val()
+                        , "SCPR_CD_ID": $('#subProd').val()
+                        , "FILI_CD_ID": $('#filialProd').val() == "" ? null : $('#cdFiliProd').val()
+                    }
+
+                    data = {
+                        prod: item
+                        , ins: null
+                    }
+                } else {
+                    var item = {
+                        "CAMA_CD_ID": $('#catIns').val()
+                        , "SCMP_CD_ID": $('#subIns').val()
+                        , "FILI_CD_ID": $('#filialIns').val() == "" ? null : $('#cdFiliIns').val()
+                        , "MAPR_NM_NOME": $('#nomeIns').val()
+                        , "MAPR_DS_DESCRICAO": $('#descIns').val()
+                        , "MAPR_CD_CODIGO": $('#cdIns').val()
+                    }
+
+                    data = {
+                        prod: null
+                        , ins: item
+                    }
+                }
+
+                $.ajax({
+                    url: '../Estoque/FiltrarInventario'
+                    , type: 'POST'
+                    , data: data
+                    , success: function (r) {
+                        if (r.url != null) {
+                            window.open(r.url, '_self');
+                        } else {
+                            //if (($('#filtroModal').data('bs.modal') || { isShown: false }).isShown) {
+                            //    $('#alert').find('.alert').html(r.error);
+                            //    $('#alert').show();
+                            //} else {
+                            //    $('#alertMain').find('.alert').html(r.error);
+                            //    $('#alertMain').show();
+                            //}
+                            $('#alert').find('.alert').html(r.error);
+                            $('#alert').show();
+                        }
+                    }
+                });
+            }
+        }
+
+        function AtualizaEstoqueProd() {
+            var count = 0;
+            var json = [];
+
+            $('table#tblProd > tbody > tr').each(function (i, e) {
+                var idPef = $(e).find('input[name="idPef"]').val();
+                var id = $(e).find('input[name="id"]').val();
+                var qtde = $(e).find('input[name="qtde"]').val();
+                var fili = $(e).find('input[name="filial"]').val();
+
+                if (qtde > 0) {
+                    json.push({
+                        "idPef": idPef
+                        , "id": id
+                        , "qtde": qtde
+                        , "filial": fili
+                    });
+                    count++;
+                }
+            });
+
+            var data = {
+                grid: JSON.stringify(json)
+                , tipo: 'PROD'
+                , justificativa: $('#jus').val()
+            }
+
+            $('#exampleModal').remove();
+
+            $.ajax({
+                url: '../Estoque/IncluirMovimentacaoEstoque'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    var stringModal = '<div id="modalResultado" class="modal" tabindex="-1" role="dialog">'
+                        + '<div class="modal-dialog" role="document">'
+                        + '<div class="modal-content">'
+                        + '<div class="modal-header">'
+                        + '<h5 class="modal-title">Produtos Alterados</h5>'
+                        + '</div>'
+                        + '<div class="modal-body">'
+                        + '<p>' + r + '</p>'
+                        + '</div>'
+                        + '<div class="modal-footer">'
+                        + '<button type="button" class="btn btn-primary" onclick="window.open(\'../Estoque/MontarTelaInventario\', \'_self\')">Confirmar</button>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>';
+
+                    $('#modalContainer').append(stringModal);
+
+                    $('#modalResultado').modal('show');
+                }
+            });
+        }
+
+        function AtualizaEstoqueIns() {
+            var count = 0;
+            var json = [];
+
+            $('table#tblIns > tbody > tr').each(function (i, e) {
+                var idMef = $(e).find('input[name="idMef"]').val();
+                var id = $(e).find('input[name="id"]').val();
+                var qtde = $(e).find('input[name="qtde"]').val();
+                var fili = $(e).find('input[name="filial"]').val();
+
+                if (qtde > 0) {
+                    json.push({
+                        "idMef": idMef
+                        , "id": id
+                        , "qtde": qtde
+                        , "filial": fili
+                    });
+                    count++;
+                }
+            });
+
+            var data = {
+                grid: JSON.stringify(json)
+                , tipo: 'INS'
+                , justificativa: $('#jus').val()
+            }
+
+            $('#exampleModal').remove();
+
+            $.ajax({
+                url: '../Estoque/IncluirMovimentacaoEstoque'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    var stringModal = '<div id="modalResultado" class="modal" tabindex="-1" role="dialog">'
+                        + '<div class="modal-dialog" role="document">'
+                        + '<div class="modal-content">'
+                        + '<div class="modal-header">'
+                        + '<h5 class="modal-title">Insumos Alterados</h5>'
+                        + '</div>'
+                        + '<div class="modal-body">'
+                        + '<p>' + r + '</p>'
+                        + '</div>'
+                        + '<div class="modal-footer">'
+                        + '<button type="button" class="btn btn-primary" onclick="window.open(\'../Estoque/MontarTelaInventario\', \'_self\')">Confirmar</button>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>';
+
+                    $('#modalContainer').append(stringModal);
+
+                    $('#modalResultado').modal('show');
+                }
+            });
+        }
+
+        function MostraModal() {
+            $.ajax({
+                url: '../Estoque/LimparListas'
+                , type: 'POST'
+            });
+
+            window.location.reload();
+        }
+    </script>
+
+    @*<script type="text/javascript">
+        $(function () {
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+    <script>
+        function FiltrarSubCategoriaProduto(id) {
+            var data = {
+                id: id
+            }
+
+            var objSubCatProduto = $('select#subProd');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Estoque/FiltrarSubCategoriaProduto'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objSubCatProduto.children('option').remove();
+                    objSubCatProduto.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        objSubCatProduto.append('<option value="' + e.value + '">' + e.text + '</option>');
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+
+        function FiltrarCategoriaProduto(id) {
+            var data = {
+                id: id
+            }
+
+            var objCatProduto = $('select#catProd');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Estoque/FiltrarCategoriaProduto'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objCatProduto.children('option').remove();
+                    objCatProduto.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        if (r.length > 1) {
+                            objCatProduto.append('<option value="' + e.value + '">' + e.text + '</option>');
+                        } else {
+                            objCatProduto.append('<option selected="selected" value="' + e.value + '">' + e.text + '</option>');
+                        }
+
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+
+        function FiltrarSubCategoriaInsumo(id) {
+            var data = {
+                id: id
+            }
+
+            var objSubCatInsumo = $('select#subIns');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Estoque/FiltrarSubCategoriaMateria'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objSubCatInsumo.children('option').remove();
+                    objSubCatInsumo.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        objSubCatInsumo.append('<option value="' + e.value + '">' + e.text + '</option>');
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+
+        function FiltrarCategoriaInsumo(id) {
+            var data = {
+                id: id
+            }
+
+            var objCatInsumo = $('select#catIns');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Estoque/FiltrarCategoriaMateria'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objCatInsumo.children('option').remove();
+                    objCatInsumo.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        if (r.length > 1) {
+                            objCatInsumo.append('<option value="' + e.value + '">' + e.text + '</option>');
+                        } else {
+                            objCatInsumo.append('<option selected="selected" value="' + e.value + '">' + e.text + '</option>');
+                        }
+
+                    });
+                }
+            });
+        }
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

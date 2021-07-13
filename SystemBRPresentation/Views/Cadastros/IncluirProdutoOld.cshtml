@@ -1,0 +1,155 @@
+@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.ProdutoViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Produtos</h3> 
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Produto - Inclusão</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                @using (Html.BeginForm("IncluirProduto", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                {
+                    <div class="ibox-content">
+                        @Html.AntiForgeryToken()
+                        @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                        {
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                    @Html.HiddenFor(m => m.PROD_DT_CADASTRO)
+                                    @Html.HiddenFor(m => m.PROD_IN_ATIVO)
+                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                    Categoria*
+                                    @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control" })                            
+                                    @Html.ValidationMessageFor(m => m.CAPR_CD_ID, "",new { @style="color:red" })
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    Filial
+                                    @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control" })                            
+                                    @Html.ValidationMessageFor(m => m.FILI_CD_ID, "",new { @style="color:red" })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                <div class="col-lg-9 col-md-9 col-xs-12">
+                                    Nome*
+                                    @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.PROD_NM_NOME, "",new { @style="color:red" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Unidade
+                                    @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control" })                            
+                                    @Html.ValidationMessageFor(m => m.UNID_CD_ID, "",new { @style="color:red" })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">               
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Quant.Inicial*
+                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_INICIAL, new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_INICIAL, "",new { @style="color:red" })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Quant.Mínima
+                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MINIMA, new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MINIMA, "",new { @style="color:red" })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Avisa Mínima
+                                    <br />
+                                    @Html.CheckBoxFor(m => m.AvisaMinima, new { @class = "checkbox i-checks"})
+                                    @Html.ValidationMessageFor(m => m.AvisaMinima, "",new { @style="color:red" })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    Descrição
+                                    @Html.TextAreaFor(m => m.PROD_DS_DESCRICAO, new { @class = "form-control", style = "width: 910px; height: 100px;", autofocus = true})
+                                    @Html.ValidationMessageFor(m => m.PROD_DS_DESCRICAO, "",new { @style="color:red" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.ButtonActionSubmit(text: "Confirma Inclusão de Produto")
+                            @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseProduto", controller: "Cadastros")
+                        </div>
+                    </div>
+                }
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+
+}
+@section Scripts {
+   
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

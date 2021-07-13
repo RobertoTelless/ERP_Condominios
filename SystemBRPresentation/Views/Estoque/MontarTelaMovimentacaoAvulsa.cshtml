@@ -1,0 +1,506 @@
+﻿@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.MovimentacaoAvulsaGridViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*Titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="limpaModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-title">
+        <h3 class="title">Movimentação de Estoque</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Movimentação de Estoque</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("FiltrarMovimentacaoAvulsa", "Estoque", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                {
+                    <div class="ibox-content">
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Operação
+                                        @Html.DropDownListFor(x => x.MOVMT_IN_OPERACAO, (SelectList)ViewBag.Lista, "Selecionar", new { @class = "form-control", id = "tipoMov", onchange = "ShowEntradaSaida($(this).val())" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Data Inicial
+                                        @Html.TextBoxFor(m => m.MOVMT_DT_MOVIMENTO_INICIAL, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", id = "dataInic" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Data Final
+                                        @Html.TextBoxFor(m => m.MOVMT_DT_MOVIMENTO_FINAL, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", id = "dataFinal" })
+                                    </div>
+                                    @if (ViewBag.Perfil == "ADM")
+                                    {
+                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                            Filial
+                                            @Html.DropDownListFor(x => x.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control" })
+                                        </div>
+                                    }
+                            </div>
+                            <div class="form-group">
+                                <div id="lstEntrada" style="display: none;" class="col-lg-4 col-md-4 col-xs-12">
+                                    Tipo de Entrada
+                                    @Html.DropDownListFor(x => x.MOVMT_IN_TIPO_MOVIMENTO, (SelectList)ViewBag.Entradas, "Selecionar", new { @class = "form-control" })
+                                </div>
+                                <div id="lstSaida" style="display: none;" class="col-lg-4 col-md-4 col-xs-12">
+                                    Tipo de Saída
+                                    @Html.DropDownListFor(x => x.MOVMT_IN_TIPO_MOVIMENTO, (SelectList)ViewBag.Saidas, "Selecionar", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Produto/Insumo
+                                    @Html.DropDownListFor(x => x.ProdutoInsumo, (SelectList)ViewBag.ProdutoInsumo, new { @class = "form-control", onchange = "ShowProdutoInsumo($(this).val())" })
+                                </div>
+                                <div id="lstProd" class="col-lg-6 col-md-6 col-xs-12">
+                                    Produtos
+                                    @Html.DropDownListFor(x => x.PROD_CD_ID, (SelectList)ViewBag.LstProd, "Selecionar", new { @class = "form-control" })
+                                </div>
+                                <div id="lstIns" class="col-lg-6 col-md-6 col-xs-12" style="display: none;">
+                                    Insumos
+                                    @Html.DropDownListFor(x => x.MAPR_CD_ID, (SelectList)ViewBag.LstIns, "Selecionar", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <br />
+                                    @Html.ButtonActionSubmit("Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroMovimentacaoAvulsa")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos - Produtos", controller: "Estoque", action: "MostrarTudoProduto")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos - Insumos", controller: "Estoque", action: "MostrarTudoInsumo")
+                                    @Html.ButtonLinkIndex(text: "Incluir Movimentação", controller: "Estoque", action: "IncluirMovimentacaoAvulsa")
+                                    @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioMovimentacaoAvulsaFiltro")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Movimentações de Estoque</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th style="display: none;"></th>
+                                    <th>Operação</th>
+                                    <th>Origem</th>
+                                    <th>Tipo de Operação</th>
+                                    <th>Data</th>
+                                    <th>Nome</th>
+                                    <th>Filial</th>
+                                    <th>Quantidade Antes</th>
+                                    <th>Quantidade Alterada</th>
+                                    <th>Quantidade Depois</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.ListaMovimento != null)
+                                {
+                                    if (ViewBag.TipoRegistro == 1)
+                                {
+                                    if (ViewBag.ListaMovimento != null && (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_PRODUTO>).Count > 0)
+                                    {
+                                        foreach (var cond in (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_PRODUTO>))
+                                    {
+                                        <tr>
+                                            <td style="display: none;">
+                                                <input type="hidden" name="ativo" value="@cond.MOEP_IN_ATIVO" />
+                                            </td>
+                                            @if (cond.MOEP_IN_OPERACAO == 1)
+                                            {
+                                                <td>Entrada</td>
+                                            }
+                                            else if (cond.MOEP_IN_OPERACAO == 2)
+                                            {
+                                                <td>Saída</td>
+                                            }
+                                            else if (cond.MOEP_IN_OPERACAO == 4)
+                                            {
+                                                <td>Tranferência entre filiais</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Manual</td>
+                                            }
+                                            @if (cond.MOEP_IN_CHAVE_ORIGEM == 1)
+                                            {
+                                                <td>Lançamento Avulso</td>
+                                            }
+                                            else if (cond.MOEP_IN_CHAVE_ORIGEM == 2)
+                                            {
+                                                <td>Inventário</td>
+                                            }
+                                            else if (cond.MOEP_IN_CHAVE_ORIGEM == 3)
+                                            {
+                                                <td>Compra</td>
+                                            }
+                                            else if (cond.MOEP_IN_CHAVE_ORIGEM == 4)
+                                            {
+                                                <td>Venda</td>
+                                            }
+                                            else if (cond.MOEP_IN_CHAVE_ORIGEM == 5)
+                                            {
+                                                <td>Compra Expressa</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Manual</td>
+                                            }
+                                            <td>@cond.MOEP_IN_ORIGEM</td>
+                                            <td>@cond.MOEP_DT_MOVIMENTO.ToShortDateString()</td>
+                                            <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                            @if (cond.FILIAL != null)
+                                            {
+                                                <td>@cond.FILIAL.FILI_NM_NOME</td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
+                                            <td>@cond.MOEP_QN_ANTES</td>
+                                            <td>@cond.MOEP_QN_ALTERADA</td>
+                                            <td>@cond.MOEP_QN_DEPOIS</td>
+                                            <td class="td-one-action">
+                                                @if (cond.MOEP_IN_ATIVO == 1)
+                                                {
+                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Estoque/ExcluirMovimentoProduto/@cond.MOEP_CD_ID')" title="Desativar"></span>
+                                                    @*@Html.TableLinkDetails(cond.MOEP_CD_ID, "ExcluirMovimentoProduto", "fa-trash-o", "Desativar")*@
+                                                }
+                                                else
+                                                {
+                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Estoque/ReativarMovimentoProduto/@cond.MOEP_CD_ID')" title="Reativar"></span>
+                                                    @*@Html.TableLinkDetails(cond.MOEP_CD_ID, "ReativarMovimentoProduto", "fa-refresh", "Reativar")*@
+                                                }
+                                            </td>
+                                        </tr>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (ViewBag.ListaMovimento != null && (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_MATERIA_PRIMA>).Count > 0)
+                                    {
+                                        foreach (var cond in (ViewBag.ListaMovimento as List<EntitiesServices.Model.MOVIMENTO_ESTOQUE_MATERIA_PRIMA>))
+                                    {
+                                        <tr>
+                                            @if (cond.MOEM_IN_OPERACAO == 1)
+                                            {
+                                                <td>Entrada</td>
+                                            }
+                                            else if (cond.MOEM_IN_OPERACAO == 2)
+                                            {
+                                                <td>Saída</td>
+                                            }
+                                            else if (cond.MOEM_IN_OPERACAO == 2)
+                                            {
+                                                <td>Tranferência entre filiais</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Manual</td>
+                                            }
+                                            @if (cond.MOEM_IN_CHAVE_ORIGEM == 1)
+                                            {
+                                                <td>Lançamento Avulso</td>
+                                            }
+                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 2)
+                                            {
+                                                <td>Inventário</td>
+                                            }
+                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 3)
+                                            {
+                                                <td>Compra</td>
+                                            }
+                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 4)
+                                            {
+                                                <td>Venda</td>
+                                            }
+                                            else if (cond.MOEM_IN_CHAVE_ORIGEM == 5)
+                                            {
+                                                <td>Compra Expressa</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Manual</td>
+                                            }
+                                            <td>@cond.MOEM_NM_ORIGEM</td>
+                                            <td>@cond.MOEM_DT_MOVIMENTO.ToShortDateString()</td>
+                                            <td>@cond.MATERIA_PRIMA.MAPR_NM_NOME</td>
+                                            @if (cond.FILIAL != null)
+                                            {
+                                                <td>@cond.FILIAL.FILI_NM_NOME</td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
+                                            <td>@cond.MOEM_QN_ANTES</td>
+                                            <td>@cond.MOEM_QN_ALTERADA</td>
+                                            <td>@cond.MOEM_QN_DEPOIS</td>
+                                            <td class="td-one-action">
+                                                @if (cond.MOEM_IN_ATIVO == 1)
+                                                {
+                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Estoque/ExcluirMovimentoInsumo/@cond.MOEM_CD_ID')" title="Desativar"></span>
+                                                    @*@Html.TableLinkDetails(cond.MOEM_CD_ID, "ExcluirMovimentoInsumo", "fa-trash-o", "Desativar")*@
+                                                }
+                                                else
+                                                {
+                                                    <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Estoque/ReativarMovimentoInsumo/@cond.MOEM_CD_ID')" title="Reativar"></span>
+                                                    @*@Html.TableLinkDetails(cond.MOEM_CD_ID, "ReativarMovimentoInsumo", "fa-refresh", "Reativar")*@
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                    }
+                                }
+                                }
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        $(function () {
+            $('input[name=ativo]').each(function (i, e) {
+                if ($(e).val() == 0) {
+                    $(e).parent().parent().css('background-color', '#ffc7c7');
+                    //$(e).parent().parent().css('color', 'black');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            limpaModal();
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão movimento?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            limpaModal();
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de movimento?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+
+        function changeList(val) {
+            if (val == 1) {
+                $('#lstProd').show();
+                $('#lstIns').hide();
+            } else {
+                $('#lstIns').show();
+                $('#lstProd').hide();
+            }
+        }
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });</script>
+
+    @*<script type="text/javascript">
+        $(function () {
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+            });
+        });
+    </script>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });</script>
+
+    <script>
+        function ShowEntradaSaida(val) {
+            if (val == 1) {
+                $('#lstEntrada').show();
+                $('#lstSaida').hide();
+            } else if (val == 2) {
+                $('#lstEntrada').hide();
+                $('#lstSaida').show();
+            } else {
+                $('#lstEntrada').hide();
+                $('#lstSaida').hide();
+            }
+        }
+
+        $(function () {
+            ShowEntradaSaida($('#tipoMov').val());
+        });
+    </script>
+
+    <script>
+        function ShowProdutoInsumo(val) {
+            if (val == 1) {
+                $('#lstProd').show();
+                $('#lstIns').hide();
+            } else {
+                $('#lstProd').hide();
+                $('#lstIns').show();
+            }
+        }
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+<script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+</script>}
+

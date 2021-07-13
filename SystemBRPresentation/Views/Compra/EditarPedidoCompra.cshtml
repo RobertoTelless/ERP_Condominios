@@ -1,0 +1,998 @@
+﻿@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.PedidoCompraViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Pedidos de Compra</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaPedidoCompra", "Compra")">Pedidos de Compra</a>
+            </li>
+            <li class="active">
+                <strong>Pedidos de Compra - Consulta & Edição</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    @*INDICADORES*@
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="widget style1 lazur-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-calendar fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h3 class="font-normal">@Model.PECO_DT_DATA.ToShortDateString()</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="widget style1 navy-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-gears fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        @if (Model.PECO_IN_STATUS == 1)
+                        {
+                    <h3 class="font-normal">Para Cotação</h3> }
+                                else if (Model.PECO_IN_STATUS == 2)
+                                {
+                    <h3 class="font-normal">Em Cotação</h3> }
+                                else if (Model.PECO_IN_STATUS == 3)
+                                {
+                    <h3 class="font-normal">Para Aprovação</h3> }
+                                else if (Model.PECO_IN_STATUS == 4)
+                                {
+                    <h3 class="font-normal">Aprovado</h3> }
+                                else if (Model.PECO_IN_STATUS == 5)
+                                {
+                    <h3 class="font-normal">Para Receber</h3> }
+                                else if (Model.PECO_IN_STATUS == 6)
+                                {
+                                    <h3 class="font-normal">Em Recebimento</h3>
+                                }
+                                else if (Model.PECO_IN_STATUS == 7)
+                                {
+                                    <h3 class="font-normal">Recebido</h3>
+                                }
+                                else if (Model.PECO_IN_STATUS == 8)
+                                {
+                    <h3 class="font-normal">Cancelado</h3>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*TABS - PRINCIPAL*@
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Pedidos de Compra - Edição</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="form-group">
+                                <br />
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
+                            </div>
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Itens do Pedido</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Acompanhamento</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Anexos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Observações</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarPedidoCompra", "Compra", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.PECO_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.PECO_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                    @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.PECO_CD_ID)
+                                                    @Html.HiddenFor(m => m.PECO_DS_JUSTIFICATIVA)
+                                                    @Html.HiddenFor(m => m.PECO_DT_ALTERACAO)
+                                                    @Html.HiddenFor(m => m.PECO_DT_APROVACAO)
+                                                    @Html.HiddenFor(m => m.PECO_DT_CANCELAMENTO)
+                                                    @Html.HiddenFor(m => m.PECO_DT_FINAL)
+                                                    @Html.HiddenFor(m => m.PECO_NR_NOTA_FISCAL)
+                                                    @Html.HiddenFor(m => m.PECO_TX_OBSERVACAO)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Nome*
+                                                        @Html.TextBoxFor(m => m.PECO_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PECO_NM_NOME, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Filial
+                                                        @Html.TextBoxFor(m => m.FILIAL.FILI_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Autor
+                                                        @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                    </div>
+                                                    @*<div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Fornecedor*
+                                                        @Html.DropDownListFor(m => m.FORN_CD_ID, (SelectList)ViewBag.Fornecedores, "Selecionar", new { @class = "form-control", @id = "forn" })
+                                                    </div>*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Número
+                                                        @Html.TextBoxFor(m => m.PECO_NR_NUMERO, new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Data*
+                                                        @Html.TextBoxFor(m => m.PECO_DT_DATA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PECO_DT_DATA, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Data Prevista*
+                                                        @Html.TextBoxFor(m => m.PECO_DT_PREVISTA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PECO_DT_PREVISTA, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Valor Total (R$)
+                                                        @Html.TextBoxFor(m => m.VALOR_TOTAL, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição
+                                                    @Html.TextAreaFor(m => m.PECO_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PECO_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Pedido", htmlAttributes: new { id = "basictoast" })
+                                            @*@Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")*@
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Itens do pedido*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("IncluirItemPedidoCompra", "Compra", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <h4>Você poderá escolher entre comprar um PRODUTO ou um INSUMO, no mesmo pedido</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @Html.HiddenFor(m => m.PECO_CD_ID)
+                                                    Tipo de Compra*
+                                                    @Html.DropDownList("ITPC_IN_TIPO", (SelectList)ViewBag.Tipo, "Selecionar", new { @class = "form-control", @id = "tipo", onchange = "DesativaInsProd()" })
+                                                </div>
+                                                <div id="prodContainer" class="col-lg-3 col-md-3 col-xs-12">
+                                                    Produto*
+                                                    @Html.DropDownList("PROD_CD_ID", (SelectList)ViewBag.Produtos, "Selecionar", new { @class = "form-control", @id = "prod", onchange = "DesativaInsumo()" })
+                                                </div>
+                                                <div id="insContainer" class="col-lg-3 col-md-3 col-xs-12">
+                                                    Insumo*
+                                                    @Html.DropDownList("MAPR_CD_ID", (SelectList)ViewBag.Insumos, "Selecionar", new { @class = "form-control", @id = "ins", onchange = "DesativaProduto()" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Quantidade*
+                                                    @Html.TextBox("ITPC_QN_QUANTIDADE", null, new { @class = "form-control", autofocus = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Observação
+                                                    @Html.TextArea("ITPC_TX_OBSERVACOES", null,  new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Inclusão de Item de Pedido", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                    <div class="row">                                          
+                                        <hr />
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Itens do Pedido</h4>
+                                                <br />
+                                                @if (Model.ITEM_PEDIDO_COMPRA != null)
+                                                {
+                                                    if (Model.ITEM_PEDIDO_COMPRA.Count > 0)
+                                                {
+                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead style ="background-color:lightsteelblue">
+                                                            <tr>
+                                                                <th>Produto</th>
+                                                                <th>Modelo</th>
+                                                                <th>Marca</th>
+                                                                <th>Fabricante</th>
+                                                                <th>Unidade</th>
+                                                                <th>Quantidade</th>
+                                                                <th>Quant.Revisada</th>
+                                                                <th>Custo Unitário (R$)</th>
+                                                                <th class="td-one-action">Ações</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (Model.ITEM_PEDIDO_COMPRA))
+                                                            {
+                                                                <tr>
+                                                                    @if (cond.PRODUTO != null || cond.MATERIA_PRIMA != null)
+                                                                    {
+                                                                        if (cond.PRODUTO == null)
+                                                                    {
+                                                                        //If que serve para desabilitar insumos da lista
+                                                                        if (cond.ITPC_IN_ATIVO == 1)
+                                                                        {
+                                                                            <td style="display: none;"><input type="text" name="codMateria" value="@cond.MAPR_CD_ID" /></td>
+                                                                        }
+                                                                        <td>@cond.MATERIA_PRIMA.MAPR_NM_NOME</td>
+                                                                        <td>-</td>
+                                                                        <td>-</td>
+                                                                        <td>-</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        //If que serve para desabilitar produtos da lista
+                                                                        if (cond.ITPC_IN_ATIVO == 1)
+                                                                        {
+                                                                            <td style="display: none;"><input type="text" name="codProd" value="@cond.PROD_CD_ID" /></td>
+                                                                        }
+                                                                        <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                        <td>@cond.PRODUTO.PROD_NM_MODELO</td>
+                                                                        <td>@cond.PRODUTO.PROD_NM_MARCA</td>
+                                                                        <td>@cond.PRODUTO.PROD_NM_FABRICANTE</td>
+                                                                    }
+                                                                    if (cond.UNIDADE != null)
+                                                                    {
+                                                                        <td>@cond.UNIDADE.UNID_NM_NOME</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>-</td>
+                                                                    }
+                                                                    <td>@cond.ITPC_QN_QUANTIDADE</td>
+                                                                    if (cond.ITPC_NR_QUANTIDADE_REVISADA != null)
+	                                                                {
+                                                                        <td>@cond.ITPC_NR_QUANTIDADE_REVISADA</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>-</td>
+                                                                    }
+                                                                    if (cond.ITPC_VL_PRECO_SELECIONADO != null)
+	                                                                {
+                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.ITPC_VL_PRECO_SELECIONADO.Value)</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>-</td>
+                                                                    }
+                                                                    <td class="td-one-action">
+                                                                        @Html.TableLinkDetails(cond.ITPC_CD_ID, "EditarItemPedidoCompra","fa-edit", "Editar/Consultar")
+                                                                        @if (cond.ITPC_IN_ATIVO == 1)
+	                                                                    {
+                                                                            @Html.TableLinkDetails(cond.ITPC_CD_ID, "ExcluirItemPedidoCompra","fa-trash-o", "Desativar")
+                                                                        }
+                                                                        else
+                                                                        {   
+                                                                            @Html.TableLinkDetails(cond.ITPC_CD_ID, "ReativarItemPedidoCompra","fa-refresh", "Reativar")
+                                                                        }
+                                                                    </td>
+                                                                    }
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Novo Item", action: "IncluirItemPedidoCompra", controller: "Compra")
+                                    </div>*@
+                                </div>
+                            </div>
+
+                            @*Acompanhamentos*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4>Acompanhamentos:</h4>
+                                            @if (Model.PEDIDO_COMPRA_ACOMPANHAMENTO.Count > 0)
+                                            {
+                                                foreach (var item in (Model.PEDIDO_COMPRA_ACOMPANHAMENTO).OrderByDescending(a => a.PCAT_DT_ACOMPANHAMENTO))
+                                                {
+                                                    <div class="social-feed-box">
+                                                        <div class="social-avatar">
+                                                            <a href="" class="pull-left">
+                                                                <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 94px; max-width: 90px;">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <a href="#">
+                                                                    @item.USUARIO.USUA_NM_NOME
+                                                                </a>
+                                                                <small class="text-muted">@item.PCAT_DT_ACOMPANHAMENTO.Value.ToLongDateString() @item.PCAT_DT_ACOMPANHAMENTO.Value.ToShortTimeString()</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="social-body">
+                                                            <p>
+                                                                @item.PCAT_DS_ACOMPANHAMENTO
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Acompanhamento", action: "IncluirAcompanhamento", controller: "Compra", routeValues: new { id = Model.PECO_CD_ID })
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Anexos do Pedido</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFilePedidoCompra", "Compra", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.PEDIDO_COMPRA_ANEXO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style ="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.PEDIDO_COMPRA_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.PECA_NM_TITULO</td>
+                                                                            <td>@cond.PECA_DT_ANEXO.ToShortDateString()</td>
+                                                                            @if (cond.PECA_IN_TIPO == 1)
+	                                                                        {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.PECA_IN_TIPO == 1)
+	                                                                            {
+                                                                                    @Html.TableLinkDetails(cond.PECA_CD_ID, "VerAnexoPedidoCompra","fa-camera", "Visualizar")
+	                                                                            }
+                                                                                @if (cond.PECA_IN_TIPO == 3)
+                                                                                {
+                                                                                    <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.PECA_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
+                                                                                }
+                                                                                @Html.TableLinkDetails(cond.PECA_CD_ID, "DownloadPedidoCompra","fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        <div cçass="form-group">
+                                                            <br />
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning"/>
+                                                                <input style="float: left;" type="submit" value="Incluir Anexo do Pedido" class="btn btn-sm btn-success" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Observações*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarPedidoCompra", "Compra", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.PECO_CD_ID)
+                                                    @Html.HiddenFor(m => m.PECO_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.PECO_DS_JUSTIFICATIVA)
+                                                    @Html.HiddenFor(m => m.PECO_DT_ALTERACAO)
+                                                    @Html.HiddenFor(m => m.PECO_DT_APROVACAO)
+                                                    @Html.HiddenFor(m => m.PECO_DT_CANCELAMENTO)
+                                                    @Html.HiddenFor(m => m.PECO_DT_DATA)
+                                                    @Html.HiddenFor(m => m.PECO_DT_FINAL)
+                                                    @Html.HiddenFor(m => m.PECO_DT_PREVISTA)
+                                                    @Html.HiddenFor(m => m.PECO_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.PECO_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.PECO_NM_NOME)
+                                                    @Html.HiddenFor(m => m.PECO_NR_NOTA_FISCAL)
+                                                    @Html.HiddenFor(m => m.PECO_NR_NUMERO)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.PECO_TX_OBSERVACAO, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true})
+                                                    @Html.ValidationMessageFor(m => m.PECO_TX_OBSERVACAO, "",new { @style="color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição do Pedido", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <br />
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMontarTelaPedidoCompra", controller: "Compra")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/sweetAlert")
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+     <script>
+        $(function () {
+            $('#prod').select2();
+            $('#ins').select2();
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $('input[name=codProd]').each(function (i, e) {
+                $('select#prod>option[value=' + $(e).val() + ']').prop('disabled', true);
+                $('select#prod>option[value=' + $(e).val() + ']').css('background', 'lightgray');
+            });
+
+            $('input[name=codMateria]').each(function (i, e) {
+                $('select#ins>option[value=' + $(e).val() + ']').prop('disabled', true);
+                $('select#ins>option[value=' + $(e).val() + ']').css('background', 'lightgray');
+            });
+        });
+    </script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 5,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+    </script>*@
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(".touchspin1").TouchSpin({
+            min: 1,
+            max: 5,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+    <script type="text/javascript">
+        $(".touchspin2").TouchSpin({
+            min: 0,
+            max: 1000000000,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PROD_IN_TIPO_EMBALAGEM').change(function () {
+                var ddlValue = $(this).val();
+
+                if (ddlValue == "1")
+                {
+                    $('#largura').show();
+                    $('#comprimento').show();
+                    $('#altura').hide();
+                    $('#diametro').hide();
+                }
+                else if (ddlValue == "2")
+                {
+                    $('#largura').hide();
+                    $('#comprimento').show();
+                    $('#altura').show();
+                    $('#diametro').hide();
+                }
+                else if (ddlValue == "3")
+                {
+                    $('#largura').hide();
+                    $('#comprimento').show();
+                    $('#altura').hide();
+                    $('#diametro').show();
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ddlValue = $('#PROD_IN_TIPO_EMBALAGEM').val();
+
+            if (ddlValue == "1")
+            {
+                $('#largura').show();
+                $('#comprimento').show();
+                $('#altura').hide();
+                $('#diametro').hide();
+            }
+            else if (ddlValue == "2")
+            {
+                $('#largura').hide();
+                $('#comprimento').show();
+                $('#altura').show();
+                $('#diametro').hide();
+            }
+            else if (ddlValue == "3")
+            {
+                $('#largura').hide();
+                $('#comprimento').show();
+                $('#altura').hide();
+                $('#diametro').show();
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.demo3').click(function () {
+                swal({
+                    title: "Confirma a duplicação do produto?",
+                    text: "A tela de edição deste produto será aberta logo após a confirmação",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar",
+                    cancelButtonText: "Cancelar",
+                   closeOnConfirm: false
+                }, function () {
+
+
+                    swal("Duplicado!", "Uma cópia deste produto foi criada", "success");
+                });
+            });
+
+            $('.demo2').click(function () {
+                swal({
+                    title: "Confirma a duplicação do produto?",
+                    text: "A tela de edição deste produto será aberta logo após a confirmação",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar",
+                    cancelButtonText: "Cancelar",
+                   closeOnConfirm: false
+                }, function () {
+                    swal("Duplicado!", "Uma cópia deste produto foi criada", "success");
+                });
+            });
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#CAPR_CD_ID").change(function () {
+
+                var cat = $("#CAPR_CD_ID").val();
+                $("#SCPR_CD_ID").empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetSubcategorias", "Cadastros")',
+                    data: { cat: cat },
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (index, value) {
+                            $("#SCPR_CD_ID").append('<option value="'
+                                                 + value.SCPR_CD_ID + '">'
+                                                 + value.SCPR_NM_NOME + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Falha na carga da lista.' + ex);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {   
+
+        $('#CAPR_CD_ID').change(function () {
+            var cat = $("#CAPR_CD_ID").val();
+            $("#SCPR_CD_ID").empty();
+
+            $.ajax({
+                url: '@Url.Action("GetSubcategorias", "Cadastros")',
+                type: 'POST',
+                data: { cat: cat },
+                datatype: 'json',
+                success: function (data) {
+                    var options = '';
+                    var category = $('#SCPR_CD_ID');
+                    $.each(data, function () {
+                        options += '<option value="' + this.SCPR_CD_ID + '">' + this.SCPR_NM_NOME + '</option>';
+                    });
+
+                    $('#SCPR_CD_ID').append(options);
+                },
+            });
+        });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options = "
+                        + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    <script>
+        function DesativaInsumo() {
+            var optProd = $('#prod option:selected').val();
+
+            $.ajax({
+                url: '../Compra/GetCustoProduto'
+                , type: 'POST'
+                , data: {
+                    id: $('#prod option:selected').val()
+                }
+                , async: false
+                , success: function (r) {
+                    $('#custo').val(r.custo == null ? "-" : r.custo);
+                    $('#unidade').val(r.unidade == null ? "-" : r.unidade);
+                    $('#markup').val(r.markup == null ? "-" : r.markup);
+                }
+            });
+
+            if (optProd != "") {
+                $('#insContainer').css("display", "none");
+            } else {
+                $('#insContainer').css("display", "block");
+            }
+        }
+
+        function DesativaProduto() {
+            var optIns = $('#ins option:selected').val();
+
+            $.ajax({
+                url: '../Compra/GetCustoInsumo'
+                , type: 'POST'
+                , data: {
+                    id: $('#ins option:selected').val()
+                }
+                , async: false
+                , success: function (r) {
+                    $('#custo').val(r.custo == null ? "-" : r.custo);
+                    $('#unidade').val(r.unidade == null ? "-" : r.unidade);
+                    $('#markup').val("-");
+                }
+            });
+
+            if (optIns != "") {
+                $('#prodContainer').css("display", "none");
+            } else {
+                $('#prodContainer').css("display", "block");
+            }
+        }
+
+        function DesativaInsProd() {
+            var optTipo = $('#tipo option:selected').val();
+
+            if (optTipo != "") {
+                if (optTipo == 1) {
+                    $('#insContainer').css("display", "none");
+                    $('#prodContainer').css("display", "block");
+                    $("#ins").val($("#ins option:first").val());
+                } else {
+                    $('#prodContainer').css("display", "none");
+                    $('#insContainer').css("display", "block");
+                    $("#prod").val($("#prod option:first").val());
+                }
+            } else {
+                $('#prodContainer').css("display", "block");
+                $('#insContainer').css("display", "block");
+            }
+        }
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

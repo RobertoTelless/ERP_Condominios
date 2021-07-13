@@ -1,0 +1,555 @@
+@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.TarefaViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Tarefas</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaTarefa", "Cadastros")">Tarefas</a>
+            </li>
+            <li class="active">
+                <strong>Tarefas - Consulta & Edição - Compartilhada</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="widget style1 red-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h3 class="font-normal">Prevista: @Model.TARE_DT_ESTIMADA.Value.ToShortDateString()</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="widget style1 red-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h3 class="font-normal">@ViewBag.Status</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Tarefas - Edição - Compartilhada</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Compartilhamento</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Status e Encerramento</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Andamento</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.TARE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.TARE_CD_ID)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_1)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_2)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_3)
+                                                    @Html.HiddenFor(m => m.TARE_DT_REALIZADA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_AVISA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.TARE_TX_OBSERVACOES)                                                    
+                                                    Tipo de Tarefa*
+                                                    @Html.TextBoxFor(m => m.TIPO_TAREFA.TITR_NM_NOME, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data de Início*
+                                                    @Html.TextBoxFor(m => m.TARE_DT_CADASTRO, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data Prevista*
+                                                    @Html.TextBoxFor(m => m.TARE_DT_ESTIMADA, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                @*<div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Prioridade*
+                                                    @Html.TextBoxFor(m => m.TARE_IN_PRIORIDADE, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>*@
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Título*
+                                                    @Html.TextBoxFor(m => m.TARE_NM_TITULO, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Local
+                                                    @Html.TextBoxFor(m => m.TARE_NM_LOCAL, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Descrição
+                                                    @Html.TextAreaFor(m => m.TARE_DS_DESCRICAO, new { @class = "form-control", @readonly="readonly", style = "width: 1040px; height: 400px;", autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Anexos da Tarefa</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.TAREFA_ANEXO.Count > 0)
+                                                        {
+                                                            <table style ="background-color:lightsteelblue" class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.TAREFA_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.TAAN_NM_TITULO</td>
+                                                                            <td>@cond.TAAN_DT_ANEXO.Value.ToShortDateString()</td>
+                                                                            @if (cond.TAAN_IN_TIPO == 1)
+	                                                                        {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.TAAN_IN_ATIVO == 1)
+	                                                                            {
+                                                                                    @Html.TableLinkDetails(cond.TAAN_CD_ID, "VerAnexoTarefa","fa-camera", "Visualizar")
+	                                                                            }
+                                                                                @Html.TableLinkDetails(cond.TAAN_CD_ID, "DownloadTarefa","fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Compartilhamento*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.TARE_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.TARE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.TARE_DT_ESTIMADA)
+                                                    @Html.HiddenFor(m => m.TARE_DT_REALIZADA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.TARE_IN_AVISA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_PRIORIDADE)
+                                                    @Html.HiddenFor(m => m.TARE_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.TARE_NM_LOCAL)
+                                                    @Html.HiddenFor(m => m.TARE_NM_TITULO)
+                                                    @Html.HiddenFor(m => m.TARE_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.TITR_CD_ID)
+                                                    @Html.HiddenFor(m => m.TARE_CD_ID)
+                                                    Usuário
+                                                    @Html.TextBoxFor(m => m.USUARIO1.USUA_NM_NOME, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Usuário
+                                                    @Html.TextBoxFor(m => m.USUARIO2.USUA_NM_NOME, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Usuário
+                                                    @Html.TextBoxFor(m => m.USUARIO3.USUA_NM_NOME, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    }
+                                </div>
+                            </div>
+
+                            @*Status e Encerramento*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @Html.HiddenFor(m => m.TARE_CD_ID)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_1)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_2)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_3)
+                                                    @Html.HiddenFor(m => m.TARE_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.TARE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.TARE_DT_ESTIMADA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.TARE_IN_AVISA)
+                                                    @Html.HiddenFor(m => m.TARE_NM_LOCAL)
+                                                    @Html.HiddenFor(m => m.TARE_NM_TITULO)
+                                                    @Html.HiddenFor(m => m.TARE_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.TITR_CD_ID)
+                                                    Data de Início
+                                                    @Html.TextBoxFor(m => m.TARE_DT_CADASTRO, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data Prevista
+                                                    @Html.TextBoxFor(m => m.TARE_DT_ESTIMADA, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>                                              
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data de Encerramento
+                                                    @Html.TextBoxFor(m => m.TARE_DT_REALIZADA, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>                                              
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Observações*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.TARE_CD_ID)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_1)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_2)
+                                                    @Html.HiddenFor(m => m.TARE_CD_USUA_3)
+                                                    @Html.HiddenFor(m => m.TARE_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.TARE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.TARE_DT_ESTIMADA)
+                                                    @Html.HiddenFor(m => m.TARE_DT_REALIZADA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.TARE_IN_AVISA)
+                                                    @Html.HiddenFor(m => m.TARE_IN_PRIORIDADE)
+                                                    @Html.HiddenFor(m => m.TARE_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.TARE_NM_LOCAL)
+                                                    @Html.HiddenFor(m => m.TARE_NM_TITULO)
+                                                    @Html.HiddenFor(m => m.TITR_CD_ID)
+                                                    @Html.HiddenFor(m => m.TAREFA_ANEXO)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.TARE_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1040px; height: 800px;", autofocus = true})
+                                                    @Html.ValidationMessageFor(m => m.TARE_TX_OBSERVACOES, "",new { @style="color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição de Tarefa", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTarefa", controller: "Tarefa")
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    @Scripts.Render("~/plugins/sweetAlert")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+   
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function() {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+              if ( this.value == '2')
+              {
+                    $("#PF").hide();
+                    $("#PJ").show();
+              }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+              else if( this.value == '1')
+              {
+                  $("#PJ").hide();
+                  $("#PF").show();
+              }
+              else if( this.value == '3')
+              {
+                    $("#PF").hide();
+                    $("#PJ").show();
+              }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else{
+                     $("#PJ").hide();
+                     $("#PF").hide();
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(".touchspin2").TouchSpin({
+            min: 1,
+            max: 5,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options = "
+                        + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

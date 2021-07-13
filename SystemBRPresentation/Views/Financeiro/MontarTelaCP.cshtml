@@ -1,0 +1,415 @@
+@using Presentation.Extensions
+@using CrossCutting;
+@using EntitiesServices.Work_Classes;
+@model EntitiesServices.Model.CONTA_PAGAR
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-title">
+        <h3 class="title">Contas a Pagar</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarAdmin", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Contas a Pagar</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Contas a Pagar</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@ViewBag.CPS</h1>
+                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                    <small>Lançamentos Cadastrados</small>
+                </div>
+            </div>
+        </div>
+        @if (ViewBag.Perfil == "ADM")
+        {
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Contas a Pagar</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.Pago</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Pagamentos no Mês</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Financeiro", action: "VerPagamentosMes", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Contas a Pagar</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.APagar</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>A Pagar no Mês</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Financeiro", action: "VerAPagarMes", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Contas a Pagar</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.Atrasos</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Lançamentos em Atraso</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Financeiro", action: "VerLancamentosAtrasoCP", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("FiltrarCP", "Financeiro", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                Fornecedor
+                                @Html.DropDownListFor(m => m.FORN_CD_ID, (SelectList)ViewBag.Forn, "Selecionar", new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                Data do Lançamento
+                                @Html.TextBoxFor(m => m.CAPA_DT_LANCAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-12">
+                                Descrição (Histórico)
+                                @Html.TextBoxFor(m => m.CAPA_DS_DESCRICAO, new { @class = "form-control", @id = "cpf", autofocus = true })
+                            </div>
+                        </div>
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                @Html.ButtonActionSubmit(text: "Filtrar")
+                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Financeiro", action: "RetirarFiltroCP")
+                                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Financeiro", action: "MostrarTudoCP")
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                @Html.ButtonLinkIndex(text: "Novo Lançamento", controller: "Financeiro", action: "IncluirCP")
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Financeiro", action: "Voltar")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "Financeiro", action: "VoltarDashboard")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Contas a Pagar</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        @if ((ViewBag.Listas as List<EntitiesServices.Model.CONTA_PAGAR>).Count > 0)
+                        {
+                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Fornecedor</th>
+                                        <th>Valor</th>
+                                        <th>Descrição</th>
+                                        <th>Vencimento</th>
+                                        <th>Saldo</th>
+                                        <th></th>
+                                        <th>Tags</th>
+                                        <th class="td-one-action">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.CONTA_PAGAR>))
+                                    {
+                                        <tr>
+                                            <td>@cond.FORNECEDOR.FORN_NM_NOME</td>
+                                            <td>@cond.CAPA_VL_VALOR</td>
+                                            <td>@cond.CAPA_DS_DESCRICAO</td>
+                                            <td>@cond.CAPA_DT_VENCIMENTO.Value.ToShortDateString()</td>
+                                            <td>@cond.CAPA_VL_SALDO</td>
+                                            @if (cond.CAPA_IN_LIQUIDADA == 1)
+                                            {
+                                                <td><img src="~/Images/gallery/Rec_Sim.png" style="width: auto; height: auto; max-height: 30px; max-width: 25px;"></td>
+                                            }
+                                            else if (cond.CAPA_IN_PAGA_PARCIAL == 1)
+                                            {
+                                                <td><img src="~/Images/gallery/Rec_Parc.png" style="width: auto; height: auto; max-height: 30px; max-width: 25px;"></td>
+                                            }
+                                            else if (cond.CAPA_IN_LIQUIDADA == 0)
+                                            {
+                                                <td><img src="~/Images/gallery/Rec_Nao.png" style="width: auto; height: auto; max-height: 30px; max-width: 25px;"></td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+                                            @if (cond.CONTA_PAGAR_TAG.Count > 0)
+                                            {
+                                                <td>
+                                                    @foreach (var item in (cond.CONTA_PAGAR_TAG))
+                                                    {
+                                                        if (item.TIPO_TAG.TITA_IN_TIPO == 1)
+                                                        {
+                                                            <span class="label label-primary">@item.TIPO_TAG.TITA_NM_NOME</span>
+                                                        }
+                                                        if (item.TIPO_TAG.TITA_IN_TIPO == 2)
+                                                        {
+                                                            <span class="label label-warning">@item.TIPO_TAG.TITA_NM_NOME</span>
+                                                        }
+                                                        if (item.TIPO_TAG.TITA_IN_TIPO == 3)
+                                                        {
+                                                            <span class="label label-danger">@item.TIPO_TAG.TITA_NM_NOME</span>
+                                                        }
+                                                        if (item.TIPO_TAG.TITA_IN_TIPO == 4)
+                                                        {
+                                                            <span class="label label-success">@item.TIPO_TAG.TITA_NM_NOME</span>
+                                                        }
+                                                    }
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
+                                            <td class="td-one-action">
+                                                @Html.TableLinkDetails(cond.CAPA_CD_ID, "VerCP", "fa-search", "Consultar Lançamento")
+                                                @if (ViewBag.Perfil == "ADM" & cond.CAPA_IN_LIQUIDADA == 0)
+                                                {
+                                                    @Html.TableLinkDetails(cond.CAPA_CD_ID, "EditarCP", "fa-edit", "Editar Lançamento")
+                                                }
+                                                @if (ViewBag.Perfil == "ADM" & cond.CAPA_IN_LIQUIDADA == 0 & cond.CAPA_IN_PARCELADA == 0)
+                                                {
+                                                    @Html.TableLinkDetails(cond.CAPA_CD_ID, "LiquidarCP", "fa-check", "Liquidar Lançamento")
+                                                }
+                                                @if (cond.CAPA_IN_LIQUIDADA == 0)
+                                                {
+                                                    if (cond.CAPA_IN_ATIVO == 1)
+                                                    {
+                                                        <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Financeiro/ExcluirCP/@cond.CAPA_CD_ID')" title="Excluir"></span>
+                                                        @*@Html.TableLinkDetails(cond.CAPA_CD_ID, "ExcluirCP", "fa-trash-o", "Excluir Lançamento")*@
+                                                    }
+                                                    else
+                                                    {
+                                                        <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Financeiro/ReativarCP/@cond.CAPA_CD_ID')" title="Reativar"></span>
+                                                        @*@Html.TableLinkDetails(cond.CAPA_CD_ID, "ReativarCP", "fa-refresh", "Reativar Lançamento")*@
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
+
+@section Scripts {
+
+    
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        $(function () {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        });
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de conta?');
+            $('#modal').find('.modal-title').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de conta?');
+            $('#modal').find('.modal-title').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

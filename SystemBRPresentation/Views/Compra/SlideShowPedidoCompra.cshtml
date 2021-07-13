@@ -1,0 +1,207 @@
+@using Presentation.Extensions
+@using CrossCutting;
+@model SystemBRPresentation.ViewModels.PedidoCompraViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Pedidos de Compra</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarAdmin", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaPedidoCompra", "Compra")">Pedidos de Compra</a>
+            </li>
+            <li>
+                <a href="@Url.Action("EditarPedidoCompra", "Compra")">Pedidos de Compra - Edição</a>
+            </li>
+            <li class="active">
+                <strong>Pedidos de Compra - Imagens</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Pedidos de Compra - Imagens</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>           
+            <div class="ibox-content">
+                @using (Html.BeginForm("SlideShowPedidoCompra", "Compra", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="panel-body">
+                        @Html.AntiForgeryToken()
+                        @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                        {
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        <div class="row">
+                            <h4>Produto</h4>
+                            <br />
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-12">
+                                        @Html.HiddenFor(m => m.PECO_CD_ID)
+                                        Número
+                                        @Html.TextBoxFor(m => m.PECO_NR_NUMERO, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        Nome
+                                        @Html.TextBoxFor(m => m.PECO_NM_NOME, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <hr />
+                            <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                <h4>Imagens do Pedido</h4>
+                                <br />
+                                <div class="form-group">
+                                    <div class="carousel slide" id="carousel2">
+                                        @if (Model.pe != null)
+                                        {
+                                            <ol class="carousel-indicators">
+                                                <li data-slide-to="0" data-target="#carousel2" class="active"></li>
+                                                <li data-slide-to="1" data-target="#carousel2"></li>
+                                                <li data-slide-to="2" data-target="#carousel2" class=""></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+                                                    <img alt="image" class="img-responsive" src="@Url.Content(Model.PROD_AQ_FOTO)">
+                                                    <div class="carousel-caption">
+                                                        <p>@Model.PROD_NM_NOME</p>
+                                                    </div>
+                                                </div>
+                                                @if (Model.PRODUTO_ANEXO.Count > 0)
+	                                            {
+                                                    foreach (var cond in (Model.PRODUTO_ANEXO))
+                                                    {
+                                                        if (cond.PRAN_IN_TIPO == 1)
+	                                                    {
+                                                            <div class="item">
+                                                                <img alt="image" class="img-responsive" src="@Url.Content(cond.PRAN_AQ_ARQUIVO)">
+                                                                <div class="carousel-caption">
+                                                                    <p>@cond.PRAN_NM_TITULO</p>
+                                                                </div>
+                                                            </div>
+	                                                    }   
+                                                    }
+	                                            }
+                                            </div>
+                                            <a data-slide="prev" href="#carousel2" class="left carousel-control">
+                                                <span class="icon-prev"></span>
+                                            </a>
+                                            <a data-slide="next" href="#carousel2" class="right carousel-control">
+                                                <span class="icon-next"></span>
+                                            </a>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="panel-footer">
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoProduto", controller: "Cadastros")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+	                hourText: 'Hora',
+	                minuteText: 'Minuto',
+	                secondText: 'Segundo',
+	                currentText: 'Agora',
+	                closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>
+    
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+        });
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

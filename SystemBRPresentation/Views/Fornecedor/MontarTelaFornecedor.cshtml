@@ -1,0 +1,345 @@
+@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.FORNECEDOR
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+
+      @using (Html.BeginForm("EnviarSmsFornecedor", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+    { 
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enviar SMS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      @Html.Hidden("id", null, new { id = "idForn" })
+                      Mensagem
+                      @Html.TextBox("mensagem", null, new { @style = "height: 200px;", @class = "form-control" })
+                  </div>
+                  <div class="modal-footer">
+                      @Html.ButtonActionSubmit("Enviar")
+                    <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+    }
+
+    <div class="page-title"> 
+        <h3 class="title">Fornecedores</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Fornecedores</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    @if (ViewBag.Perfil == "ADM")
+    {
+        <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Fornecedores</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">@ViewBag.Fornecedores</h1>
+                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                        <small>Fornecedores Exibidos</small>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Fornecedores</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.Atrasos</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Pagamentos em Atraso</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Fornecedor", action: "VerPagamentosAtraso", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Fornecedores</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.Inativos</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Fornecedores Inativos</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Fornecedor", action: "VerFornecedorInativos", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Fornecedores</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.SemPedidos</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Fornecedores Sem Pedidos</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Fornecedor", action: "VerFornecedorSemPedidos", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+    </div>
+    }
+
+    
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>           
+            
+                @using (Html.BeginForm("FiltrarFornecedor", "Fornecedor", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                    Categoria do Fornecedor
+                                    @Html.DropDownListFor(m => m.CAFO_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control" })                            
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-5ths">
+                                    Nome
+                                    @Html.TextBoxFor(m => m.FORN_NM_NOME, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-5ths">
+                                    Razão Social
+                                    @Html.TextBoxFor(m => m.FORN_NM_RAZAO, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                    CPF
+                                    @Html.TextBoxFor(m => m.FORN_NR_CPF, new { @class = "form-control", @id="cpf", autofocus = true })
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                    CNPJ
+                                    @Html.TextBoxFor(m => m.FORN_NR_CNPJ, new { @class = "form-control", @id="cnpj", autofocus = true })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    E-Mail
+                                    @Html.TextBoxFor(m => m.FORN_NM_EMAIL, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Cidade
+                                    @Html.TextBoxFor(m => m.FORN_NM_CIDADE, new { @class = "form-control", autofocus = true })
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    UF
+                                    @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control" })                            
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                    Ativo?
+                                    @Html.DropDownListFor(m => m.FORN_IN_ATIVO, (SelectList)ViewBag.Ativos, new { @class = "form-control" })                            
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    @Html.ButtonActionSubmit(text: "Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Fornecedor", action: "RetirarFiltroFornecedor")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Fornecedor", action: "MostrarTudoFornecedor")
+                                    @Html.ButtonLinkIndex(text: "Novo Fornecedor", controller: "Fornecedor", action: "IncluirFornecedor")
+                                    @Html.ButtonLinkIndex(text: "Exibir Cards dos Fornecedores", controller: "Fornecedor", action: "VerCardsFornecedor")
+                                    @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Fornecedor", action: "GerarRelatorioLista")
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Fornecedor", action: "Voltar")
+                                </div>
+                            </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Fornecedores</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.FORNECEDOR>).Count > 0)                                        {
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead style ="background-color:lightsteelblue">
+                                        <tr>
+                                            <th>Nome/Razão Social</th>   
+                                            <th>Categoria</th>   
+                                            <th>CPF</th>
+                                            <th>CNPJ</th>
+                                            <th>E-Mail</th>   
+                                            <th>Telefone</th>
+                                            <th>Cidade</th>   
+                                            <th>UF</th>
+                                            <th></th>
+                                            <th class="td-one-action">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.FORNECEDOR>).OrderBy(p => p.FORN_NM_NOME))
+                                        {
+                                            <tr>
+                                                @if (cond.FORN_NM_RAZAO != null)
+                                                {
+                                                    <td>@cond.FORN_NM_RAZAO</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@cond.FORN_NM_NOME</td>
+                                                }
+                                                <td>@cond.CATEGORIA_FORNECEDOR.CAFO_NM_NOME</td>
+                                                <td>@cond.FORN_NR_CPF</td>
+                                                <td>@cond.FORN_NR_CNPJ</td>
+                                                <td>@cond.FORN_NM_EMAIL</td>
+                                                <td>@cond.FORN_NM_TELEFONES</td>
+                                                <td>@cond.FORN_NM_CIDADE</td>
+                                                <td>@cond.UF.UF_SG_SIGLA</td>
+                                                @if (!String.IsNullOrEmpty(cond.FORN_AQ_FOTO))
+	                                            {
+                                                    <td><img src="@Url.Content(cond.FORN_AQ_FOTO)" style = "width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><img src="~/Images/a8.jpg" style = "width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+                                                }
+                                                <td class="td-one-action">
+                                                    @Html.TableLinkDetails(cond.FORN_CD_ID, "EditarFornecedor","fa-edit", "Editar/Consultar Fornecedor")
+                                                    <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.FORN_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enivar SMS"> </span>
+                                                    @if (cond.FORN_IN_ATIVO == 1)
+	                                                {
+                                                        @Html.TableLinkDetails(cond.FORN_CD_ID, "ExcluirFornecedor","fa-trash-o", "Desativar Fornecedor")
+                                                    }
+                                                    else
+                                                    {   
+                                                        @Html.TableLinkDetails(cond.FORN_CD_ID, "ReativarFornecedor","fa-refresh", "Reativar Fornecedor")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+   
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+     <script>
+        function MudaIdForn(id) {
+            $('#idForn').val(id);
+        }
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+
+

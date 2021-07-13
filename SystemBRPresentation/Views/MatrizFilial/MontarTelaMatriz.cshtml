@@ -1,0 +1,573 @@
+@using Presentation.Extensions
+@using CrossCutting;
+@using EntitiesServices.Work_Classes;
+@model SystemBRPresentation.ViewModels.MatrizViewModel
+@{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Matriz & Filiais</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Matriz</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    @if (ViewBag.Perfil == "ADM")
+    {
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Filiais</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@Model.FILIAL.Count</h1>
+                        <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                        <small>Filiais Cadastradas</small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Matriz - Consulta & Edição</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="tabs-container">
+                        <div class="form-group">
+                            @if (SessionMocks.tipoAssinante == 1)
+                            {
+                                if (SessionMocks.numUsuarios < 2)
+                                {
+                @Html.ButtonLinkIndex(text: "Nova Filial", action: "IncluirFilial", controller: "MatrizFilial") }
+        }
+        else
+        {
+@Html.ButtonLinkIndex(text: "Nova Filial", action: "IncluirFilial", controller: "MatrizFilial")}
+                        </div>
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Logotipo</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Filiais</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("MontarTelaMatriz", "MatrizFilial", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                        <div class="ibox-content">
+                            @Html.AntiForgeryToken()
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            </div>}
+                            <div id="alertContainer"></div>
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    <div style="text-align: center; margin-top: 20px; line-height: 10px;">
+                                        @Html.HiddenFor(m => m.MATR_CD_ID)
+                                        @Html.HiddenFor(m => m.MATR_IN_ATIVO)
+                                        @Html.HiddenFor(m => m.MATR_DT_CADASTRO)
+                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                        @Html.HiddenFor(m => m.MATR_AQ_LOGOTIPO)
+                                        @if (!String.IsNullOrEmpty(Model.MATR_AQ_LOGOTIPO))
+                                        {
+                        <img src="@Url.Content(Model.MATR_AQ_LOGOTIPO)" style="width: auto; height: auto; max-height: 150px; max-width: 100px;"> }
+                    else
+                    {
+    <img src="~/Images/a8.jpg" style="width: auto; height: auto; max-height: 150px; max-width: 100px;">}
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            Tipo de Pessoa
+                                            @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.TipoPessoa, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa" })
+                                            @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row PJ">
+                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                            CNPJ
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.MATR_NR_CNPJ, new { @class = "form-control", autofocus = true, @id = "cnpj" })
+                                                @Html.ValidationMessageFor(m => m.MATR_NR_CNPJ, "", new { @style = "color:red" })
+                                                <span class="input-group-btn">
+                                                    <span id="btnPesquisaCnpj" class="btn btn-success" onclick="PesquisaCNPJ($('#cnpj').val())">Buscar CNPJ</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                            Inscrição Municipal
+                                            @Html.TextBoxFor(m => m.MATR_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", autofocus = true })
+                                            @Html.ValidationMessageFor(m => m.MATR_NR_INSCRICAO_MUNICIPAL, "", new { @style = "color:red" })
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                            Inscrição Estadual
+                                            @Html.TextBoxFor(m => m.MATR_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true, id = "ie" })
+                                            @Html.ValidationMessageFor(m => m.MATR_NR_INSCRICAO_ESTADUAL, "", new { @style = "color:red" })
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                            CNAE
+                                            @Html.TextBoxFor(m => m.MATR_NR_CNAE, new { @class = "form-control", autofocus = true })
+                                            @Html.ValidationMessageFor(m => m.MATR_NR_CNAE, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="PF" class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                            CPF*
+                                            @Html.TextBoxFor(m => m.MATR_NR_CPF, new { @class = "form-control", autofocus = true, @id = "cpf" })
+                                            @Html.ValidationMessageFor(m => m.MATR_NR_CPF, "", new { @style = "color:red" })
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                            RG*
+                                            @Html.TextBoxFor(m => m.MATR_NR_RG, new { @class = "form-control", autofocus = true })
+                                            @Html.ValidationMessageFor(m => m.MATR_NR_RG, "", new { @style = "color:red" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group PJ">
+                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                        Razão Social
+                                        @Html.TextBoxFor(m => m.MATR_NM_RAZAO, new { @class = "form-control", autofocus = true, id = "razao" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_RAZAO, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                        Nome Fantasia*
+                                        @Html.TextBoxFor(m => m.MATR_NM_NOME, new { @class = "form-control", autofocus = true, id = "nome" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_NOME, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        E-Mail*
+                                        @Html.TextBoxFor(m => m.MATR_NM_EMAIL, new { @class = "form-control", autofocus = true, id = "email" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_EMAIL, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        Contato
+                                        @Html.TextBoxFor(m => m.MATR_NM_CONTATOS, new { @class = "form-control", autofocus = true })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_CONTATOS, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        Telefone
+                                        @Html.TextBoxFor(m => m.MATR_NR_TELEFONES, new { @class = "form-control", id = "tel", autofocus = true, placeholder = "(99) 9999-9999 R: 99" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NR_TELEFONES, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        Celular
+                                        @Html.TextBoxFor(m => m.MATR_NR_CELULAR, new { @class = "form-control", id = "cel", autofocus = true })
+                                        @Html.ValidationMessageFor(m => m.MATR_NR_CELULAR, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        Website
+                                        @Html.TextBoxFor(m => m.MATR_NM_WEBSITE, new { @class = "form-control", autofocus = true })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_WEBSITE, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        CEP
+                                        <div class="input-group">
+                                            @Html.TextBoxFor(m => m.MATR_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
+                                            @Html.ValidationMessageFor(m => m.MATR_NR_CEP, "", new { @style = "color:red" })
+                                            <span class="input-group-btn">
+                                                <span class="btn btn-warning btn-sm" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 2)">Buscar CEP</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                        Endereço
+                                        @Html.TextBoxFor(m => m.MATR_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_ENDERECO, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Bairro
+                                        @Html.TextBoxFor(m => m.MATR_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_BAIRRO, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                        Cidade
+                                        @Html.TextBoxFor(m => m.MATR_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
+                                        @Html.ValidationMessageFor(m => m.MATR_NM_CIDADE, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                        UF
+                                        @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
+                                        @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="form-group">
+                                @Html.ButtonActionSubmit(text: "Confirma Edição da Matriz")
+                            </div>
+                        </div>}
+                                </div>
+                            </div>
+
+                            @*Logotipo*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        @Html.HiddenFor(m => m.MATR_CD_ID)
+                                        @Html.HiddenFor(m => m.MATR_IN_ATIVO)
+                                        @Html.HiddenFor(m => m.MATR_DT_CADASTRO)
+                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                        <div class="col-lg-10 col-md-10 col-xs-12 ibox float-e-margins">
+                                            @using (Html.BeginForm("UploadLogoMatriz", "MatrizFilial", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container4" }))
+                                            {
+                                <input style="float: left; margin-right: 5px;" type="file" name="file" accept=".jpg, .png, .jpeg, .gif|images/*" id="file" class="btn btn-sm btn-warning" />
+                                                <input style="float: left;" type="submit" value="Incluir Logotipo na Matriz" class="btn btn-sm btn-success" />}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    @if (!String.IsNullOrEmpty(Model.MATR_AQ_LOGOTIPO))
+                                                    {
+                                        <img src="@Url.Content(Model.MATR_AQ_LOGOTIPO)" style="width: auto; height: auto; max-height: 150px; max-width: 1100px;"> }
+                                    else
+                                    {
+                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 150px; max-width: 110px;">}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Filiais*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        @if (Model.FILIAL.Count > 0)
+                                        {
+                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                <thead style="background-color:lightsteelblue">
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>CNPJ</th>
+                                        <th>E-Mail</th>
+                                        <th>Contato</th>
+                                        <th>Telefone</th>
+                                        <th>Cidade</th>
+                                        <th>UF</th>
+                                        <th></th>
+                                        <th class="td-one-action">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cond in Model.FILIAL.Where(p => p.FILI_CD_ID != 9))
+                                    {
+                    <tr>
+                        <td>@cond.FILI_NM_NOME</td>
+                        <td>@cond.FILI_NR_CNPJ</td>
+                        <td>@cond.FILI_NM_EMAIL</td>
+                        <td>@cond.FILI_NM_CONTATOS</td>
+                        <td>@cond.FILI_NM_TELEFONES</td>
+                        <td>@cond.FILI_NM_CIDADE</td>
+                        @if (cond.UF != null)
+                        {
+    <td>@cond.UF.UF_SG_SIGLA</td>
+ }
+else
+{
+<td>-</td>
+}
+                        @if (!String.IsNullOrEmpty(cond.FILI_AQ_LOGOTIPO))
+                        {
+    <td><img src="@Url.Content(cond.FILI_AQ_LOGOTIPO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+ }
+else
+{
+<td><img src="~/Images/a8.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+}
+                        <td class="td-one-action">
+                            @Html.TableLinkDetails(cond.FILI_CD_ID, "EditarFilial", "fa-edit", "Editar/Consultar")
+                            @if (ViewBag.Perfil == "ADM")
+                            {
+                                if (cond.FILI_IN_ATIVO == 1)
+                                {
+        @Html.TableLinkDetails(cond.FILI_CD_ID, "ExcluirFilial", "fa-trash-o", "Desativar") }
+    else
+    {
+@Html.TableLinkDetails(cond.FILI_CD_ID, "ReativarFilial", "fa-refresh", "Reativar")}
+}
+                        </td>
+                    </tr>
+}
+                                </tbody>
+                            </table>}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Banco")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>*@
+    <script type="text/javascript">
+        $(function () {
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cpf").mask("999.999.999-99");
+            $("#cep").mask("99999-999");
+            $('#tel').mask('(99) 9999-9999');
+            $('#cel').mask('(99) 99999-9999');
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#PF").hide();
+                    $(".PJ").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $(".PJ").hide();
+                    $("#PF").show();
+                }
+                //Se não for nem 1 nem 2 esconde as duas
+                else {
+                    $(".PJ").hide();
+                    $("#PF").hide();
+                }
+            });
+        });
+
+        $(function () {
+            if ($('#pessoa').val() == '2') {
+                $("#PF").hide();
+                $(".PJ").show();
+            }
+            else if ($('#pessoa').val() == '1') {
+                $(".PJ").hide();
+                $("#PF").show();
+            }
+            else {
+                $(".PJ").hide();
+                $("#PF").hide();
+            }
+        });
+    </script>
+
+    <script>
+        function PesquisaCep(cep, btn, tipoEnd) {
+            data = {
+                cep: cep
+                , tipoEnd: tipoEnd
+            }
+
+            $('#btnBuscaCep').attr("disabled", "disabled");
+
+            $.ajax({
+                url: '../MatrizFilial/PesquisaCEP_Javascript'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    $('#endereco').val(r.MATR_NM_ENDERECO);
+                    $('#bairro').val(r.MATR_NM_BAIRRO);
+                    $('#cidade').val(r.MATR_NM_CIDADE);
+
+                    $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
+                    $('#btnBuscaCep').removeAttr("disabled");
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function PesquisaCNPJ(cnpj) {
+            var spinner = '<i style="margin-right: 5px;" class="fa fa-spinner fa-spin"></i>';
+            $('#btnPesquisaCnpj').prepend(spinner);
+            $('#btnPesquisaCnpj').attr('disabled', true);
+
+            var data = {
+                cnpj: cnpj
+            }
+
+            if (cnpj != "") {
+                $.ajax({
+                    url: '../MatrizFilial/PesquisaCNPJ'
+                    , type: 'POST'
+                    , data: data
+                    , async: false
+                    , success: function (r) {
+                        if (r.status != "ERROR") {
+                            //if (r[0].CLQS_IN_ATIVO != 0) {
+                            //    $('#tblQs > tbody').html('');
+                            //    r.forEach(function (e) {
+                            //        $('#tblQs > tbody').append(
+                            //            '<tr><td>' + e.CLQS_NM_QUALIFICACAO + '</td>'
+                            //            + '<td>' + e.CLQS_NM_NOME + '</td></tr>'
+                            //        );
+                            //    });
+                            //}
+                            $('#ie').val(r.INSCRICAO_ESTADUAL);
+                            $('#razao').val(r.RAZAO);
+                            $('#nome').val(r.NOME);
+                            $('#cep').val(r.CEP);
+                            $("#cep").mask("99999-999");
+                            $('#endereco').val(r.ENDERECO);
+                            //$('#nmr').val(r[0].CLIENTE.CLIE_NR_NUMERO);
+                            $('#bairro').val(r.BAIRRO);
+                            $('#cidade').val(r.CIDADE);
+                            $('#uf option[value="' + r.UF + '"]').attr('selected', 'selected');
+                            $('#email').val(r.EMAIL);
+                            $('#tel').val(r.TELEFONE);
+                            //$('#alt_tel').val(r[0].CLIENTE.CLIE_NR_TELEFONE_ADICIONAL);
+                            //$('#situacao').val(r[0].CLIENTE.CLIE_NM_SITUACAO);
+
+                            $('#btnPesquisaCnpj').html('Buscar CNPJ');
+                            $('#btnPesquisaCnpj').attr('disabled', false);
+                        } else {
+                            if (r.public == 1) {
+                                var alert = '<div class="alert alert-danger">'
+                                    + '<button type="button" class="close" data-dismiss="alert">Fechar</button>'
+                                    + r.message
+                                    + '</div>';
+                                $('#alertContainer').html(alert);
+                                $('.alert').show();
+
+                                $('#btnPesquisaCnpj').html('Buscar CNPJ');
+                                $('#btnPesquisaCnpj').attr('disabled', false);
+                            } else {
+                                console.log(r);
+
+                                $('#btnPesquisaCnpj').html('Buscar CNPJ');
+                                $('#btnPesquisaCnpj').attr('disabled', false);
+                            }
+                        }
+                    }
+                    , error: function () {
+                        $('#btnPesquisaCnpj').html('Buscar CNPJ');
+                        $('#btnPesquisaCnpj').attr('disabled', false);
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+<script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+</script>}
+
+
+

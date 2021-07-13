@@ -1,0 +1,376 @@
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@using EntitiesServices.Work_Classes;
+@model EntitiesServices.Model.ATENDIMENTO
+@{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Tarefas</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarAdmin", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Atendimentos</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Ações</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                            @Html.ButtonLinkIndex(text: "Novo Atendimento", controller: "Atendimento", action: "IncluirAtendimento")
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Atendimento", action: "MontarTelaAtendimento")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="ibox-title">
+                <h5>Tarefas</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div id="kanbanContainer" class="row">
+                    <div class="col-lg-3 col-md-3 col-xs-3">
+                        <h3>Criado</h3>
+                        <ul class="sortable-list connectList agile-list ui-sortable" data-classe="warning-element" data-status="1" id="criado">
+                        </ul>
+                    </div>
+                    @*<div class="col-lg-5ths col-md-5ths col-xs-5ths">
+                        <h3>Aguardando Informações</h3>
+                        <ul class="sortable-list connectList agile-list ui-sortable" data-classe="warning-element" data-status="2" id="aguardando">
+                        </ul>
+                    </div>*@
+                    <div class="col-lg-3 col-md-3 col-xs-3">
+                        <h3>Em execução</h3>
+                        <ul class="sortable-list connectList agile-list ui-sortable" data-classe="danger-element" data-status="4" id="execucao">
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-3">
+                        <h3>Cancelado</h3>
+                        <ul class="sortable-list connectList agile-list ui-sortable" data-classe="warning-element" data-status="3" id="cancelado">
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-3">
+                        <h3>Encerrado</h3>
+                        <ul class="sortable-list connectList agile-list ui-sortable" data-classe="success-element" data-status="5" id="finalizado">
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaTarefa", controller: "Tarefa")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/toastr")
+    
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script></script>
+
+    <script>
+        $.ajax({
+            url: '../Atendimento/GetAtendimento'
+            , type: 'POST'
+            , success: function (r) {
+                r.forEach(function (e) {
+                    var element = $('<li class="ui-sortable-handle" data-id="' + e.ATEN_CD_ID + '">'
+                        + '<h5 onclick="redirectEditar(' + e.ATEN_CD_ID + ')">' + e.CLIE_NM_NOME + '</h5>'
+                        + '<div class="agile-detail">'
+                        + '<i class="fa fa-clock-o"></i>'
+                        + ' Início: ' + e.ATEN_DT_INICIO
+                        + '<br />'
+                        + '<i class="fa fa-clock-o"></i>'
+                        + ' Previsão: ' + e.ATEN_DT_PREVISTA
+                        + '</div>'
+                        + '</li>');
+
+                    if (e.ATEN_IN_STATUS == 1) {
+                        element.addClass('warning-element');
+                        $('#criado').append(element);
+                    }
+                    //if (e.ATEN_IN_STATUS == 2) { // em andamento
+                    //    element.addClass('warning-element');
+                    //    $('#aguardando').append(element);
+                    //}
+                    if (e.ATEN_IN_STATUS == 3) {
+                        element.addClass('danger-element');
+                        $('#cancelado').append(element);
+                    }
+                    if (e.ATEN_IN_STATUS == 4) {
+                        element.addClass('success-element');
+                        $('#execucao').append(element);
+                    }
+                    if (e.ATEN_IN_STATUS == 5) {
+                        element.addClass('success-element');
+                        $('#finalizado').append(element);
+                    }
+                });
+            }
+        });
+
+        $(function () {
+            $('.connectList').sortable({
+                connectWith: $('.connectList')
+                , start: function (event, ui) {
+                    ui.item.removeClass(ui.item.parent().attr('data-classe'));
+                }
+                , stop: function (event, ui) {
+                    //append modal
+
+                    if (ui.item.parent().attr('data-status') == "3") {
+                        $('#dtEnc' + ui.item.attr('data-id')).remove();
+
+                        ui.item.append('<div id="dtEnc' + ui.item.attr('data-id') + '">'
+                            + '<hr />'
+                            + '<div class="card" style="width: 18rem;">'
+                            + '<div class="card-body">'
+                            + '<h5 class="card-title">Data de Cancelamento</h5>'
+                            + '<p class="card-text"><input id="dtEncAten' + ui.item.attr('data-id') + '" type="text" class="form-control dtEnc" value="' + GetCurrentDate() + '" /></p >'
+                            + '<h5 class="card-title">Justificativa de Cancelamento</h5>'
+                            + '<p class="card-text"><input id="justEnc' + ui.item.attr('data-id') + '" type="text" class="form-control" /></p >'
+                            + '<span id="dtEncEnviar' + ui.item.attr('data-id')+'" class="btn btn-sm btn-success" onclick="EditarStatusDt(' + ui.item.attr('data-id') + ', ' + ui.item.parent().attr('data-status') + ')">Enviar</span>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>'
+                        );
+
+                        InstanceDatePickerEnc();
+                    }
+                    else {
+                        $('#dtEnc' + ui.item.attr('data-id')).remove();
+                    }
+
+                    ui.item.addClass(ui.item.parent().attr('data-classe'));
+
+                    EditarStatus(ui.item.attr('data-id'), ui.item.parent().attr('data-status'))
+                }
+            });
+        });
+
+        function redirectEditar(id) {
+            window.open("/Atendimento/EditarAtendimento/" + id, '_self');
+        }
+
+        function EditarStatus(id, status) {
+            var data = {
+                id: id
+                , status: status
+            }
+
+            $.ajax({
+                url: '../Atendimento/EditarStatusAtendimento'
+                , type: 'POST'
+                , data: data
+                , success: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+        function EditarStatusDt(id, status) {
+            var data = {
+                id: id
+                , status: status
+                , dtEnc: $('#dtEncAten' + id).val() == undefined ? null : $('#dtEncAten' + id).val()
+                , justificativa: $('#justEnc' + id).val() == undefined ? null : $('#justEnc' + id).val()
+            }
+
+            $.ajax({
+                url: '../Atendimento/EditarStatusAtendimento'
+                , type: 'POST'
+                , data: data
+                , success: function (e) {
+                    if (e == 'SUCCESS') {
+                        var pDt = $('#dtEncAten' + id).parent();
+                        var pJus = $('#justEnc' + id).parent();
+
+                        $('#dtEncTarefa' + id).remove();
+                        $('#dtEncEnviar' + id).remove();
+                        $('#justEnc' + id).remove();
+
+                        pDt.html(data.dtEnc);
+                        pJus.html(data.justificativa);
+                    }
+                    else {
+                        $('#dtEncTarefa' + id).parent().append('<span class="field-validation-error" data-valmsg-replace="true" style="color:red">' + e.dt + '</span>');
+                        $('#justEnc' + id).parent().append('<span class="field-validation-error" data-valmsg-replace="true" style="color:red">' + e.jus + '</span>');
+                    }
+                }
+            });
+        }
+    </script>
+
+    @*<script type="text/javascript">$(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });</script>*@
+    <script type="text/javascript">$(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });</script>
+    <script type="text/javascript" language="javascript">$(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });</script>
+
+    <script>
+        function InstanceDatePickerEnc() {
+            $('.dtEnc').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        }
+    </script>
+
+    <script>
+        function GetCurrentDate() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = dd + '/' + mm + '/' + yyyy;
+            return today;
+        }
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+<script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+</script>
+}
+

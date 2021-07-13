@@ -131,12 +131,20 @@ namespace ERP_Condominios_Solution.Controllers
                 }
                 ViewBag.Greeting = frase;
                 ViewBag.Nome = usuario.USUA_NM_NOME;
-                ViewBag.Cargo = usuario.CARGO.CARG_NM_NOME;
+                if (usuario.CARGO != null)
+                {
+                    ViewBag.Cargo = usuario.CARGO.CARG_NM_NOME;
+                    Session["Cargo"] = usuario.CARGO.CARG_NM_NOME;
+                }
+                else
+                {
+                    ViewBag.Cargo = "-";
+                    Session["Cargo"] = "-";
+                }
                 ViewBag.Foto = usuario.USUA_AQ_FOTO;
 
                 Session["Greeting"] = frase;
                 Session["Nome"] = usuario.USUA_NM_NOME;
-                Session["Cargo"] = usuario.CARGO.CARG_NM_NOME;
                 Session["Foto"] = usuario.USUA_AQ_FOTO;
                 Session["Perfil"] = usuario.PERFIL;
                 Session["FlagInicial"] = 0;

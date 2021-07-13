@@ -1,0 +1,1107 @@
+@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.ClienteViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Clientes</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaCliente", "Cliente")">Clientes</a>
+            </li>
+            <li class="active">
+                <strong>Cliente - Consulta & Edição</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Pedidos de Vendas</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">21</h1>
+                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                    <small>Pedidos de Vendas Cadastrados</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Pedidos de Serviços</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">3</h1>
+                    <div class="stat-percent font-bold text-navy">35% <i class="fa fa-level-up"></i></div>
+                    <small>Pedidos de Serviços Cadastrados</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Atendimentos</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">5</h1>
+                    <div class="stat-percent font-bold text-navy">29% <i class="fa fa-level-up"></i></div>
+                    <small>Atendimentos em Aberto</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Evolução de Vendas</h5>
+                </div>
+                <div class="ibox-content">
+                    <h5>Total Acumulado</h5>
+                    <h2>176</h2>
+                    <div id="sparkline1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Cliente - Edição</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @Html.AntiForgeryToken()
+                    @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Imagens</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Endereços</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Contatos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Dados Pessoais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-6">Dados Comerciais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-8">Indicadores</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group">
+                                                @if (!String.IsNullOrEmpty(Model.CLIE_AQ_FOTO))
+	                                            {
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+                                                        <img src="@Url.Content(Model.CLIE_AQ_FOTO)" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    </div>                       
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+                                                        <img src="~/Images/gallery/10s.jpg" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    </div>                       
+                                                }
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_NASCIMENTO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL_DANFE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_MAE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NACIONALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NATURALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME_CONJUGE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_PAI)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_REDES_SOCIAIS)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_WEBSITE)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CELULAR)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_FAX)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONES)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONE_ADICIONAL)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_NATURALIADE_UF)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_UF_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.CLIE_UF_CD_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_LIMITE_CREDITO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.SEXO_CD_ID)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Tipo de Pessoa*
+                                                    @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.TiposPessoa, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                    @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Filial*
+                                                    @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true  })                            
+                                                    @Html.ValidationMessageFor(m => m.FILI_CD_ID, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Tipo de Contribuinte*
+                                                    @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TiposContribuinte, "Selecionar", new { @class = "form-control" , autofocus = true })                            
+                                                    @Html.ValidationMessageFor(m => m.TICO_CD_ID, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Categoria*
+                                                    @Html.DropDownListFor(m => m.CACL_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                    @Html.ValidationMessageFor(m => m.CACL_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Nome*
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_NOME, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Razão Social
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_RAZAO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_RAZAO, "",new { @style="color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PF">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    CPF
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_CPF, "",new { @style="color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PJ">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    CNPJ
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CNPJ, new { @class = "form-control", @id = "cnpj", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_CNPJ, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Inscrição Estadual
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Inscrição Municipal
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Saldo
+                                                    @Html.TextBoxFor(m => m.CLIE_VL_SALDO, "{0:n2}", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_VL_SALDO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Regime Tributário
+                                                    @Html.DropDownListFor(m => m.RETR_CD_ID, (SelectList)ViewBag.Regimes, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                    @Html.ValidationMessageFor(m => m.RETR_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Inscrição SUFRAMA
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_SUFRAMA, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_SUFRAMA, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Cliente", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-10 col-md-10 col-xs-12">   
+                                            <div class="form-group">
+                                                <h4>Logotipo/Foto do Cliente</h4>
+                                                @using (Html.BeginForm("UploadFotoCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container3" }))
+                                                {
+                                                    <br />
+                                                    <input type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning"/>
+                                                    <br />
+                                                    <div class="form-group">
+                                                        <input type="submit" value="Incluir Logotipo/Foto do Cliente" class="btn btn-sm btn-success" />
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    @if (!String.IsNullOrEmpty(Model.CLIE_AQ_FOTO))
+	                                                {
+                                                        <img src="@Url.Content(Model.CLIE_AQ_FOTO)" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/gallery/10s.jpg" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                </div>                       
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Anexos do Cliente</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.CLIENTE_ANEXO.Count > 0)
+                                                        {
+                                                            <table style ="background-color:lightsteelblue" class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.CLIENTE_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.CLAN_NM_TITULO</td>
+                                                                            <td>@cond.CLAN_DT_ANEXO.ToShortDateString()</td>
+                                                                            @if (cond.CLAN_IN_TIPO == 1)
+	                                                                        {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.CLAN_IN_TIPO == 1 || cond.CLAN_IN_TIPO == 2)
+	                                                                            {
+                                                                                    @Html.TableLinkDetails(cond.CLAN_CD_ID, "VerAnexoCliente","fa-camera", "Visualizar")
+	                                                                            }
+                                                                                @Html.TableLinkDetails(cond.CLAN_CD_ID, "DownloadCliente","fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        <input type="file" name="file" id="file" class="btn btn-sm btn-warning"/>
+                                                        <br />
+                                                        <div class="form-group">
+                                                            <input type="submit" value="Incluir Anexo do Cliente" class="btn btn-sm btn-success" />
+                                                            @Html.ButtonLinkIndex(text: "Ver Imagens em Sequencia", action: "SlideShowCliente", controller: "Cliente")
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Endereços*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    @Html.Partial("EditarEnderecoCliente")
+                                </div>
+                            </div>
+
+                            @*Contatos*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CACL_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_NASCIMENTO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_MAE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NACIONALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NATURALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME_CONJUGE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_PAI)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_PROFISSAO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_RAZAO)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CPF)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_FAX)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_RG)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_SUFRAMA)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_NATURALIADE_UF)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_UF_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.CLIE_UF_CD_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_LIMITE_CREDITO)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_SALDO)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.RETR_CD_ID)
+                                                    @Html.HiddenFor(m => m.SEXO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TICO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    E-Mail*
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_EMAIL, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_EMAIL, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    E-Mail DANFE
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_EMAIL_DANFE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_EMAIL_DANFE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Redes Sociais
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_REDES_SOCIAIS, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_REDES_SOCIAIS, "", new { @style = "color:red" })
+                                                </div>                                              
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Telefone
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_TELEFONES, new { @class = "form-control", autofocus = true,placeholder = "(99) 9999-9999 R: 99", @id = "tel" })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_TELEFONES, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Celular
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CELULAR, new { @class = "form-control", autofocus = true, placeholder = "(99) 99999-9999 R: 99", @id = "cel" })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_CELULAR, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Telefone Adicional
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_TELEFONE_ADICIONAL, new { @class = "form-control", autofocus = true, placeholder = "(99) 9999-9999 R: 99", @id = "tel" })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NR_TELEFONE_ADICIONAL, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Cliente", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                    <div class="row">                                          
+                                        <hr />
+                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Contatos</h4>
+                                                <br />
+                                                @if (Model.CLIENTE_CONTATO.Count > 0)
+                                                {
+                                                    <table style ="background-color:lightsteelblue" class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nome</th>
+                                                                <th>Cargo</th>
+                                                                <th>E-Mail</th>
+                                                                <th>Telefone</th>
+                                                                <th>Ativo</th>
+                                                                <th class="td-one-action">Ações</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var cond in (Model.CLIENTE_CONTATO))
+                                                            {
+                                                                <tr>
+                                                                    <td>@cond.CLCO_NM_NOME</td>
+                                                                    <td>@cond.CLCO_NM_CARGO</td>
+                                                                    <td>@cond.CLCO_NM_EMAIL</td>
+                                                                    <td>@cond.CLCO_NM_TELEFONE</td>
+                                                                    @if (cond.CLCO_IN_ATIVO == 1)
+	                                                                {
+                                                                        <td>Sim</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>Não</td>
+                                                                    }
+                                                                    <td class="td-one-action">
+                                                                        @Html.TableLinkDetails(cond.CLCO_CD_ID, "EditarContato","fa-edit", "Editar/Consultar Contato")
+                                                                        @if (cond.CLCO_IN_ATIVO == 1)
+	                                                                    {
+                                                                            @Html.TableLinkDetails(cond.CLCO_CD_ID, "ExcluirContato","fa-trash-o", "Desativar Contato")
+                                                                        }
+                                                                        else
+                                                                        {   
+                                                                            @Html.TableLinkDetails(cond.CLCO_CD_ID, "ReativarContato","fa-refresh", "Reativar Contato")
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Novo Contato", action: "IncluirContato", controller: "Cliente")
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Dados Pessoais*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CACL_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL_DANFE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME_CONJUGE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_RAZAO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_REDES_SOCIAIS)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_WEBSITE)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CELULAR)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CPF)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_FAX)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_RG)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_SUFRAMA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONES)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONE_ADICIONAL)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_UF_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.CLIE_UF_CD_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_LIMITE_CREDITO)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_SALDO)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.RETR_CD_ID)
+                                                    @Html.HiddenFor(m => m.SEXO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TICO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Nome do Pai
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_PAI, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_PAI, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Nome da Mãe
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_MAE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_MAE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data Nascimento
+                                                    @Html.TextBoxFor(m => m.CLIE_DT_NASCIMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "dn" })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_DT_NASCIMENTO, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Sexo
+                                                    @Html.DropDownListFor(m => m.SEXO_CD_ID, (SelectList)ViewBag.sexo, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                    @Html.ValidationMessageFor(m => m.SEXO_CD_ID, "", new { @style = "color:red" })
+                                                </div>                                                
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Naturalidade
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_NATURALIDADE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_NATURALIDADE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    UF
+                                                    @Html.TextBoxFor(m => m.CLIE_SG_NATURALIADE_UF, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_SG_NATURALIADE_UF, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Nacionalidade
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_NACIONALIDADE, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_NM_NACIONALIDADE, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Cliente", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Dados Comerciais*@
+                            <div id="tab-6" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CACL_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL_DANFE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME_CONJUGE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_RAZAO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_REDES_SOCIAIS)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_WEBSITE)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CELULAR)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CPF)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_FAX)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_RG)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_SUFRAMA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONES)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONE_ADICIONAL)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_UF_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.CLIE_UF_CD_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_LIMITE_CREDITO)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_SALDO)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.RETR_CD_ID)
+                                                    @Html.HiddenFor(m => m.SEXO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TICO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_PAI)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_MAE)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_NASCIMENTO)
+                                                    @Html.HiddenFor(m => m.SEXO_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NATURALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NACIONALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_NATURALIADE_UF)
+                                                    Vendedor
+                                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control" , autofocus = true})                            
+                                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Limite de Crédito
+                                                    @Html.TextBoxFor(m => m.CLIE_VL_LIMITE_CREDITO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CLIE_VL_LIMITE_CREDITO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Cliente", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+
+                            @*Observações*@
+                            <div id="tab-7" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cliente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CACL_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_NASCIMENTO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_BAIRRO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_CIDADE_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_EMAIL_DANFE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_ENDERECO_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_MAE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NACIONALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NATURALIDADE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_NOME_CONJUGE)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_PAI)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_PROFISSAO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_RAZAO)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_REDES_SOCIAIS)
+                                                    @Html.HiddenFor(m => m.CLIE_NM_WEBSITE)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CELULAR)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CEP_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CNPJ)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_CPF)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_FAX)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_RG)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_SUFRAMA)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONES)
+                                                    @Html.HiddenFor(m => m.CLIE_NR_TELEFONE_ADICIONAL)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_NATURALIADE_UF)
+                                                    @Html.HiddenFor(m => m.CLIE_SG_UF_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_UF_CD_ENTREGA)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_LIMITE_CREDITO)
+                                                    @Html.HiddenFor(m => m.CLIE_VL_SALDO)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.RETR_CD_ID)
+                                                    @Html.HiddenFor(m => m.SEXO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TICO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
+                                                    @Html.HiddenFor(m => m.UF_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.CLIE_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 400px;", autofocus = true})
+                                                    @Html.ValidationMessageFor(m => m.CLIE_TX_OBSERVACOES, "",new { @style="color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Cliente", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Indicadores*@
+                            <div id="tab-8" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Últimos Pedidos de Vendas</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.PEDIDO_VENDA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Número/Nome</th>
+                                                                    <th>Emissão</th>
+                                                                    <th>Status</th>
+                                                                    <th>Aprovação</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.PEDIDO_VENDA.OrderByDescending(a => a.PEVE_DT_DATA).Take(4)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.PEVE_NM_NOME</td>
+                                                                        <td>@cond.PEVE_DT_DATA.ToShortDateString()</td>
+                                                                        @if (cond.PEVE_IN_STATUS == 1)
+	                                                                    {
+                                                                            <td>Em Emissão</td>
+                                                                        }
+                                                                        else if (cond.PEVE_IN_STATUS == 2)
+	                                                                    {
+                                                                            <td>Em Aprovação</td>
+                                                                        }
+                                                                        else if (cond.PEVE_IN_STATUS == 3)
+                                                                        {
+                                                                            <td>Aprovado</td>
+                                                                        }
+                                                                        else if (cond.PEVE_IN_STATUS == 4)
+                                                                        {
+                                                                            <td>Cancelado</td>
+                                                                        }
+                                                                        @if (cond.PEVE_DT_APROVACAO == null)
+	                                                                    {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        else
+	                                                                    {
+                                                                            <td>@cond.PEVE_DT_APROVACAO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseCliente", controller: "Cliente")
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'Excel' },
+                    { extend: 'pdf', title: 'PDF' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+    
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#cep1").mask("99999-999");
+            $("#dn").mask("99/99/9999");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function() {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+              if ( this.value == '2')
+              {
+                    $("#PF").hide();
+                    $("#PJ").show();
+              }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+              else if( this.value == '1')
+              {
+                  $("#PJ").hide();
+                  $("#PF").show();
+              }
+              else if( this.value == '3')
+              {
+                    $("#PF").hide();
+                    $("#PJ").show();
+              }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else{
+                     $("#PJ").hide();
+                     $("#PF").hide();
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição am andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options = "
+                        + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
+

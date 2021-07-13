@@ -1,0 +1,323 @@
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.PRODUTO
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Produtos - Estoque</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Produtos - Estoque</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("FiltrarProduto", "Estoque", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Código de Barras
+                                @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-xs-12">
+                                Código
+                                @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true })
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                Categoria do Produto
+                                @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.CatProd, "Selecionar", new { @class = "form-control" })
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Nome
+                                @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Marca
+                                @Html.TextBoxFor(m => m.PROD_NM_MARCA, new { @class = "form-control", autofocus = true })
+                            </div>
+                            @if (ViewBag.Perfil != "ADM")
+                            {
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Filial
+                                    @Html.TextBox("Filial", (String)ViewBag.FilialUsuario, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Filial*
+                                    @Html.DropDownListFor(m => m.FILI_CD_ID, (SelectList)ViewBag.Filiais, "Selecionar", new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.FILI_CD_ID, "", new { @style = "color:red" })
+                                </div>
+                            }
+                        </div>
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                @Html.ButtonActionSubmit(text: "Filtrar")
+                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Estoque", action: "RetirarFiltroProduto")
+                                @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Estoque", action: "GerarRelatorioEstoqueProduto")
+                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Estoque", action: "Voltar")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Produtos - Estoque</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="row">
+                        @if ((ViewBag.Listas as List<EntitiesServices.Model.PRODUTO_ESTOQUE_FILIAL>).Count > 0)
+                        {
+                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                <thead style="background-color:lightsteelblue">
+                                    <tr>
+                                        <th style="display: none;"></th>
+                                        <th>Produto</th>
+                                        <th>Filial</th>
+                                        <th>Categoria</th>
+                                        <th>Código Barras</th>
+                                        <th>Código</th>
+                                        <th>Marca</th>
+                                        <th>Modelo</th>
+                                        <th>Unidade</th>
+                                        <th>Estoque</th>
+                                        <th>Mínimo</th>
+                                        <th></th>
+                                        <th class="td-one-action">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.PRODUTO_ESTOQUE_FILIAL>))
+                                    {
+                                    <tr>
+                                        <td name="containerCor" style="display:none;">
+                                            <input type="hidden" name="btwZeroMinima" value="@(cond.PREF_QN_ESTOQUE > 0 && cond.PREF_QN_ESTOQUE < cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA ? 1 : 0)" />
+                                            <input type="hidden" name="negativo" value="@(cond.PREF_QN_ESTOQUE <= 0 ? 1 : 0)" />
+                                            <input type="hidden" name="abaixoMin" value="@(cond.PREF_QN_ESTOQUE < cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA ? 1 : 0)" />
+                                            <input type="hidden" name="acimaMin" value="@(cond.PREF_QN_ESTOQUE > cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA ? 1 : 0)" />
+                                        </td>
+                                        <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                        <td>@cond.FILIAL.FILI_NM_NOME</td>
+                                        <td>@cond.PRODUTO.CATEGORIA_PRODUTO.CAPR_NM_NOME</td>
+                                        <td>@cond.PRODUTO.PROD_NR_BARCODE</td>
+                                        <td>@cond.PRODUTO.PROD_CD_CODIGO</td>
+                                        <td>@cond.PRODUTO.PROD_NM_MARCA</td>
+                                        <td>@cond.PRODUTO.PROD_NM_MODELO</td>
+                                        @if (cond.PRODUTO.UNIDADE != null)
+                                        {
+                                            <td>@cond.PRODUTO.UNIDADE.UNID_NM_NOME</td>
+                                        }
+                                        else
+                                        {
+                                            <td>-</td>
+                                        }
+
+                                        <td name="estoque">@cond.PREF_QN_ESTOQUE</td>
+
+                                        <td>@cond.PRODUTO.PROD_QN_QUANTIDADE_MINIMA</td>
+                                        @if (!String.IsNullOrEmpty(cond.PRODUTO.PROD_AQ_FOTO))
+                                        {
+                                            <td><img src="@Url.Content(cond.PRODUTO.PROD_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+                                        }
+                                        else
+                                        {
+                                            <td><img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>
+                                        }
+                                        <td class="td-one-action">
+                                            @Html.TableLinkDetails(cond.PREF_CD_ID, "VerMovimentacaoEstoqueProduto", "fa-truck", "Movimentações")
+                                            @if (ViewBag.Perfil == "ADM")
+                                            {
+                                                @Html.TableLinkDetails(cond.PREF_CD_ID, "AcertoManualProduto", "fa-edit", "Acerto Manual")
+                                            }
+                                            else
+                                            {
+                                                @Html.TableLinkDetails(cond.PROD_CD_ID, "VerEstoqueProduto", "fa-search", "Ver Produto")
+                                            }
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sweetAlert")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        $(function () {
+            $('td[name=containerCor]').each(function (i, e) {
+                if ($(e).find('input[name=negativo]').val() == 1) {
+                    $(e).parent().find('td[name=estoque]').css('background-color', '#ffdede');
+                }
+                //else if ($(e).find('input[name=abaixoMin]').val() == 1) {
+                //    $(e).parent().css('background-color', '#dee3ff');
+                //}
+                else if ($(e).find('input[name=btwZeroMinima]').val() == 1) {
+                    $(e).parent().find('td[name=estoque]').css('background-color', '#ffffb3');
+                }
+                else if ($(e).find('input[name=acimaMin]').val() == 1) {
+                    $(e).parent().find('td[name=estoque]').css('background-color', '#bbffb3');
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            DataTableEx.destroy();
+
+            $('.dataTables-example').DataTable({
+                pageLength: lineCount,
+                dom: '<"html5buttons"B>lTfgitp',
+                autoWidth: false,
+                columnDefs: [
+                    {
+                        targets: 0,
+                        width: 400
+                    }
+                ],
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.demo3').click(function () {
+                swal({
+                    title: "Confirma a duplicação do produto?",
+                    text: "A tela de edição deste produto será aberta logo após a confirmação",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: false
+                }, function () {
+                    swal("Duplicado!", "Uma cópia deste produto foi criada", "success");
+                });
+            });
+        });
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

@@ -1,0 +1,891 @@
+@using Presentation.Extensions
+@model SystemBRPresentation.ViewModels.ClienteViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Clientes</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarAdmin", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaCliente", "Cadastros")">Clientes</a>
+            </li>
+            <li class="active">
+                <strong>Clientes - Visualização</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Pedidos de Vendas</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">21</h1>
+                    <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                    <small>Pedidos de Vendas Cadastrados</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Pedidos de Serviços</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">3</h1>
+                    <div class="stat-percent font-bold text-navy">35% <i class="fa fa-level-up"></i></div>
+                    <small>Pedidos de Serviços Cadastrados</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">Hoje</span>
+                    <h5>Atendimentos</h5>
+                </div>
+                <div class="ibox-content">
+                    <h1 class="no-margins">5</h1>
+                    <div class="stat-percent font-bold text-navy">29% <i class="fa fa-level-up"></i></div>
+                    <small>Atendimentos em Aberto</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <h5>Evolução de Vendas</h5>
+                    <h2>176</h2>
+                    <div id="sparkline1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Cliente - Visualização</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Imagens</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Endereços</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Contatos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-5">Dados Pessoais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-6">Dados Comerciais</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-8">Indicadores</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    <img src="@Url.Content(Model.CLIE_AQ_FOTO)" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                </div>                       
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    Categoria
+                                                    @Html.TextBoxFor(m => m.CATEGORIA_CLIENTE.CACL_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Filial
+                                                    @Html.TextBoxFor(m => m.FILIAL.FILI_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Tipo de Contribuinte
+                                                    @Html.TextBoxFor(m => m.TIPO_CONTRIBUINTE.TICO_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Tipo de Pessoa
+                                                    @Html.TextBoxFor(m => m.TIPO_PESSOA.TIPE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Nome
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Razão Social
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_RAZAO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    CPF
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CPF, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    CNPJ
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CNPJ, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Inscrição Estadual
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_INSCRICAO_ESTADUAL, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Inscrição Municipal
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_INSCRICAO_MUNICIPAL, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Telefone
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_TELEFONES, new { @class = "form-control", @readonly="readonly",autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Celular
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CELULAR, new { @class = "form-control", @readonly="readonly",autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Telefone Adicional
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_TELEFONE_ADICIONAL, new { @class = "form-control",@readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    E-Mail
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_EMAIL, new { @class = "form-control", @readonly="readonly",autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Anexos do Cliente</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.CLIENTE_ANEXO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.CLIENTE_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.CLAN_NM_TITULO</td>
+                                                                            <td>@cond.CLAN_DT_ANEXO.ToShortDateString()</td>
+                                                                            @if (cond.CLAN_IN_TIPO == 1)
+	                                                                        {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.CLAN_IN_TIPO == 1)
+	                                                                            {
+                                                                                    @Html.TableLinkDetails(cond.CLAN_CD_ID, "VerAnexoCliente","fa-camera", "Visualizar")
+	                                                                            }
+                                                                                @Html.TableLinkDetails(cond.CLAN_CD_ID, "DownloadCliente","fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Endereços*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">                                
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    <h4>Endereço Principal</h4>
+                                                    <br />
+                                                    CEP
+                                                    <div class="input-group">
+                                                        @Html.TextBoxFor(m => m.CLIE_NR_CEP, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>                                   
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">              
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Endereço
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_ENDERECO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Bairro
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_BAIRRO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Cidade
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_CIDADE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    UF
+                                                    @Html.TextBoxFor(m => m.CLIE_SG_UF, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">                                
+                                                    <h4>Endereço de Entrega</h4>
+                                                    <br />
+                                                    CEP Entrega
+                                                    <div class="input-group">
+                                                        @Html.TextBoxFor(m => m.CLIE_NR_CEP_ENTREGA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>                                   
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">              
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Endereço Entrega
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_ENDERECO_ENTREGA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Bairro Entrega
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_BAIRRO_ENTREGA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Cidade Entrega
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_CIDADE_ENTREGA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    UF
+                                                    @Html.TextBoxFor(m => m.CLIE_SG_UF_ENTREGA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                            @*Contatos*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    E-Mail
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_EMAIL, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    E-Mail DANFE
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_EMAIL_DANFE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Redes Sociais
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_REDES_SOCIAIS, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>                                              
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Telefone
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_TELEFONES, new { @class = "form-control", @readonly="readonly",autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Celular
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_CELULAR, new { @class = "form-control", @readonly="readonly",autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Telefone Adicional
+                                                    @Html.TextBoxFor(m => m.CLIE_NR_TELEFONE_ADICIONAL, new { @class = "form-control",@readonly="readonly", autofocus = true })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    E-Mail
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_EMAIL, new { @class = "form-control", @readonly="readonly",autofocus = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Contatos</h4>
+                                                    <br />
+                                                    @if (Model.CLIENTE_CONTATO.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Nome</th>
+                                                                    <th>Cargo</th>
+                                                                    <th>E-Mail</th>
+                                                                    <th>Telefone</th>
+                                                                    <th>Ativo</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CLIENTE_CONTATO))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.CLCO_NM_NOME</td>
+                                                                        <td>@cond.CLCO_NM_CARGO</td>
+                                                                        <td>@cond.CLCO_NM_EMAIL</td>
+                                                                        <td>@cond.CLCO_NM_TELEFONE</td>
+                                                                        @if (cond.CLCO_IN_ATIVO == 1)
+	                                                                    {
+                                                                            <td>Sim</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>Não</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                            @*Dados Pessoais*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    Nome do Pai
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_PAI, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Nome da Mãe
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_MAE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data Nascimento
+                                                    @Html.TextBoxFor(m => m.CLIE_DT_NASCIMENTO,"{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Naturalidade
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_NATURALIDADE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    UF
+                                                    @Html.TextBoxFor(m => m.CLIE_SG_NATURALIADE_UF, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Nacionalidade
+                                                    @Html.TextBoxFor(m => m.CLIE_NM_NACIONALIDADE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    }
+
+                                </div>
+                            </div>
+
+                            @*Dados Comerciais*@
+                            <div id="tab-6" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    Vendedor
+                                                    @Html.TextBoxFor(m => m.COLABORADOR.COLA_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Limite de Crédito
+                                                    @Html.TextBoxFor(m => m.LimiteCredito, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Tags</h4>
+                                                    <br />
+                                                        @foreach (var cond in (Model.CLIENTE_TAG))
+                                                        {
+                                                            <div class="col-lg-1 col-md-1 col-xs-3">
+                                                                @if (cond.CLTA_IN_TIPO == 1)
+	                                                            {
+                                                                    <span class="label label-primary">@cond.CLTA_NM_TAG</span>
+	                                                            }
+                                                                @if (cond.CLTA_IN_TIPO == 2)
+	                                                            {
+                                                                    <span class="label label-warning">@cond.CLTA_NM_TAG</span>
+	                                                            }
+                                                                @if (cond.CLTA_IN_TIPO == 3)
+	                                                            {
+                                                                    <span class="label label-danger">@cond.CLTA_NM_TAG</span>
+	                                                            }                                                                
+                                                                @if (cond.CLTA_IN_TIPO == 4)
+	                                                            {
+                                                                    <span class="label label-success">@cond.CLTA_NM_TAG</span>
+	                                                            }                                                                
+                                                            </div>
+                                                        }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Referências Comerciais</h4>
+                                                    <br />
+                                                    @if (Model.CLIENTE_REFERENCIA.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Nome</th>
+                                                                    <th>E-Mail</th>
+                                                                    <th>Telefone</th>
+                                                                    <th>Ativo</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CLIENTE_REFERENCIA))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.CLRE_NM_NOME</td>
+                                                                        <td>@cond.CLRE_NM_EMAIL</td>
+                                                                        <td>@cond.CLRE_NR_TELEFONE</td>
+                                                                        @if (cond.CLRE_IN_ATIVO == 1)
+	                                                                    {
+                                                                            <td>Sim</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>Não</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Observações*@
+                            <div id="tab-7" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCliente", "Cadastros", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+                                        {
+                                            <div class="alert alert-danger">
+                                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                            </div>
+                                        }
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CLIE_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_DT_CADASTRO)
+                                                    @Html.HiddenFor(m => m.CLIE_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.MATR_CD_ID)
+                                                    @Html.HiddenFor(m => m.FILI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CLIE_AQ_FOTO)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.CLIE_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1040px; height: 400px;", autofocus = true, @readonly="readonly"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Indicadores*@
+                            <div id="tab-8" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Últimos Pedidos de Vendas</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.PEDIDO_VENDA.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Número/Nome</th>
+                                                                    <th>Emissão</th>
+                                                                    <th>Status</th>
+                                                                    <th>Aprovação</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.PEDIDO_VENDA.OrderByDescending(a => a.PEVE_DT_DATA).Take(4)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.PEVE_NM_NOME</td>
+                                                                        <td>@cond.PEVE_DT_DATA.ToShortDateString()</td>
+                                                                        @if (cond.PEVE_IN_STATUS == 1)
+	                                                                    {
+                                                                            <td>Em Emissão</td>
+                                                                        }
+                                                                        else if (cond.PEVE_IN_STATUS == 2)
+	                                                                    {
+                                                                            <td>Em Aprovação</td>
+                                                                        }
+                                                                        else if (cond.PEVE_IN_STATUS == 3)
+                                                                        {
+                                                                            <td>Aprovado</td>
+                                                                        }
+                                                                        else if (cond.PEVE_IN_STATUS == 4)
+                                                                        {
+                                                                            <td>Cancelado</td>
+                                                                        }
+                                                                        @if (cond.PEVE_DT_APROVACAO == null)
+	                                                                    {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        else
+	                                                                    {
+                                                                            <td>@cond.PEVE_DT_APROVACAO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Últimos Pedidos de Serviços</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.PEDIDO_SERVICO.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Número/Nome</th>
+                                                                    <th>Emissão</th>
+                                                                    <th>Status</th>
+                                                                    <th>Aprovação</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.PEDIDO_SERVICO.OrderByDescending(a => a.PESE_DT_DATA).Take(4)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.PESE_NM_NOME</td>
+                                                                        <td>@cond.PESE_DT_DATA.ToShortDateString()</td>
+                                                                        @if (cond.PESE_IN_STATUS == 1)
+	                                                                    {
+                                                                            <td>Em Emissão</td>
+                                                                        }
+                                                                        else if (cond.PESE_IN_STATUS == 2)
+	                                                                    {
+                                                                            <td>Em Aprovação</td>
+                                                                        }
+                                                                        else if (cond.PESE_IN_STATUS == 3)
+                                                                        {
+                                                                            <td>Aprovado</td>
+                                                                        }
+                                                                        else if (cond.PESE_IN_STATUS == 4)
+                                                                        {
+                                                                            <td>Cancelado</td>
+                                                                        }
+                                                                        @if (cond.PESE_DT_APROVACAO == null)
+	                                                                    {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        else
+	                                                                    {
+                                                                            <td>@cond.PESE_DT_APROVACAO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Últimos Atendimentos</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.TICKET_ATENDIMENTO.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Número/Nome</th>
+                                                                    <th>Abertura</th>
+                                                                    <th>Status</th>
+                                                                    <th>Aprovação</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.TICKET_ATENDIMENTO.OrderByDescending(a => a.TIAT_DT_ATENDIMENTO).Take(4)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.TIAT_NM_TITULO</td>
+                                                                        <td>@cond.TIAT_DT_ATENDIMENTO.ToShortDateString()</td>
+                                                                        @if (cond.TIAT_IN_STATUS == 1)
+	                                                                    {
+                                                                            <td>Aberto</td>
+                                                                        }
+                                                                        else if (cond.TIAT_IN_STATUS == 2)
+	                                                                    {
+                                                                            <td>Atendendo</td>
+                                                                        }
+                                                                        else if (cond.TIAT_IN_STATUS == 3)
+                                                                        {
+                                                                            <td>Finalizado</td>
+                                                                        }
+                                                                        else if (cond.TIAT_IN_STATUS == 4)
+                                                                        {
+                                                                            <td>Cancelado</td>
+                                                                        }
+                                                                        @if (cond.TIAT_DT_FINALIZACAO == null)
+	                                                                    {
+                                                                            <td>-</td>
+                                                                        }
+                                                                        else
+	                                                                    {
+                                                                            <td>@cond.TIAT_DT_FINALIZACAO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5>Últimas NF´s Emitidas</h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    <h1 class="no-margins">Em definição</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseCliente", controller: "Cadastros")
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+}
+@section Scripts {
+   
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+   
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('body').addClass('light-navbar');
+
+            $("#sparkline1").sparkline([34, 43, 43, 35, 44, 32, 44, 52], {
+                type: 'line',
+                width: '100%',
+                height: '60',
+                lineColor: '#1ab394',
+                fillColor: "#ffffff"
+            });
+
+        });
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

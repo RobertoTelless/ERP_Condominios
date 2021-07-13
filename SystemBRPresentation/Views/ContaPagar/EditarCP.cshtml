@@ -1,0 +1,1447 @@
+﻿@using Presentation.Extensions
+@using EntitiesServices.Work_Classes;
+@model SystemBRPresentation.ViewModels.ContaPagarViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Contas a Pagar</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaCP", "ContaPagar")">Contas a Pagar</a>
+            </li>
+            <li class="active">
+                <strong>Contas a Pagar - Edição</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="widget style1 yellow-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        @if (Model.CAPA_IN_LIQUIDADA == 0)
+	                    {
+                            <h3 class="font-normal">Em Aberto</h3>
+                        }
+                        else
+                        {
+                            <h3 class="font-normal">Liquidada</h3>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.CAPA_NR_ATRASO > 0)
+        {
+            <div class="col-lg-2">
+                <div class="widget style1 red-bg">
+                    <div class="row vertical-align">
+                        <div class="col-xs-3">
+                            <i class="fa fa-thumbs-o-up fa-3x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <h3 class="font-normal">Atraso: @Model.CAPA_NR_ATRASO</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="col-lg-2">
+            <div class="widget style1 navy-bg">
+                <div class="row vertical-align">
+                    <div class="col-xs-3">
+                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <h3 class="font-normal">Vencimento: @Model.CAPA_DT_VENCIMENTO.Value.ToShortDateString()</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Conta a Pagar - Edição</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    @*@Html.AntiForgeryToken()*@
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="form-group">
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
+                    </div>
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li id="geral" class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                            <li id="parcela" class=""><a data-toggle="tab" href="#tab-2">Parcelas</a></li>
+                            <li id="liquidar" class=""><a data-toggle="tab" href="#tab-3">Liquidação</a></li>
+                            @if (Model.CAPA_IN_PARCELADA == 0)
+	                        {
+                                <li class=""><a data-toggle="tab" href="#tab-4">Pagamento Parcial</a></li>
+	                        }   
+                            <li class=""><a data-toggle="tab" href="#tab-5">Rateio de Plano de Contas</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-6">Anexos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
+                        </ul>
+                        <div class="tab-content">
+
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="form-group">
+                                            @Html.ButtonLinkIndex(text: "Duplicar Lançamento", action: "DuplicarCP", controller: "ContaPagar", htmlAttributes: new { id = Model.CAPA_CD_ID })
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CAPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_LIQUIDACAO)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_INICIO_PARCELAS)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELAS)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_DESCONTO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_JUROS)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_PARCELADO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_TAXAS)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_VALOR_PAGO)
+                                                    @Html.HiddenFor(m => m.PERI_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_PARCIAL)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    Fornecedor
+                                                    @Html.DropDownListFor(m => m.FORN_CD_ID, (SelectList)ViewBag.Forn, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FORN_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Centro de Custos
+                                                    @Html.DropDownListFor(m => m.CECU_CD_ID, (SelectList)ViewBag.CC, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CECU_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Responsável
+                                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Forma de Pagamento*
+                                                    @Html.DropDownListFor(m => m.FOPA_CD_ID, (SelectList)ViewBag.Formas, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.FOPA_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Tipo de Documento
+                                                    @Html.DropDownListFor(m => m.CAPA_IN_TIPO_DOC, (SelectList)ViewBag.TipoDoc, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_IN_TIPO_DOC, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <hr />
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Num.Documento
+                                                    @Html.TextBoxFor(m => m.CAPA_NR_DOCUMENTO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_NR_DOCUMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-10 col-md-10 col-xs-12">
+                                                    Descrição
+                                                    @Html.TextBoxFor(m => m.CAPA_DS_DESCRICAO, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DS_DESCRICAO, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data de Emissão
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_LANCAMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DT_LANCAMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Competência
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_COMPETENCIA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DT_COMPETENCIA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Valor
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_VL_VALOR, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data de Vencimento
+                                                    @if (Model.Parcelado || Model.Parcial)
+                                                    {
+                                                        @Html.TextBoxFor(m => m.CAPA_DT_VENCIMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(m => m.CAPA_DT_VENCIMENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                    }
+                                                    @Html.ValidationMessageFor(m => m.CAPA_DT_VENCIMENTO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Saldo
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_SALDO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                </div>
+                                                @if (Model.CAPA_NR_ATRASO > 0)
+                                                {
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Atraso
+                                                        @Html.TextBoxFor(m => m.CAPA_NR_ATRASO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <br />
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
+                                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Liquidação*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        if (ViewBag.TemSaldo == 0)
+                                        {
+                                            <div class="modal fade" id="liquidaModal" tabindex="-1" role="dialog" aria-labelledby="liquidaModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="liquidaModalLabel">Confirma Liquidação</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>A conta não possui saldo suficiente para efetuar o pagamento.</p>
+                                                            <p>Deseja continuar mesmo assim?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            @Html.ButtonActionSubmit(text: "Confirmar", htmlAttributes: new { id = "basictoast", onclick = "LiquidarCP()" }) 
+                                                            <button style="margin-top: -5px;" type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CAPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_COMPETENCIA)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_INICIO_PARCELAS)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_LANCAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_VENCIMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELAS)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_NM_FAVORECIDO)
+                                                    @Html.HiddenFor(m => m.CAPA_NM_FORMA_PAGAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_NR_DOCUMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_PARCELADO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_PARCIAL)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_SALDO)
+                                                    @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                    @Html.HiddenFor(m => m.COBA_CD_ID)
+                                                    @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.PERI_CD_ID)
+                                                    @Html.HiddenFor(m => m.PLCO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIFA_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_DOC)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.CAPA_IN_LIQUIDADA == 1)
+	                                        {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        <div class="input-group">
+                                                            Liquidada
+                                                            <span class="input-group-btn">
+                                                                @Html.CheckBoxFor(m => m.Liquidada, new { @class = "checkbox i-checks" , @readonly="readonly"})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data Liquidação
+                                                        @Html.TextBoxFor(m => m.CAPA_DT_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true , @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Valor Original
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_VALOR,  "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Descontos(-)
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_DESCONTO,"{0:n2}", new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Juros (+)
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_JUROS,"{0:n2}", new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Taxas (+)
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_TAXAS, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Valor Pago (=)
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_VALOR_PAGO,"{0:n2}", new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">   
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        Conta Bancária
+                                                        @Html.TextBoxFor(m => m.FORMA_PAGAMENTO.CONTA_BANCO.COBA_NM_NOME_EXIBE, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                    </div>
+                                                    @if (Model.FORMA_PAGAMENTO.FOPA_IN_CHEQUE == 1)
+	                                                {
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Número do Cheque
+                                                            @Html.TextBoxFor(m => m.CAPA_NR_CHEQUE, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                        </div>
+	                                                }
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <br />
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        @Html.ButtonLinkIndex(text: "Visualizar Conta", action: "EditarContaBanco", controller: "ContaPagar", routeValues: new { id = Model.CAPA_CD_ID })
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                if (Model.CAPA_IN_PARCELADA == 0)
+	                                            {
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Data Liquidação
+                                                            @Html.TextBoxFor(m => m.CAPA_DT_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker",  @id = "data5", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.CAPA_DT_LIQUIDACAO, "",new { @style="color:red" })
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            Conta Bancária
+                                                            @Html.TextBoxFor(m => m.FORMA_PAGAMENTO.CONTA_BANCO.COBA_NM_NOME_EXIBE, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                            Forma de Pagamento
+                                                            @Html.TextBoxFor(m => m.FORMA_PAGAMENTO.FOPA_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                        @if (Model.CAPA_IN_PAGA_PARCIAL == 0)
+	                                                    {
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Original
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}",new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "valor"})
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Descontos(-)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc", onkeyup = "sum()"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_DESCONTO, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Juros (+)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro", onkeyup = "sum()"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_JUROS, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Taxas (+)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_TAXAS,new { @class = "form-control", autofocus = true, @id = "taxa", onkeyup = "sum()"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_TAXAS, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Pago (=)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR_PAGO, new { @class = "form-control", autofocus = true, @id = "rec"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_VALOR_PAGO, "",new { @style="color:red" })
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor já Pago
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_PARCIAL, "{0:n2}",new { @class = "form-control", autofocus = true, @readonly="readonly"})
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Saldo a Receber
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_SALDO,"{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly", @id = "saldo"})
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Descontos(-)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_DESCONTO, new { @class = "form-control", autofocus = true, @id = "desc1", onkeyup = "sum1()"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_DESCONTO, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Juros (+)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_JUROS, new { @class = "form-control", autofocus = true, @id = "juro1", onkeyup = "sum1()"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_JUROS, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Taxas (+)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_TAXAS, new { @class = "form-control", autofocus = true, @id = "taxa1", onkeyup = "sum1()"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_TAXAS, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Pago (=)
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR_PAGO, new { @class = "form-control", autofocus = true, @id = "rec1"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_VALOR_PAGO, "",new { @style="color:red" })
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        @if (Model.FORMA_PAGAMENTO != null)
+                                                        {
+                                                            if (Model.FORMA_PAGAMENTO.FOPA_IN_CHEQUE == 1)
+                                                            {
+                                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                    Número do Cheque
+                                                                    @Html.TextBoxFor(m => m.CAPA_NR_CHEQUE, new { @class = "form-control", autofocus = true })
+                                                                    @Html.ValidationMessageFor(m => m.CAPA_NR_CHEQUE, "", new { @style = "color:red" })
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div> 
+                                                    <div class="form-group">   
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            @if (ViewBag.TemSaldo == 0)
+                                                            {
+                                                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#liquidaModal">
+                                                                    Confirma Liquidação de Lançamento
+                                                                </button>
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.ButtonActionSubmit(text: "Confirma Liquidação de Lançamento", htmlAttributes: new { id = "basictoast", onclick = "LiquidarCP()" }) 
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <h4>Esse lançamento foi parcelado. Só pode ser liquidado através da liquidação das parcelas individuais</h4>    
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Parcial*@
+                            @if (Model.CAPA_IN_PARCELADA == 0)
+	                        {
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        @using (Html.BeginForm("EditarCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                        {
+                                            <div class="modal fade" id="parcialModal" tabindex="-1" role="dialog" aria-labelledby="parcialModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="parcialModalLabel">Confirma Pagamento Parcial</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>A conta não possui saldo suficiente para efetuar o pagamento.</p>
+                                                            <p>Deseja continuar mesmo assim?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            @Html.ButtonActionSubmit(text: "Confirmar", htmlAttributes: new { id = "basictoast" })
+                                                            <button style="margin-top: -5px;" type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        @Html.HiddenFor(m => m.CAPA_CD_ID)
+                                                        @Html.HiddenFor(m => m.CAPA_DS_DESCRICAO)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_COMPETENCIA)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_INICIO_PARCELAS)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_LANCAMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_VENCIMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_PARCELAS)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_NM_FAVORECIDO)
+                                                        @Html.HiddenFor(m => m.CAPA_NM_FORMA_PAGAMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_NR_ATRASO)
+                                                        @Html.HiddenFor(m => m.CAPA_NR_DOCUMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_TX_OBSERVACOES)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_DESCONTO)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_JUROS)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_PARCELADO)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_TAXAS)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_VALOR_PAGO)
+                                                        @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                        @Html.HiddenFor(m => m.COBA_CD_ID)
+                                                        @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                        @Html.HiddenFor(m => m.PERI_CD_ID)
+                                                        @Html.HiddenFor(m => m.PLCO_CD_ID)
+                                                        @Html.HiddenFor(m => m.TIFA_CD_ID)
+                                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_TIPO_DOC)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        <div class="input-group">
+                                                            Pagamento Parcial
+                                                            <span class="input-group-btn">
+                                                                @Html.CheckBoxFor(m => m.Parcial, new { @class = "checkbox i-checks" , @readonly="readonly", @id="parc"})
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @if (Model.CAPA_IN_PAGA_PARCIAL == 1)
+	                                            {
+                                                    if (Model.CAPA_IN_LIQUIDADA == 0)
+	                                                {
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Recebido
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_PARCIAL, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Saldo a Receber
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_SALDO, "{0:n2}", new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Recebido
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR_PAGO, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (Model.CAPA_IN_LIQUIDADA == 0 & Model.CAPA_IN_PARCELADA.Value == 0)
+	                                                {
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Total
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_VALOR, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Data Pagamento Parcial
+                                                                @Html.TextBoxFor(m => m.CAPA_DT_LIQUIDACAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true,  @id = "data1" })
+                                                                @Html.ValidationMessageFor(m => m.CAPA_DT_LIQUIDACAO, "",new { @style="color:red" })
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                Valor Parcial Pago
+                                                                @Html.TextBoxFor(m => m.CAPA_VL_PARCIAL, new { @class = "form-control", autofocus = true, onkeyup = "VerificaSaldoParcial($(this).val())"})
+                                                                @Html.ValidationMessageFor(m => m.CAPA_VL_PARCIAL, "",new { @style="color:red" })
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                            @if (Model.FORMA_PAGAMENTO != null)
+                                                            {
+                                                                if (Model.FORMA_PAGAMENTO.FOPA_IN_CHEQUE == 1)
+                                                                {
+                                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                                        Número do Cheque
+                                                                        @Html.TextBoxFor(m => m.CAPA_NR_CHEQUE, new { @class = "form-control", autofocus = true })
+                                                                        @Html.ValidationMessageFor(m => m.CAPA_NR_CHEQUE, "", new { @style = "color:red" })
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>                                                       
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                <button id="btnSubmitParcial" style="display: none;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#parcialModal">
+                                                                    Confirma Pagamento Parcial
+                                                                </button>
+                                                                <div id="btnParcialContainer">
+                                                                    @Html.ButtonActionSubmit(text: "Confirma Pagamento Parcial", htmlAttributes: new { id = "basictoast" })    
+                                                                </div> 
+                                                            </div>
+                                                        </div>  
+	                                                }       
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+	                        }   
+
+                            @*Imagens - Anexos*@
+                            <div id="tab-6" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Anexos do Lançamento</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileLancamentoCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.CONTA_PAGAR_ANEXO != null)
+	                                                    {
+                                                            if (Model.CONTA_PAGAR_ANEXO.Count > 0)
+                                                            {
+                                                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                    <thead style ="background-color:lightsteelblue">
+                                                                        <tr>
+                                                                            <th>Título</th>
+                                                                            <th>Data</th>
+                                                                            <th>Tipo</th>
+                                                                            <th class="td-one-action">Ações</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach (var cond in (Model.CONTA_PAGAR_ANEXO))
+                                                                        {
+                                                                            <tr>
+                                                                                <td>@cond.CPAN_NM_TITULO</td>
+                                                                                <td>@cond.CPAN_DT_ANEXO.Value.ToShortDateString()</td>
+                                                                                @if (cond.CPAN_IN_TIPO == 1)
+	                                                                            {
+                                                                                    <td>Imagem</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>Arquivo</td>
+                                                                                }
+                                                                                <td class="td-one-action">
+                                                                                    @if (cond.CPAN_IN_TIPO == 1 || cond.CPAN_IN_TIPO == 2)
+	                                                                                {
+                                                                                        @Html.TableLinkDetails(cond.CPAN_CD_ID, "VerAnexoLancamentoCP","fa-camera", "Visualizar")
+	                                                                                }
+                                                                                    @if (cond.CPAN_IN_TIPO == 3)
+	                                                                                {
+                                                                                        <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.CPAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank"></a>
+	                                                                                }
+                                                                                    @Html.TableLinkDetails(cond.CPAN_CD_ID, "DownloadLancamentoCP","fa-download", "Download")
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            }
+	                                                    }  
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                <input style="float:left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                <input style="float:left; margin-right: 5px;" type="submit" value="Incluir Anexo do Lançamento" class="btn btn-sm btn-success" />
+                                                                @Html.ButtonLinkIndex(text: "Ver Imagens em Sequencia", action: "SlideShowCP", controller: "ContaPagar", htmlAttributes: new { style="float:left;" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Parcelas*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    @if (Model.CAPA_IN_PARCELADA == 1)
+	                                {
+                                        <div class="row">                                            
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="input-group">
+                                                        Parcelado
+                                                        <span class="input-group-btn">
+                                                            @Html.CheckBoxFor(m => m.Parcelado, new { @class = "checkbox i-checks" , @readonly="readonly"})
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                        <br />
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Valor Parcelado
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_PARCELADO, "{0:n2}",new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Num.Parcelas
+                                                    @Html.TextBoxFor(m => m.CAPA_IN_PARCELAS, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data inicial
+                                                    @Html.TextBoxFor(m => m.CAPA_DT_INICIO_PARCELAS, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Periodicidade
+                                                    @Html.TextBoxFor(m => m.PERIODICIDADE.PERI_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Saldo
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_SALDO,"{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly"})
+                                                </div>                                                
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm("EditarCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                        {
+                                            <div class="row">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        @Html.HiddenFor(m => m.CAPA_CD_ID)
+                                                        @Html.HiddenFor(m => m.CAPA_DS_DESCRICAO)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_COMPETENCIA)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_LIQUIDACAO)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_LANCAMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_DT_VENCIMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_NM_FAVORECIDO)
+                                                        @Html.HiddenFor(m => m.CAPA_NM_FORMA_PAGAMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_NR_DOCUMENTO)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_DESCONTO)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_JUROS)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_TAXAS)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_VALOR)
+                                                        @Html.HiddenFor(m => m.CAPA_VL_VALOR_PAGO)
+                                                        @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                        @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                        @Html.HiddenFor(m => m.COBA_CD_ID)
+                                                        @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                        @Html.HiddenFor(m => m.PLCO_CD_ID)
+                                                        @Html.HiddenFor(m => m.TIFA_CD_ID)
+                                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                        @Html.HiddenFor(m => m.CAPA_TX_OBSERVACOES)
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.CAPA_IN_TIPO_DOC)
+                                                        Valor Parcelado
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_PARCELADO, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_VL_PARCELADO, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Num.Parcelas
+                                                        @Html.TextBoxFor(m => m.CAPA_IN_PARCELAS, new { @class = "form-control touchspin2", autofocus = true, @id = "parcelas" })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_IN_PARCELAS, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data inicial
+                                                        @Html.TextBoxFor(m => m.CAPA_DT_INICIO_PARCELAS, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true,  @id = "data2"  })
+                                                        @Html.ValidationMessageFor(m => m.CAPA_DT_INICIO_PARCELAS, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        Periodicidade
+                                                        @Html.DropDownListFor(m => m.PERI_CD_ID, (SelectList)ViewBag.Periodicidade, "Selecionar", new { @class = "form-control", autofocus = true })                            
+                                                        @Html.ValidationMessageFor(m => m.PERI_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Saldo
+                                                        @Html.TextBoxFor(m => m.CAPA_VL_SALDO,"{0:n2}", new { @class = "form-control", autofocus = true, @readonly="readonly"})
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma Parcelamento", htmlAttributes: new { id = "basictoast" })
+                                            </div>
+                                        }
+                                    }
+
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Parcelas do Lançamento</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                <div class="ibox-content">
+                                                    @if (Model.CONTA_PAGAR_PARCELA != null)
+	                                                {
+                                                        if (Model.CONTA_PAGAR_PARCELA.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style ="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Número</th>
+                                                                        <th>Vencimento</th>
+                                                                        <th>Valor</th>
+                                                                        <th>Valor Recebido</th>
+                                                                        <th>Descrição</th>
+                                                                        <th></th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.CONTA_PAGAR_PARCELA))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.CPPA_NR_PARCELA</td>
+                                                                            <td>@cond.CPPA_DT_VENCIMENTO.Value.ToShortDateString()</td>
+                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CPPA_VL_VALOR.Value)</td>
+                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CPPA_VL_VALOR_PAGO.Value)</td>
+                                                                            <td>@cond.CPPA_DS_DESCRICAO</td>
+                                                                            @if (cond.CPPA_IN_QUITADA == 1)
+                                                                            {
+                                                                                <td><span class="badge badge-primary">Liquidada</span></td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td><span class="badge badge-warning">Em Aberto</span></td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @Html.TableLinkDetails(cond.CPPA_CD_ID, "VerParcelaCP","fa-search", "Consultar Parcela")
+                                                                                @if (cond.CPPA_IN_QUITADA == 0)
+	                                                                            {
+                                                                                    @Html.TableLinkDetails(cond.CPPA_CD_ID, "LiquidarParcelaCP","fa-check", "Liquidar Parcela")
+	                                                                            }   
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+	                                                }   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            @*Observações*@
+                            <div id="tab-7" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarCP", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                                    {
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @Html.HiddenFor(m => m.CAPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_DS_DESCRICAO)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_COMPETENCIA)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_LIQUIDACAO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_INICIO_PARCELAS)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_LANCAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_DT_VENCIMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_PARCELAS)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_NM_FAVORECIDO)
+                                                    @Html.HiddenFor(m => m.CAPA_NM_FORMA_PAGAMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_NR_DOCUMENTO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_DESCONTO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_JUROS)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_PARCELADO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_SALDO)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_TAXAS)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_VALOR)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_VALOR_PAGO)
+                                                    @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                    @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                    @Html.HiddenFor(m => m.COBA_CD_ID)
+                                                    @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                    @Html.HiddenFor(m => m.PERI_CD_ID)
+                                                    @Html.HiddenFor(m => m.PLCO_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIFA_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_VL_PARCIAL)
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CAPA_IN_TIPO_DOC)
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.CAPA_TX_OBSERVACOES, new { @class = "form-control", style = "width: 1040px; height: 400px;", autofocus = true , @readonly="readonly"})
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <br />
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Lançamento", htmlAttributes: new { id = "basictoast" })
+                                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseCP", controller: "ContaPagar")
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Rateio*@
+                            <div id="tab-5" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("IncluirRateioCC", "ContaPagar", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row">   
+                                            <hr />
+                                            <h4>Incluir Novo Rateio</h4>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Plano de Contas
+                                                    @Html.DropDownListFor(m => m.CECU_CD_RATEIO, (SelectList)ViewBag.CC, "Selecionar", new { @class = "form-control", autofocus = true, @id = "cc" })                            
+                                                    @Html.ValidationMessageFor(m => m.CECU_CD_RATEIO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Percentual
+                                                    @Html.TextBoxFor(m => m.CAPA_VL_PERCENTUAL, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.CAPA_VL_PERCENTUAL, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    <br />
+                                                    @Html.ButtonActionSubmit(text: "Confirma Inclusão do Rateio")
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">                                          
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                                @Html.HiddenFor(m => m.CAPA_CD_ID)
+                                                @Html.HiddenFor(m => m.CAPA_DS_DESCRICAO)
+                                                @Html.HiddenFor(m => m.CAPA_DT_COMPETENCIA)
+                                                @Html.HiddenFor(m => m.CAPA_DT_LIQUIDACAO)
+                                                @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                @Html.HiddenFor(m => m.CAPA_DT_INICIO_PARCELAS)
+                                                @Html.HiddenFor(m => m.CAPA_DT_LANCAMENTO)
+                                                @Html.HiddenFor(m => m.CAPA_DT_VENCIMENTO)
+                                                @Html.HiddenFor(m => m.CAPA_IN_ATIVO)
+                                                @Html.HiddenFor(m => m.CAPA_IN_LIQUIDADA)
+                                                @Html.HiddenFor(m => m.CAPA_IN_PAGA_PARCIAL)
+                                                @Html.HiddenFor(m => m.CAPA_IN_PARCELADA)
+                                                @Html.HiddenFor(m => m.CAPA_IN_PARCELAS)
+                                                @Html.HiddenFor(m => m.CAPA_IN_TIPO_LANCAMENTO)
+                                                @Html.HiddenFor(m => m.CAPA_NM_FAVORECIDO)
+                                                @Html.HiddenFor(m => m.CAPA_NM_FORMA_PAGAMENTO)
+                                                @Html.HiddenFor(m => m.CAPA_NR_DOCUMENTO)
+                                                @Html.HiddenFor(m => m.CAPA_VL_DESCONTO)
+                                                @Html.HiddenFor(m => m.CAPA_VL_JUROS)
+                                                @Html.HiddenFor(m => m.CAPA_VL_PARCELADO)
+                                                @Html.HiddenFor(m => m.CAPA_VL_SALDO)
+                                                @Html.HiddenFor(m => m.CAPA_VL_TAXAS)
+                                                @Html.HiddenFor(m => m.CAPA_VL_VALOR)
+                                                @Html.HiddenFor(m => m.CAPA_VL_VALOR_PAGO)
+                                                @Html.HiddenFor(m => m.CECU_CD_ID)
+                                                @Html.HiddenFor(m => m.FORN_CD_ID)
+                                                @Html.HiddenFor(m => m.COBA_CD_ID)
+                                                @Html.HiddenFor(m => m.FOPA_CD_ID)
+                                                @Html.HiddenFor(m => m.PERI_CD_ID)
+                                                @Html.HiddenFor(m => m.PLCO_CD_ID)
+                                                @Html.HiddenFor(m => m.TIFA_CD_ID)
+                                                @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                @Html.HiddenFor(m => m.CAPA_VL_PARCIAL)
+                                                @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                @Html.HiddenFor(m => m.CAPA_IN_TIPO_DOC)
+                                                @Html.HiddenFor(m => m.CAPA_TX_OBSERVACOES)
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    @if (Model.CONTA_PAGAR_RATEIO != null)
+                                                    {
+                                                        if (Model.CONTA_PAGAR_RATEIO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Centro de Custos</th>
+                                                                        <th>Nome</th>
+                                                                        <th>Percentual</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.CONTA_PAGAR_RATEIO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.CENTRO_CUSTO.GRUPO.GRUP_NR_NUMERO . @cond.CENTRO_CUSTO.SUBGRUPO.SUBG_NR_NUMERO . @cond.CENTRO_CUSTO.CECU_NR_NUMERO</td>
+                                                                            <td>@cond.CENTRO_CUSTO.CECU_NM_NOME</td>
+                                                                            <td>@cond.CRPA_NR_PERCENTUAL</td>
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.CRPA_IN_ATIVO == 1)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.CPRA_CD_ID, "ExcluirRateio", "fa-trash-o", "Excluir Rateio")
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.CPRA_CD_ID, "ReativarRateio", "fa-refresh", "Reativar Rateio")
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Indicadores*@
+                            <div id="tab-9" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+}
+@section Scripts {
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: '../GetRateio'
+                , type: 'POST'
+                , async: false
+                , success: function (r) {
+                    r.forEach(function (e) {
+                        $('#cc option[value=' + e.id + ']').prop('disabled', true);
+                        $('#cc option[value=' + e.id + ']').css('background-color', '#bdbdbd');
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+        $(function () {
+            if (getUrlParameter('parcelamento')) {
+                $('#tab-1').removeClass('active');
+                $('#tab-5').removeClass('active');
+                $('#tab-2').addClass('active');
+
+                $('#geral').removeClass('active');
+                $('#rateio').removeClass('active');
+                $('#parcela').addClass('active');
+            }
+            else if (getUrlParameter('liquidar')) {
+                $('#tab-1').removeClass('active');
+                $('#tab-5').removeClass('active');
+                $('#tab-2').removeClass('active');
+                $('#tab-3').addClass('active');
+
+                $('#geral').removeClass('active');
+                $('#rateio').removeClass('active');
+                $('#parcela').removeClass('active');
+                $('#liquidar').addClass('active');
+            }
+        });
+    </script>
+
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+
+    </script>*@
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $("#data").mask("99/99/9999");
+            $("#data1").mask("99/99/9999");
+            $("#data2").mask("99/99/9999");
+            $("#data5").mask("99/99/9999");
+        });
+    </script>
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(".touchspin2").TouchSpin({
+            min: 2,
+            max: 24,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+    <script type="text/javascript">
+        $(".touchspin3").TouchSpin({
+            min: 1,
+            max: 100,
+            step: 1,
+            buttondown_class: 'btn btn-white',
+            buttonup_class: 'btn btn-white'
+        });
+    </script>
+    @*<script type="text/javascript">
+        $(document).ready(function () {
+            $('#FOPA_CD_ID').change(function () {
+                var ddlValue = $(this).val();
+
+                if (ddlValue == "2")
+                {
+                    $('#cheque').show();
+                    $('#cheque1').show();
+                    $('#cheque2').show();
+                }
+                else 
+                {
+                    $('#cheque').hide();
+                    $('#cheque1').show();
+                    $('#cheque2').show();
+                }
+            });
+        });
+    </script>*@
+    <script type="text/javascript">
+
+        function sum() {
+            var txtFirstNumberValue = document.getElementById('valor').value;
+            var full1 = txtFirstNumberValue.replace('.', '');
+            full1 = full1.replace(',', '.');
+            var txtSecondNumberValue = document.getElementById('juro').value;
+            var full2 = txtSecondNumberValue.replace(',', '.');
+            var txtThirdNumberValue = document.getElementById('taxa').value;
+            var full3 = txtThirdNumberValue.replace(',', '.');
+            var txtFourthNumberValue = document.getElementById('desc').value;
+            var full4 = txtFourthNumberValue.replace(',', '.');
+            var result = parseFloat(txtFirstNumberValue) + parseFloat(txtSecondNumberValue) + parseFloat(txtThirdNumberValue) - parseFloat(txtFourthNumberValue);
+            var result1 = parseFloat(full1) + parseFloat(full2) + parseFloat(full3) - parseFloat(full4);
+            document.getElementById('rec').value = result1.toFixed(2).toString().replace('.', ',');
+        }
+        function sum1() {
+            var txtFirstNumberValue = document.getElementById('saldo').value;
+            var full1 = txtFirstNumberValue.replace('.', '');
+            full1 = full1.replace(',', '.');
+            var txtSecondNumberValue = document.getElementById('juro1').value;
+            var full2 = txtSecondNumberValue.replace(',', '.');
+            var txtThirdNumberValue = document.getElementById('taxa1').value;
+            var full3 = txtThirdNumberValue.replace(',', '.');
+            var txtFourthNumberValue = document.getElementById('desc1').value;
+            var full4 = txtFourthNumberValue.replace(',', '.');
+            var result = parseFloat(txtFirstNumberValue) + parseFloat(txtSecondNumberValue) + parseFloat(txtThirdNumberValue) - parseFloat(txtFourthNumberValue);
+            var result1 = parseFloat(full1) + parseFloat(full2) + parseFloat(full3) - parseFloat(full4);
+            document.getElementById('rec1').value = result1.toFixed(2).toString().replace('.', ',');
+        }
+
+    </script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                        + shortCutFunction
+                        + "](\""
+                        + msg
+                        + (title ? "\", \"" + title : '')
+                        + "\")\n\ntoastr.options = "
+                        + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    <script>
+        function LiquidarCP() {
+            $.ajax({
+                url: '../LiquidarCPClick'
+                , type: 'POST'
+            });
+        }
+
+        function VerificaSaldoParcial(val) {
+            var data = {
+                parcial: val
+            }
+
+            $.ajax({
+                url: '../VerificaSaldo'
+                , type: 'POST'
+                , data: data
+                , async: false
+                , success: function (r) {
+                    if (r != 1) {
+                        $('#btnParcialContainer').hide();
+                        $('#btnSubmitParcial').show();
+                    }
+                    else {
+                        $('#btnParcialContainer').show();
+                        $('#btnSubmitParcial').hide();
+                    }
+                }
+            });
+        }
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
