@@ -12,25 +12,18 @@ namespace EntitiesServices.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class SUBGRUPO
+    public partial class TIPO_CONTA
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SUBGRUPO()
+        public TIPO_CONTA()
         {
-            this.CENTRO_CUSTO = new HashSet<CENTRO_CUSTO>();
+            this.CONTA_BANCO = new HashSet<CONTA_BANCO>();
         }
     
-        public int SUBG_CD_ID { get; set; }
-        public int ASSI_CD_ID { get; set; }
-        public Nullable<int> GRUP_CD_ID { get; set; }
-        public string SUBG_NM_NOME { get; set; }
-        public Nullable<int> SUBG_IN_ATIVO { get; set; }
-        public string SUBG_NR_NUMERO { get; set; }
-        public string SUBG_NM_EXIBE { get; set; }
+        public int TICO_CD_ID { get; set; }
+        public string TICO_NM_NOME { get; set; }
     
-        public virtual ASSINANTE ASSINANTE { get; set; }
-        public virtual GRUPO GRUPO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
+        public virtual ICollection<CONTA_BANCO> CONTA_BANCO { get; set; }
     }
 }

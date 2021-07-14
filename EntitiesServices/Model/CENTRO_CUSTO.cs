@@ -12,25 +12,21 @@ namespace EntitiesServices.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class SUBGRUPO
+    public partial class CENTRO_CUSTO
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SUBGRUPO()
-        {
-            this.CENTRO_CUSTO = new HashSet<CENTRO_CUSTO>();
-        }
-    
-        public int SUBG_CD_ID { get; set; }
+        public int CECU_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
+        public string CECU_NR_NUMERO { get; set; }
+        public string CECU_NM_NOME { get; set; }
+        public int CECU_IN_ATIVO { get; set; }
         public Nullable<int> GRUP_CD_ID { get; set; }
-        public string SUBG_NM_NOME { get; set; }
-        public Nullable<int> SUBG_IN_ATIVO { get; set; }
-        public string SUBG_NR_NUMERO { get; set; }
-        public string SUBG_NM_EXIBE { get; set; }
+        public Nullable<int> SUBG_CD_ID { get; set; }
+        public Nullable<int> CECU_IN_TIPO { get; set; }
+        public Nullable<int> CECU_IN_MOVTO { get; set; }
+        public string CECU_NM_EXIBE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual GRUPO GRUPO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
+        public virtual SUBGRUPO SUBGRUPO { get; set; }
     }
 }

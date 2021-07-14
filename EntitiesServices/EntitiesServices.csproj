@@ -332,6 +332,9 @@
     <Compile Include="Model\AUTORIZACAO_ACESSO_ANEXO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\BANCO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\CARGO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -356,10 +359,22 @@
     <Compile Include="Model\CATEGORIA_USUARIO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CENTRO_CUSTO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\CONFIGURACAO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONFIGURACAO_ASSOCIACAO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_BANCO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_BANCO_CONTATO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTA_BANCO_LANCAMENTO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_RECEBER.cs">
@@ -546,6 +561,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_CONDOMINIO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TIPO_CONTA.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_DOCUMENTO.cs">

@@ -286,6 +286,21 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_VAGA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_ANEXO_VEICULO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.BANCO" Width="1.5" PointX="5.25" PointY="122.5" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CENTRO_CUSTO" Width="1.5" PointX="22.75" PointY="131.625" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONTA_BANCO" Width="1.5" PointX="16.5" PointY="120" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONTA_BANCO_CONTATO" Width="1.5" PointX="18.75" PointY="120.125" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONTA_BANCO_LANCAMENTO" Width="1.5" PointX="18.75" PointY="123.5" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.TIPO_CONTA" Width="1.5" PointX="14.25" PointY="119.5" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_BANCO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CENTRO_CUSTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_BANCO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CENTRO_CUSTO_GRUPO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CENTRO_CUSTO_SUBGRUPO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_TIPO_CONTA" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

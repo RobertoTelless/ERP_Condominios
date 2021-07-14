@@ -63,6 +63,9 @@ namespace EntitiesServices.Model
             this.USUARIO = new HashSet<USUARIO>();
             this.VAGA = new HashSet<VAGA>();
             this.VEICULO = new HashSet<VEICULO>();
+            this.BANCO = new HashSet<BANCO>();
+            this.CENTRO_CUSTO = new HashSet<CENTRO_CUSTO>();
+            this.CONTA_BANCO = new HashSet<CONTA_BANCO>();
         }
     
         public int ASSI_CD_ID { get; set; }
@@ -181,5 +184,11 @@ namespace EntitiesServices.Model
         public virtual ICollection<VAGA> VAGA { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BANCO> BANCO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTA_BANCO> CONTA_BANCO { get; set; }
     }
 }
