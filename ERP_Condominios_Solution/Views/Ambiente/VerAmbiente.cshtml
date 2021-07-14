@@ -152,11 +152,25 @@
                                                 <div class="row">
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Tem Chave?
-                                                        @Html.DropDownListFor(m => m.AMBI_IN_CHAVE, (SelectList)ViewBag.Chave, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @if (Model.AMBI_IN_CHAVE == 1)
+                                                        {
+                                                            @Html.TextBox("cha", "Sim", new { style = "color: orange; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TextBox("cha", "Não", new { style = "color: orange; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                        }
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12" id="razao">
                                                         Gratuito?
-                                                        @Html.DropDownListFor(m => m.AMBI_IN_GRATUITO, (SelectList)ViewBag.Gratuito, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @if (Model.AMBI_IN_GRATUITO == 1)
+                                                        {
+                                                            @Html.TextBox("grat", "Sim", new { style = "color: orange; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TextBox("grat", "Não", new { style = "color: orange; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
+                                                        }
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Dias de Reserva

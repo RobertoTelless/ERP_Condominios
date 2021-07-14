@@ -14,6 +14,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(OCORRENCIA item, OCORRENCIA itemAntes);
         Int32 ValidateDelete(OCORRENCIA item, USUARIO usuario);
         Int32 ValidateReativar(OCORRENCIA item, USUARIO usuario);
+        Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, OCORRENCIA ocorrencia, String template);
 
         OCORRENCIA GetItemById(Int32 id);
         List<OCORRENCIA> GetAllItens(Int32 idAss);

@@ -11,7 +11,6 @@ namespace ERP_Condominios_Solution.ViewModels
     {
         [Key]
         public int OCOR_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo UNIDADE obrigatorio")]
         public Nullable<int> UNID_CD_ID { get; set; }
         public Nullable<int> ASSI_CD_ID { get; set; }
         public Nullable<int> USUA_CD_ID { get; set; }

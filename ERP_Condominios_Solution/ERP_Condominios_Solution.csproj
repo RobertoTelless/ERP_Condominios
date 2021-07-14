@@ -2982,6 +2982,8 @@
     <Content Include="Views\Ocorrencia\ExcluirOcorrencia.cshtml" />
     <Content Include="Views\Ocorrencia\ReativarOcorrencia.cshtml" />
     <Content Include="Views\Ocorrencia\VerAnexoOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\GerarNotificacaoOcorrencia.cshtml" />
+    <Content Include="Views\Ocorrencia\IncluirComentarioOcorrencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

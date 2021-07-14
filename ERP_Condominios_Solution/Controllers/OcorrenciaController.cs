@@ -27,6 +27,7 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly ILogAppService logApp;
         private readonly IUsuarioAppService usuApp;
         private readonly IConfiguracaoAppService confApp;
+        private readonly IUnidadeAppService uniApp;
         private String msg;
         private Exception exception;
         OCORRENCIA objetoForn = new OCORRENCIA();
@@ -34,12 +35,13 @@ namespace ERP_Condominios_Solution.Controllers
         List<OCORRENCIA> listaMasterForn = new List<OCORRENCIA>();
         String extensao;
 
-        public OcorrenciaController(IOcorrenciaAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps)
+        public OcorrenciaController(IOcorrenciaAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IUnidadeAppService uniApps)
         {
             fornApp = baseApps;
             logApp = logApps;
             usuApp = usuApps;
             confApp = confApps;
+            uniApp = uniApps;
         }
 
         [HttpGet]
@@ -229,6 +231,8 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Unids = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Usus = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             Session["VoltaProp"] = 4;
+            ViewBag.Unidade = usuario.UNID_CD_ID;
+            ViewBag.Usuario = usuario.USUA_CD_ID;
 
             // Prepara view
             OCORRENCIA item = new OCORRENCIA();
@@ -237,7 +241,11 @@ namespace ERP_Condominios_Solution.Controllers
             vm.OCOR_IN_ATIVO = 1;
             vm.OCOR_DT_OCORRENCIA = DateTime.Today.Date;
             vm.OCOR_IN_STATUS = 1;
-            vm.UNID_CD_ID = usuario.UNID_CD_ID;
+            if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                vm.UNID_CD_ID = usuario.UNID_CD_ID;
+                ViewBag.Unidade = usuario.UNIDADE;
+            }
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
             return View(vm);
@@ -378,6 +386,13 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 try
                 {
+                    // Acerta para encerramento
+                    if (vm.OCOR_DS_JUSTIFICATIVA != null)
+                    {
+                        vm.OCOR_DT_ENCERRAMENTO = DateTime.Today.Date;
+                        vm.OCOR_IN_STATUS = 2;
+                    }                    
+                    
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     OCORRENCIA item = Mapper.Map<OcorrenciaViewModel, OCORRENCIA>(vm);
@@ -809,5 +824,147 @@ namespace ERP_Condominios_Solution.Controllers
 
             return Json(listaFiltrada.Select(x => new { x.UNID_CD_ID, x.UNID_NM_EXIBE }));
         }
+
+        [HttpGet]
+        public ActionResult GerarNotificacaoOcorrencia()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                {
+                    Session["MensOcorrencia"] = 2;
+                    return RedirectToAction("MontarTelaOcorrencia", "Ocorrencia");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            Int32 unidade = (Int32)Session["IdUnidade"];
+            List<USUARIO> lista = fornApp.GetAllUsuarios(idAss);
+
+            // Prepara view
+            ViewBag.Usuarios = new SelectList(lista, "USUA_CD_ID", "USUA_NM_NOME");
+
+            NOTIFICACAO item = new NOTIFICACAO();
+            NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
+            vm.NOTI_DT_EMISSAO = DateTime.Today.Date;
+            vm.ASSI_CD_ID = idAss;
+            vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+            vm.NOTI_IN_ATIVO = 1;
+            vm.NOTI_IN_NIVEL = 1;
+            vm.NOTI_IN_ORIGEM = 1;
+            vm.NOTI_IN_STATUS = 1;
+            vm.NOTI_IN_VISTA = 0;
+            vm.CANO_CD_ID = 5;
+            vm.NOTI_NM_TITULO = "Notificação de Ocorrência";
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult GerarNotificacaoOcorrencia(NotificacaoViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            OCORRENCIA veiculo = (OCORRENCIA)Session["Ocorrencia"];
+            List<USUARIO> lista = fornApp.GetAllUsuarios(idAss);
+            ViewBag.Usuarios = new SelectList(lista, "USUA_CD_ID", "USUA_NM_NOME");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    NOTIFICACAO item = Mapper.Map<NotificacaoViewModel, NOTIFICACAO>(vm);
+                    Int32 volta = fornApp.GerarNotificacao(item, usuarioLogado, veiculo, "NOTIOCOR");
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    listaMasterForn = new List<OCORRENCIA>();
+                    return RedirectToAction("VoltarBaseOcorrencia");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        public ActionResult IncluirComentarioOcorrencia()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            OCORRENCIA item = fornApp.GetItemById((Int32)Session["IdOcorrencia"]);
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            OCORRENCIA_COMENTARIO coment = new OCORRENCIA_COMENTARIO();
+            OcorrenciaComentarioViewModel vm = Mapper.Map<OCORRENCIA_COMENTARIO, OcorrenciaComentarioViewModel>(coment);
+            vm.OCCO_DT_COMENTARIO = DateTime.Now;
+            vm.OCCO_IN_ATIVO = 1;
+            vm.OCOR_CD_ID = item.OCOR_CD_ID;
+            vm.USUARIO = usuarioLogado;
+            vm.USUA_CD_ID = usuarioLogado.USUA_CD_ID;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncluirComentarioOcorrencia(OcorrenciaComentarioViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    OCORRENCIA_COMENTARIO item = Mapper.Map<OcorrenciaComentarioViewModel, OCORRENCIA_COMENTARIO>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    OCORRENCIA not = fornApp.GetItemById((Int32)Session["IdOcorrencia"]);
+
+                    item.USUARIO = null;
+                    not.OCORRENCIA_COMENTARIO.Add(item);
+                    objetoFornAntes = not;
+                    Int32 volta = fornApp.ValidateEdit(not, objetoFornAntes);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    return RedirectToAction("EditarOcorrencia", new { id = (Int32)Session["IdOcorrencia"] });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
     }
 }
