@@ -41,6 +41,15 @@ namespace MvcMapping.Mappers
             CreateMap<AUTORIZACAO_ACESSO, AutorizacaoViewModel>();
             CreateMap<OCORRENCIA, OcorrenciaViewModel>();
             CreateMap<OCORRENCIA_COMENTARIO, OcorrenciaComentarioViewModel>();
+            CreateMap<BANCO, BancoViewModel>();
+            CreateMap<CENTRO_CUSTO, CentroCustoViewModel>();
+            CreateMap<CONTA_BANCO, ContaBancariaViewModel>();
+            CreateMap<CONTA_BANCO_CONTATO, ContaBancariaContatoViewModel>();
+            CreateMap<CONTA_BANCO_LANCAMENTO, ContaBancariaLancamentoViewModel>();
+            CreateMap<GRUPO, GrupoViewModel>();
+            CreateMap<SUBGRUPO, SubgrupoViewModel>();
+
+
         }
     }
 }

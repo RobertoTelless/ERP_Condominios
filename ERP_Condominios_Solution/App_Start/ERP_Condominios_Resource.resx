@@ -216,6 +216,12 @@
   <data name="M0035" xml:space="preserve">
     <value>Não é possível excluir essa autorização/restrição. Existem informações vinculadas a ela</value>
   </data>
+  <data name="M0036" xml:space="preserve">
+    <value>Centro de Custo já cadastrado</value>
+  </data>
+  <data name="M0037" xml:space="preserve">
+    <value>Não é possível excluir esse centro de custo. Existem informações vinculadas a ele</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>
