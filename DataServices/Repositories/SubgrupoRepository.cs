@@ -13,9 +13,8 @@ namespace DataServices.Repositories
 {
     public class SubgrupoRepository : RepositoryBase<SUBGRUPO>, ISubgrupoRepository
     {
-        public SUBGRUPO CheckExist(SUBGRUPO conta)
+        public SUBGRUPO CheckExist(SUBGRUPO conta, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<SUBGRUPO> query = Db.SUBGRUPO;
             query = query.Where(p => p.SUBG_NR_NUMERO == conta.SUBG_NR_NUMERO);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -29,17 +28,15 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<SUBGRUPO> GetAllItensAdm()
+        public List<SUBGRUPO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<SUBGRUPO> query = Db.SUBGRUPO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<SUBGRUPO> GetAllItens()
+        public List<SUBGRUPO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<SUBGRUPO> query = Db.SUBGRUPO.Where(p => p.SUBG_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();

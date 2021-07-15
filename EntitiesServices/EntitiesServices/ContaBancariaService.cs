@@ -23,7 +23,7 @@ namespace ModelServices.EntitiesServices
         private readonly ITipoContaRepository _tipoRepository;
         private readonly IContaBancariaContatoRepository _contRepository;
         private readonly IContaBancariaLancamentoRepository _lancRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public ContaBancariaService(IContaBancariaRepository baseRepository, ILogRepository logRepository, ITipoContaRepository tipoRepository, IContaBancariaContatoRepository contRepository, IContaBancariaLancamentoRepository lancRepository) : base(baseRepository)
         {
@@ -34,9 +34,9 @@ namespace ModelServices.EntitiesServices
             _lancRepository = lancRepository;
         }
 
-        public CONTA_BANCO CheckExist(CONTA_BANCO conta)
+        public CONTA_BANCO CheckExist(CONTA_BANCO conta, Int32 idAss)
         {
-            CONTA_BANCO item = _baseRepository.CheckExist(conta);
+            CONTA_BANCO item = _baseRepository.CheckExist(conta, idAss);
             return item;
         }
 
@@ -46,20 +46,20 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public CONTA_BANCO GetContaPadrao()
+        public CONTA_BANCO GetContaPadrao(Int32 idAss)
         {
-            CONTA_BANCO item = _baseRepository.GetContaPadrao();
+            CONTA_BANCO item = _baseRepository.GetContaPadrao(idAss);
             return item;
         }
 
-        public List<CONTA_BANCO> GetAllItens()
+        public List<CONTA_BANCO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<CONTA_BANCO> GetAllItensAdm()
+        public List<CONTA_BANCO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
         public CONTA_BANCO_CONTATO GetContatoById(Int32 id)
@@ -72,14 +72,14 @@ namespace ModelServices.EntitiesServices
             return _lancRepository.GetItemById(id);
         }
 
-        public Decimal GetTotalContas()
+        public Decimal GetTotalContas(Int32 idAss)
         {
-            return _baseRepository.GetTotalContas();
+            return _baseRepository.GetTotalContas(idAss);
         }
 
-        public List<TIPO_CONTA> GetAllTipos()
+        public List<TIPO_CONTA> GetAllTipos(Int32 idAss)
         {
-            return _tipoRepository.GetAllItens();
+            return _tipoRepository.GetAllItens(idAss);
         }
 
         public Decimal GetTotalReceita(Int32 conta)
@@ -122,6 +122,11 @@ namespace ModelServices.EntitiesServices
         {
 
             return _lancRepository.GetLancamentosFaixa(conta, inicio, final);
+        }
+
+        public List<CONTA_BANCO_LANCAMENTO> ExecuteFilterLanc(Int32 conta, DateTime? data, Int32? tipo, String desc)
+        {
+            return _lancRepository.ExecuteFilter(conta, data, tipo, desc);
         }
 
         public Int32 Create(CONTA_BANCO item, LOG log)
@@ -287,9 +292,6 @@ namespace ModelServices.EntitiesServices
                 try
                 {
                     _lancRepository.Add(item);
-                    //CONTA_BANCO obj = _baseRepository.GetById(item.COBA_CD_ID);
-                    //_baseRepository.Detach(obj);
-                    //_baseRepository.Update(conta);
                     transaction.Commit();
                     return 0;
                 }

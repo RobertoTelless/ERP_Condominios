@@ -21,15 +21,15 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<CONTA_BANCO> GetAllItens()
+        public List<CONTA_BANCO> GetAllItens(Int32 idAss)
         {
-            List<CONTA_BANCO> lista = _baseService.GetAllItens();
+            List<CONTA_BANCO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public Decimal GetTotalContas()
+        public Decimal GetTotalContas(Int32 idAss)
         {
-            Decimal saldo = _baseService.GetTotalContas();
+            Decimal saldo = _baseService.GetTotalContas(idAss);
             return saldo;
         }
 
@@ -45,9 +45,9 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public List<CONTA_BANCO> GetAllItensAdm()
+        public List<CONTA_BANCO> GetAllItensAdm(Int32 idAss)
         {
-            List<CONTA_BANCO> lista = _baseService.GetAllItensAdm();
+            List<CONTA_BANCO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -57,21 +57,21 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public CONTA_BANCO GetContaPadrao()
+        public CONTA_BANCO GetContaPadrao(Int32 idAss)
         {
-            CONTA_BANCO item = _baseService.GetContaPadrao();
+            CONTA_BANCO item = _baseService.GetContaPadrao(idAss);
             return item;
         }
 
-        public CONTA_BANCO CheckExist(CONTA_BANCO conta)
+        public CONTA_BANCO CheckExist(CONTA_BANCO conta, Int32 idAss)
         {
-            CONTA_BANCO item = _baseService.CheckExist(conta);
+            CONTA_BANCO item = _baseService.CheckExist(conta, idAss);
             return item;
         }
 
-        public List<TIPO_CONTA> GetAllTipos()
+        public List<TIPO_CONTA> GetAllTipos(Int32 idAss)
         {
-            List<TIPO_CONTA> lista = _baseService.GetAllTipos();
+            List<TIPO_CONTA> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
@@ -117,12 +117,32 @@ namespace ApplicationServices.Services
             return _baseService.GetLancamentosFaixa(conta, inicio, final);
         }
 
+        public Int32 ExecuteFilterLanc(Int32 conta, DateTime? data, Int32? tipo, String desc, out List<CONTA_BANCO_LANCAMENTO> objeto)
+        {
+            try
+            {
+                objeto = new List<CONTA_BANCO_LANCAMENTO>();
+                Int32 volta = 0;
+
+                objeto = _baseService.ExecuteFilterLanc(conta, data, tipo, desc);
+                if (objeto.Count == 0)
+                {
+                    volta = 1;
+                }
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Int32 ValidateCreate(CONTA_BANCO item, USUARIO usuario)
         {
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
@@ -135,7 +155,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddCOBA",
                     LOG_IN_ATIVO = 1,
@@ -156,23 +176,6 @@ namespace ApplicationServices.Services
         {
             try
             {
-                // Verifica existencia prévia
-                //if (_baseService.CheckExist(item) != null)
-                //{
-                //    return 1;
-                //}
-
-                // Monta Log
-                //LOG log = new LOG
-                //{
-                //    LOG_DT_LOG = DateTime.Now,
-                //    USUA_CD_ID = usuario.USUA_CD_ID,
-                //    LOG_NM_MODULO = "EditCOBA",
-                //    LOG_IN_ATIVO = 1,
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTA_BANCO>(item),
-                //    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<CONTA_BANCO>(itemAntes)
-                //};
-
                 // Persiste
                 return _baseService.Edit(item);
             }
@@ -207,7 +210,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelCOBA",
@@ -236,7 +239,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatCOBA",
@@ -292,12 +295,12 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateCreateLancamento(CONTA_BANCO_LANCAMENTO item)
+        public Int32 ValidateCreateLancamento(CONTA_BANCO_LANCAMENTO item, CONTA_BANCO contaPadrao)
         {
             try
             {
                 // Acerta saldo
-                CONTA_BANCO conta = SessionMocks.contaPadrao;
+                CONTA_BANCO conta = contaPadrao;
                 //if (item.CBLA_IN_TIPO == 1)
                 //{
                 //    conta.COBA_VL_SALDO_ATUAL = conta.COBA_VL_SALDO_ATUAL + item.CBLA_VL_VALOR.Value;

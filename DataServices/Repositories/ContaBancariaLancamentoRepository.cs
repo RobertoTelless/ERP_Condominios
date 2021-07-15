@@ -12,9 +12,33 @@ namespace DataServices.Repositories
 {
     public class ContaBancariaLancamentoRepository : RepositoryBase<CONTA_BANCO_LANCAMENTO>, IContaBancariaLancamentoRepository
     {
-        public List<CONTA_BANCO_LANCAMENTO> GetAllItens()
+        public List<CONTA_BANCO_LANCAMENTO> GetAllItens(Int32 idAss)
         {
             return Db.CONTA_BANCO_LANCAMENTO.ToList();
+        }
+
+        public List<CONTA_BANCO_LANCAMENTO> ExecuteFilter(Int32 conta, DateTime? data, Int32? tipo, String desc)
+        {
+            IQueryable<CONTA_BANCO_LANCAMENTO> query = Db.CONTA_BANCO_LANCAMENTO.Where(p => p.CBLA_IN_ATIVO == 1);
+            query = query.Where(p => p.COBA_CD_ID == conta);
+
+            if (tipo != null)
+            {
+                query = query.Where(x => x.CBLA_IN_TIPO == tipo);
+            }
+            if (desc != null)
+            {
+                query = query.Where(x => x.CBLA_DS_DESCRICAO == desc);
+            }
+
+            List<CONTA_BANCO_LANCAMENTO> lista = query.ToList<CONTA_BANCO_LANCAMENTO>();
+
+            if (data != null)
+            {
+                lista = lista.Where(x => x.CBLA_DT_LANCAMENTO == data).ToList<CONTA_BANCO_LANCAMENTO>();
+            }
+
+            return lista;
         }
 
         public CONTA_BANCO_LANCAMENTO GetItemById(Int32 id)

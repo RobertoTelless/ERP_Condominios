@@ -13,9 +13,8 @@ namespace DataServices.Repositories
 {
     public class GrupoRepository : RepositoryBase<GRUPO>, IGrupoRepository
     {
-        public GRUPO CheckExist(GRUPO conta)
+        public GRUPO CheckExist(GRUPO conta, Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<GRUPO> query = Db.GRUPO;
             query = query.Where(p => p.GRUP_NR_NUMERO == conta.GRUP_NR_NUMERO);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
@@ -29,17 +28,15 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<GRUPO> GetAllItensAdm()
+        public List<GRUPO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<GRUPO> query = Db.GRUPO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<GRUPO> GetAllItens()
+        public List<GRUPO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<GRUPO> query = Db.GRUPO.Where(p => p.GRUP_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();

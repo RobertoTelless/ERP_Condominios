@@ -21,7 +21,7 @@ namespace ModelServices.EntitiesServices
         private readonly ISubgrupoRepository _baseRepository;
         private readonly IGrupoRepository _gruRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public SubgrupoService(ISubgrupoRepository baseRepository, ILogRepository logRepository, IGrupoRepository gruRepository) : base(baseRepository)
         {
@@ -36,25 +36,25 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public SUBGRUPO CheckExist(SUBGRUPO obj)
+        public SUBGRUPO CheckExist(SUBGRUPO obj, Int32 idAss)
         {
-            SUBGRUPO item = _baseRepository.CheckExist(obj);
+            SUBGRUPO item = _baseRepository.CheckExist(obj, idAss);
             return item;
         }
 
-        public List<SUBGRUPO> GetAllItens()
+        public List<SUBGRUPO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<SUBGRUPO> GetAllItensAdm()
+        public List<SUBGRUPO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<GRUPO> GetAllGrupos()
+        public List<GRUPO> GetAllGrupos(Int32 idAss)
         {
-            return _gruRepository.GetAllItens();
+            return _gruRepository.GetAllItens(idAss);
         }
 
         public Int32 Create(SUBGRUPO item, LOG log)

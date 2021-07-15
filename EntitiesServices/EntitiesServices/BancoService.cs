@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly IBancoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public BancoService(IBancoRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -29,9 +29,9 @@ namespace ModelServices.EntitiesServices
 
         }
 
-        public BANCO CheckExist(BANCO conta)
+        public BANCO CheckExist(BANCO conta, Int32 idAss)
         {
-            BANCO item = _baseRepository.CheckExist(conta);
+            BANCO item = _baseRepository.CheckExist(conta, idAss);
             return item;
         }
 
@@ -47,19 +47,19 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<BANCO> GetAllItens()
+        public List<BANCO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<BANCO> GetAllItensAdm()
+        public List<BANCO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<BANCO> ExecuteFilter(String codigo, String nome)
+        public List<BANCO> ExecuteFilter(String codigo, String nome, Int32 idAss)
         {
-            List<BANCO> lista = _baseRepository.ExecuteFilter(codigo, nome);
+            List<BANCO> lista = _baseRepository.ExecuteFilter(codigo, nome, idAss);
             return lista;
         }
 

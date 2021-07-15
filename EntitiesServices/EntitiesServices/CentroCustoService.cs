@@ -20,7 +20,7 @@ namespace ModelServices.EntitiesServices
     {
         private readonly ICentroCustoRepository _baseRepository;
         private readonly ILogRepository _logRepository;
-        protected SystemBRDatabaseEntities Db = new SystemBRDatabaseEntities();
+        protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
         public CentroCustoService(ICentroCustoRepository baseRepository, ILogRepository logRepository) : base(baseRepository)
         {
@@ -35,35 +35,35 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public CENTRO_CUSTO CheckExist(CENTRO_CUSTO obj)
+        public CENTRO_CUSTO CheckExist(CENTRO_CUSTO obj, Int32 idAss)
         {
-            CENTRO_CUSTO item = _baseRepository.CheckExist(obj);
+            CENTRO_CUSTO item = _baseRepository.CheckExist(obj, idAss);
             return item;
         }
 
-        public List<CENTRO_CUSTO> GetAllItens()
+        public List<CENTRO_CUSTO> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<CENTRO_CUSTO> GetAllReceitas()
+        public List<CENTRO_CUSTO> GetAllReceitas(Int32 idAss)
         {
-            return _baseRepository.GetAllReceitas();
+            return _baseRepository.GetAllReceitas(idAss);
         }
 
-        public List<CENTRO_CUSTO> GetAllDespesas()
+        public List<CENTRO_CUSTO> GetAllDespesas(Int32 idAss)
         {
-            return _baseRepository.GetAllDespesas();
+            return _baseRepository.GetAllDespesas(idAss);
         }
 
-        public List<CENTRO_CUSTO> GetAllItensAdm()
+        public List<CENTRO_CUSTO> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<CENTRO_CUSTO> ExecuteFilter(Int32? grupoId, Int32? subGrupoId, Int32? tipo, Int32? movimento, String numero, String nome)
+        public List<CENTRO_CUSTO> ExecuteFilter(Int32? grupoId, Int32? subGrupoId, Int32? tipo, Int32? movimento, String numero, String nome, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(grupoId, subGrupoId, tipo, movimento, numero, nome);
+            return _baseRepository.ExecuteFilter(grupoId, subGrupoId, tipo, movimento, numero, nome, idAss);
 
         }
 

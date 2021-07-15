@@ -20,16 +20,14 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<PERIODICIDADE> GetAllItensAdm()
+        public List<PERIODICIDADE> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<PERIODICIDADE> query = Db.PERIODICIDADE;
             return query.ToList();
         }
 
-        public List<PERIODICIDADE> GetAllItens()
+        public List<PERIODICIDADE> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<PERIODICIDADE> query = Db.PERIODICIDADE.Where(p => p.PERI_IN_ATIVO == 1);
             return query.ToList();
         }

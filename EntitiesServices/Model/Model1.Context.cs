@@ -135,5 +135,10 @@ namespace EntitiesServices.Model
         public virtual DbSet<CONTA_BANCO_CONTATO> CONTA_BANCO_CONTATO { get; set; }
         public virtual DbSet<CONTA_BANCO_LANCAMENTO> CONTA_BANCO_LANCAMENTO { get; set; }
         public virtual DbSet<TIPO_CONTA> TIPO_CONTA { get; set; }
+        public virtual DbSet<CATEGORIA_EQUIPAMENTO> CATEGORIA_EQUIPAMENTO { get; set; }
+        public virtual DbSet<EQUIPAMENTO> EQUIPAMENTO { get; set; }
+        public virtual DbSet<EQUIPAMENTO_ANEXO> EQUIPAMENTO_ANEXO { get; set; }
+        public virtual DbSet<EQUIPAMENTO_MANUTENCAO> EQUIPAMENTO_MANUTENCAO { get; set; }
+        public virtual DbSet<PERIODICIDADE> PERIODICIDADE { get; set; }
     }
 }

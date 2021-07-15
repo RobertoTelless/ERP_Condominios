@@ -21,15 +21,15 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<SUBGRUPO> GetAllItens()
+        public List<SUBGRUPO> GetAllItens(Int32 idAss)
         {
-            List<SUBGRUPO> lista = _baseService.GetAllItens();
+            List<SUBGRUPO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<SUBGRUPO> GetAllItensAdm()
+        public List<SUBGRUPO> GetAllItensAdm(Int32 idAss)
         {
-            List<SUBGRUPO> lista = _baseService.GetAllItensAdm();
+            List<SUBGRUPO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -39,15 +39,15 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public List<GRUPO> GetAllGrupos()
+        public List<GRUPO> GetAllGrupos(Int32 idAss)
         {
-            List<GRUPO> lista = _baseService.GetAllGrupos();
+            List<GRUPO> lista = _baseService.GetAllGrupos(idAss);
             return lista;
         }
 
-        public SUBGRUPO CheckExist(SUBGRUPO obj)
+        public SUBGRUPO CheckExist(SUBGRUPO obj, Int32 idAss)
         {
-            SUBGRUPO item = _baseService.CheckExist(obj);
+            SUBGRUPO item = _baseService.CheckExist(obj, idAss);
             return item;
         }
 
@@ -57,20 +57,20 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
 
                 // Completa objeto
                 item.SUBG_IN_ATIVO = 1;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddSUBG",
                     LOG_IN_ATIVO = 1,
@@ -95,7 +95,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditSUBG",
                     LOG_IN_ATIVO = 1,
@@ -142,7 +142,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DeleSUBG",
@@ -171,7 +171,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatSUBG",

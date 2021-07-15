@@ -21,21 +21,21 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<GRUPO> GetAllItens()
+        public List<GRUPO> GetAllItens(Int32 idAss)
         {
-            List<GRUPO> lista = _baseService.GetAllItens();
+            List<GRUPO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public GRUPO CheckExist(GRUPO obj)
+        public GRUPO CheckExist(GRUPO obj, Int32 idAss)
         {
-            GRUPO item = _baseService.CheckExist(obj);
+            GRUPO item = _baseService.CheckExist(obj, idAss);
             return item;
         }
 
-        public List<GRUPO> GetAllItensAdm()
+        public List<GRUPO> GetAllItensAdm(Int32 idAss)
         {
-            List<GRUPO> lista = _baseService.GetAllItensAdm();
+            List<GRUPO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -50,20 +50,20 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
 
                 // Completa objeto
                 item.GRUP_IN_ATIVO = 1;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddGRUP",
                     LOG_IN_ATIVO = 1,
@@ -88,7 +88,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditGRUP",
                     LOG_IN_ATIVO = 1,
@@ -135,7 +135,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DeleGRUP",
@@ -164,7 +164,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatGRUP",

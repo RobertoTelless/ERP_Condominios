@@ -21,27 +21,27 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<CENTRO_CUSTO> GetAllItens()
+        public List<CENTRO_CUSTO> GetAllItens(Int32 idAss)
         {
-            List<CENTRO_CUSTO> lista = _baseService.GetAllItens();
+            List<CENTRO_CUSTO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<CENTRO_CUSTO> GetAllDespesas()
+        public List<CENTRO_CUSTO> GetAllDespesas(Int32 idAss)
         {
-            List<CENTRO_CUSTO> lista = _baseService.GetAllDespesas();
+            List<CENTRO_CUSTO> lista = _baseService.GetAllDespesas(idAss);
             return lista;
         }
 
-        public List<CENTRO_CUSTO> GetAllReceitas()
+        public List<CENTRO_CUSTO> GetAllReceitas(Int32 idAss)
         {
-            List<CENTRO_CUSTO> lista = _baseService.GetAllReceitas();
+            List<CENTRO_CUSTO> lista = _baseService.GetAllReceitas(idAss);
             return lista;
         }
 
-        public List<CENTRO_CUSTO> GetAllItensAdm()
+        public List<CENTRO_CUSTO> GetAllItensAdm(Int32 idAss)
         {
-            List<CENTRO_CUSTO> lista = _baseService.GetAllItensAdm();
+            List<CENTRO_CUSTO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -51,13 +51,13 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public CENTRO_CUSTO CheckExist(CENTRO_CUSTO obj)
+        public CENTRO_CUSTO CheckExist(CENTRO_CUSTO obj, Int32 idAss)
         {
-            CENTRO_CUSTO item = _baseService.CheckExist(obj);
+            CENTRO_CUSTO item = _baseService.CheckExist(obj, idAss);
             return item;
         }
 
-        public Int32 ExecuteFilter(Int32? grupoId, Int32? subGrupoId, Int32? tipo, Int32? movimento, String numero, String nome, out List<CENTRO_CUSTO> objeto)
+        public Int32 ExecuteFilter(Int32? grupoId, Int32? subGrupoId, Int32? tipo, Int32? movimento, String numero, String nome, Int32 idAss, out List<CENTRO_CUSTO> objeto)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(grupoId, subGrupoId, tipo, movimento, numero, nome);
+                objeto = _baseService.ExecuteFilter(grupoId, subGrupoId, tipo, movimento, numero, nome, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -84,13 +84,13 @@ namespace ApplicationServices.Services
             {
                 // Completa objeto
                 item.CECU_IN_ATIVO = 1;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddCECU",
                     LOG_IN_ATIVO = 1,
@@ -115,7 +115,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditCECU",
                     LOG_IN_ATIVO = 1,
@@ -144,13 +144,13 @@ namespace ApplicationServices.Services
 
                 // Acerta campos
                 item.CECU_IN_ATIVO = 0;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelCECU",
@@ -174,13 +174,13 @@ namespace ApplicationServices.Services
 
                 // Acerta campos
                 item.CECU_IN_ATIVO = 1;
-                item.ASSI_CD_ID = SessionMocks.IdAssinante;
+                item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 // Monta Log
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatCECU",

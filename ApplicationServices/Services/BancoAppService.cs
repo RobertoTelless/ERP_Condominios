@@ -21,21 +21,21 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public BANCO CheckExist(BANCO conta)
+        public BANCO CheckExist(BANCO conta, Int32 idAss)
         {
-            BANCO item = _baseService.CheckExist(conta);
+            BANCO item = _baseService.CheckExist(conta, idAss);
             return item;
         }
 
-        public List<BANCO> GetAllItens()
+        public List<BANCO> GetAllItens(Int32 idAss)
         {
-            List<BANCO> lista = _baseService.GetAllItens();
+            List<BANCO> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<BANCO> GetAllItensAdm()
+        public List<BANCO> GetAllItensAdm(Int32 idAss)
         {
-            List<BANCO> lista = _baseService.GetAllItensAdm();
+            List<BANCO> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -51,7 +51,7 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public Int32 ExecuteFilter(String codigo, String nome, out List<BANCO> objeto)
+        public Int32 ExecuteFilter(String codigo, String nome, Int32 idAss, out List<BANCO> objeto)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(codigo, nome);
+                objeto = _baseService.ExecuteFilter(codigo, nome, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -77,7 +77,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
@@ -89,7 +89,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "AddBANC",
                     LOG_IN_ATIVO = 1,
@@ -114,7 +114,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_NM_OPERACAO = "EditBANC",
                     LOG_IN_ATIVO = 1,
@@ -148,7 +148,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelBANC",
@@ -177,7 +177,7 @@ namespace ApplicationServices.Services
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = SessionMocks.IdAssinante,
+                    ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatBANC",

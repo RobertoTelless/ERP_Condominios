@@ -9,9 +9,9 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IGrupoRepository : IRepositoryBase<GRUPO>
     {
-        GRUPO CheckExist(GRUPO item);
-        List<GRUPO> GetAllItens();
+        GRUPO CheckExist(GRUPO item, Int32 idAss);
+        List<GRUPO> GetAllItens(Int32 idAss);
         GRUPO GetItemById(Int32 id);
-        List<GRUPO> GetAllItensAdm();
+        List<GRUPO> GetAllItensAdm(Int32 idAss);
     }
 }

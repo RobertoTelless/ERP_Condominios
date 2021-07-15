@@ -12,24 +12,21 @@ namespace EntitiesServices.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class UNIDADE_MATERIAL
+    public partial class CATEGORIA_EQUIPAMENTO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UNIDADE_MATERIAL()
+        public CATEGORIA_EQUIPAMENTO()
         {
-            this.MATERIAL = new HashSet<MATERIAL>();
-            this.PRODUTO = new HashSet<PRODUTO>();
+            this.EQUIPAMENTO = new HashSet<EQUIPAMENTO>();
         }
     
-        public int UNMA_CD_ID { get; set; }
+        public int CAEQ_CD_ID { get; set; }
         public int ASSI_CD_ID { get; set; }
-        public string UNMA_NM_NOME { get; set; }
-        public int UNMA_IN_ATIVO { get; set; }
+        public string CAEQ_NM_NOME { get; set; }
+        public Nullable<int> CAEQ_IN_ATIVO { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EQUIPAMENTO> EQUIPAMENTO { get; set; }
         public virtual ASSINANTE ASSINANTE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MATERIAL> MATERIAL { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PRODUTO> PRODUTO { get; set; }
     }
 }

@@ -9,12 +9,12 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IBancoRepository : IRepositoryBase<BANCO>
     {
-        BANCO CheckExist(BANCO conta);
+        BANCO CheckExist(BANCO conta, Int32 idAss);
         BANCO GetByCodigo(String codigo);
         BANCO GetItemById(Int32 id);
-        List<BANCO> GetAllItens();
-        List<BANCO> GetAllItensAdm();
-        List<BANCO> ExecuteFilter(String codigo, String nome);
+        List<BANCO> GetAllItens(Int32 idAss);
+        List<BANCO> GetAllItensAdm(Int32 idAss);
+        List<BANCO> ExecuteFilter(String codigo, String nome, Int32 idAss);
     }
 }
 

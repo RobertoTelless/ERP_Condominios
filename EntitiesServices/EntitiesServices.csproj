@@ -193,12 +193,17 @@
     <Compile Include="EntitiesServices\AgendaService.cs" />
     <Compile Include="EntitiesServices\AutorizacaoService.cs" />
     <Compile Include="EntitiesServices\AssinanteService.cs" />
+    <Compile Include="EntitiesServices\BancoService.cs" />
     <Compile Include="EntitiesServices\CategoriaTelefoneService.cs" />
     <Compile Include="EntitiesServices\CategoriaFornecedorService.cs" />
+    <Compile Include="EntitiesServices\CentroCustoService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
+    <Compile Include="EntitiesServices\ContaBancariaService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
     <Compile Include="EntitiesServices\AmbienteService.cs" />
+    <Compile Include="EntitiesServices\GrupoService.cs" />
     <Compile Include="EntitiesServices\OcorrenciaService.cs" />
+    <Compile Include="EntitiesServices\SubgrupoService.cs" />
     <Compile Include="EntitiesServices\TelefoneService.cs" />
     <Compile Include="EntitiesServices\FornecedorService.cs" />
     <Compile Include="EntitiesServices\LogService.cs" />
@@ -222,10 +227,19 @@
     <Compile Include="Interfaces\Repositories\IAgendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOcorrenciaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICentroCustoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IContaBancariaContatoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IContaBancariaLancamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IContaBancariaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPeriodicidadeRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISubgrupoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ITipoContaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoDocumentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrauParentescoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaFornecedorRepository.cs" />
@@ -270,12 +284,17 @@
     <Compile Include="Interfaces\Services\IAgendaService.cs" />
     <Compile Include="Interfaces\Services\IAutorizacaoService.cs" />
     <Compile Include="Interfaces\Services\IAssinanteService.cs" />
+    <Compile Include="Interfaces\Services\IBancoService.cs" />
     <Compile Include="Interfaces\Services\ICategoriaTelefoneService.cs" />
     <Compile Include="Interfaces\Services\ICategoriaFornecedorService.cs" />
+    <Compile Include="Interfaces\Services\ICentroCustoService.cs" />
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
+    <Compile Include="Interfaces\Services\IContaBancariaService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />
     <Compile Include="Interfaces\Services\IAmbienteService.cs" />
+    <Compile Include="Interfaces\Services\IGrupoService.cs" />
     <Compile Include="Interfaces\Services\IOcorrenciaService.cs" />
+    <Compile Include="Interfaces\Services\ISubgrupoService.cs" />
     <Compile Include="Interfaces\Services\ITelefoneService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorService.cs" />
     <Compile Include="Interfaces\Services\ILogService.cs" />
@@ -341,6 +360,9 @@
     <Compile Include="Model\CATEGORIA_AGENDA.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\CATEGORIA_EQUIPAMENTO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\CATEGORIA_FORNECEDOR.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -399,6 +421,15 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ENTRADA_SAIDA.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EQUIPAMENTO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EQUIPAMENTO_ANEXO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EQUIPAMENTO_MANUTENCAO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FINALIDADE_RESERVA.cs">
@@ -492,6 +523,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERFIL.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PERIODICIDADE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERIODICIDADE_TAREFA.cs">

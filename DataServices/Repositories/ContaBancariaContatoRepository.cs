@@ -12,7 +12,7 @@ namespace DataServices.Repositories
 {
     public class ContaBancariaContatoRepository : RepositoryBase<CONTA_BANCO_CONTATO>, IContaBancariaContatoRepository
     {
-        public List<CONTA_BANCO_CONTATO> GetAllItens()
+        public List<CONTA_BANCO_CONTATO> GetAllItens(Int32 idAss)
         {
             return Db.CONTA_BANCO_CONTATO.ToList();
         }

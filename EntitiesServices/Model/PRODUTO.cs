@@ -56,6 +56,7 @@ namespace EntitiesServices.Model
         public string PROD_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> PROD_QN_NOVA_CONTAGEM { get; set; }
         public Nullable<int> PROD_QN_CONTAGEM { get; set; }
+        public Nullable<int> UNMA_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_PRODUTO CATEGORIA_PRODUTO { get; set; }
@@ -67,5 +68,6 @@ namespace EntitiesServices.Model
         public virtual ICollection<PRODUTO_FORNECEDOR> PRODUTO_FORNECEDOR { get; set; }
         public virtual SUBCATEGORIA_PRODUTO SUBCATEGORIA_PRODUTO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
+        public virtual UNIDADE_MATERIAL UNIDADE_MATERIAL { get; set; }
     }
 }

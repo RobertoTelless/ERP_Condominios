@@ -301,6 +301,20 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" />
         <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" />
         <AssociationConnector Association="ERP_CondominioModel.FK_CONTA_BANCO_TIPO_CONTA" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO" Width="1.5" PointX="19" PointY="116.375" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.EQUIPAMENTO" Width="1.5" PointX="21.25" PointY="123.75" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.EQUIPAMENTO_ANEXO" Width="1.5" PointX="23.5" PointY="125.5" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO" Width="1.5" PointX="25.5" PointY="133" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.PERIODICIDADE" Width="1.5" PointX="19" PointY="113.125" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_PERIODICIDADE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE_MATERIAL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

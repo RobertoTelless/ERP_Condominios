@@ -9,8 +9,8 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IPeriodicidadeRepository : IRepositoryBase<PERIODICIDADE>
     {
-        List<PERIODICIDADE> GetAllItens();
+        List<PERIODICIDADE> GetAllItens(Int32 idAss);
         PERIODICIDADE GetItemById(Int32 id);
-        List<PERIODICIDADE> GetAllItensAdm();
+        List<PERIODICIDADE> GetAllItensAdm(Int32 idAss);
     }
 }

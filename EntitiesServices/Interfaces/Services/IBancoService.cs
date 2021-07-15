@@ -15,11 +15,12 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(BANCO perfil, LOG log);
         Int32 Edit(BANCO perfil);
         Int32 Delete(BANCO perfil, LOG log);
-        BANCO CheckExist(BANCO conta);
+
+        BANCO CheckExist(BANCO conta, Int32 idAss);
         BANCO GetByCodigo(String nome);
         BANCO GetItemById(Int32 id);
-        List<BANCO> GetAllItens();
-        List<BANCO> GetAllItensAdm();
-        List<BANCO> ExecuteFilter(String codigo, String nome);
+        List<BANCO> GetAllItens(Int32 idAss);
+        List<BANCO> GetAllItensAdm(Int32 idAss);
+        List<BANCO> ExecuteFilter(String codigo, String nome, Int32 idAss);
     }
 }

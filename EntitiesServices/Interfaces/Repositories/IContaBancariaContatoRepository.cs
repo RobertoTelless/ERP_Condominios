@@ -9,7 +9,7 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IContaBancariaContatoRepository : IRepositoryBase<CONTA_BANCO_CONTATO>
     {
-        List<CONTA_BANCO_CONTATO> GetAllItens();
+        List<CONTA_BANCO_CONTATO> GetAllItens(Int32 idConta);
         CONTA_BANCO_CONTATO GetItemById(Int32 id);
     }
 }

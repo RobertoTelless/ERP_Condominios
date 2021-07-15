@@ -14,10 +14,11 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(SUBGRUPO item, SUBGRUPO itemAntes);
         Int32 ValidateDelete(SUBGRUPO item, USUARIO usuario);
         Int32 ValidateReativar(SUBGRUPO item, USUARIO usuario);
-        SUBGRUPO CheckExist(SUBGRUPO obj);
-        List<SUBGRUPO> GetAllItens();
-        List<SUBGRUPO> GetAllItensAdm();
+
+        SUBGRUPO CheckExist(SUBGRUPO obj, Int32 idAss);
+        List<SUBGRUPO> GetAllItens(Int32 idAss);
+        List<SUBGRUPO> GetAllItensAdm(Int32 idAss);
         SUBGRUPO GetItemById(Int32 id);
-        List<GRUPO> GetAllGrupos();
+        List<GRUPO> GetAllGrupos(Int32 idAss);
     }
 }
