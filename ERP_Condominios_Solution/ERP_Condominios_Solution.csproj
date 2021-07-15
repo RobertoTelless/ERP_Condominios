@@ -3008,6 +3008,7 @@
     <Content Include="Views\Banco\EditarContato.cshtml" />
     <Content Include="Views\Banco\IncluirContato.cshtml" />
     <Content Include="Views\Banco\EditarLancamento.cshtml" />
+    <Content Include="Views\Banco\IncluirLancamento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
