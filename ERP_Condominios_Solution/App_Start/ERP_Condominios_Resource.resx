@@ -222,6 +222,18 @@
   <data name="M0037" xml:space="preserve">
     <value>Não é possível excluir esse centro de custo. Existem informações vinculadas a ele</value>
   </data>
+  <data name="M0038" xml:space="preserve">
+    <value>Banco já cadastrado</value>
+  </data>
+  <data name="M0039" xml:space="preserve">
+    <value>Não é possível excluir esse banco. Existem informações vinculadas a ele</value>
+  </data>
+  <data name="M0040" xml:space="preserve">
+    <value>Não é possível excluir essa conta bancária. Existem informações vinculadas a ela</value>
+  </data>
+  <data name="M0041" xml:space="preserve">
+    <value>Conta bancária já cadastrada</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>
