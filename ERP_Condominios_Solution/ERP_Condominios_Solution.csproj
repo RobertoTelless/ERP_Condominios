@@ -3023,6 +3023,8 @@
     <Content Include="Views\Equipamento\EditarManutencao.cshtml" />
     <Content Include="Views\Equipamento\VerManutencoesVencidas.cshtml" />
     <Content Include="Views\Equipamento\VerDepreciados.cshtml" />
+    <Content Include="Views\Equipamento\VerEquipamento.cshtml" />
+    <Content Include="Views\Equipamento\VerBaixados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

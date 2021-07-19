@@ -578,6 +578,44 @@ namespace ERP_Condominios_Solution.Controllers
             return View(item);
         }
 
+        [HttpGet]
+        public ActionResult VerEquipamento(Int32 id)
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+                {
+                    Session["MensEquipamento"] = 2;
+                    return RedirectToAction("MontarTelaEquipamento", "Equipamento");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Unidade = usuario.UNID_CD_ID;
+
+            // Prepara view
+            EQUIPAMENTO item = equiApp.GetItemById(id);
+            objetoEquiAntes = item;
+            Session["Equipamento"] = item;
+            Session["IdVolta"] = id;
+            Session["IdEquipamento"] = id;
+            EquipamentoViewModel vm = Mapper.Map<EQUIPAMENTO, EquipamentoViewModel>(item);
+            return View(vm);
+        }
+
         public ActionResult VoltarAnexoEquipamento()
         {
             if ((String)Session["Ativa"] == null)
