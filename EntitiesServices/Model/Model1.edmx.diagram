@@ -315,6 +315,8 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" />
         <AssociationConnector Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" />
         <AssociationConnector Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE_MATERIAL" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

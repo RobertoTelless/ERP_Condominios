@@ -281,6 +281,7 @@
             <PropertyRef Name="CAPR_CD_ID" />
           </Key>
           <Property Name="CAPR_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ASSI_CD_ID" Type="int" />
           <Property Name="CAPR_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CAPR_IN_ATIVO" Type="int" />
         </EntityType>
@@ -811,6 +812,8 @@
           <Property Name="MAMO_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
           <Property Name="MAMO_QN_ANTES" Type="int" />
           <Property Name="MAMO_QN_DEPOIS" Type="int" />
+          <Property Name="MAMO_QN_ALTERADA" Type="int" />
+          <Property Name="MAMO_IN_OPERACAO" Type="int" />
         </EntityType>
         <EntityType Name="MOVIMENTO_ESTOQUE_PRODUTO">
           <Key>
@@ -2057,6 +2060,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CATEGORIA_PRODUTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CATEGORIA_TELEFONE_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="CATEGORIA_TELEFONE" Type="Self.CATEGORIA_TELEFONE" Multiplicity="*" />
@@ -2906,6 +2921,18 @@
             </Principal>
             <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
               <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="MOVIMENTO_ESTOQUE_PRODUTO" Type="Self.MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4217,6 +4244,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_NOTIFICACAO" EntitySet="CATEGORIA_NOTIFICACAO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_PRODUTO_ASSINANTE" Association="Self.FK_CATEGORIA_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_TELEFONE_ASSINANTE" Association="Self.FK_CATEGORIA_TELEFONE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_TELEFONE" EntitySet="CATEGORIA_TELEFONE" />
@@ -4499,6 +4530,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
             <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_NOTICIA_ASSINANTE" Association="Self.FK_NOTICIA_ASSINANTE">
@@ -5100,6 +5135,7 @@
           <NavigationProperty Name="EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="EQUIPAMENTO" />
           <NavigationProperty Name="CATEGORIA_EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_EQUIPAMENTO" />
           <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" FromRole="ASSINANTE" ToRole="EQUIPAMENTO_MANUTENCAO" />
+          <NavigationProperty Name="CATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_PRODUTO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -5217,6 +5253,8 @@
           <Property Name="CAPR_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="PRODUTO" />
           <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="Self.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="CATEGORIA_PRODUTO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="CATEGORIA_TELEFONE">
           <Key>
@@ -5704,6 +5742,8 @@
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_MATERIAL_MOVIMENTO_ASSINANTE" FromRole="MATERIAL_MOVIMENTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="MATERIAL" Relationship="Self.FK_MATERIAL_MOVIMENTO_MATERIAL" FromRole="MATERIAL_MOVIMENTO" ToRole="MATERIAL" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_MATERIAL_MOVIMENTO_USUARIO" FromRole="MATERIAL_MOVIMENTO" ToRole="USUARIO" />
+          <Property Name="MAMO_QN_ALTERADA" Type="Int32" />
+          <Property Name="MAMO_IN_OPERACAO" Type="Int32" />
         </EntityType>
         <EntityType Name="MOVIMENTO_ESTOQUE_PRODUTO">
           <Key>
@@ -5726,6 +5766,7 @@
           <Property Name="MOEP_IN_OPERACAO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="PRODUTO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="NOTICIA">
           <Key>
@@ -6530,6 +6571,7 @@
           <NavigationProperty Name="USUARIO_ESCALA_TRABALHO" Relationship="Self.FK_USUARIO_ESCALA_TRABALHO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ESCALA_TRABALHO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
+          <NavigationProperty Name="MOVIMENTO_ESTOQUE_PRODUTO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="USUARIO" ToRole="MOVIMENTO_ESTOQUE_PRODUTO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -9694,6 +9736,14 @@
             <End Role="UNIDADE_MATERIAL" EntitySet="UNIDADE_MATERIAL" />
             <End Role="PRODUTO" EntitySet="PRODUTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_PRODUTO_ASSINANTE" Association="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BANCO">
           <Key>
@@ -10091,6 +10141,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CATEGORIA_PRODUTO_ASSINANTE">
+          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.CATEGORIA_PRODUTO" Role="CATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
+          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Role="MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10371,6 +10445,7 @@
           <EntitySetMapping Name="CATEGORIA_PRODUTO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_PRODUTO">
               <MappingFragment StoreEntitySet="CATEGORIA_PRODUTO">
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
                 <ScalarProperty Name="CAPR_NM_NOME" ColumnName="CAPR_NM_NOME" />
                 <ScalarProperty Name="CAPR_IN_ATIVO" ColumnName="CAPR_IN_ATIVO" />
@@ -10800,6 +10875,8 @@
           <EntitySetMapping Name="MATERIAL_MOVIMENTO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.MATERIAL_MOVIMENTO">
               <MappingFragment StoreEntitySet="MATERIAL_MOVIMENTO">
+                <ScalarProperty Name="MAMO_IN_OPERACAO" ColumnName="MAMO_IN_OPERACAO" />
+                <ScalarProperty Name="MAMO_QN_ALTERADA" ColumnName="MAMO_QN_ALTERADA" />
                 <ScalarProperty Name="MAMO_CD_ID" ColumnName="MAMO_CD_ID" />
                 <ScalarProperty Name="MATE_CD_ID" ColumnName="MATE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />

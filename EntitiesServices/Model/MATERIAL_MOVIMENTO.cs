@@ -25,6 +25,8 @@ namespace EntitiesServices.Model
         public string MAMO_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> MAMO_QN_ANTES { get; set; }
         public Nullable<int> MAMO_QN_DEPOIS { get; set; }
+        public Nullable<int> MAMO_QN_ALTERADA { get; set; }
+        public Nullable<int> MAMO_IN_OPERACAO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual MATERIAL MATERIAL { get; set; }

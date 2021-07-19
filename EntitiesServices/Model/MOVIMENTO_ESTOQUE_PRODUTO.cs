@@ -32,5 +32,6 @@ namespace EntitiesServices.Model
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual PRODUTO PRODUTO { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }
