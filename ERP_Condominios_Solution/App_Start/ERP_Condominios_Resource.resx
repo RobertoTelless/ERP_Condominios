@@ -234,6 +234,12 @@
   <data name="M0041" xml:space="preserve">
     <value>Conta bancária já cadastrada</value>
   </data>
+  <data name="M0042" xml:space="preserve">
+    <value>Equipamento já cadastrado</value>
+  </data>
+  <data name="M0043" xml:space="preserve">
+    <value>Não é possível excluir esse eqiupamento. Existem informações vinculadas a ele</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

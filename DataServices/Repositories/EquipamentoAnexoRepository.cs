@@ -13,7 +13,7 @@ namespace DataServices.Repositories
 {
     public class EquipamentoAnexoRepository : RepositoryBase<EQUIPAMENTO_ANEXO>, IEquipamentoAnexoRepository
     {
-        public List<EQUIPAMENTO_ANEXO> GetAllItens()
+        public List<EQUIPAMENTO_ANEXO> GetAllItens(Int32 idAss)
         {
             return Db.EQUIPAMENTO_ANEXO.ToList();
         }

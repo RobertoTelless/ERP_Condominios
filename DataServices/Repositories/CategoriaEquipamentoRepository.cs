@@ -20,13 +20,13 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<CATEGORIA_EQUIPAMENTO> GetAllItensAdm()
+        public List<CATEGORIA_EQUIPAMENTO> GetAllItensAdm(Int32 idAss)
         {
             IQueryable<CATEGORIA_EQUIPAMENTO> query = Db.CATEGORIA_EQUIPAMENTO;
             return query.ToList();
         }
 
-        public List<CATEGORIA_EQUIPAMENTO> GetAllItens()
+        public List<CATEGORIA_EQUIPAMENTO> GetAllItens(Int32 idAss)
         {
             IQueryable<CATEGORIA_EQUIPAMENTO> query = Db.CATEGORIA_EQUIPAMENTO.Where(p => p.CAEQ_IN_ATIVO == 1);
             return query.ToList();

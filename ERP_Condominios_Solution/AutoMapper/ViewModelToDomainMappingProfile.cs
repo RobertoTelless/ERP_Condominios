@@ -48,6 +48,8 @@ namespace MvcMapping.Mappers
             CreateMap<CentroCustoViewModel, CENTRO_CUSTO>();
             CreateMap<GrupoViewModel, GRUPO>();
             CreateMap<SubgrupoViewModel, SUBGRUPO>();
+            CreateMap<EquipamentoViewModel, EQUIPAMENTO>();
+            CreateMap<EquipamentoManutencaoViewModel, EQUIPAMENTO_MANUTENCAO>();
 
         }
     }

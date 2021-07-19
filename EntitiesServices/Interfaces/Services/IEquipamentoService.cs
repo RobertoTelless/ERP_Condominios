@@ -15,17 +15,19 @@ namespace ModelServices.Interfaces.EntitiesServices
         Int32 Edit(EQUIPAMENTO perfil, LOG log);
         Int32 Edit(EQUIPAMENTO perfil);
         Int32 Delete(EQUIPAMENTO perfil, LOG log);
-        EQUIPAMENTO CheckExist(EQUIPAMENTO conta);
+
+        EQUIPAMENTO CheckExist(EQUIPAMENTO conta, Int32 idAss);
         EQUIPAMENTO GetItemById(Int32 id);
-        EQUIPAMENTO GetByNumero(String numero);
-        List<EQUIPAMENTO> GetAllItens();
-        List<EQUIPAMENTO> GetAllItensAdm();
-        List<CATEGORIA_EQUIPAMENTO> GetAllTipos();
-        List<PERIODICIDADE> GetAllPeriodicidades();
+        EQUIPAMENTO GetByNumero(String numero, Int32 idAss);
+        List<EQUIPAMENTO> GetAllItens(Int32 idAss);
+        List<EQUIPAMENTO> GetAllItensAdm(Int32 idAss);
+        List<CATEGORIA_EQUIPAMENTO> GetAllTipos(Int32 idAss);
+        List<PERIODICIDADE> GetAllPeriodicidades(Int32 idAss);
         EQUIPAMENTO_ANEXO GetAnexoById(Int32 id);
-        List<EQUIPAMENTO> ExecuteFilter(Int32? catId, String nome, String numero, Int32? depreciado, Int32? manutencao);
-        Int32 CalcularManutencaoVencida();
-        Int32 CalcularDepreciados();
+        List<EQUIPAMENTO> ExecuteFilter(Int32? catId, String nome, String numero, Int32? depreciado, Int32? manutencao, Int32 idAss);
+        
+        Int32 CalcularManutencaoVencida(Int32 idAss);
+        Int32 CalcularDepreciados(Int32 idAss);
         EQUIPAMENTO_MANUTENCAO GetItemManutencaoById(Int32 id);
         Int32 EditManutencao(EQUIPAMENTO_MANUTENCAO item);
         Int32 CreateManutencao(EQUIPAMENTO_MANUTENCAO item);

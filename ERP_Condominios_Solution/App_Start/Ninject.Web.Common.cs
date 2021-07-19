@@ -94,7 +94,8 @@ namespace Presentation.Start
             kernel.Bind<ICentroCustoAppService>().To<CentroCustoAppService>();
             kernel.Bind<IContaBancariaAppService>().To<ContaBancariaAppService>();
             kernel.Bind<IGrupoAppService>().To<GrupoAppService>();
-            kernel.Bind<SubgrupoAppService>().To<SubgrupoAppService>();
+            kernel.Bind<ISubgrupoAppService>().To<SubgrupoAppService>();
+            kernel.Bind<IEquipamentoAppService>().To<EquipamentoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -123,6 +124,7 @@ namespace Presentation.Start
             kernel.Bind<IContaBancariaService>().To<ContaBancariaService>();
             kernel.Bind<IGrupoService>().To<GrupoService>();
             kernel.Bind<ISubgrupoService>().To<SubgrupoService>();
+            kernel.Bind<IEquipamentoService>().To<EquipamentoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -184,6 +186,11 @@ namespace Presentation.Start
             kernel.Bind<IContaBancariaLancamentoRepository>().To<ContaBancariaLancamentoRepository>();
             kernel.Bind<IGrupoRepository>().To<GrupoRepository>();
             kernel.Bind<ISubgrupoRepository>().To<SubgrupoRepository>();
+            kernel.Bind<IEquipamentoRepository>().To<EquipamentoRepository>();
+            kernel.Bind<IEquipamentoAnexoRepository>().To<EquipamentoAnexoRepository>();
+            kernel.Bind<IEquipamentoManutencaoRepository>().To<EquipamentoManutencaoRepository>();
+            kernel.Bind<IPeriodicidadeRepository>().To<PeriodicidadeRepository>();
+            kernel.Bind<ICategoriaEquipamentoRepository>().To<CategoriaEquipamentoRepository>();
 
         }
     }

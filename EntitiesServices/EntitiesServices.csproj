@@ -199,6 +199,7 @@
     <Compile Include="EntitiesServices\CentroCustoService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\ContaBancariaService.cs" />
+    <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
     <Compile Include="EntitiesServices\AmbienteService.cs" />
     <Compile Include="EntitiesServices\GrupoService.cs" />
@@ -228,11 +229,15 @@
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICentroCustoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaBancariaContatoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaBancariaLancamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IContaBancariaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEquipamentoAnexoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEquipamentoManutencaoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaAnexoRepository.cs" />
@@ -290,6 +295,7 @@
     <Compile Include="Interfaces\Services\ICentroCustoService.cs" />
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\Services\IContaBancariaService.cs" />
+    <Compile Include="Interfaces\Services\IEquipamentoService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />
     <Compile Include="Interfaces\Services\IAmbienteService.cs" />
     <Compile Include="Interfaces\Services\IGrupoService.cs" />
