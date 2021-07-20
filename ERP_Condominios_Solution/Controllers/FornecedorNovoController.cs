@@ -683,6 +683,15 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.UF = new SelectList(fornApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
             ViewBag.Incluir = (Int32)Session["IncluirForn"];
 
+            if ((Int32)Session["MensFornecedor"] == 5)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensFornecedor"] == 6)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+            }
+
             FORNECEDOR item = fornApp.GetItemById(id);
             ViewBag.QuadroSoci = fcnpjApp.GetByFornecedor(item);
             objetoFornAntes = item;

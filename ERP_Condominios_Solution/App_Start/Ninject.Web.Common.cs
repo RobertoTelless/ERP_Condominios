@@ -96,6 +96,8 @@ namespace Presentation.Start
             kernel.Bind<IGrupoAppService>().To<GrupoAppService>();
             kernel.Bind<ISubgrupoAppService>().To<SubgrupoAppService>();
             kernel.Bind<IEquipamentoAppService>().To<EquipamentoAppService>();
+            kernel.Bind<IProdutoAppService>().To<ProdutoAppService>();
+            kernel.Bind<IMovimentoEstoqueProdutoAppService>().To<MovimentoEstoqueProdutoAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -125,6 +127,8 @@ namespace Presentation.Start
             kernel.Bind<IGrupoService>().To<GrupoService>();
             kernel.Bind<ISubgrupoService>().To<SubgrupoService>();
             kernel.Bind<IEquipamentoService>().To<EquipamentoService>();
+            kernel.Bind<IMovimentoEstoqueProdutoService>().To<MovimentoEstoqueProdutoService>();
+            kernel.Bind<IProdutoService>().To<ProdutoService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -191,6 +195,14 @@ namespace Presentation.Start
             kernel.Bind<IEquipamentoManutencaoRepository>().To<EquipamentoManutencaoRepository>();
             kernel.Bind<IPeriodicidadeRepository>().To<PeriodicidadeRepository>();
             kernel.Bind<ICategoriaEquipamentoRepository>().To<CategoriaEquipamentoRepository>();
+            kernel.Bind<ICategoriaProdutoRepository>().To<CategoriaProdutoRepository>();
+            kernel.Bind<ISubcategoriaProdutoRepository>().To<SubcategoriaProdutoRepository>();
+            kernel.Bind<IUnidadeMaterialRepository>().To<UnidadeMaterialRepository>();
+            kernel.Bind<IMovimentoEstoqueProdutoRepository>().To<MovimentoEstoqueProdutoRepository>();
+            kernel.Bind<IProdutoAnexoRepository>().To<ProdutoAnexoRepository>();
+            kernel.Bind<IProdutoFornecedorRepository>().To<ProdutoFornecedorRepository>();
+            kernel.Bind<IProdutoMovimentoEstoqueRepository>().To<ProdutoMovimentoEstoqueRepository>();
+            kernel.Bind<IProdutoRepository>().To<ProdutoRepository>();
 
         }
     }

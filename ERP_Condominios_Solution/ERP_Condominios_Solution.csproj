@@ -291,6 +291,7 @@
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\OcorrenciaController.cs" />
+    <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
@@ -322,6 +323,8 @@
     <Compile Include="ViewModels\GrupoViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoViewModel.cs" />
     <Compile Include="ViewModels\SubgrupoViewModel.cs" />
     <Compile Include="ViewModels\TelefoneViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
@@ -3025,6 +3028,18 @@
     <Content Include="Views\Equipamento\VerDepreciados.cshtml" />
     <Content Include="Views\Equipamento\VerEquipamento.cshtml" />
     <Content Include="Views\Equipamento\VerBaixados.cshtml" />
+    <Content Include="Views\Produto\MontarTelaProduto.cshtml" />
+    <Content Include="Views\Produto\IncluirProduto.cshtml" />
+    <Content Include="Views\Produto\ConsultarProduto.cshtml" />
+    <Content Include="Views\Produto\ExcluirProduto.cshtml" />
+    <Content Include="Views\Produto\ReativarProduto.cshtml" />
+    <Content Include="Views\Produto\VerCardsProduto.cshtml" />
+    <Content Include="Views\Produto\VerAnexoProduto.cshtml" />
+    <Content Include="Views\Produto\VerMovimentacaoEstoqueProduto.cshtml" />
+    <Content Include="Views\Produto\VerProdutosEstoqueZerado.cshtml" />
+    <Content Include="Views\Produto\VerProdutosEstoqueNegativo.cshtml" />
+    <Content Include="Views\Produto\EditarProdutoFornecedor.cshtml" />
+    <Content Include="Views\Produto\IncluirProdutoFornecedor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

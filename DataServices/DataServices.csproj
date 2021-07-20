@@ -235,6 +235,7 @@
     <Compile Include="Repositories\NoticiaRepository.cs" />
     <Compile Include="Repositories\AmbienteChaveRepository.cs" />
     <Compile Include="Repositories\TipoAmbienteRepository.cs" />
+    <Compile Include="Repositories\UnidadeMaterialRepository.cs" />
     <Compile Include="Repositories\TipoVeiculoRepository.cs" />
     <Compile Include="Repositories\TorreRepository.cs" />
     <Compile Include="Repositories\VeiculoAnexoRepository.cs" />
