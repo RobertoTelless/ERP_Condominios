@@ -1,7 +1,468 @@
-﻿
-@{
-    ViewBag.Title = "MontarTelaProduto";
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.PRODUTO
+@{ Layout = "~/Views/Shared/_Layout_Admin.cshtml"; }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div id="containerModalDesc">
+        <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDesc">Descrição do Material</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalDescBody" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-title">
+        <h3 class="title">Materiais</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Materiais</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    @if (ViewBag.Perfil == "ADM")
+    {
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Materiais</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.Produtos</h1>
+                        <div class="stat-percent font-bold text-navy">32% <i class="fa fa-level-up"></i></div>
+                        <small>Materiais Exibidos</small>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Materiais</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.PontoPedido</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Ponto de Pedido</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Produto", action: "VerProdutosPontoPedido", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Materiais</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.EstoqueZerado</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Estoque Zerado</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Produto", action: "VerProdutosEstoqueZerado", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-primary pull-right">Hoje</span>
+                        <h5>Materiais</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">@ViewBag.EstoqueNegativo</h1>
+                        <div class="stat-percent font-bold text-navy">22% <i class="fa fa-level-up"></i></div>
+                        <small>Estoque Negativo</small>
+                        <br />
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Ver", controller: "Produto", action: "VerProdutosEstoqueNegativo", buttonClass: "white")
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm("FiltrarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Código de Barras
+                                @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Código do Material
+                                @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true })
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                Nome
+                                @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
+                            </div>
+                        </div>
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                Categoria do Material
+                                @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", onchange = "FiltrarSubCategoriaProduto($(this).val())" })
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                Subcategoria do Material
+                                @Html.DropDownListFor(m => m.SCPR_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", onchange = "FiltrarCategoriaProduto($(this).val())" })
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                Marca
+                                @Html.TextBoxFor(m => m.PROD_NM_MARCA, new { @class = "form-control", autofocus = true })
+                            </div>
+                        </div>
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                @Html.ButtonActionSubmit(text: "Filtrar")
+                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Produto", action: "RetirarFiltroProduto")
+                                @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Produto", action: "MostrarTudoProduto")
+                                @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                {
+                                    @Html.ButtonLinkIndex(text: "Novo Material", controller: "Produto", action: "IncluirProduto")
+                                }
+                                @Html.ButtonLinkIndex(text: "Cards dos Materiais", controller: "Produto", action: "VerCardsProduto")
+                                @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Produto", action: "GerarRelatorioFiltro")
+                                @Html.ButtonLinkIndex(text: "Voltar", controller: "Produto", action: "Voltar")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Materiais</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>}
+                        <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.PRODUTO>).Count > 0)
+                            {
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead style="background-color:lightsteelblue">
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Categoria</th>
+                                            <th>Subcategoria</th>
+                                            <th>Código de Barras</th>
+                                            <th>Código</th>
+                                            <th>Marca</th>
+                                            <th>Modelo</th>
+                                            <th></th>
+                                            <th class="td-one-action">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.PRODUTO>).OrderBy(p => p.PROD_NM_NOME))
+                                        {
+                                            if (ViewBag.CodigoProduto != null && cond.PROD_CD_ID == (Int32)ViewBag.CodigoProduto)
+                                            {
+                                                <tr style="background: #c7ffc7;">
+                                                    <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.PROD_DS_DESCRICAO')">@cond.PROD_NM_NOME</td>
+                                                    @if (cond.CATEGORIA_PRODUTO != null)
+                                                    {
+                                                        <td>@cond.CATEGORIA_PRODUTO.CAPR_NM_NOME</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    @if (cond.SUBCATEGORIA_PRODUTO != null)
+                                                    {
+                                                        <td>@cond.SUBCATEGORIA_PRODUTO.SCPR_NM_NOME</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@cond.PROD_NR_BARCODE</td>
+                                                    <td>@cond.PROD_CD_CODIGO</td>
+                                                    <td>@cond.PROD_NM_MARCA</td>
+                                                    <td>@cond.PROD_NM_MODELO</td>
+                                                    @if (!String.IsNullOrEmpty(cond.PROD_AQ_FOTO))
+                                                    {
+                                                        <td><img src="@Url.Content(cond.PROD_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.PROD_NM_NOME', '@Url.Content(cond.PROD_AQ_FOTO)')"></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.PROD_NM_NOME', '/Images/gallery/10s.jpg')"></td>
+                                                    }
+                                                    <td class="td-one-action">
+                                                        @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                                        {
+                                                            @Html.TableLinkDetails(cond.PROD_CD_ID, "EditarProduto", "fa-edit", "Editar")
+                                                            if (cond.PROD_IN_ATIVO == 1)
+                                                            {
+                                                                @Html.TableLinkDetails(cond.PROD_CD_ID, "ExcluirProduto", "fa-trash-o", "Desativar") }
+                                                            else
+                                                            {
+                                                                @Html.TableLinkDetails(cond.PROD_CD_ID, "ReativarProduto", "fa-refresh", "Reativar")}
+                                                            }
+                                                        else
+                                                        {
+                                                            @Html.TableLinkDetails(cond.PROD_CD_ID, "ConsultarProduto", "fa-search", "Consultar")
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td style="cursor: pointer; text-decoration: underline; color: #337ab7;" onclick="mostrarDesc('@cond.PROD_DS_DESCRICAO')">@cond.PROD_NM_NOME</td>
+                                                    @if (cond.CATEGORIA_PRODUTO != null)
+                                                    {
+                                                        <td>@cond.CATEGORIA_PRODUTO.CAPR_NM_NOME</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    @if (cond.SUBCATEGORIA_PRODUTO != null)
+                                                    {
+                                                        <td>@cond.SUBCATEGORIA_PRODUTO.SCPR_NM_NOME</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@cond.PROD_NR_BARCODE</td>
+                                                    <td>@cond.PROD_CD_CODIGO</td>
+                                                    <td>@cond.PROD_NM_MARCA</td>
+                                                    <td>@cond.PROD_NM_MODELO</td>
+                                                    @if (!String.IsNullOrEmpty(cond.PROD_AQ_FOTO))
+                                                    {
+                                                        <td><img src="@Url.Content(cond.PROD_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.PROD_NM_NOME', '@Url.Content(cond.PROD_AQ_FOTO)')"></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.PROD_NM_NOME', '/Images/gallery/10s.jpg')"></td>
+                                                    }
+                                                    <td class="td-one-action">
+                                                        @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                                        {
+                                                            @Html.TableLinkDetails(cond.PROD_CD_ID, "EditarProduto", "fa-edit", "Editar")
+                                                            if (cond.PROD_IN_ATIVO == 1)
+                                                            {
+                                                                @Html.TableLinkDetails(cond.PROD_CD_ID, "ExcluirProduto", "fa-trash-o", "Desativar") }
+                                                            else
+                                                            {
+                                                                @Html.TableLinkDetails(cond.PROD_CD_ID, "ReativarProduto", "fa-refresh", "Reativar")}
+                                                            }
+                                                        else
+                                                        {
+                                                            @Html.TableLinkDetails(cond.PROD_CD_ID, "ConsultarProduto", "fa-search", "Consultar")
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
 }
 
-<h2>MontarTelaProduto</h2>
+@section Scripts {
 
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sweetAlert")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script>
+        function mostrarDesc(desc) {
+            $('#modalDescBody').html(desc);
+            $('#modalDesc').modal('show');
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.demo3').click(function () {
+                swal({
+                    title: "Confirma a duplicação do produto?",
+                    text: "A tela de edição deste produto será aberta logo após a confirmação",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Confirmar",
+                    cancelButtonText: "Cancelar",
+                    closeOnConfirm: false
+                }, function () {
+                    swal("Duplicado!", "Uma cópia deste produto foi criada", "success");
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(function () {
+            FiltrarSubCategoriaProduto($('#catProd').val());
+        });
+
+        function FiltrarSubCategoriaProduto(CAPR_CD_ID) {
+            var data = {
+                id: CAPR_CD_ID
+            }
+
+            var objSubCatProduto = $('select#subCatProd');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Produto/FiltrarSubCategoriaProduto'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objSubCatProduto.children('option').remove();
+                    objSubCatProduto.append('<option>Selecionar</option>');
+
+                    // Loop para adicionar Itens específicos à categoria
+                    r.forEach(function (e) {
+                        objSubCatProduto.append('<option value="' + e.SCPR_CD_ID + '">' + e.SCPR_NM_NOME + '</option>');
+                    });
+
+                    //console.log(r);
+                }
+            });
+        }
+
+        function FiltrarCategoriaProduto(SCPR_CD_ID) {
+            var data = {
+                id: SCPR_CD_ID
+            }
+
+            var objCatProduto = $('select#catProd');
+
+            // Requisição para o controller
+            $.ajax({
+                url: '../Produto/FiltrarCategoriaProduto'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    // Remove todos os itens da lista e adiciona o placeholder
+                    objCatProduto.children('option').remove();
+                    objCatProduto.append('<option>Selecionar</option>');
+
+                    // Selecionar a categoria
+                    objCatProduto.append('<option selected="selected" value="' + r.CAPR_CD_ID + '">' + r.CAPR_NM_NOME + '</option>');
+
+                    //console.log(r);
+                }
+            });
+        }
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}

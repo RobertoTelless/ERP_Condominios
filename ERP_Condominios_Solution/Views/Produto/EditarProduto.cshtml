@@ -30,7 +30,7 @@
                 <a href="@Url.Action("MontarTelaProduto", "Produto")">Materiais</a>
             </li>
             <li class="active">
-                <strong>Materiais - Consulta</strong>
+                <strong>Materiais - Consulta & Edição</strong>
             </li>
         </ol>
         <br />
@@ -75,9 +75,10 @@
                             @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                         </div>
                     }
-                    @using (Html.BeginForm("VerProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                    @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                     {
                         <div class="form-group">
+                            @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
                             @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Produto")
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseProduto", controller: "Produto")
                         </div>
@@ -141,35 +142,42 @@
                                             <div class="col-md-11">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Categoria
-                                                        @Html.TextBoxFor(m => m.CATEGORIA_PRODUTO.CAPR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        Categoria*
+                                                        @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarSubCategoriaProduto($(this).val(), $(this))", id = "catProd" })
+                                                        @Html.ValidationMessageFor(m => m.CAPR_CD_ID, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Subcategoria
-                                                        @Html.TextBoxFor(m => m.SUBCATEGORIA_PRODUTO.SCPR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.DropDownListFor(m => m.SCPR_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.SCPR_CD_ID, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Unidade
-                                                        @Html.TextBoxFor(m => m.UNIDADE_MATERIAL.UNMA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.DropDownListFor(m => m.UNMA_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.UNMA_CD_ID, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Código
+                                                        Código*
                                                         @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.ValidationMessageFor(m => m.PROD_CD_CODIGO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Código de Barras
-                                                        @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.TextBoxFor(m => m.PROD_NR_BARCODE, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_NR_BARCODE, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
                                                 <br />
                                                 <div class="row">
                                                     <div class="col-lg-6 col-md-6 col-xs-12">
-                                                        Nome
-                                                        @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        Nome*
+                                                        @Html.TextBoxFor(m => m.PROD_NM_NOME, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_NM_NOME, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Preço (R$)
-                                                        @Html.TextBoxFor(m => m.PROD_VL_CUSTO, "{0:n2}", new { @class = "form-control", autofocus = true, @readonly = "readonly", @style = "color:green; font-weight:bold" })
+                                                        @Html.TextBoxFor(m => m.PROD_VL_CUSTO, "{0:n2}", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold" })
+                                                        @Html.ValidationMessageFor(m => m.PROD_VL_CUSTO, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,17 +186,20 @@
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Descrição
-                                                    @Html.TextAreaFor(m => m.PROD_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
+                                                    @Html.TextAreaFor(m => m.PROD_DS_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_DS_DESCRICAO, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Informações do Produto
-                                                    @Html.TextAreaFor(m => m.PROD_DS_INFORMACOES, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true, @readonly = "readonly" })
+                                                    @Html.TextAreaFor(m => m.PROD_DS_INFORMACOES, new { @class = "form-control", style = "width: 100%; height: 100px;", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_DS_INFORMACOES, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de material", htmlAttributes: new { id = "basictoast" })
                                         </div>
                                     </div>
                                 </div>
@@ -202,6 +213,12 @@
                                                     <h4>Imagem do Material</h4>
                                                     @using (Html.BeginForm("UploadFotoProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
                                                     {
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <input style="float:left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                <input style="float:left;" type="submit" value="Incluir Fotografia do Produto" class="btn btn-sm btn-success" />
+                                                            </div>
+                                                        </div>
                                                     }
                                                 </div>
                                             </div>
@@ -227,6 +244,12 @@
                                                     <h4>QRCode</h4>
                                                     @using (Html.BeginForm("UploadQRCodeProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
                                                     {
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <input style="float:left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                <input style="float:left;" type="submit" value="Incluir QRCode do Produto" class="btn btn-sm btn-success" />
+                                                            </div>
+                                                        </div>
                                                         <br />
                                                         
                                                         <br />
@@ -289,11 +312,13 @@
                                                     @Html.HiddenFor(x => x.PROD_QN_NOVA_CONTAGEM)
                                                     @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
                                                     Estoque Máximo
-                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Estoque Mínimo
-                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MINIMA, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MINIMA, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MINIMA, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Estoque Atual
@@ -301,14 +326,19 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Reserva de Estoque
-                                                    @Html.TextBoxFor(m => m.PROD_QN_RESERVA_ESTOQUE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                    @Html.TextBoxFor(m => m.PROD_QN_RESERVA_ESTOQUE, new { @class = "form-control touchspin2", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.PROD_QN_RESERVA_ESTOQUE, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Aviso de Limite Mínimo
                                                     <br />
-                                                    @Html.CheckBoxFor(m => m.AvisaMinima, new { @class = "checkbox i-checks", @readonly = "readonly" })
+                                                    @Html.CheckBoxFor(m => m.AvisaMinima, new { @class = "checkbox i-checks" })
+                                                    @Html.ValidationMessageFor(m => m.AvisaMinima, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Material", htmlAttributes: new { id = "basictoast" })
                                         </div>
                                     </div>
                                 </div>
@@ -331,6 +361,7 @@
                                                                     <th>E-Mail</th>
                                                                     <th>Telefone</th>
                                                                     <th>Ativo</th>
+                                                                    <th class="td-one-action">Ações</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -348,6 +379,17 @@
                                                                         {
                                                                             <td>Não</td>
                                                                         }
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.PRFO_CD_ID, "EditarProdutoFornecedor", "fa-edit", "Editar/Consultar Fornecedor")
+                                                                            @if (cond.PRFO_IN_ATIVO == 1)
+                                                                            {
+                                                                                @Html.TableLinkDetails(cond.PRFO_CD_ID, "ExcluirProdutoFornecedor", "fa-trash-o", "Desativar Fornecedor")
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                @Html.TableLinkDetails(cond.PRFO_CD_ID, "ReativarProdutoFornecedor", "fa-refresh", "Reativar Fornecedor")
+                                                                            }
+                                                                        </td>
                                                                     </tr>
                                                                 }
                                                             </tbody>
@@ -355,6 +397,9 @@
                                                     }
                                                 </div>
                                             </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonLinkIndex(text: "Incluir Novo Fornecedor", action: "IncluirProdutoFornecedor", controller: "Produto")
                                             </div>
                                     </div>
                                 </div>
@@ -397,21 +442,28 @@
                                                         @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
                                                         @Html.HiddenFor(x => x.AvisaMinima)
                                                         Marca
-                                                        @Html.TextBoxFor(m => m.PROD_NM_MARCA, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.TextBoxFor(m => m.PROD_NM_MARCA, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_NM_MARCA, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Modelo
-                                                        @Html.TextBoxFor(m => m.PROD_NM_MODELO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.TextBoxFor(m => m.PROD_NM_MODELO, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_NM_MODELO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Fabricante
-                                                        @Html.TextBoxFor(m => m.PROD_NM_FABRICANTE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                        @Html.TextBoxFor(m => m.PROD_NM_FABRICANTE, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_NM_FABRICANTE, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Referência
-                                                        @Html.TextBoxFor(m => m.PROD_NR_REFERENCIA, new { @class = "form-control", @style = "color:green", autofocus = true, @readonly = "readonly" })
+                                                        @Html.TextBoxFor(m => m.PROD_NR_REFERENCIA, new { @class = "form-control", @style = "color:green", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_NR_REFERENCIA, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma edição de Material", htmlAttributes: new { id = "basictoast" })
                                             </div>
                                         }
                                     </div>
@@ -543,6 +595,12 @@
                                                                 </tbody>
                                                             </table>
                                                         }
+                                                        <div class="form-group">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                <input style="float: left;" type="submit" value="Incluir Anexo do Produto" class="btn btn-sm btn-success" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     }
                                                 </div>
@@ -593,9 +651,13 @@
                                                         @Html.HiddenFor(x => x.PROD_QN_CONTAGEM)
                                                         @Html.HiddenFor(x => x.AvisaMinima)
                                                         Observações
-                                                        @Html.TextAreaFor(m => m.PROD_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 400px;", autofocus = true, @readonly = "readonly" })
+                                                        @Html.TextAreaFor(m => m.PROD_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 400px;", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.PROD_TX_OBSERVACOES, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma edição de Material", htmlAttributes: new { id = "basictoast" })
                                             </div>
                                         }
                                     </div>

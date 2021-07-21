@@ -3040,6 +3040,8 @@
     <Content Include="Views\Produto\VerProdutosEstoqueNegativo.cshtml" />
     <Content Include="Views\Produto\EditarProdutoFornecedor.cshtml" />
     <Content Include="Views\Produto\IncluirProdutoFornecedor.cshtml" />
+    <Content Include="Views\Produto\VerProdutosPontoPedido.cshtml" />
+    <Content Include="Views\Produto\EditarProduto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
