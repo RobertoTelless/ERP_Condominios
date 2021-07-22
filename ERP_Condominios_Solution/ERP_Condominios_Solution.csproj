@@ -287,6 +287,7 @@
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\FornecedorNovoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListaConvidadoController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
@@ -320,6 +321,7 @@
     <Compile Include="ViewModels\ContaBancariaViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoManutencaoViewModel.cs" />
     <Compile Include="ViewModels\EquipamentoViewModel.cs" />
+    <Compile Include="ViewModels\ConvidadoViewModel.cs" />
     <Compile Include="ViewModels\GrupoViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaViewModel.cs" />
@@ -335,6 +337,7 @@
     <Compile Include="ViewModels\NotificacaoAnexoViewModel.cs" />
     <Compile Include="ViewModels\NotificacaoViewModel.cs" />
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\ListaConvidadoViewModel.cs" />
     <Compile Include="ViewModels\VeiculoViewModel.cs" />
     <Compile Include="ViewModels\VagaViewModel.cs" />
     <Compile Include="ViewModels\UnidadeViewModel.cs" />
@@ -3068,6 +3071,7 @@
     <Folder Include="Imagens\1\Veiculo\2\Anexos\" />
     <Folder Include="Imagens\1\Veiculo\2\Fotos\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\ListaConvidado\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>

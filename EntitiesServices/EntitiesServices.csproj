@@ -218,6 +218,7 @@
     <Compile Include="EntitiesServices\TarefaService.cs" />
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
+    <Compile Include="EntitiesServices\ListaConvidadoService.cs" />
     <Compile Include="EntitiesServices\VeiculoService.cs" />
     <Compile Include="EntitiesServices\VagaService.cs" />
     <Compile Include="EntitiesServices\UnidadeService.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Interfaces\Repositories\IEquipamentoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoManutencaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IConvidadoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMaterialFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMaterialAnexoRepository.cs" />
@@ -295,6 +297,8 @@
     <Compile Include="Interfaces\Repositories\ITipoPessoaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoTarefaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IReservaRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IListaConvidadoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVagaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUnidadeRepository.cs" />
@@ -328,6 +332,7 @@
     <Compile Include="Interfaces\Services\ITarefaService.cs" />
     <Compile Include="Interfaces\Services\ITemplateService.cs" />
     <Compile Include="Interfaces\Services\ITipoPessoaService.cs" />
+    <Compile Include="Interfaces\Services\IListaConvidadoService.cs" />
     <Compile Include="Interfaces\Services\IVeiculoService.cs" />
     <Compile Include="Interfaces\Services\IVagaService.cs" />
     <Compile Include="Interfaces\Services\IUnidadeService.cs" />

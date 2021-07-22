@@ -218,6 +218,7 @@
     <Compile Include="Interfaces\ITarefaAppService.cs" />
     <Compile Include="Interfaces\ITemplateAppService.cs" />
     <Compile Include="Interfaces\ITipoPessoaAppService.cs" />
+    <Compile Include="Interfaces\IListaConvidadoAppService.cs" />
     <Compile Include="Interfaces\IVeiculoAppService.cs" />
     <Compile Include="Interfaces\IVagaAppService.cs" />
     <Compile Include="Interfaces\IUnidadeAppService.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Services\TarefaAppService.cs" />
     <Compile Include="Services\TemplateAppService.cs" />
     <Compile Include="Services\TipoPessoaAppService.cs" />
+    <Compile Include="Services\ListaConvidadoAppService.cs" />
     <Compile Include="Services\VeiculoAppService.cs" />
     <Compile Include="Services\VagaAppService.cs" />
     <Compile Include="Services\UnidadeAppService.cs" />

@@ -204,6 +204,7 @@
     <Compile Include="Repositories\EquipamentoAnexoRepository.cs" />
     <Compile Include="Repositories\EquipamentoManutencaoRepository.cs" />
     <Compile Include="Repositories\EquipamentoRepository.cs" />
+    <Compile Include="Repositories\ConvidadoRepository.cs" />
     <Compile Include="Repositories\GrupoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Repositories\OcorrenciaRepository.cs" />
@@ -254,6 +255,8 @@
     <Compile Include="Repositories\TipoPessoaRepository.cs" />
     <Compile Include="Repositories\TipoTarefaRepository.cs" />
     <Compile Include="Repositories\UFRepository.cs" />
+    <Compile Include="Repositories\ReservaRepository.cs" />
+    <Compile Include="Repositories\ListaConvidadoRepository.cs" />
     <Compile Include="Repositories\VeiculoRepository.cs" />
     <Compile Include="Repositories\VagaRepository.cs" />
     <Compile Include="Repositories\UnidadeRepository.cs" />
