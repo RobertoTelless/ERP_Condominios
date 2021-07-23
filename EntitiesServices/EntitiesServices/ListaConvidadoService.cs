@@ -25,9 +25,10 @@ namespace ModelServices.EntitiesServices
         private readonly ICategoriaNotificacaoRepository _cnRepository;
         private readonly IUsuarioRepository _usuRepository;
         private readonly IConvidadoRepository _contRepository;
+        private readonly IListaConvidadoAnexoRepository _anexoRepository;
         protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
-        public ListaConvidadoService(IListaConvidadoRepository baseRepository, ILogRepository logRepository, IReservaRepository reRepository, IUnidadeRepository toRepository, ICategoriaNotificacaoRepository cnRepository, IUsuarioRepository usuRepository, IConvidadoRepository contRepository) : base(baseRepository)
+        public ListaConvidadoService(IListaConvidadoRepository baseRepository, ILogRepository logRepository, IReservaRepository reRepository, IUnidadeRepository toRepository, ICategoriaNotificacaoRepository cnRepository, IUsuarioRepository usuRepository, IConvidadoRepository contRepository, IListaConvidadoAnexoRepository anexoRepository) : base(baseRepository)
         {
             _baseRepository = baseRepository;
             _logRepository = logRepository;
@@ -36,6 +37,7 @@ namespace ModelServices.EntitiesServices
             _usuRepository = usuRepository;
             _reRepository = reRepository;
             _contRepository = contRepository;
+            _anexoRepository = anexoRepository;
         }
 
         public LISTA_CONVIDADO CheckExist(LISTA_CONVIDADO tarefa, Int32 idAss)
@@ -53,6 +55,11 @@ namespace ModelServices.EntitiesServices
         public List<LISTA_CONVIDADO> GetAllItens(Int32 idAss)
         {
             return _baseRepository.GetAllItens(idAss);
+        }
+
+        public LISTA_CONVIDADO_ANEXO GetAnexoById(Int32 id)
+        {
+            return _anexoRepository.GetItemById(id);
         }
 
         public List<LISTA_CONVIDADO> GetByUnidade(Int32 idUnid)

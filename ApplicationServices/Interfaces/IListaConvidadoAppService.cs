@@ -22,6 +22,7 @@ namespace ApplicationServices.Interfaces
         List<LISTA_CONVIDADO> GetAllItensAdm(Int32 idAss);
         List<LISTA_CONVIDADO> GetByUnidade(Int32 idUnid);
         Int32 ExecuteFilter(String nome, DateTime? data, Int32? unid, Int32? reserva, Int32 idAss, out List<LISTA_CONVIDADO> objeto);
+        LISTA_CONVIDADO_ANEXO GetAnexoById(Int32 id);
 
         List<RESERVA> GetAllReservas(Int32 idAss);
         List<UNIDADE> GetAllUnidades(Int32 idAss);

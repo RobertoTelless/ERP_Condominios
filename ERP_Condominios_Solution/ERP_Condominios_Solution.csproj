@@ -3045,6 +3045,16 @@
     <Content Include="Views\Produto\IncluirProdutoFornecedor.cshtml" />
     <Content Include="Views\Produto\VerProdutosPontoPedido.cshtml" />
     <Content Include="Views\Produto\EditarProduto.cshtml" />
+    <Content Include="Views\ListaConvidado\MontarTelaListaConvidado.cshtml" />
+    <Content Include="Views\ListaConvidado\MontarTelaLista.cshtml" />
+    <Content Include="Views\ListaConvidado\IncluirLista.cshtml" />
+    <Content Include="Views\ListaConvidado\EditarLista.cshtml" />
+    <Content Include="Views\ListaConvidado\VerLista.cshtml" />
+    <Content Include="Views\ListaConvidado\ExcluirLista.cshtml" />
+    <Content Include="Views\ListaConvidado\ReativarLista.cshtml" />
+    <Content Include="Views\ListaConvidado\VerAnexoLista.cshtml" />
+    <Content Include="Views\ListaConvidado\EditarConvidado.cshtml" />
+    <Content Include="Views\ListaConvidado\IncluirConvidado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3071,7 +3081,6 @@
     <Folder Include="Imagens\1\Veiculo\2\Anexos\" />
     <Folder Include="Imagens\1\Veiculo\2\Fotos\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\ListaConvidado\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>

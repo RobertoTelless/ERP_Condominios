@@ -211,6 +211,7 @@
     <Compile Include="Repositories\OcorrenciaAnexoRepository.cs" />
     <Compile Include="Repositories\OcorrenciaComentarioRepository.cs" />
     <Compile Include="Repositories\PeriodicidadeRepository.cs" />
+    <Compile Include="Repositories\ListaConvidadoAnexoRepository.cs" />
     <Compile Include="Repositories\ProdutoAnexoRepository.cs" />
     <Compile Include="Repositories\ProdutoFornecedorRepository.cs" />
     <Compile Include="Repositories\ProdutoMovimentoEstoqueRepository.cs" />

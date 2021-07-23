@@ -733,6 +733,18 @@
           <Property Name="LICO_TX_OBSERVACOES" Type="text" />
           <Property Name="LICO_NM_CONVIDADO" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="LISTA_CONVIDADO_ANEXO">
+          <Key>
+            <PropertyRef Name="LCAN_CD_ID" />
+          </Key>
+          <Property Name="LCAN_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LICO_CD_ID" Type="int" Nullable="false" />
+          <Property Name="LCAN_DT_ANEXO" Type="date" />
+          <Property Name="LCAN_NM_TITULO" Type="varchar" MaxLength="50" />
+          <Property Name="LCAN_IN_TIPO" Type="int" />
+          <Property Name="LCAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
+          <Property Name="LCAN_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="LOG">
           <Key>
             <PropertyRef Name="LOG_CD_ID" />
@@ -2720,6 +2732,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
+          <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="1" />
+          <End Role="LISTA_CONVIDADO_ANEXO" Type="Self.LISTA_CONVIDADO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_CONVIDADO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_ANEXO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LISTA_CONVIDADO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
           <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="*" />
@@ -4034,6 +4058,7 @@
           <EntitySet Name="GRAU_PARENTESCO" EntityType="Self.GRAU_PARENTESCO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GRUPO" EntityType="Self.GRUPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LISTA_CONVIDADO" EntityType="Self.LISTA_CONVIDADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LISTA_CONVIDADO_ANEXO" EntityType="Self.LISTA_CONVIDADO_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOG" EntityType="Self.LOG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIAL_ANEXO" EntityType="Self.MATERIAL_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -4463,6 +4488,10 @@
           <AssociationSet Name="FK_GRUPO_TIPO_GRUPO" Association="Self.FK_GRUPO_TIPO_GRUPO">
             <End Role="TIPO_GRUPO" EntitySet="TIPO_GRUPO" />
             <End Role="GRUPO" EntitySet="GRUPO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" Association="Self.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
+            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+            <End Role="LISTA_CONVIDADO_ANEXO" EntitySet="LISTA_CONVIDADO_ANEXO" />
           </AssociationSet>
           <AssociationSet Name="FK_LISTA_CONVIDADO_ASSINANTE" Association="Self.FK_LISTA_CONVIDADO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -5648,6 +5677,7 @@
           <NavigationProperty Name="RESERVA" Relationship="Self.FK_LISTA_CONVIDADO_RESERVA" FromRole="LISTA_CONVIDADO" ToRole="RESERVA" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_LISTA_CONVIDADO_UNIDADE" FromRole="LISTA_CONVIDADO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_CONVIDADO_USUARIO" FromRole="LISTA_CONVIDADO" ToRole="USUARIO" />
+          <NavigationProperty Name="LISTA_CONVIDADO_ANEXO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_ANEXO" />
         </EntityType>
         <EntityType Name="LOG">
           <Key>
@@ -9744,6 +9774,11 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
           </AssociationSet>
+          <EntitySet Name="LISTA_CONVIDADO_ANEXO" EntityType="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO" />
+          <AssociationSet Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
+            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+            <End Role="LISTA_CONVIDADO_ANEXO" EntitySet="LISTA_CONVIDADO_ANEXO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BANCO">
           <Key>
@@ -10162,6 +10197,31 @@
             </Principal>
             <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
               <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LISTA_CONVIDADO_ANEXO">
+          <Key>
+            <PropertyRef Name="LCAN_CD_ID" />
+          </Key>
+          <Property Name="LCAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LICO_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="LCAN_DT_ANEXO" Type="DateTime" Precision="0" />
+          <Property Name="LCAN_NM_TITULO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LCAN_IN_TIPO" Type="Int32" />
+          <Property Name="LCAN_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LCAN_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="LISTA_CONVIDADO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO_ANEXO" ToRole="LISTA_CONVIDADO" />
+        </EntityType>
+        <Association Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
+          <End Type="ERP_CondominioModel.LISTA_CONVIDADO" Role="LISTA_CONVIDADO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO" Role="LISTA_CONVIDADO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_CONVIDADO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_ANEXO">
+              <PropertyRef Name="LICO_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11894,6 +11954,19 @@
                 <ScalarProperty Name="PERI_NR_DIAS" ColumnName="PERI_NR_DIAS" />
                 <ScalarProperty Name="PERI_NM_NOME" ColumnName="PERI_NM_NOME" />
                 <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LISTA_CONVIDADO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO">
+              <MappingFragment StoreEntitySet="LISTA_CONVIDADO_ANEXO">
+                <ScalarProperty Name="LCAN_IN_ATIVO" ColumnName="LCAN_IN_ATIVO" />
+                <ScalarProperty Name="LCAN_AQ_ARQUIVO" ColumnName="LCAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="LCAN_IN_TIPO" ColumnName="LCAN_IN_TIPO" />
+                <ScalarProperty Name="LCAN_NM_TITULO" ColumnName="LCAN_NM_TITULO" />
+                <ScalarProperty Name="LCAN_DT_ANEXO" ColumnName="LCAN_DT_ANEXO" />
+                <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
+                <ScalarProperty Name="LCAN_CD_ID" ColumnName="LCAN_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

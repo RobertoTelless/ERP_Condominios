@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public LISTA_CONVIDADO()
         {
             this.CONVIDADO = new HashSet<CONVIDADO>();
+            this.LISTA_CONVIDADO_ANEXO = new HashSet<LISTA_CONVIDADO_ANEXO>();
         }
     
         public int LICO_CD_ID { get; set; }
@@ -38,5 +39,7 @@ namespace EntitiesServices.Model
         public virtual RESERVA RESERVA { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LISTA_CONVIDADO_ANEXO> LISTA_CONVIDADO_ANEXO { get; set; }
     }
 }

@@ -59,6 +59,12 @@ namespace ApplicationServices.Services
             return item;
         }
 
+        public LISTA_CONVIDADO_ANEXO GetAnexoById(Int32 id)
+        {
+            LISTA_CONVIDADO_ANEXO lista = _baseService.GetAnexoById(id);
+            return lista;
+        }
+
         public List<RESERVA> GetAllReservas(Int32 idAss)
         {
             List<RESERVA> lista = _baseService.GetAllReservas(idAss);
@@ -421,7 +427,7 @@ namespace ApplicationServices.Services
             {
                 // Persiste
                 item.CONV_IN_ATIVO = 1;
-                Int32 volta = _baseService.cre(item);
+                Int32 volta = _baseService.CreateConvidado(item);
                 return volta;
             }
             catch (Exception ex)
@@ -429,14 +435,5 @@ namespace ApplicationServices.Services
                 throw;
             }
         }
-
-
-
-
-
-
-
-
-
     }
 }

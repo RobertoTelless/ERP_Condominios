@@ -448,6 +448,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Lista de Convidados já cadastrada.
+        /// </summary>
+        internal static string M0046 {
+            get {
+                return ResourceManager.GetString("M0046", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa lista. Existem informações vinculadas a ela.
+        /// </summary>
+        internal static string M0047 {
+            get {
+                return ResourceManager.GetString("M0047", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {

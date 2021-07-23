@@ -246,6 +246,12 @@
   <data name="M0045" xml:space="preserve">
     <value>Não é possível excluir esse material . Existem informações vinculadas a ele</value>
   </data>
+  <data name="M0046" xml:space="preserve">
+    <value>Lista de Convidados já cadastrada</value>
+  </data>
+  <data name="M0047" xml:space="preserve">
+    <value>Não é possível excluir essa lista. Existem informações vinculadas a ela</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>
