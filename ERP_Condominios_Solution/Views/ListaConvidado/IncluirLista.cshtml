@@ -1,7 +1,539 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_Condominios_Solution.ViewModels.ListaConvidadoViewModel
 @{
-    ViewBag.Title = "IncluirLista";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Lista de Convidados</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Lista de Convidados</a>
+            </li>
+            <li class="active">
+                <strong>Lista de Convidados - Inclusão</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Lista de Convidados - Inclusão</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
 
-<h2>IncluirLista</h2>
+                <div class="ibox-content">
+                    @Html.AntiForgeryToken()
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        @using (Html.BeginForm("IncluirLista", "ListaConvidado", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                        {
 
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
+                                @*<li class=""><a data-toggle="tab" href="#tab-2">Convidados</a></li>*@
+                                <li class=""><a data-toggle="tab" href="#tab-3">Anexos</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4">Observações</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                @*Dados Gerais*@
+                                <div id="tab-1" class="tab-pane active">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                @if (ViewBag.Perfil == "MOR")
+                                                {
+                                                    <div class="col-lg-2 col-md-3 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.LICO_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.LICO_IN_ATIVO)
+                                                        Unidade
+                                                        @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-lg-2 col-md-3 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.LICO_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.LICO_IN_ATIVO)
+                                                        Unidade*
+                                                        @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
+                                                    </div>
+                                                }
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Nome da Lista*
+                                                    @Html.TextBoxFor(m => m.LICO_NM_LISTA, new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.LICO_NM_LISTA, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Data do Evento*
+                                                    @Html.TextBoxFor(m => m.LICO_DT_EVENTO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data" })
+                                                    @Html.ValidationMessageFor(m => m.LICO_DT_EVENTO, "",new { @style="color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Vinculado a Reserva?
+                                                    @Html.DropDownListFor(m => m.RESE_CD_ID, (SelectList)ViewBag.Reservas, "Selecionar", new { @class = "form-control", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.RESE_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                @*Convidados*@
+                                @*<div id="tab-2" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    @Html.HiddenFor(m => m.LICO_CD_ID)
+                                                    Nome do Convidado*
+                                                    @Html.TextBoxFor(m => m.LICO_NM_CONVIDADO, new { @class = "form-control", autofocus = true, @id = "nome" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <span class="btn btn-success btn-sm" onclick="IncluirConvidadoLista()">Incluir Convidado na Lista</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style="margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <table id="convidado" style="width: 100%" class="table table-striped table-bordered table-hover dataTables-example">
+                                                        <thead>
+                                                            <tr>
+                                                                <td>Nome</td>
+                                                                <td>Ações</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                                @*Imagens - Foto e Anexos*@
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <hr />
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <h4>Anexos</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                                <br />
+                                                <div class="form-group">
+                                                    <div class="ibox-content">
+                                                        <br />
+                                                        <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="myFiles">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <td>Nome</td>
+                                                                    <td>Tipo</td>
+                                                                    <td>Ações</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Observações*@
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    Observações
+                                                    @Html.TextAreaFor(m => m.LICO_TX_OBSERVACOES, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.LICO_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <br />
+                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Lista de Convidados</button>
+                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseLista", controller: "ListaConvidado")
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @Scripts.Render("~/plugins/switchery")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+        <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $('#tel').mask("(99) 9999-9999");
+            $('#cel').mask("(99) 99999-9999");
+            $('data').mask("99/99/9999");
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#PF').hide();
+            $('#PJ').hide();
+        });
+
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#PF").hide();
+                    $("#PJ").show();
+                    $("#razao").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $("#PJ").hide();
+                    $("#PF").show();
+                    $("#razao").hide();
+                }
+                else if (this.value == '4') {
+                    $("#PF").show();
+                    $("#PJ").hide();
+                    $("#razao").hide();
+                }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else {
+                    $("#PJ").hide();
+                    $("#PF").hide();
+                    $("#razao").hide();
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Inclusão em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+                if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+
+    <script>
+        SendFilesV2('imgFornecedor', 'FornecedorNovo', 'UploadFileToSession');
+    </script>
+
+    @*<script>
+        function IncluirConvidado() {
+            if ($('#nome').val() == "")
+            {
+                var alert = '<div class="alert alert-danger text-danger">'
+                    + '<button type="button" class="close" data-dismiss="alert">Fechar</button>'
+                    + '<ul>'
+                    + '<li>Campo NOME obrigatório</li>'
+                    + '</ul>'
+                    + '</div>';
+
+                $('#containerAlert').html(alert);
+            }
+
+            if (isValidForm())
+            {
+                $('button.close').click();
+                $('table#convidado td.dataTables_empty').closest('tr').remove();
+
+                var table = $('table#convidado tbody');
+
+                console.log(custo);
+
+                table.append(
+                    '<tr>'
+                    + '<td><input name="rowNome" type="hidden" value="' + $('#nome').val() + '" />' + $('#nome').val() + '</td>'
+                    + '<td><span style="color: #337ab7; cursor: pointer;" class="fa fa-trash-o" onclick="apagaRow($(this))"></span></td>'
+                    + '</tr>'
+                );
+
+                var data = {
+                    "CONV_NM_": $('#nome').val()
+                    , "PROD_CD_ID": $('#prod option:selected').val()
+                    , "MAPR_CD_ID": $('#ins option:selected').val()
+                    , "ITPC_QN_QUANTIDADE": $('#qtde').val()
+                    , "ITPC_TX_OBSERVACOES": $('#obs').val()
+                }
+
+                $.ajax({
+                    url: '../Compra/MontaListaItemPedido'
+                    , data: data
+                    , type: 'POST'
+                });
+
+                $('#nome').val('');
+            }
+        }
+
+        function apagaRow(td) {
+            var tr = $(td.closest('tr'));
+            var tipo = tr.find($('input[type=hidden][name=rowTipo]')).val();
+            if (tipo == 1) {
+
+                var data = {
+                    "ITPC_IN_TIPO": tr.find($('input[type=hidden][name=rowTipo]')).val()
+                    , "PROD_CD_ID": tr.find($('input[type=hidden][name=rowProd]')).val()
+                }
+
+                $.ajax({
+                    url: '../Compra/RemoveItpcTabela' //'../Compra/UploadFileToSession'
+                    , async: false
+                    , data: data
+                    , type: 'POST'
+                    , error: function (data) {
+                        buttonSubmit.prop('disabled', false);
+                        console.log('ERROR!!');
+                    }
+                    , cache: false
+                    , processData: false
+                    , contentType: false
+                });
+
+                var prod = $('#prod option[value="' + tr.find($('input[type=hidden][name=rowProd]')).val() + '"]');
+                prod.prop('disabled', false);
+                prod.css('background', '');
+            }
+
+            if (tipo == 2) {
+
+                var data = {
+                    "ITPC_IN_TIPO": tr.find($('input[type=hidden][name=rowTipo]')).val()
+                    , "MAPR_CD_ID": tr.find($('input[type=hidden][name=rowIns]')).val()
+                }
+
+                $.ajax({
+                    url: '../Compra/RemoveItpcTabela' //'../Compra/UploadFileToSession'
+                    , async: false
+                    , data: data
+                    , type: 'POST'
+                    , cache: false
+                    , processData: false
+                    , contentType: false
+                });
+
+                var ins = $('#ins option[value="' + tr.find($('input[type=hidden][name=rowIns]')).val() + '"]');
+                ins.prop('disabled', false);
+                ins.css('background', '');
+            }
+
+            td.closest('tr').remove();
+
+            if ($('table#itemPedido tr').length == 1) {
+                $('table#itemPedido tbody').append('<tr class="odd"><td valign="top" colspan="6" class="dataTables_empty">Nenhuma linha recuperada</td></tr>');
+            }
+        }
+
+        function isValidForm() {
+            if ($('#tipo').val() == "1") {
+                if ($("#tipo").val() != "" && $("#prod").val() != "" && $("#und").val() != "" && $('#qtde').val() != "") {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if ($('#tipo').val() == 2) {
+                if ($("#tipo").val() != "" && $("#ins").val() != "" && $("#und").val() != "" && $('#qtde').val() != "") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    </script>*@
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

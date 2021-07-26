@@ -745,6 +745,17 @@
           <Property Name="LCAN_AQ_ARQUIVO" Type="varchar" MaxLength="250" />
           <Property Name="LCAN_IN_ATIVO" Type="int" />
         </EntityType>
+        <EntityType Name="LISTA_CONVIDADO_COMENTARIO">
+          <Key>
+            <PropertyRef Name="LCCM_CD_ID" />
+          </Key>
+          <Property Name="LCCM_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LICO_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="LCCM_DT_COMENTARIO" Type="datetime" Nullable="false" />
+          <Property Name="LCCM_DS_COMENTARIO" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="LCCM_IN_ATIVO" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="LOG">
           <Key>
             <PropertyRef Name="LOG_CD_ID" />
@@ -2756,6 +2767,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
+          <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="1" />
+          <End Role="LISTA_CONVIDADO_COMENTARIO" Type="Self.LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_CONVIDADO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="LISTA_CONVIDADO_COMENTARIO" Type="Self.LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LISTA_CONVIDADO_RESERVA">
           <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="0..1" />
           <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="*" />
@@ -4059,6 +4094,7 @@
           <EntitySet Name="GRUPO" EntityType="Self.GRUPO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LISTA_CONVIDADO" EntityType="Self.LISTA_CONVIDADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LISTA_CONVIDADO_ANEXO" EntityType="Self.LISTA_CONVIDADO_ANEXO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LISTA_CONVIDADO_COMENTARIO" EntityType="Self.LISTA_CONVIDADO_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOG" EntityType="Self.LOG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MATERIAL_ANEXO" EntityType="Self.MATERIAL_ANEXO" Schema="dbo" store:Type="Tables" />
@@ -4496,6 +4532,14 @@
           <AssociationSet Name="FK_LISTA_CONVIDADO_ASSINANTE" Association="Self.FK_LISTA_CONVIDADO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" Association="Self.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
+            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" Association="Self.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
           </AssociationSet>
           <AssociationSet Name="FK_LISTA_CONVIDADO_RESERVA" Association="Self.FK_LISTA_CONVIDADO_RESERVA">
             <End Role="RESERVA" EntitySet="RESERVA" />
@@ -5678,6 +5722,7 @@
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_LISTA_CONVIDADO_UNIDADE" FromRole="LISTA_CONVIDADO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_CONVIDADO_USUARIO" FromRole="LISTA_CONVIDADO" ToRole="USUARIO" />
           <NavigationProperty Name="LISTA_CONVIDADO_ANEXO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_ANEXO" />
+          <NavigationProperty Name="LISTA_CONVIDADO_COMENTARIO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_COMENTARIO" />
         </EntityType>
         <EntityType Name="LOG">
           <Key>
@@ -6602,6 +6647,7 @@
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
           <NavigationProperty Name="MOVIMENTO_ESTOQUE_PRODUTO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="USUARIO" ToRole="MOVIMENTO_ESTOQUE_PRODUTO" />
+          <NavigationProperty Name="LISTA_CONVIDADO_COMENTARIO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="LISTA_CONVIDADO_COMENTARIO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -9779,6 +9825,15 @@
             <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
             <End Role="LISTA_CONVIDADO_ANEXO" EntitySet="LISTA_CONVIDADO_ANEXO" />
           </AssociationSet>
+          <EntitySet Name="LISTA_CONVIDADO_COMENTARIO" EntityType="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" />
+          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
+            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="BANCO">
           <Key>
@@ -10222,6 +10277,43 @@
             </Principal>
             <Dependent Role="LISTA_CONVIDADO_ANEXO">
               <PropertyRef Name="LICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LISTA_CONVIDADO_COMENTARIO">
+          <Key>
+            <PropertyRef Name="LCCM_CD_ID" />
+          </Key>
+          <Property Name="LCCM_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LICO_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="LCCM_DT_COMENTARIO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LCCM_DS_COMENTARIO" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="LCCM_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LISTA_CONVIDADO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO_COMENTARIO" ToRole="LISTA_CONVIDADO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" FromRole="LISTA_CONVIDADO_COMENTARIO" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
+          <End Type="ERP_CondominioModel.LISTA_CONVIDADO" Role="LISTA_CONVIDADO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" Role="LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_CONVIDADO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
+          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" Role="LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11967,6 +12059,18 @@
                 <ScalarProperty Name="LCAN_DT_ANEXO" ColumnName="LCAN_DT_ANEXO" />
                 <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
                 <ScalarProperty Name="LCAN_CD_ID" ColumnName="LCAN_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LISTA_CONVIDADO_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO">
+              <MappingFragment StoreEntitySet="LISTA_CONVIDADO_COMENTARIO">
+                <ScalarProperty Name="LCCM_IN_ATIVO" ColumnName="LCCM_IN_ATIVO" />
+                <ScalarProperty Name="LCCM_DS_COMENTARIO" ColumnName="LCCM_DS_COMENTARIO" />
+                <ScalarProperty Name="LCCM_DT_COMENTARIO" ColumnName="LCCM_DT_COMENTARIO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
+                <ScalarProperty Name="LCCM_CD_ID" ColumnName="LCCM_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -323,6 +323,7 @@
     <Compile Include="ViewModels\EquipamentoViewModel.cs" />
     <Compile Include="ViewModels\ConvidadoViewModel.cs" />
     <Compile Include="ViewModels\GrupoViewModel.cs" />
+    <Compile Include="ViewModels\ListaConvidadoComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaViewModel.cs" />
     <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
@@ -3045,7 +3046,6 @@
     <Content Include="Views\Produto\IncluirProdutoFornecedor.cshtml" />
     <Content Include="Views\Produto\VerProdutosPontoPedido.cshtml" />
     <Content Include="Views\Produto\EditarProduto.cshtml" />
-    <Content Include="Views\ListaConvidado\MontarTelaListaConvidado.cshtml" />
     <Content Include="Views\ListaConvidado\MontarTelaLista.cshtml" />
     <Content Include="Views\ListaConvidado\IncluirLista.cshtml" />
     <Content Include="Views\ListaConvidado\EditarLista.cshtml" />
@@ -3055,6 +3055,7 @@
     <Content Include="Views\ListaConvidado\VerAnexoLista.cshtml" />
     <Content Include="Views\ListaConvidado\EditarConvidado.cshtml" />
     <Content Include="Views\ListaConvidado\IncluirConvidado.cshtml" />
+    <Content Include="Views\ListaConvidado\IncluirComentarioLista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

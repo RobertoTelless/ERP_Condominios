@@ -109,6 +109,12 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 Session["ListaLista"] = listaMasterForn;
             }
+            if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                listaMasterForn = listaMasterForn.Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+                Session["ListaLista"] = listaMasterForn;
+            }
+
             ViewBag.Listas = (List<LISTA_CONVIDADO>)Session["ListaLista"];
             ViewBag.Title = "Lista de Convidados";
             ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NR_NUMERO), "UNID_CD_ID", "UNID_NM_EXIBE");
@@ -246,6 +252,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Reservas = new SelectList(fornApp.GetAllReservas(idAss).OrderBy(x => x.RESE_NM_NOME), "RESE_CD_ID", "RESE_NM_NOME");
             Session["VoltaProp"] = 4;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
             LISTA_CONVIDADO item = new LISTA_CONVIDADO();
@@ -254,6 +261,10 @@ namespace ERP_Condominios_Solution.Controllers
             vm.LICO_IN_ATIVO = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+            if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                vm.UNID_CD_ID = usuario.UNID_CD_ID;
+            }
             return View(vm);
         }
 
@@ -904,7 +915,7 @@ namespace ERP_Condominios_Solution.Controllers
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = fornApp.ValidateCreateConvidado(item);
                     // Verifica retorno
-                    return RedirectToAction("VoltarAnexoLista");
+                    return RedirectToAction("IncluirConvidado");
                 }
                 catch (Exception ex)
                 {
@@ -917,5 +928,63 @@ namespace ERP_Condominios_Solution.Controllers
                 return View(vm);
             }
         }
+
+        public ActionResult IncluirComentarioLista()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            LISTA_CONVIDADO item = fornApp.GetItemById((Int32)Session["IdLista"]);
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            LISTA_CONVIDADO_COMENTARIO coment = new LISTA_CONVIDADO_COMENTARIO();
+            ListaConvidadoComentarioViewModel vm = Mapper.Map<LISTA_CONVIDADO_COMENTARIO, ListaConvidadoComentarioViewModel>(coment);
+            vm.LCCM_DT_COMENTARIO = DateTime.Now;
+            vm.LCCM_IN_ATIVO = 1;
+            vm.LICO_CD_ID = item.LICO_CD_ID;
+            vm.USUARIO = usuarioLogado;
+            vm.USUA_CD_ID = usuarioLogado.USUA_CD_ID;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult IncluirComentarioLista(ListaConvidadoComentarioViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    LISTA_CONVIDADO_COMENTARIO item = Mapper.Map<ListaConvidadoComentarioViewModel, LISTA_CONVIDADO_COMENTARIO>(vm);
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    LISTA_CONVIDADO not = fornApp.GetItemById((Int32)Session["IdLista"]);
+
+                    item.USUARIO = null;
+                    not.LISTA_CONVIDADO_COMENTARIO.Add(item);
+                    objetoFornAntes = not;
+                    Int32 volta = fornApp.ValidateEdit(not, objetoFornAntes);
+
+                    // Verifica retorno
+
+                    // Sucesso
+                    return RedirectToAction("EditarLista", new { id = (Int32)Session["IdLista"] });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
     }
 }

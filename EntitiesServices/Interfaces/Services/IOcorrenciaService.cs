@@ -23,6 +23,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<OCORRENCIA> GetAllItensUnidade(Int32 id, Int32 idAss);
         List<OCORRENCIA> GetOcorrenciasNovas(Int32 id, Int32 idAss);
         List<OCORRENCIA> ExecuteFilter(Int32? unidade, Int32? usuario, Int32? cat, String titulo, DateTime? data, String texto, Int32 idAss);
+        
         OCORRENCIA_ANEXO GetAnexoById(Int32 id);
         List<CATEGORIA_OCORRENCIA> GetAllCategorias(Int32 idAss);
         List<UNIDADE> GetAllUnidades(Int32 idAss);

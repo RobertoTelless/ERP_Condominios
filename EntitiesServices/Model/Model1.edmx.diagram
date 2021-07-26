@@ -319,6 +319,9 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" />
         <EntityTypeShape EntityType="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO" Width="1.5" PointX="28.25" PointY="156.75" />
         <AssociationConnector Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" Width="1.5" PointX="31.25" PointY="141.375" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

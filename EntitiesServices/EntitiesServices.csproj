@@ -248,6 +248,7 @@
     <Compile Include="Interfaces\Repositories\IMaterialFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMaterialAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMovimentoEstoqueProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IListaConvidadoComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaComentarioRepository.cs" />
@@ -498,6 +499,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LISTA_CONVIDADO_ANEXO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\LISTA_CONVIDADO_COMENTARIO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LOG.cs">

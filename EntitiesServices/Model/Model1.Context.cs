@@ -141,5 +141,6 @@ namespace EntitiesServices.Model
         public virtual DbSet<EQUIPAMENTO_MANUTENCAO> EQUIPAMENTO_MANUTENCAO { get; set; }
         public virtual DbSet<PERIODICIDADE> PERIODICIDADE { get; set; }
         public virtual DbSet<LISTA_CONVIDADO_ANEXO> LISTA_CONVIDADO_ANEXO { get; set; }
+        public virtual DbSet<LISTA_CONVIDADO_COMENTARIO> LISTA_CONVIDADO_COMENTARIO { get; set; }
     }
 }
