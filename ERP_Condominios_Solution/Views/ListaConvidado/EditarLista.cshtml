@@ -158,7 +158,7 @@
                                                         <thead style ="background-color:lightsteelblue">
                                                             <tr>
                                                                 <th>Nome</th>
-                                                                <th>Data de Chegada</th>
+                                                                <th>Hora de Chegada</th>
                                                                 <th class="td-one-action">Ações</th>
                                                             </tr>
                                                         </thead>
@@ -169,7 +169,7 @@
                                                                     <td>@cond.CONV_NM_CONVIDADO</td>
                                                                     @if (cond.CONV_DT_CHEGADA != null)
                                                                     {
-                                                                        <td>@cond.CONV_DT_CHEGADA.Value.ToShortDateString()</td>
+                                                                        <td>@cond.CONV_DT_CHEGADA.Value.ToShortDateString() @cond.CONV_DT_CHEGADA.Value.ToShortTimeString()</td>
                                                                     }
                                                                     else
                                                                     {

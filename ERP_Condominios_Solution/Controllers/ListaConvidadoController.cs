@@ -465,6 +465,34 @@ namespace ERP_Condominios_Solution.Controllers
             return View(vm);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ProcessarLista(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            try
+            {
+                // Executa a operação
+                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                CONVIDADO item = fornApp.GetConvidadoById(id);
+                Int32 volta = fornApp.ValidateEditConvidado(item);
+
+                // Verifica retorno
+
+                // Sucesso
+                return RedirectToAction("VerLista", new { id = (Int32)Session["IdLista"] });
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return null;
+            }
+        }
+
         [HttpGet]
         public ActionResult ExcluirLista(Int32 id)
         {
