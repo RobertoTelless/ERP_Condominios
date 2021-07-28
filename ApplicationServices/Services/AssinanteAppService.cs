@@ -141,16 +141,16 @@ namespace ApplicationServices.Services
             try
             {
                 // Monta Log
-                LOG log = new LOG
-                {
-                    LOG_DT_DATA = DateTime.Now,
-                    ASSI_CD_ID = usuario.ASSI_CD_ID,
-                    USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "EditASSI",
-                    LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ASSINANTE>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<ASSINANTE>(itemAntes)
-                };
+                LOG log = new LOG();
+                //{
+                //    LOG_DT_DATA = DateTime.Now,
+                //    ASSI_CD_ID = usuario.ASSI_CD_ID,
+                //    USUA_CD_ID = usuario.USUA_CD_ID,
+                //    LOG_NM_OPERACAO = "EditASSI",
+                //    LOG_IN_ATIVO = 1,
+                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<ASSINANTE>(item),
+                //    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<ASSINANTE>(itemAntes)
+                //};
 
                 // Persiste
                 return _baseService.Edit(item, log);

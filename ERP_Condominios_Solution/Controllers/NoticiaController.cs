@@ -78,7 +78,7 @@ namespace ERP_Condominios_Solution.Controllers
             USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             NOTICIA_COMENTARIO coment = new NOTICIA_COMENTARIO();
             NoticiaComentarioViewModel vm = Mapper.Map<NOTICIA_COMENTARIO, NoticiaComentarioViewModel>(coment);
-            vm.NOCO_DT_COMENTARIO = DateTime.Today;
+            vm.NOCO_DT_COMENTARIO = DateTime.Now;
             vm.NOCO_IN_ATIVO = 1;
             vm.NOTC_CD_ID = item.NOTC_CD_ID;
             vm.USUARIO = usuarioLogado;
@@ -156,6 +156,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Abre view
             Session["MensNoticia"] = 0;
+            Session["VoltaNoticia"] = 2;
             objeto = new NOTICIA();
             return View(objeto);
         }
@@ -166,7 +167,15 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            return RedirectToAction("CarregarBase", "BaseAdmin");
+            if ((Int32)Session["VoltaNoticia"] == 1)
+            {
+                return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaNoticia"] == 2)
+            {
+                return RedirectToAction("MontarTelaUsuario", "Noticia");
+            }
+            return RedirectToAction("MontarTelaNoticia", "Noticia");
         }
 
         public ActionResult VoltarBase()

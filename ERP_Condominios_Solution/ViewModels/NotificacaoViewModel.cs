@@ -21,7 +21,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<System.DateTime> NOTI_DT_EMISSAO { get; set; }
         public int NOTI_IN_ATIVO { get; set; }
         public Nullable<int> NOTI_IN_STATUS { get; set; }
-        [StringLength(50, ErrorMessage = "O TEXTO DA NOTIFICAÇÃO deve ter no máximo 50 caracteres.")]
+        [StringLength(5000, ErrorMessage = "O TEXTO DA NOTIFICAÇÃO deve ter no máximo 5000 caracteres.")]
         public string NOTI_TX_TEXTO { get; set; }
         [Required(ErrorMessage = "Campo TÍTULO obrigatorio")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "O TÍTULO deve ter no minimo 1 e no máximo 50 caracteres.")]

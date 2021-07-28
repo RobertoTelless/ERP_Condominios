@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <br />
                         @Html.ButtonLinkIndex(text: "Imprimir", action: "GerarRelatorioDetalhe", controller: "Condominio")
-                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBase", controller: "Condominio")
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Condominio")
                     </div>
                     @*@Html.AntiForgeryToken()*@
                     @if (!ViewData.ModelState.IsValid)
@@ -68,42 +68,41 @@
                         <div class="tab-content">
 
                             @*Dados Gerais*@
-                            @if (ViewBag.Incluir == 0)
-                            {
-                                <div id="tab-1" class="tab-pane active">
-                                    <div class="panel-body">
-                                        @using (Html.BeginForm("MontarTelaCondominio", "Condominio", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
-                                        {
-                                            <div class="row" style="width: 100%;">
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    <div style="text-align: center; margin-top: 25px; line-height: 10px;">
-                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                        @Html.HiddenFor(m => m.ASSI_IN_ATIVO)
-                                                        @Html.HiddenFor(m => m.ASSI_IN_STATUS)
-                                                        @Html.HiddenFor(m => m.ASSI_IN_TIPO)
-                                                        @if (!String.IsNullOrEmpty(Model.ASSI_AQ_FOTO))
-                                                        {
-                                                            <img src="@Url.Content(Model.ASSI_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.ASSI_NM_NOME', '@Url.Content(Model.ASSI_AQ_FOTO)')">
-                                                        }
-                                                        else
-                                                        {
-                                                            <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                        }
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                    </div>
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("MontarTelaCondominio", "Condominio", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row" style="width: 100%;">
+                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div style="text-align: center; margin-top: 25px; line-height: 10px;">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ASSI_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.ASSI_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ASSI_IN_TIPO)
+                                                    @if (!String.IsNullOrEmpty(Model.ASSI_AQ_FOTO))
+                                                    {
+                                                        <img src="@Url.Content(Model.ASSI_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.ASSI_NM_NOME', '@Url.Content(Model.ASSI_AQ_FOTO)')">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
                                                 </div>
-                                                <div class="col-md-10">
-                                                    <div class="row">
-                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                            </div>
+                                            <div class="col-md-10">
+                                                <div class="row">
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
                                                             Nome*
                                                             @Html.TextBoxFor(m => m.ASSI_NM_NOME, new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.ASSI_NM_NOME, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
                                                             Tipo de Pessoa*
                                                             @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
                                                             @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
@@ -115,292 +114,128 @@
                                                         </div>
                                                         <div class=" col-lg-2 col-md-2 col-xs-12">
                                                             Data Início
-                                                            @Html.TextBoxFor(m => m.ASSI_NM_NOME, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
+                                                            @Html.TextBoxFor(m => m.ASSI_DT_INICIO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.ASSI_DT_INICIO, "", new { @style = "color:red" })
-                                                        </div>
+                                                        </div>                                                
                                                     </div>
-                                                    <div class="row">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                         <div class="col-lg-4 col-md-4 col-xs-12">
                                                             Email*
                                                             @Html.TextBoxFor(m => m.ASSI_NM_EMAIL, new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.ASSI_NM_EMAIL, "", new { @style = "color:red" })
-                                                        </div>
-                                                    </div>
-                                                    <br />
-                                                </div>
-                                            </div>
-                                            <div class="row" style="width: 100%;">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PF">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        CPF
-                                                        @Html.TextBoxFor(m => m.ASSI_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_CPF, "", new { @style = "color:red" })
+                                                        </div>                                                 
                                                     </div>
                                                 </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PJ">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        CNPJ
-                                                        @Html.TextBoxFor(m => m.ASSI_NR_CPF, new { @class = "form-control", @id = "cnpj" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_CNPJ, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-xs-12">
-                                                        Razão Social
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_RAZAO_SOCIAL, new { @class = "form-control", autofocus = true, id = "rs" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_RAZAO_SOCIAL, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
+                                                <br />
                                             </div>
-
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        <h4>Endereço</h4>
-                                                        <br />
-                                                        CEP
-                                                        <div class="input-group">
-                                                            @Html.TextBoxFor(m => m.ASSI_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.ASSI_NR_CEP, "", new { @style = "color:red" })
-                                                            <span class="input-group-btn">
-                                                                <span class="btn btn-warning btn-sm" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 1)">Buscar CEP</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Endereço*
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_ENDERECO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Número*
-                                                        @Html.TextBoxFor(m => m.ASSI_NR_NUMERO, new { @class = "form-control", autofocus = true, @id = "numero" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_NUMERO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Bairro*
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_BAIRRO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Cidade*
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_CIDADE, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        UF*
-                                                        @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
-                                                        @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                @if (Model.TIPE_CD_ID == 2)
-                                                {
-                                                    <div class="form-group">
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <hr />
-                                                            <h4>Quadro Diretor</h4>
-                                                            <br />
-                                                            <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="tblQs">
-                                                                <thead style="background-color:lightblue">
-                                                                    <tr>
-                                                                        <th>Cargo</th>
-                                                                        <th>Nome</th>
-                                                                        <th>Unidade</th>
-                                                                        <th>Telefone</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach (var cond in Model.CORPO_DIRETIVO)
-                                                                    {
-                                                                        <tr>
-                                                                            <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
-                                                                            <td>@cond.USUARIO.USUA_NM_NOME</td>
-                                                                            <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
-                                                                            <td>@cond.USUARIO.USUA_NR_CELULAR</td>
-                                                                        </tr>
-                                                                    }
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div id="tab-1" class="tab-pane">
-                                    <div class="panel-body">
-                                        @using (Html.BeginForm("MontarTelaCondominio", "Condominio", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
-                                        {
-                                            <div class="row" style="width: 100%;">
+                                        </div>
+                                        <div class="row" style="width: 100%;">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PF">
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    <div style="text-align: center; margin-top: 25px; line-height: 10px;">
-                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                        @Html.HiddenFor(m => m.ASSI_IN_ATIVO)
-                                                        @Html.HiddenFor(m => m.ASSI_IN_STATUS)
-                                                        @Html.HiddenFor(m => m.ASSI_IN_TIPO)
-                                                        @if (!String.IsNullOrEmpty(Model.ASSI_AQ_FOTO))
-                                                        {
-                                                            <img src="@Url.Content(Model.ASSI_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.ASSI_NM_NOME', '@Url.Content(Model.ASSI_AQ_FOTO)')">
-                                                        }
-                                                        else
-                                                        {
-                                                            <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                        }
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                    </div>
+                                                    CPF
+                                                    @Html.TextBoxFor(m => m.ASSI_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NR_CPF, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-md-10">
-                                                    <div class="row">
-                                                        <div class="col-lg-3 col-md-3 col-xs-12">
-                                                            Nome*
-                                                            @Html.TextBoxFor(m => m.ASSI_NM_NOME, new { @class = "form-control", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.ASSI_NM_NOME, "", new { @style = "color:red" })
-                                                        </div>
-                                                        <div class="col-lg-2 col-md-2 col-xs-12">
-                                                            Tipo de Pessoa*
-                                                            @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
-                                                            @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
-                                                        </div>
-                                                        <div class="col-lg-2 col-md-2 col-xs-12">
-                                                            Tipo de Condomínio*
-                                                            @Html.DropDownListFor(m => m.TICO_CD_ID, (SelectList)ViewBag.TC, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.TICO_CD_ID, "", new { @style = "color:red" })
-                                                        </div>
-                                                        <div class=" col-lg-2 col-md-2 col-xs-12">
-                                                            Data Início
-                                                            @Html.TextBoxFor(m => m.ASSI_NM_NOME, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                            @Html.ValidationMessageFor(m => m.ASSI_DT_INICIO, "", new { @style = "color:red" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-lg-4 col-md-4 col-xs-12">
-                                                            Email*
-                                                            @Html.TextBoxFor(m => m.ASSI_NM_EMAIL, new { @class = "form-control", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.ASSI_NM_EMAIL, "", new { @style = "color:red" })
-                                                        </div>
-                                                    </div>
+                                            </div>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PJ">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    CNPJ
+                                                    @Html.TextBoxFor(m => m.ASSI_NR_CNPJ, new { @class = "form-control", @id = "cnpj" })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NR_CNPJ, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    Razão Social
+                                                    @Html.TextBoxFor(m => m.ASSI_NM_RAZAO_SOCIAL, new { @class = "form-control", autofocus = true, id = "rs" })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NM_RAZAO_SOCIAL, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <h4>Endereço</h4>
                                                     <br />
-                                                </div>
-                                            </div>
-                                            <div class="row" style="width: 100%;">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PF">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        CPF
-                                                        @Html.TextBoxFor(m => m.ASSI_NR_CPF, new { @class = "form-control", @id = "cpf", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_CPF, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="PJ">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        CNPJ
-                                                        @Html.TextBoxFor(m => m.ASSI_NR_CPF, new { @class = "form-control", @id = "cnpj" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_CNPJ, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-6 col-md-6 col-xs-12">
-                                                        Razão Social
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_RAZAO_SOCIAL, new { @class = "form-control", autofocus = true, id = "rs" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_RAZAO_SOCIAL, "", new { @style = "color:red" })
+                                                    CEP
+                                                    <div class="input-group">
+                                                        @Html.TextBoxFor(m => m.ASSI_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_CEP, "", new { @style = "color:red" })
+                                                        <span class="input-group-btn">
+                                                            <span class="btn btn-warning btn-sm" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 1)">Buscar CEP</span>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        <h4>Endereço</h4>
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Endereço*
+                                                    @Html.TextBoxFor(m => m.ASSI_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NM_ENDERECO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Número*
+                                                    @Html.TextBoxFor(m => m.ASSI_NR_NUMERO, new { @class = "form-control", autofocus = true, @id = "numero" })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NR_NUMERO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Bairro*
+                                                    @Html.TextBoxFor(m => m.ASSI_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NM_BAIRRO, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Cidade*
+                                                    @Html.TextBoxFor(m => m.ASSI_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
+                                                    @Html.ValidationMessageFor(m => m.ASSI_NM_CIDADE, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    UF*
+                                                    @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
+                                                    @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            @if (Model.TIPE_CD_ID == 2)
+                                            {
+                                                <div class="form-group">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        <hr />
+                                                        <h4>Quadro Diretor</h4>
                                                         <br />
-                                                        CEP
-                                                        <div class="input-group">
-                                                            @Html.TextBoxFor(m => m.ASSI_NR_CEP, new { @class = "form-control", @id = "cep", autofocus = true })
-                                                            @Html.ValidationMessageFor(m => m.ASSI_NR_CEP, "", new { @style = "color:red" })
-                                                            <span class="input-group-btn">
-                                                                <span class="btn btn-warning btn-sm" id="btnBuscaCep" onclick="PesquisaCep($('#cep').val(), $(this), 1)">Buscar CEP</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Endereço*
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_ENDERECO, new { @class = "form-control", autofocus = true, @id = "endereco" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_ENDERECO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Número*
-                                                        @Html.TextBoxFor(m => m.ASSI_NR_NUMERO, new { @class = "form-control", autofocus = true, @id = "numero" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NR_NUMERO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        Bairro*
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_BAIRRO, new { @class = "form-control", autofocus = true, @id = "bairro" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_BAIRRO, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Cidade*
-                                                        @Html.TextBoxFor(m => m.ASSI_NM_CIDADE, new { @class = "form-control", autofocus = true, @id = "cidade" })
-                                                        @Html.ValidationMessageFor(m => m.ASSI_NM_CIDADE, "", new { @style = "color:red" })
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
-                                                        UF*
-                                                        @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control", autofocus = true, @id = "uf" })
-                                                        @Html.ValidationMessageFor(m => m.UF_CD_ID, "", new { @style = "color:red" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                @if (Model.TIPE_CD_ID == 2)
-                                                {
-                                                    <div class="form-group">
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <hr />
-                                                            <h4>Quadro Diretor</h4>
-                                                            <br />
-                                                            <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="tblQs">
-                                                                <thead style="background-color:lightblue">
+                                                        <table style="width: 100%;" class="table table-striped table-bordered table-hover dataTables-example" id="tblQs">
+                                                            <thead style="background-color:lightblue">
+                                                                <tr>
+                                                                    <th>Cargo</th>
+                                                                    <th>Nome</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Telefone</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in Model.CORPO_DIRETIVO)
+                                                                {
                                                                     <tr>
-                                                                        <th>Cargo</th>
-                                                                        <th>Nome</th>
-                                                                        <th>Unidade</th>
-                                                                        <th>Telefone</th>
+                                                                        <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
+                                                                        <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                        <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.USUARIO.USUA_NR_CELULAR</td>
                                                                     </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach (var cond in Model.CORPO_DIRETIVO)
-                                                                    {
-                                                                        <tr>
-                                                                            <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
-                                                                            <td>@cond.USUARIO.USUA_NM_NOME</td>
-                                                                            <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
-                                                                            <td>@cond.USUARIO.USUA_NR_CELULAR</td>
-                                                                        </tr>
-                                                                    }
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                                }
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                }
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
-                                            </div>
-                                        }
-                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                        </div>
+                                    }
                                 </div>
-                            }
-
+                            </div>
+                            
                             @*Imagens - Foto e Anexos*@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
@@ -559,7 +394,7 @@
                             </div>
 
                             @*Vagas*@
-                            <div id="tab-3" class="tab-pane">
+                            <div id="tab-4" class="tab-pane">
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -589,8 +424,22 @@
                                                                         <td>@cond.TIPO_VAGA.TIVA_NM_NOME</td>
                                                                         <td>@cond.VAGA_NR_ANDAR</td>
                                                                         <td>@cond.VAGA_NR_NUMERO</td>
-                                                                        <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
-                                                                        <td>@cond.VAGA_DT_ATRIBUICAO.Value.ToShortDateString()</td>
+                                                                        @if (cond.UNIDADE != null)
+                                                                        {
+                                                                            <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>Condomínio</td>
+                                                                        }
+                                                                        @if (cond.VAGA_DT_ATRIBUICAO != null)
+                                                                        {
+                                                                            <td>@cond.VAGA_DT_ATRIBUICAO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
                                                                         <td class="td-one-action">
                                                                             @Html.TableLinkDetails(cond.VAGA_CD_ID, "VerVaga", "fa-search", "Ver Vaga")
                                                                         </td>
@@ -748,7 +597,7 @@
                 </div>
                 <div class="form-group">
                     <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBase", controller: "Condominio")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Condominio")
                 </div>
             </div>
         </div>

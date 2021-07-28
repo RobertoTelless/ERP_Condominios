@@ -141,6 +141,9 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensProduto"] = 0;
             Session["MensLista"] = 0;
 
+            Session["VoltaNotificacao"] = 3;
+            Session["VoltaNoticia"] = 1;
+
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();
             List<NOTIFICACAO> noti = new List<NOTIFICACAO>();
@@ -165,7 +168,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             Session["Notificacoes"] = noti; //usu.NOTIFICACAO.ToList();
             Session["ListaNovas"] = noti.Where(p => p.NOTI_IN_VISTA == 0).ToList();
-            Session["NovasNotificacoes"] = noti.Where(p => p.NOTI_IN_VISTA == 0 & p.NOTI_DT_EMISSAO == DateTime.Today.Date).Count();
+            Session["NovasNotificacoes"] = noti.Where(p => p.NOTI_IN_VISTA == 0).Count();
             Session["Nome"] = usu.USUA_NM_NOME;
 
             Session["Noticias"] = notiApp.GetAllItensValidos(idAss);

@@ -84,11 +84,8 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Carrega Dados
-            if (Session["Condominio"] == null)
-            {
-                objeto = baseApp.GetItemById(usuario.ASSI_CD_ID);
-                Session["Condominio"] = objeto;
-            }
+            objeto = baseApp.GetItemById(usuario.ASSI_CD_ID);
+            Session["Condominio"] = objeto;
             ViewBag.Condominio = objeto;
             ViewBag.Title = "Condominio";
 

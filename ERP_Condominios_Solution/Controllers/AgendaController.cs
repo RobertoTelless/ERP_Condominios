@@ -646,7 +646,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("VoltarAnexoAgenda");
             }
 
-            String caminho = "/Imagens/" + ((Int32)Session["IdVolta"]).ToString() + "/Agenda/" + item.AGEN_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + ((Int32)Session["IdAssinante"]).ToString() + "/Agenda/" + item.AGEN_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.Directory.CreateDirectory(Server.MapPath(caminho));
             System.IO.File.WriteAllBytes(path, file.Contents);
@@ -706,7 +706,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("VoltarAnexoAgenda");
             }
 
-            String caminho = "/Imagens/" + ((Int32)Session["IdVolta"]).ToString() + "/Agenda/" + item.AGEN_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + ((Int32)Session["IdAssinante"]).ToString() + "/Agenda/" + item.AGEN_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             file.SaveAs(path);
 

@@ -512,7 +512,7 @@ namespace ERP_Condominios_Solution.Controllers
                             Int32 voltaAg = agenApp.ValidateCreate(ag, usuarioLogado);
 
                             // Cria pastas Tarefa
-                            String caminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+                            String caminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Tarefa/" + item.TARE_CD_ID.ToString() + "/Anexos/";
                             Directory.CreateDirectory(Server.MapPath(caminho));
 
                             // Cria pastas Agenda
@@ -567,7 +567,7 @@ namespace ERP_Condominios_Solution.Controllers
                         Int32 voltaAg = agenApp.ValidateCreate(ag, usuarioLogado);
 
                         // Cria pastas Tarefa
-                        String caminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+                        String caminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Tarefa/" + item.TARE_CD_ID.ToString() + "/Anexos/";
                         Directory.CreateDirectory(Server.MapPath(caminho));
 
                         // Cria pastas Agenda
@@ -909,7 +909,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
-            String caminho = "/Imagens/" + usu.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + usu.ASSI_CD_ID.ToString() + "/Tarefa/" + item.TARE_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.File.WriteAllBytes(path, file.Contents);
 
@@ -968,7 +968,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
-            String caminho = "/Imagens/" + usu.ASSI_CD_ID.ToString() + "/Tarefas/" + item.TARE_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + usu.ASSI_CD_ID.ToString() + "/Tarefa/" + item.TARE_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             file.SaveAs(path);
 
