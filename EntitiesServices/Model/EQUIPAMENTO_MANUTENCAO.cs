@@ -22,8 +22,8 @@ namespace EntitiesServices.Model
         public string EQMA_TX_OBSERVACOES { get; set; }
         public int EQMA_IN_ATIVO { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual EQUIPAMENTO EQUIPAMENTO { get; set; }
         public virtual FORNECEDOR FORNECEDOR { get; set; }
-        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

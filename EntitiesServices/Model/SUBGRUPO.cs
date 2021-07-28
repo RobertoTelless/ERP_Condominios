@@ -29,8 +29,8 @@ namespace EntitiesServices.Model
         public string SUBG_NM_EXIBE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
-        public virtual GRUPO GRUPO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
+        public virtual GRUPO GRUPO { get; set; }
     }
 }

@@ -25,8 +25,8 @@ namespace EntitiesServices.Model
         public string CAEQ_NM_NOME { get; set; }
         public Nullable<int> CAEQ_IN_ATIVO { get; set; }
     
+        public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EQUIPAMENTO> EQUIPAMENTO { get; set; }
-        public virtual ASSINANTE ASSINANTE { get; set; }
     }
 }

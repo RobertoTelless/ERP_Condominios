@@ -27,6 +27,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CAPR_CD_ID { get; set; }
         public Nullable<int> SCPR_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
+        public Nullable<int> UNMA_CD_ID { get; set; }
         public string PROD_NM_NOME { get; set; }
         public string PROD_DS_DESCRICAO { get; set; }
         public int PROD_QN_QUANTIDADE_MINIMA { get; set; }
@@ -38,8 +39,6 @@ namespace EntitiesServices.Model
         public int PROD_IN_ATIVO { get; set; }
         public string PROD_AQ_FOTO { get; set; }
         public string PROD_CD_CODIGO { get; set; }
-        public Nullable<decimal> PROD_VL_PRECO_VENDA { get; set; }
-        public Nullable<decimal> PROD_VL_PRECO_PROMOCAO { get; set; }
         public string PROD_DS_INFORMACOES { get; set; }
         public Nullable<int> PROD_QN_QUANTIDADE_MAXIMA { get; set; }
         public Nullable<int> PROD_QN_RESERVA_ESTOQUE { get; set; }
@@ -56,7 +55,6 @@ namespace EntitiesServices.Model
         public string PROD_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> PROD_QN_NOVA_CONTAGEM { get; set; }
         public Nullable<int> PROD_QN_CONTAGEM { get; set; }
-        public Nullable<int> UNMA_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_PRODUTO CATEGORIA_PRODUTO { get; set; }

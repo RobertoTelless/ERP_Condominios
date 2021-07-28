@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -4958,7 +4958,8 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERP_CondominioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -5162,16 +5163,23 @@
           <NavigationProperty Name="TIPO_PESSOA" Relationship="Self.FK_ASSINANTE_TIPO_PESSOA" FromRole="ASSINANTE" ToRole="TIPO_PESSOA" />
           <NavigationProperty Name="UF" Relationship="Self.FK_ASSINANTE_UF" FromRole="ASSINANTE" ToRole="UF" />
           <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="Self.FK_AUTORIZACAO_ACESSO_ASSINANTE" FromRole="ASSINANTE" ToRole="AUTORIZACAO_ACESSO" />
+          <NavigationProperty Name="BANCO" Relationship="Self.FK_BANCO_ASSINANTE" FromRole="ASSINANTE" ToRole="BANCO" />
           <NavigationProperty Name="CARGO" Relationship="Self.FK_CARGO_ASSINANTE" FromRole="ASSINANTE" ToRole="CARGO" />
           <NavigationProperty Name="CATEGORIA_AGENDA" Relationship="Self.FK_CATEGORIA_AGENDA_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_AGENDA" />
+          <NavigationProperty Name="CATEGORIA_EQUIPAMENTO" Relationship="Self.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_EQUIPAMENTO" />
           <NavigationProperty Name="CATEGORIA_NOTIFICACAO" Relationship="Self.FK_CATEGORIA_NOTIFICACAO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_NOTIFICACAO" />
+          <NavigationProperty Name="CATEGORIA_PRODUTO" Relationship="Self.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_PRODUTO" />
           <NavigationProperty Name="CATEGORIA_TELEFONE" Relationship="Self.FK_CATEGORIA_TELEFONE_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_TELEFONE" />
           <NavigationProperty Name="CATEGORIA_USUARIO" Relationship="Self.FK_CATEGORIA_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_USUARIO" />
+          <NavigationProperty Name="CENTRO_CUSTO" Relationship="Self.FK_CENTRO_CUSTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CENTRO_CUSTO" />
           <NavigationProperty Name="CONFIGURACAO" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="ASSINANTE" ToRole="CONFIGURACAO" />
+          <NavigationProperty Name="CONTA_BANCO" Relationship="Self.FK_CONTA_BANCO_ASSINANTE" FromRole="ASSINANTE" ToRole="CONTA_BANCO" />
           <NavigationProperty Name="CONTROLE_VEICULO" Relationship="Self.FK_CONTROLE_VEICULO_ASSINANTE" FromRole="ASSINANTE" ToRole="CONTROLE_VEICULO" />
           <NavigationProperty Name="CORPO_DIRETIVO" Relationship="Self.FK_CORPO_DIRETIVO_ASSINANTE" FromRole="ASSINANTE" ToRole="CORPO_DIRETIVO" />
           <NavigationProperty Name="ENCOMENDA" Relationship="Self.FK_ENCOMENDA_ASSINANTE" FromRole="ASSINANTE" ToRole="ENCOMENDA" />
           <NavigationProperty Name="ENTRADA_SAIDA" Relationship="Self.FK_ENTRADA_SAIDA_ASSINANTE" FromRole="ASSINANTE" ToRole="ENTRADA_SAIDA" />
+          <NavigationProperty Name="EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="EQUIPAMENTO" />
+          <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" FromRole="ASSINANTE" ToRole="EQUIPAMENTO_MANUTENCAO" />
           <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_FORNECEDOR_ASSINANTE" FromRole="ASSINANTE" ToRole="FORNECEDOR" />
           <NavigationProperty Name="FUNCAO_CORPO_DIRETIVO" Relationship="Self.FK_FUNCAO_CORPO_DIRETIVO_ASSINANTE" FromRole="ASSINANTE" ToRole="FUNCAO_CORPO_DIRETIVO" />
           <NavigationProperty Name="GRUPO" Relationship="Self.FK_GRUPO_ASSINANTE" FromRole="ASSINANTE" ToRole="GRUPO" />
@@ -5202,13 +5210,6 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_ASSINANTE" FromRole="ASSINANTE" ToRole="USUARIO" />
           <NavigationProperty Name="VAGA" Relationship="Self.FK_VAGA_ASSINANTE" FromRole="ASSINANTE" ToRole="VAGA" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_ASSINANTE" FromRole="ASSINANTE" ToRole="VEICULO" />
-          <NavigationProperty Name="BANCO" Relationship="ERP_CondominioModel.FK_BANCO_ASSINANTE" FromRole="ASSINANTE" ToRole="BANCO" />
-          <NavigationProperty Name="CENTRO_CUSTO" Relationship="ERP_CondominioModel.FK_CENTRO_CUSTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CENTRO_CUSTO" />
-          <NavigationProperty Name="CONTA_BANCO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_ASSINANTE" FromRole="ASSINANTE" ToRole="CONTA_BANCO" />
-          <NavigationProperty Name="EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="EQUIPAMENTO" />
-          <NavigationProperty Name="CATEGORIA_EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_EQUIPAMENTO" />
-          <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" FromRole="ASSINANTE" ToRole="EQUIPAMENTO_MANUTENCAO" />
-          <NavigationProperty Name="CATEGORIA_PRODUTO" Relationship="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="ASSINANTE" ToRole="CATEGORIA_PRODUTO" />
         </EntityType>
         <EntityType Name="ASSINANTE_ANEXO">
           <Key>
@@ -5265,6 +5266,18 @@
           <Property Name="AAAN_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="Self.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" FromRole="AUTORIZACAO_ACESSO_ANEXO" ToRole="AUTORIZACAO_ACESSO" />
         </EntityType>
+        <EntityType Name="BANCO">
+          <Key>
+            <PropertyRef Name="BANC_CD_ID" />
+          </Key>
+          <Property Name="BANC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
+          <Property Name="BANC_SG_CODIGO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BANC_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BANC_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_BANCO_ASSINANTE" FromRole="BANCO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CONTA_BANCO" Relationship="Self.FK_CONTA_BANCO_BANCO" FromRole="BANCO" ToRole="CONTA_BANCO" />
+        </EntityType>
         <EntityType Name="CARGO">
           <Key>
             <PropertyRef Name="CARG_CD_ID" />
@@ -5287,6 +5300,17 @@
           <Property Name="CAAG_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AGENDA" Relationship="Self.FK_AGENDA_CATEGORIA_AGENDA" FromRole="CATEGORIA_AGENDA" ToRole="AGENDA" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CATEGORIA_AGENDA_ASSINANTE" FromRole="CATEGORIA_AGENDA" ToRole="ASSINANTE" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_EQUIPAMENTO">
+          <Key>
+            <PropertyRef Name="CAEQ_CD_ID" />
+          </Key>
+          <Property Name="CAEQ_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CAEQ_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CAEQ_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" FromRole="CATEGORIA_EQUIPAMENTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" FromRole="CATEGORIA_EQUIPAMENTO" ToRole="EQUIPAMENTO" />
         </EntityType>
         <EntityType Name="CATEGORIA_FORNECEDOR">
           <Key>
@@ -5322,12 +5346,12 @@
             <PropertyRef Name="CAPR_CD_ID" />
           </Key>
           <Property Name="CAPR_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" />
           <Property Name="CAPR_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CAPR_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="CATEGORIA_PRODUTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="PRODUTO" />
           <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="Self.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" FromRole="CATEGORIA_PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
-          <Property Name="ASSI_CD_ID" Type="Int32" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE" FromRole="CATEGORIA_PRODUTO" ToRole="ASSINANTE" />
         </EntityType>
         <EntityType Name="CATEGORIA_TELEFONE">
           <Key>
@@ -5350,6 +5374,24 @@
           <Property Name="ASSI_CD_ID" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CATEGORIA_USUARIO_ASSINANTE" FromRole="CATEGORIA_USUARIO" ToRole="ASSINANTE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_CATEGORIA_USUARIO" FromRole="CATEGORIA_USUARIO" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="CENTRO_CUSTO">
+          <Key>
+            <PropertyRef Name="CECU_CD_ID" />
+          </Key>
+          <Property Name="CECU_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CECU_NR_NUMERO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CECU_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CECU_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="GRUP_CD_ID" Type="Int32" />
+          <Property Name="SUBG_CD_ID" Type="Int32" />
+          <Property Name="CECU_IN_TIPO" Type="Int32" />
+          <Property Name="CECU_IN_MOVTO" Type="Int32" />
+          <Property Name="CECU_NM_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CENTRO_CUSTO_ASSINANTE" FromRole="CENTRO_CUSTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="GRUPO" Relationship="Self.FK_CENTRO_CUSTO_GRUPO" FromRole="CENTRO_CUSTO" ToRole="GRUPO" />
+          <NavigationProperty Name="SUBGRUPO" Relationship="Self.FK_CENTRO_CUSTO_SUBGRUPO" FromRole="CENTRO_CUSTO" ToRole="SUBGRUPO" />
         </EntityType>
         <EntityType Name="CONFIGURACAO">
           <Key>
@@ -5382,6 +5424,68 @@
           <Property Name="COAS_NM_APLICATIVO_PADRAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="COAS_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CONFIGURACAO" Relationship="Self.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" FromRole="CONFIGURACAO_ASSOCIACAO" ToRole="CONFIGURACAO" />
+        </EntityType>
+        <EntityType Name="CONTA_BANCO">
+          <Key>
+            <PropertyRef Name="COBA_CD_ID" />
+          </Key>
+          <Property Name="COBA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="BANC_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="TICO_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="COBA_IN_PRINCIPAL" Type="Int32" Nullable="false" />
+          <Property Name="COBA_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="COBA_VL_SALDO_INICIAL" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="COBA_NR_AGENCIA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="COBA_NR_CONTA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="COBA_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="COBA_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="COBA_NM_AGENCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COBA_NM_GERENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COBA_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="COBA_DT_ABERTURA" Type="DateTime" Precision="0" />
+          <Property Name="COBA_VL_SALDO_ATUAL" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="COBA_NM_NOME_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COBA_IN_CONTA_PADRAO" Type="Int32" />
+          <Property Name="COBA_IN_CONTA_SELECAO" Type="Int32" />
+          <Property Name="COBA_IN_DIAS" Type="Int32" />
+          <Property Name="COBA_DT_SELECAO" Type="DateTime" Precision="0" />
+          <Property Name="COBA_IN_TIPO_FILTRO" Type="Int32" />
+          <Property Name="COBA_IN_MES" Type="Int32" />
+          <Property Name="COBA_DT_SELECAO_FINAL" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONTA_BANCO_ASSINANTE" FromRole="CONTA_BANCO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="BANCO" Relationship="Self.FK_CONTA_BANCO_BANCO" FromRole="CONTA_BANCO" ToRole="BANCO" />
+          <NavigationProperty Name="CONTA_BANCO_CONTATO" Relationship="Self.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_CONTATO" />
+          <NavigationProperty Name="CONTA_BANCO_LANCAMENTO" Relationship="Self.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_LANCAMENTO" />
+          <NavigationProperty Name="TIPO_CONTA" Relationship="Self.FK_CONTA_BANCO_TIPO_CONTA" FromRole="CONTA_BANCO" ToRole="TIPO_CONTA" />
+        </EntityType>
+        <EntityType Name="CONTA_BANCO_CONTATO">
+          <Key>
+            <PropertyRef Name="CBCT_CD_ID" />
+          </Key>
+          <Property Name="CBCT_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COBA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CBCT_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CBCT_NM_EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CBCT_NM_CARGO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CBCT_NR_TELEFONES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CBCT_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CONTA_BANCO" Relationship="Self.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" FromRole="CONTA_BANCO_CONTATO" ToRole="CONTA_BANCO" />
+        </EntityType>
+        <EntityType Name="CONTA_BANCO_LANCAMENTO">
+          <Key>
+            <PropertyRef Name="CBLA_CD_ID" />
+          </Key>
+          <Property Name="CBLA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COBA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CBLA_DT_LANCAMENTO" Type="DateTime" Precision="0" />
+          <Property Name="CBLA_IN_TIPO" Type="Int32" />
+          <Property Name="CBLA_DS_DESCRICAO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CBLA_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CBLA_IN_ATIVO" Type="Int32" />
+          <Property Name="CBLA_NR_NUMERO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CBLA_IN_ORIGEM" Type="Int32" />
+          <NavigationProperty Name="CONTA_BANCO" Relationship="Self.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" FromRole="CONTA_BANCO_LANCAMENTO" ToRole="CONTA_BANCO" />
         </EntityType>
         <EntityType Name="CONTA_RECEBER">
           <Key>
@@ -5530,6 +5634,65 @@
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENTRADA_SAIDA_UNIDADE" FromRole="ENTRADA_SAIDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENTRADA_SAIDA_USUARIO" FromRole="ENTRADA_SAIDA" ToRole="USUARIO" />
         </EntityType>
+        <EntityType Name="EQUIPAMENTO">
+          <Key>
+            <PropertyRef Name="EQUI_CD_ID" />
+          </Key>
+          <Property Name="EQUI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERI_CD_ID" Type="Int32" />
+          <Property Name="CAEQ_CD_ID" Type="Int32" />
+          <Property Name="EQUI_NR_NUMERO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EQUI_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EQUI_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="EQUI_DT_COMPRA" Type="DateTime" Precision="0" />
+          <Property Name="EQUI_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EQUI_NR_VIDA_UTIL" Type="Int32" />
+          <Property Name="EQUI_DT_BAIXA" Type="DateTime" Precision="0" />
+          <Property Name="EQUI_DS_MOTIVO_BAIXA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EQUI_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="EQUI_DT_CADASTRO" Type="DateTime" Precision="0" />
+          <Property Name="EQUI_AQ_FOTO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="EQUI_DT_MANUTENCAO" Type="DateTime" Precision="0" />
+          <Property Name="EQUI_IN_AVISA_MANUTENCAO" Type="Int32" />
+          <Property Name="EQUI_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EQUI_IN_DEPRECIADOS" Type="Int32" />
+          <Property Name="EQUI_IN_MANUTENCAO" Type="Int32" />
+          <Property Name="EQUI_IN_BAIXADOS" Type="Int32" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_EQUIPAMENTO_ASSINANTE" FromRole="EQUIPAMENTO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CATEGORIA_EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="CATEGORIA_EQUIPAMENTO" />
+          <NavigationProperty Name="EQUIPAMENTO_ANEXO" Relationship="Self.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_ANEXO" />
+          <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_MANUTENCAO" />
+          <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="EQUIPAMENTO" ToRole="PERIODICIDADE" />
+        </EntityType>
+        <EntityType Name="EQUIPAMENTO_ANEXO">
+          <Key>
+            <PropertyRef Name="EQAN_CD_ID" />
+          </Key>
+          <Property Name="EQAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EQUI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="EQAN_NM_TITULO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EQAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EQAN_IN_TIPO" Type="Int32" Nullable="false" />
+          <Property Name="EQAN_AQ_ARQUIVO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EQAN_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" FromRole="EQUIPAMENTO_ANEXO" ToRole="EQUIPAMENTO" />
+        </EntityType>
+        <EntityType Name="EQUIPAMENTO_MANUTENCAO">
+          <Key>
+            <PropertyRef Name="EQMA_CD_ID" />
+          </Key>
+          <Property Name="EQMA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="EQUI_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="EQMA_DT_MANUTENCAO" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FORN_CD_ID" Type="Int32" />
+          <Property Name="EQMA_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EQMA_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" FromRole="EQUIPAMENTO_MANUTENCAO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO_MANUTENCAO" ToRole="EQUIPAMENTO" />
+          <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" FromRole="EQUIPAMENTO_MANUTENCAO" ToRole="FORNECEDOR" />
+        </EntityType>
         <EntityType Name="FINALIDADE_RESERVA">
           <Key>
             <PropertyRef Name="FIRE_CD_ID" />
@@ -5584,6 +5747,7 @@
           <Property Name="FORN_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_FORNECEDOR_ASSINANTE" FromRole="FORNECEDOR" ToRole="ASSINANTE" />
           <NavigationProperty Name="CATEGORIA_FORNECEDOR" Relationship="Self.FK_FORNECEDOR_CATEGORIA_FORNECEDOR" FromRole="FORNECEDOR" ToRole="CATEGORIA_FORNECEDOR" />
+          <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="EQUIPAMENTO_MANUTENCAO" />
           <NavigationProperty Name="FORNECEDOR_ANEXO" Relationship="Self.FK_FORNECEDOR_ANEXO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="FORNECEDOR_ANEXO" />
           <NavigationProperty Name="FORNECEDOR_COMENTARIO" Relationship="Self.FK_FORNECEDOR_COMENTARIO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="FORNECEDOR_COMENTARIO" />
           <NavigationProperty Name="FORNECEDOR_CONTATO" Relationship="Self.FK_FORNECEDOR_CONTATO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="FORNECEDOR_CONTATO" />
@@ -5593,7 +5757,6 @@
           <NavigationProperty Name="UF" Relationship="Self.FK_FORNECEDOR_UF" FromRole="FORNECEDOR" ToRole="UF" />
           <NavigationProperty Name="MATERIAL_FORNECEDOR" Relationship="Self.FK_MATERIAL_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="MATERIAL_FORNECEDOR" />
           <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="Self.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="PRODUTO_FORNECEDOR" />
-          <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="EQUIPAMENTO_MANUTENCAO" />
         </EntityType>
         <EntityType Name="FORNECEDOR_ANEXO">
           <Key>
@@ -5697,9 +5860,9 @@
           <Property Name="GR_NM_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="GRUP_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_GRUPO_ASSINANTE" FromRole="GRUPO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CENTRO_CUSTO" Relationship="Self.FK_CENTRO_CUSTO_GRUPO" FromRole="GRUPO" ToRole="CENTRO_CUSTO" />
           <NavigationProperty Name="TIPO_GRUPO" Relationship="Self.FK_GRUPO_TIPO_GRUPO" FromRole="GRUPO" ToRole="TIPO_GRUPO" />
           <NavigationProperty Name="SUBGRUPO" Relationship="Self.FK_SUBGRUPO_GRUPO" FromRole="GRUPO" ToRole="SUBGRUPO" />
-          <NavigationProperty Name="CENTRO_CUSTO" Relationship="ERP_CondominioModel.FK_CENTRO_CUSTO_GRUPO" FromRole="GRUPO" ToRole="CENTRO_CUSTO" />
         </EntityType>
         <EntityType Name="LISTA_CONVIDADO">
           <Key>
@@ -5718,11 +5881,37 @@
           <Property Name="LICO_NM_CONVIDADO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_LISTA_CONVIDADO_ASSINANTE" FromRole="LISTA_CONVIDADO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CONVIDADO" Relationship="Self.FK_CONVIDADO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="CONVIDADO" />
+          <NavigationProperty Name="LISTA_CONVIDADO_ANEXO" Relationship="Self.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_ANEXO" />
+          <NavigationProperty Name="LISTA_CONVIDADO_COMENTARIO" Relationship="Self.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_COMENTARIO" />
           <NavigationProperty Name="RESERVA" Relationship="Self.FK_LISTA_CONVIDADO_RESERVA" FromRole="LISTA_CONVIDADO" ToRole="RESERVA" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_LISTA_CONVIDADO_UNIDADE" FromRole="LISTA_CONVIDADO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_CONVIDADO_USUARIO" FromRole="LISTA_CONVIDADO" ToRole="USUARIO" />
-          <NavigationProperty Name="LISTA_CONVIDADO_ANEXO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_ANEXO" />
-          <NavigationProperty Name="LISTA_CONVIDADO_COMENTARIO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO" ToRole="LISTA_CONVIDADO_COMENTARIO" />
+        </EntityType>
+        <EntityType Name="LISTA_CONVIDADO_ANEXO">
+          <Key>
+            <PropertyRef Name="LCAN_CD_ID" />
+          </Key>
+          <Property Name="LCAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LICO_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="LCAN_DT_ANEXO" Type="DateTime" Precision="0" />
+          <Property Name="LCAN_NM_TITULO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LCAN_IN_TIPO" Type="Int32" />
+          <Property Name="LCAN_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="LCAN_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="LISTA_CONVIDADO" Relationship="Self.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO_ANEXO" ToRole="LISTA_CONVIDADO" />
+        </EntityType>
+        <EntityType Name="LISTA_CONVIDADO_COMENTARIO">
+          <Key>
+            <PropertyRef Name="LCCM_CD_ID" />
+          </Key>
+          <Property Name="LCCM_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LICO_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="LCCM_DT_COMENTARIO" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LCCM_DS_COMENTARIO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LCCM_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LISTA_CONVIDADO" Relationship="Self.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO_COMENTARIO" ToRole="LISTA_CONVIDADO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" FromRole="LISTA_CONVIDADO_COMENTARIO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="LOG">
           <Key>
@@ -5814,11 +6003,11 @@
           <Property Name="MAMO_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="MAMO_QN_ANTES" Type="Int32" />
           <Property Name="MAMO_QN_DEPOIS" Type="Int32" />
+          <Property Name="MAMO_QN_ALTERADA" Type="Int32" />
+          <Property Name="MAMO_IN_OPERACAO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_MATERIAL_MOVIMENTO_ASSINANTE" FromRole="MATERIAL_MOVIMENTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="MATERIAL" Relationship="Self.FK_MATERIAL_MOVIMENTO_MATERIAL" FromRole="MATERIAL_MOVIMENTO" ToRole="MATERIAL" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_MATERIAL_MOVIMENTO_USUARIO" FromRole="MATERIAL_MOVIMENTO" ToRole="USUARIO" />
-          <Property Name="MAMO_QN_ALTERADA" Type="Int32" />
-          <Property Name="MAMO_IN_OPERACAO" Type="Int32" />
         </EntityType>
         <EntityType Name="MOVIMENTO_ESTOQUE_PRODUTO">
           <Key>
@@ -5841,7 +6030,7 @@
           <Property Name="MOEP_IN_OPERACAO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="PRODUTO" Relationship="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="PRODUTO" />
-          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="USUARIO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="MOVIMENTO_ESTOQUE_PRODUTO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="NOTICIA">
           <Key>
@@ -5977,6 +6166,16 @@
           <Property Name="PERF_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_PERFIL" FromRole="PERFIL" ToRole="USUARIO" />
         </EntityType>
+        <EntityType Name="PERIODICIDADE">
+          <Key>
+            <PropertyRef Name="PERI_CD_ID" />
+          </Key>
+          <Property Name="PERI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PERI_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PERI_NR_DIAS" Type="Int32" Nullable="false" />
+          <Property Name="PERI_IN_ATIVO" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="EQUIPAMENTO" />
+        </EntityType>
         <EntityType Name="PERIODICIDADE_TAREFA">
           <Key>
             <PropertyRef Name="PETA_CD_ID" />
@@ -5998,6 +6197,7 @@
           <Property Name="CAPR_CD_ID" Type="Int32" />
           <Property Name="SCPR_CD_ID" Type="Int32" />
           <Property Name="UNID_CD_ID" Type="Int32" />
+          <Property Name="UNMA_CD_ID" Type="Int32" />
           <Property Name="PROD_NM_NOME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PROD_DS_DESCRICAO" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="PROD_QN_QUANTIDADE_MINIMA" Type="Int32" Nullable="false" />
@@ -6009,8 +6209,6 @@
           <Property Name="PROD_IN_ATIVO" Type="Int32" Nullable="false" />
           <Property Name="PROD_AQ_FOTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="PROD_CD_CODIGO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PROD_VL_PRECO_VENDA" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="PROD_VL_PRECO_PROMOCAO" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PROD_DS_INFORMACOES" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="PROD_QN_QUANTIDADE_MAXIMA" Type="Int32" />
           <Property Name="PROD_QN_RESERVA_ESTOQUE" Type="Int32" />
@@ -6034,8 +6232,7 @@
           <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="Self.FK_PRODUTO_FORNECEDOR_PRODUTO" FromRole="PRODUTO" ToRole="PRODUTO_FORNECEDOR" />
           <NavigationProperty Name="SUBCATEGORIA_PRODUTO" Relationship="Self.FK_PRODUTO_SUBCATEGORIA_PRODUTO" FromRole="PRODUTO" ToRole="SUBCATEGORIA_PRODUTO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_PRODUTO_UNIDADE" FromRole="PRODUTO" ToRole="UNIDADE" />
-          <Property Name="UNMA_CD_ID" Type="Int32" />
-          <NavigationProperty Name="UNIDADE_MATERIAL" Relationship="ERP_CondominioModel.FK_PRODUTO_UNIDADE_MATERIAL" FromRole="PRODUTO" ToRole="UNIDADE_MATERIAL" />
+          <NavigationProperty Name="UNIDADE_MATERIAL" Relationship="Self.FK_PRODUTO_UNIDADE_MATERIAL" FromRole="PRODUTO" ToRole="UNIDADE_MATERIAL" />
         </EntityType>
         <EntityType Name="PRODUTO_ANEXO">
           <Key>
@@ -6228,8 +6425,8 @@
           <Property Name="SUBG_NR_NUMERO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="SUBG_NM_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_SUBGRUPO_ASSINANTE" FromRole="SUBGRUPO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CENTRO_CUSTO" Relationship="Self.FK_CENTRO_CUSTO_SUBGRUPO" FromRole="SUBGRUPO" ToRole="CENTRO_CUSTO" />
           <NavigationProperty Name="GRUPO" Relationship="Self.FK_SUBGRUPO_GRUPO" FromRole="SUBGRUPO" ToRole="GRUPO" />
-          <NavigationProperty Name="CENTRO_CUSTO" Relationship="ERP_CondominioModel.FK_CENTRO_CUSTO_SUBGRUPO" FromRole="SUBGRUPO" ToRole="CENTRO_CUSTO" />
         </EntityType>
         <EntityType Name="TAREFA">
           <Key>
@@ -6377,6 +6574,14 @@
           <Property Name="TICO_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TICO_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_ASSINANTE_TIPO_CONDOMINIO" FromRole="TIPO_CONDOMINIO" ToRole="ASSINANTE" />
+        </EntityType>
+        <EntityType Name="TIPO_CONTA">
+          <Key>
+            <PropertyRef Name="TICO_CD_ID" />
+          </Key>
+          <Property Name="TICO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TICO_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CONTA_BANCO" Relationship="Self.FK_CONTA_BANCO_TIPO_CONTA" FromRole="TIPO_CONTA" ToRole="CONTA_BANCO" />
         </EntityType>
         <EntityType Name="TIPO_DOCUMENTO">
           <Key>
@@ -6558,7 +6763,7 @@
           <Property Name="UNMA_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_UNIDADE_MATERIAL_ASSINANTE" FromRole="UNIDADE_MATERIAL" ToRole="ASSINANTE" />
           <NavigationProperty Name="MATERIAL" Relationship="Self.FK_MATERIAL_UNIDADE_MATERIAL" FromRole="UNIDADE_MATERIAL" ToRole="MATERIAL" />
-          <NavigationProperty Name="PRODUTO" Relationship="ERP_CondominioModel.FK_PRODUTO_UNIDADE_MATERIAL" FromRole="UNIDADE_MATERIAL" ToRole="PRODUTO" />
+          <NavigationProperty Name="PRODUTO" Relationship="Self.FK_PRODUTO_UNIDADE_MATERIAL" FromRole="UNIDADE_MATERIAL" ToRole="PRODUTO" />
         </EntityType>
         <EntityType Name="USUARIO">
           <Key>
@@ -6624,8 +6829,10 @@
           <NavigationProperty Name="FORNECEDOR_COMENTARIO" Relationship="Self.FK_FORNECEDOR_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="FORNECEDOR_COMENTARIO" />
           <NavigationProperty Name="FORNECEDOR_MENSAGEM" Relationship="Self.FK_FORNECEDOR_MENSAGEM_USUARIO" FromRole="USUARIO" ToRole="FORNECEDOR_MENSAGEM" />
           <NavigationProperty Name="LISTA_CONVIDADO" Relationship="Self.FK_LISTA_CONVIDADO_USUARIO" FromRole="USUARIO" ToRole="LISTA_CONVIDADO" />
+          <NavigationProperty Name="LISTA_CONVIDADO_COMENTARIO" Relationship="Self.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="LISTA_CONVIDADO_COMENTARIO" />
           <NavigationProperty Name="LOG" Relationship="Self.FK_LOG_USUARIO" FromRole="USUARIO" ToRole="LOG" />
           <NavigationProperty Name="MATERIAL_MOVIMENTO" Relationship="Self.FK_MATERIAL_MOVIMENTO_USUARIO" FromRole="USUARIO" ToRole="MATERIAL_MOVIMENTO" />
+          <NavigationProperty Name="MOVIMENTO_ESTOQUE_PRODUTO" Relationship="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="USUARIO" ToRole="MOVIMENTO_ESTOQUE_PRODUTO" />
           <NavigationProperty Name="NOTICIA_COMENTARIO" Relationship="Self.FK_NOTICIA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="NOTICIA_COMENTARIO" />
           <NavigationProperty Name="NOTIFICACAO" Relationship="Self.FK_NOTIFICACAO_USUARIO" FromRole="USUARIO" ToRole="NOTIFICACAO" />
           <NavigationProperty Name="OCORRENCIA" Relationship="Self.FK_OCORRENCIA_USUARIO" FromRole="USUARIO" ToRole="OCORRENCIA" />
@@ -6646,8 +6853,6 @@
           <NavigationProperty Name="USUARIO_ESCALA_TRABALHO" Relationship="Self.FK_USUARIO_ESCALA_TRABALHO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ESCALA_TRABALHO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
-          <NavigationProperty Name="MOVIMENTO_ESTOQUE_PRODUTO" Relationship="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" FromRole="USUARIO" ToRole="MOVIMENTO_ESTOQUE_PRODUTO" />
-          <NavigationProperty Name="LISTA_CONVIDADO_COMENTARIO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="LISTA_CONVIDADO_COMENTARIO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -7128,6 +7333,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BANCO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="BANCO" Type="Self.BANCO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="BANCO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CARGO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="CARGO" Type="Self.CARGO" Multiplicity="*" />
@@ -7152,6 +7369,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CATEGORIA_EQUIPAMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CATEGORIA_EQUIPAMENTO" Type="Self.CATEGORIA_EQUIPAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_EQUIPAMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CATEGORIA_NOTIFICACAO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="CATEGORIA_NOTIFICACAO" Type="Self.CATEGORIA_NOTIFICACAO" Multiplicity="*" />
@@ -7160,6 +7389,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="CATEGORIA_NOTIFICACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CATEGORIA_PRODUTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="0..1" />
+          <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CATEGORIA_PRODUTO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -7188,6 +7429,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CENTRO_CUSTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CENTRO_CUSTO" Type="Self.CENTRO_CUSTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CENTRO_CUSTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONFIGURACAO_ASSINANTE">
           <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
           <End Role="CONFIGURACAO" Type="Self.CONFIGURACAO" Multiplicity="*" />
@@ -7196,6 +7449,18 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="CONFIGURACAO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_BANCO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="CONTA_BANCO" Type="Self.CONTA_BANCO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_BANCO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -7244,6 +7509,30 @@
               <PropertyRef Name="ASSI_CD_ID" />
             </Principal>
             <Dependent Role="ENTRADA_SAIDA">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUIPAMENTO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="EQUIPAMENTO" Type="Self.EQUIPAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE">
+          <End Role="ASSINANTE" Type="Self.ASSINANTE" Multiplicity="1" />
+          <End Role="EQUIPAMENTO_MANUTENCAO" Type="Self.EQUIPAMENTO_MANUTENCAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ASSINANTE">
+              <PropertyRef Name="ASSI_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO_MANUTENCAO">
               <PropertyRef Name="ASSI_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -7680,6 +7969,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CONTA_BANCO_BANCO">
+          <End Role="BANCO" Type="Self.BANCO" Multiplicity="1" />
+          <End Role="CONTA_BANCO" Type="Self.CONTA_BANCO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BANCO">
+              <PropertyRef Name="BANC_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_BANCO">
+              <PropertyRef Name="BANC_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_USUARIO_CARGO">
           <End Role="CARGO" Type="Self.CARGO" Multiplicity="0..1" />
           <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
@@ -7689,6 +7990,18 @@
             </Principal>
             <Dependent Role="USUARIO">
               <PropertyRef Name="CARG_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO">
+          <End Role="CATEGORIA_EQUIPAMENTO" Type="Self.CATEGORIA_EQUIPAMENTO" Multiplicity="0..1" />
+          <End Role="EQUIPAMENTO" Type="Self.EQUIPAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_EQUIPAMENTO">
+              <PropertyRef Name="CAEQ_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO">
+              <PropertyRef Name="CAEQ_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7776,6 +8089,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CENTRO_CUSTO_GRUPO">
+          <End Role="GRUPO" Type="Self.GRUPO" Multiplicity="0..1" />
+          <End Role="CENTRO_CUSTO" Type="Self.CENTRO_CUSTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO">
+              <PropertyRef Name="GRUP_CD_ID" />
+            </Principal>
+            <Dependent Role="CENTRO_CUSTO">
+              <PropertyRef Name="GRUP_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CENTRO_CUSTO_SUBGRUPO">
+          <End Role="SUBGRUPO" Type="Self.SUBGRUPO" Multiplicity="0..1" />
+          <End Role="CENTRO_CUSTO" Type="Self.CENTRO_CUSTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBGRUPO">
+              <PropertyRef Name="SUBG_CD_ID" />
+            </Principal>
+            <Dependent Role="CENTRO_CUSTO">
+              <PropertyRef Name="SUBG_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO">
           <End Role="CONFIGURACAO" Type="Self.CONFIGURACAO" Multiplicity="1" />
           <End Role="CONFIGURACAO_ASSOCIACAO" Type="Self.CONFIGURACAO_ASSOCIACAO" Multiplicity="*" />
@@ -7785,6 +8122,42 @@
             </Principal>
             <Dependent Role="CONFIGURACAO_ASSOCIACAO">
               <PropertyRef Name="CONF_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_BANCO_CONTATO_CONTA_BANCO">
+          <End Role="CONTA_BANCO" Type="Self.CONTA_BANCO" Multiplicity="1" />
+          <End Role="CONTA_BANCO_CONTATO" Type="Self.CONTA_BANCO_CONTATO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTA_BANCO">
+              <PropertyRef Name="COBA_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_BANCO_CONTATO">
+              <PropertyRef Name="COBA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO">
+          <End Role="CONTA_BANCO" Type="Self.CONTA_BANCO" Multiplicity="1" />
+          <End Role="CONTA_BANCO_LANCAMENTO" Type="Self.CONTA_BANCO_LANCAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTA_BANCO">
+              <PropertyRef Name="COBA_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_BANCO_LANCAMENTO">
+              <PropertyRef Name="COBA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTA_BANCO_TIPO_CONTA">
+          <End Role="TIPO_CONTA" Type="Self.TIPO_CONTA" Multiplicity="1" />
+          <End Role="CONTA_BANCO" Type="Self.CONTA_BANCO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_CONTA">
+              <PropertyRef Name="TICO_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTA_BANCO">
+              <PropertyRef Name="TICO_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7980,6 +8353,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO">
+          <End Role="EQUIPAMENTO" Type="Self.EQUIPAMENTO" Multiplicity="1" />
+          <End Role="EQUIPAMENTO_ANEXO" Type="Self.EQUIPAMENTO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPAMENTO">
+              <PropertyRef Name="EQUI_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO_ANEXO">
+              <PropertyRef Name="EQUI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO">
+          <End Role="EQUIPAMENTO" Type="Self.EQUIPAMENTO" Multiplicity="1" />
+          <End Role="EQUIPAMENTO_MANUTENCAO" Type="Self.EQUIPAMENTO_MANUTENCAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPAMENTO">
+              <PropertyRef Name="EQUI_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO_MANUTENCAO">
+              <PropertyRef Name="EQUI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUIPAMENTO_PERIODICIDADE">
+          <End Role="PERIODICIDADE" Type="Self.PERIODICIDADE" Multiplicity="0..1" />
+          <End Role="EQUIPAMENTO" Type="Self.EQUIPAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERIODICIDADE">
+              <PropertyRef Name="PERI_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO">
+              <PropertyRef Name="PERI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR">
+          <End Role="FORNECEDOR" Type="Self.FORNECEDOR" Multiplicity="0..1" />
+          <End Role="EQUIPAMENTO_MANUTENCAO" Type="Self.EQUIPAMENTO_MANUTENCAO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="EQUIPAMENTO_MANUTENCAO">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RESERVA_FINALIDADE_RESERVA">
           <End Role="FINALIDADE_RESERVA" Type="Self.FINALIDADE_RESERVA" Multiplicity="1" />
           <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="*" />
@@ -8160,6 +8581,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
+          <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="1" />
+          <End Role="LISTA_CONVIDADO_ANEXO" Type="Self.LISTA_CONVIDADO_ANEXO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_CONVIDADO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_ANEXO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
+          <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="1" />
+          <End Role="LISTA_CONVIDADO_COMENTARIO" Type="Self.LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LISTA_CONVIDADO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
+              <PropertyRef Name="LICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_LISTA_CONVIDADO_RESERVA">
           <End Role="RESERVA" Type="Self.RESERVA" Multiplicity="0..1" />
           <End Role="LISTA_CONVIDADO" Type="Self.LISTA_CONVIDADO" Multiplicity="*" />
@@ -8192,6 +8637,18 @@
               <PropertyRef Name="USUA_CD_ID" />
             </Principal>
             <Dependent Role="LISTA_CONVIDADO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="LISTA_CONVIDADO_COMENTARIO" Type="Self.LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
               <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8289,6 +8746,18 @@
             </Principal>
             <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
               <PropertyRef Name="PROD_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="MOVIMENTO_ESTOQUE_PRODUTO" Type="Self.MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8469,6 +8938,18 @@
             </Principal>
             <Dependent Role="PRODUTO">
               <PropertyRef Name="UNID_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUTO_UNIDADE_MATERIAL">
+          <End Role="UNIDADE_MATERIAL" Type="Self.UNIDADE_MATERIAL" Multiplicity="0..1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDADE_MATERIAL">
+              <PropertyRef Name="UNMA_CD_ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="UNMA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8931,16 +9412,22 @@
           <EntitySet Name="ASSINANTE_ANEXO" EntityType="Self.ASSINANTE_ANEXO" />
           <EntitySet Name="AUTORIZACAO_ACESSO" EntityType="Self.AUTORIZACAO_ACESSO" />
           <EntitySet Name="AUTORIZACAO_ACESSO_ANEXO" EntityType="Self.AUTORIZACAO_ACESSO_ANEXO" />
+          <EntitySet Name="BANCO" EntityType="Self.BANCO" />
           <EntitySet Name="CARGO" EntityType="Self.CARGO" />
           <EntitySet Name="CATEGORIA_AGENDA" EntityType="Self.CATEGORIA_AGENDA" />
+          <EntitySet Name="CATEGORIA_EQUIPAMENTO" EntityType="Self.CATEGORIA_EQUIPAMENTO" />
           <EntitySet Name="CATEGORIA_FORNECEDOR" EntityType="Self.CATEGORIA_FORNECEDOR" />
           <EntitySet Name="CATEGORIA_NOTIFICACAO" EntityType="Self.CATEGORIA_NOTIFICACAO" />
           <EntitySet Name="CATEGORIA_OCORRENCIA" EntityType="Self.CATEGORIA_OCORRENCIA" />
           <EntitySet Name="CATEGORIA_PRODUTO" EntityType="Self.CATEGORIA_PRODUTO" />
           <EntitySet Name="CATEGORIA_TELEFONE" EntityType="Self.CATEGORIA_TELEFONE" />
           <EntitySet Name="CATEGORIA_USUARIO" EntityType="Self.CATEGORIA_USUARIO" />
+          <EntitySet Name="CENTRO_CUSTO" EntityType="Self.CENTRO_CUSTO" />
           <EntitySet Name="CONFIGURACAO" EntityType="Self.CONFIGURACAO" />
           <EntitySet Name="CONFIGURACAO_ASSOCIACAO" EntityType="Self.CONFIGURACAO_ASSOCIACAO" />
+          <EntitySet Name="CONTA_BANCO" EntityType="Self.CONTA_BANCO" />
+          <EntitySet Name="CONTA_BANCO_CONTATO" EntityType="Self.CONTA_BANCO_CONTATO" />
+          <EntitySet Name="CONTA_BANCO_LANCAMENTO" EntityType="Self.CONTA_BANCO_LANCAMENTO" />
           <EntitySet Name="CONTA_RECEBER" EntityType="Self.CONTA_RECEBER" />
           <EntitySet Name="CONTROLE_VEICULO" EntityType="Self.CONTROLE_VEICULO" />
           <EntitySet Name="CONVIDADO" EntityType="Self.CONVIDADO" />
@@ -8949,6 +9436,9 @@
           <EntitySet Name="ENCOMENDA_ANEXO" EntityType="Self.ENCOMENDA_ANEXO" />
           <EntitySet Name="ENCOMENDA_COMENTARIO" EntityType="Self.ENCOMENDA_COMENTARIO" />
           <EntitySet Name="ENTRADA_SAIDA" EntityType="Self.ENTRADA_SAIDA" />
+          <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" />
+          <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="Self.EQUIPAMENTO_ANEXO" />
+          <EntitySet Name="EQUIPAMENTO_MANUTENCAO" EntityType="Self.EQUIPAMENTO_MANUTENCAO" />
           <EntitySet Name="FINALIDADE_RESERVA" EntityType="Self.FINALIDADE_RESERVA" />
           <EntitySet Name="FORMA_ENTREGA" EntityType="Self.FORMA_ENTREGA" />
           <EntitySet Name="FORNECEDOR" EntityType="Self.FORNECEDOR" />
@@ -8961,6 +9451,8 @@
           <EntitySet Name="GRAU_PARENTESCO" EntityType="Self.GRAU_PARENTESCO" />
           <EntitySet Name="GRUPO" EntityType="Self.GRUPO" />
           <EntitySet Name="LISTA_CONVIDADO" EntityType="Self.LISTA_CONVIDADO" />
+          <EntitySet Name="LISTA_CONVIDADO_ANEXO" EntityType="Self.LISTA_CONVIDADO_ANEXO" />
+          <EntitySet Name="LISTA_CONVIDADO_COMENTARIO" EntityType="Self.LISTA_CONVIDADO_COMENTARIO" />
           <EntitySet Name="LOG" EntityType="Self.LOG" />
           <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" />
           <EntitySet Name="MATERIAL_ANEXO" EntityType="Self.MATERIAL_ANEXO" />
@@ -8975,6 +9467,7 @@
           <EntitySet Name="OCORRENCIA_ANEXO" EntityType="Self.OCORRENCIA_ANEXO" />
           <EntitySet Name="OCORRENCIA_COMENTARIO" EntityType="Self.OCORRENCIA_COMENTARIO" />
           <EntitySet Name="PERFIL" EntityType="Self.PERFIL" />
+          <EntitySet Name="PERIODICIDADE" EntityType="Self.PERIODICIDADE" />
           <EntitySet Name="PERIODICIDADE_TAREFA" EntityType="Self.PERIODICIDADE_TAREFA" />
           <EntitySet Name="PRODUTO" EntityType="Self.PRODUTO" />
           <EntitySet Name="PRODUTO_ANEXO" EntityType="Self.PRODUTO_ANEXO" />
@@ -8998,6 +9491,7 @@
           <EntitySet Name="TIPO_AGENDA" EntityType="Self.TIPO_AGENDA" />
           <EntitySet Name="TIPO_AMBIENTE" EntityType="Self.TIPO_AMBIENTE" />
           <EntitySet Name="TIPO_CONDOMINIO" EntityType="Self.TIPO_CONDOMINIO" />
+          <EntitySet Name="TIPO_CONTA" EntityType="Self.TIPO_CONTA" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" />
           <EntitySet Name="TIPO_ENCOMENDA" EntityType="Self.TIPO_ENCOMENDA" />
           <EntitySet Name="TIPO_GRUPO" EntityType="Self.TIPO_GRUPO" />
@@ -9133,6 +9627,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="AUTORIZACAO_ACESSO" EntitySet="AUTORIZACAO_ACESSO" />
           </AssociationSet>
+          <AssociationSet Name="FK_BANCO_ASSINANTE" Association="Self.FK_BANCO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="BANCO" EntitySet="BANCO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CARGO_ASSINANTE" Association="Self.FK_CARGO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CARGO" EntitySet="CARGO" />
@@ -9141,9 +9639,17 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_AGENDA" EntitySet="CATEGORIA_AGENDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" Association="Self.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_EQUIPAMENTO" EntitySet="CATEGORIA_EQUIPAMENTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_NOTIFICACAO_ASSINANTE" Association="Self.FK_CATEGORIA_NOTIFICACAO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_NOTIFICACAO" EntitySet="CATEGORIA_NOTIFICACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CATEGORIA_PRODUTO_ASSINANTE" Association="Self.FK_CATEGORIA_PRODUTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CATEGORIA_TELEFONE_ASSINANTE" Association="Self.FK_CATEGORIA_TELEFONE_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -9153,9 +9659,17 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CATEGORIA_USUARIO" EntitySet="CATEGORIA_USUARIO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CENTRO_CUSTO_ASSINANTE" Association="Self.FK_CENTRO_CUSTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONFIGURACAO_ASSINANTE" Association="Self.FK_CONFIGURACAO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CONFIGURACAO" EntitySet="CONFIGURACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTA_BANCO_ASSINANTE" Association="Self.FK_CONTA_BANCO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
           </AssociationSet>
           <AssociationSet Name="FK_CONTROLE_VEICULO_ASSINANTE" Association="Self.FK_CONTROLE_VEICULO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -9172,6 +9686,14 @@
           <AssociationSet Name="FK_ENTRADA_SAIDA_ASSINANTE" Association="Self.FK_ENTRADA_SAIDA_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_ASSINANTE" Association="Self.FK_EQUIPAMENTO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" Association="Self.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE">
+            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
+            <End Role="EQUIPAMENTO_MANUTENCAO" EntitySet="EQUIPAMENTO_MANUTENCAO" />
           </AssociationSet>
           <AssociationSet Name="FK_FORNECEDOR_ASSINANTE" Association="Self.FK_FORNECEDOR_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -9317,9 +9839,17 @@
             <End Role="AUTORIZACAO_ACESSO" EntitySet="AUTORIZACAO_ACESSO" />
             <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTA_BANCO_BANCO" Association="Self.FK_CONTA_BANCO_BANCO">
+            <End Role="BANCO" EntitySet="BANCO" />
+            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
+          </AssociationSet>
           <AssociationSet Name="FK_USUARIO_CARGO" Association="Self.FK_USUARIO_CARGO">
             <End Role="CARGO" EntitySet="CARGO" />
             <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" Association="Self.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO">
+            <End Role="CATEGORIA_EQUIPAMENTO" EntitySet="CATEGORIA_EQUIPAMENTO" />
+            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
           </AssociationSet>
           <AssociationSet Name="FK_FORNECEDOR_CATEGORIA_FORNECEDOR" Association="Self.FK_FORNECEDOR_CATEGORIA_FORNECEDOR">
             <End Role="CATEGORIA_FORNECEDOR" EntitySet="CATEGORIA_FORNECEDOR" />
@@ -9349,9 +9879,29 @@
             <End Role="CATEGORIA_USUARIO" EntitySet="CATEGORIA_USUARIO" />
             <End Role="USUARIO" EntitySet="USUARIO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CENTRO_CUSTO_GRUPO" Association="Self.FK_CENTRO_CUSTO_GRUPO">
+            <End Role="GRUPO" EntitySet="GRUPO" />
+            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CENTRO_CUSTO_SUBGRUPO" Association="Self.FK_CENTRO_CUSTO_SUBGRUPO">
+            <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
+            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" Association="Self.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO">
             <End Role="CONFIGURACAO" EntitySet="CONFIGURACAO" />
             <End Role="CONFIGURACAO_ASSOCIACAO" EntitySet="CONFIGURACAO_ASSOCIACAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTA_BANCO_CONTATO_CONTA_BANCO" Association="Self.FK_CONTA_BANCO_CONTATO_CONTA_BANCO">
+            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
+            <End Role="CONTA_BANCO_CONTATO" EntitySet="CONTA_BANCO_CONTATO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" Association="Self.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO">
+            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
+            <End Role="CONTA_BANCO_LANCAMENTO" EntitySet="CONTA_BANCO_LANCAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTA_BANCO_TIPO_CONTA" Association="Self.FK_CONTA_BANCO_TIPO_CONTA">
+            <End Role="TIPO_CONTA" EntitySet="TIPO_CONTA" />
+            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
           </AssociationSet>
           <AssociationSet Name="FK_RESERVA_CONTA_RECEBER" Association="Self.FK_RESERVA_CONTA_RECEBER">
             <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
@@ -9417,6 +9967,22 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
           </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" Association="Self.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO">
+            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
+            <End Role="EQUIPAMENTO_ANEXO" EntitySet="EQUIPAMENTO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" Association="Self.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO">
+            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
+            <End Role="EQUIPAMENTO_MANUTENCAO" EntitySet="EQUIPAMENTO_MANUTENCAO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_PERIODICIDADE" Association="Self.FK_EQUIPAMENTO_PERIODICIDADE">
+            <End Role="PERIODICIDADE" EntitySet="PERIODICIDADE" />
+            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" Association="Self.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="EQUIPAMENTO_MANUTENCAO" EntitySet="EQUIPAMENTO_MANUTENCAO" />
+          </AssociationSet>
           <AssociationSet Name="FK_RESERVA_FINALIDADE_RESERVA" Association="Self.FK_RESERVA_FINALIDADE_RESERVA">
             <End Role="FINALIDADE_RESERVA" EntitySet="FINALIDADE_RESERVA" />
             <End Role="RESERVA" EntitySet="RESERVA" />
@@ -9477,6 +10043,14 @@
             <End Role="GRUPO" EntitySet="GRUPO" />
             <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
           </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" Association="Self.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
+            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+            <End Role="LISTA_CONVIDADO_ANEXO" EntitySet="LISTA_CONVIDADO_ANEXO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" Association="Self.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
+            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
+          </AssociationSet>
           <AssociationSet Name="FK_LISTA_CONVIDADO_RESERVA" Association="Self.FK_LISTA_CONVIDADO_RESERVA">
             <End Role="RESERVA" EntitySet="RESERVA" />
             <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
@@ -9488,6 +10062,10 @@
           <AssociationSet Name="FK_LISTA_CONVIDADO_USUARIO" Association="Self.FK_LISTA_CONVIDADO_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" Association="Self.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
           </AssociationSet>
           <AssociationSet Name="FK_LOG_USUARIO" Association="Self.FK_LOG_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
@@ -9519,6 +10097,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO">
             <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" Association="Self.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_NOTICIA_COMENTARIO_NOTICIA" Association="Self.FK_NOTICIA_COMENTARIO_NOTICIA">
@@ -9579,6 +10161,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_PRODUTO_UNIDADE" Association="Self.FK_PRODUTO_UNIDADE">
             <End Role="UNIDADE" EntitySet="UNIDADE" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUTO_UNIDADE_MATERIAL" Association="Self.FK_PRODUTO_UNIDADE_MATERIAL">
+            <End Role="UNIDADE_MATERIAL" EntitySet="UNIDADE_MATERIAL" />
             <End Role="PRODUTO" EntitySet="PRODUTO" />
           </AssociationSet>
           <AssociationSet Name="FK_RESERVA_ANEXO_RESERVA" Association="Self.FK_RESERVA_ANEXO_RESERVA">
@@ -9729,594 +10315,7 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
             <End Role="VEICULO_ANEXO" EntitySet="VEICULO_ANEXO" />
           </AssociationSet>
-          <EntitySet Name="BANCO" EntityType="ERP_CondominioModel.BANCO" />
-          <EntitySet Name="CENTRO_CUSTO" EntityType="ERP_CondominioModel.CENTRO_CUSTO" />
-          <EntitySet Name="CONTA_BANCO" EntityType="ERP_CondominioModel.CONTA_BANCO" />
-          <EntitySet Name="CONTA_BANCO_CONTATO" EntityType="ERP_CondominioModel.CONTA_BANCO_CONTATO" />
-          <EntitySet Name="CONTA_BANCO_LANCAMENTO" EntityType="ERP_CondominioModel.CONTA_BANCO_LANCAMENTO" />
-          <EntitySet Name="TIPO_CONTA" EntityType="ERP_CondominioModel.TIPO_CONTA" />
-          <AssociationSet Name="FK_BANCO_ASSINANTE" Association="ERP_CondominioModel.FK_BANCO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="BANCO" EntitySet="BANCO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CENTRO_CUSTO_ASSINANTE" Association="ERP_CondominioModel.FK_CENTRO_CUSTO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTA_BANCO_ASSINANTE" Association="ERP_CondominioModel.FK_CONTA_BANCO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTA_BANCO_BANCO" Association="ERP_CondominioModel.FK_CONTA_BANCO_BANCO">
-            <End Role="BANCO" EntitySet="BANCO" />
-            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CENTRO_CUSTO_GRUPO" Association="ERP_CondominioModel.FK_CENTRO_CUSTO_GRUPO">
-            <End Role="GRUPO" EntitySet="GRUPO" />
-            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CENTRO_CUSTO_SUBGRUPO" Association="ERP_CondominioModel.FK_CENTRO_CUSTO_SUBGRUPO">
-            <End Role="SUBGRUPO" EntitySet="SUBGRUPO" />
-            <End Role="CENTRO_CUSTO" EntitySet="CENTRO_CUSTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTA_BANCO_CONTATO_CONTA_BANCO" Association="ERP_CondominioModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO">
-            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
-            <End Role="CONTA_BANCO_CONTATO" EntitySet="CONTA_BANCO_CONTATO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" Association="ERP_CondominioModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO">
-            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
-            <End Role="CONTA_BANCO_LANCAMENTO" EntitySet="CONTA_BANCO_LANCAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTA_BANCO_TIPO_CONTA" Association="ERP_CondominioModel.FK_CONTA_BANCO_TIPO_CONTA">
-            <End Role="TIPO_CONTA" EntitySet="TIPO_CONTA" />
-            <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
-          </AssociationSet>
-          <EntitySet Name="CATEGORIA_EQUIPAMENTO" EntityType="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO" />
-          <EntitySet Name="EQUIPAMENTO" EntityType="ERP_CondominioModel.EQUIPAMENTO" />
-          <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="ERP_CondominioModel.EQUIPAMENTO_ANEXO" />
-          <EntitySet Name="EQUIPAMENTO_MANUTENCAO" EntityType="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO" />
-          <EntitySet Name="PERIODICIDADE" EntityType="ERP_CondominioModel.PERIODICIDADE" />
-          <AssociationSet Name="FK_EQUIPAMENTO_ASSINANTE" Association="ERP_CondominioModel.FK_EQUIPAMENTO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" Association="ERP_CondominioModel.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO">
-            <End Role="CATEGORIA_EQUIPAMENTO" EntitySet="CATEGORIA_EQUIPAMENTO" />
-            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" Association="ERP_CondominioModel.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO">
-            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
-            <End Role="EQUIPAMENTO_ANEXO" EntitySet="EQUIPAMENTO_ANEXO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO">
-            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
-            <End Role="EQUIPAMENTO_MANUTENCAO" EntitySet="EQUIPAMENTO_MANUTENCAO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EQUIPAMENTO_PERIODICIDADE" Association="ERP_CondominioModel.FK_EQUIPAMENTO_PERIODICIDADE">
-            <End Role="PERIODICIDADE" EntitySet="PERIODICIDADE" />
-            <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR">
-            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
-            <End Role="EQUIPAMENTO_MANUTENCAO" EntitySet="EQUIPAMENTO_MANUTENCAO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" Association="ERP_CondominioModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="CATEGORIA_EQUIPAMENTO" EntitySet="CATEGORIA_EQUIPAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" Association="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="EQUIPAMENTO_MANUTENCAO" EntitySet="EQUIPAMENTO_MANUTENCAO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PRODUTO_UNIDADE_MATERIAL" Association="ERP_CondominioModel.FK_PRODUTO_UNIDADE_MATERIAL">
-            <End Role="UNIDADE_MATERIAL" EntitySet="UNIDADE_MATERIAL" />
-            <End Role="PRODUTO" EntitySet="PRODUTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CATEGORIA_PRODUTO_ASSINANTE" Association="ERP_CondominioModel.FK_CATEGORIA_PRODUTO_ASSINANTE">
-            <End Role="ASSINANTE" EntitySet="ASSINANTE" />
-            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" Association="ERP_CondominioModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
-            <End Role="USUARIO" EntitySet="USUARIO" />
-            <End Role="MOVIMENTO_ESTOQUE_PRODUTO" EntitySet="MOVIMENTO_ESTOQUE_PRODUTO" />
-          </AssociationSet>
-          <EntitySet Name="LISTA_CONVIDADO_ANEXO" EntityType="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO" />
-          <AssociationSet Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
-            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
-            <End Role="LISTA_CONVIDADO_ANEXO" EntitySet="LISTA_CONVIDADO_ANEXO" />
-          </AssociationSet>
-          <EntitySet Name="LISTA_CONVIDADO_COMENTARIO" EntityType="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" />
-          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
-            <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
-            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" Association="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
-            <End Role="USUARIO" EntitySet="USUARIO" />
-            <End Role="LISTA_CONVIDADO_COMENTARIO" EntitySet="LISTA_CONVIDADO_COMENTARIO" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="BANCO">
-          <Key>
-            <PropertyRef Name="BANC_CD_ID" />
-          </Key>
-          <Property Name="BANC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASSI_CD_ID" Type="Int32" />
-          <Property Name="BANC_SG_CODIGO" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="BANC_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BANC_IN_ATIVO" Type="Int32" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_BANCO_ASSINANTE" FromRole="BANCO" ToRole="ASSINANTE" />
-          <NavigationProperty Name="CONTA_BANCO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_BANCO" FromRole="BANCO" ToRole="CONTA_BANCO" />
-        </EntityType>
-        <EntityType Name="CENTRO_CUSTO">
-          <Key>
-            <PropertyRef Name="CECU_CD_ID" />
-          </Key>
-          <Property Name="CECU_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="CECU_NR_NUMERO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CECU_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CECU_IN_ATIVO" Type="Int32" Nullable="false" />
-          <Property Name="GRUP_CD_ID" Type="Int32" />
-          <Property Name="SUBG_CD_ID" Type="Int32" />
-          <Property Name="CECU_IN_TIPO" Type="Int32" />
-          <Property Name="CECU_IN_MOVTO" Type="Int32" />
-          <Property Name="CECU_NM_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_CENTRO_CUSTO_ASSINANTE" FromRole="CENTRO_CUSTO" ToRole="ASSINANTE" />
-          <NavigationProperty Name="GRUPO" Relationship="ERP_CondominioModel.FK_CENTRO_CUSTO_GRUPO" FromRole="CENTRO_CUSTO" ToRole="GRUPO" />
-          <NavigationProperty Name="SUBGRUPO" Relationship="ERP_CondominioModel.FK_CENTRO_CUSTO_SUBGRUPO" FromRole="CENTRO_CUSTO" ToRole="SUBGRUPO" />
-        </EntityType>
-        <EntityType Name="CONTA_BANCO">
-          <Key>
-            <PropertyRef Name="COBA_CD_ID" />
-          </Key>
-          <Property Name="COBA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="BANC_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="TICO_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="COBA_IN_PRINCIPAL" Type="Int32" Nullable="false" />
-          <Property Name="COBA_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="COBA_VL_SALDO_INICIAL" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="COBA_NR_AGENCIA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="COBA_NR_CONTA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="COBA_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="COBA_IN_ATIVO" Type="Int32" Nullable="false" />
-          <Property Name="COBA_NM_AGENCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="COBA_NM_GERENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="COBA_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="COBA_DT_ABERTURA" Type="DateTime" Precision="0" />
-          <Property Name="COBA_VL_SALDO_ATUAL" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="COBA_NM_NOME_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="COBA_IN_CONTA_PADRAO" Type="Int32" />
-          <Property Name="COBA_IN_CONTA_SELECAO" Type="Int32" />
-          <Property Name="COBA_IN_DIAS" Type="Int32" />
-          <Property Name="COBA_DT_SELECAO" Type="DateTime" Precision="0" />
-          <Property Name="COBA_IN_TIPO_FILTRO" Type="Int32" />
-          <Property Name="COBA_IN_MES" Type="Int32" />
-          <Property Name="COBA_DT_SELECAO_FINAL" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_ASSINANTE" FromRole="CONTA_BANCO" ToRole="ASSINANTE" />
-          <NavigationProperty Name="BANCO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_BANCO" FromRole="CONTA_BANCO" ToRole="BANCO" />
-          <NavigationProperty Name="CONTA_BANCO_CONTATO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_CONTATO" />
-          <NavigationProperty Name="CONTA_BANCO_LANCAMENTO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_LANCAMENTO" />
-          <NavigationProperty Name="TIPO_CONTA" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_TIPO_CONTA" FromRole="CONTA_BANCO" ToRole="TIPO_CONTA" />
-        </EntityType>
-        <EntityType Name="CONTA_BANCO_CONTATO">
-          <Key>
-            <PropertyRef Name="CBCT_CD_ID" />
-          </Key>
-          <Property Name="CBCT_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COBA_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="CBCT_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CBCT_NM_EMAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="CBCT_NM_CARGO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CBCT_NR_TELEFONES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CBCT_IN_ATIVO" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CONTA_BANCO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" FromRole="CONTA_BANCO_CONTATO" ToRole="CONTA_BANCO" />
-        </EntityType>
-        <EntityType Name="CONTA_BANCO_LANCAMENTO">
-          <Key>
-            <PropertyRef Name="CBLA_CD_ID" />
-          </Key>
-          <Property Name="CBLA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COBA_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="CBLA_DT_LANCAMENTO" Type="DateTime" Precision="0" />
-          <Property Name="CBLA_IN_TIPO" Type="Int32" />
-          <Property Name="CBLA_DS_DESCRICAO" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="CBLA_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="CBLA_IN_ATIVO" Type="Int32" />
-          <Property Name="CBLA_NR_NUMERO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CBLA_IN_ORIGEM" Type="Int32" />
-          <NavigationProperty Name="CONTA_BANCO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" FromRole="CONTA_BANCO_LANCAMENTO" ToRole="CONTA_BANCO" />
-        </EntityType>
-        <EntityType Name="TIPO_CONTA">
-          <Key>
-            <PropertyRef Name="TICO_CD_ID" />
-          </Key>
-          <Property Name="TICO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TICO_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CONTA_BANCO" Relationship="ERP_CondominioModel.FK_CONTA_BANCO_TIPO_CONTA" FromRole="TIPO_CONTA" ToRole="CONTA_BANCO" />
-        </EntityType>
-        <Association Name="FK_BANCO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.BANCO" Role="BANCO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="BANCO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CENTRO_CUSTO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CENTRO_CUSTO" Role="CENTRO_CUSTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="CENTRO_CUSTO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTA_BANCO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTA_BANCO" Role="CONTA_BANCO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTA_BANCO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTA_BANCO_BANCO">
-          <End Type="ERP_CondominioModel.BANCO" Role="BANCO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTA_BANCO" Role="CONTA_BANCO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BANCO">
-              <PropertyRef Name="BANC_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTA_BANCO">
-              <PropertyRef Name="BANC_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CENTRO_CUSTO_GRUPO">
-          <End Type="ERP_CondominioModel.GRUPO" Role="GRUPO" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.CENTRO_CUSTO" Role="CENTRO_CUSTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GRUPO">
-              <PropertyRef Name="GRUP_CD_ID" />
-            </Principal>
-            <Dependent Role="CENTRO_CUSTO">
-              <PropertyRef Name="GRUP_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CENTRO_CUSTO_SUBGRUPO">
-          <End Type="ERP_CondominioModel.SUBGRUPO" Role="SUBGRUPO" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.CENTRO_CUSTO" Role="CENTRO_CUSTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SUBGRUPO">
-              <PropertyRef Name="SUBG_CD_ID" />
-            </Principal>
-            <Dependent Role="CENTRO_CUSTO">
-              <PropertyRef Name="SUBG_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTA_BANCO_CONTATO_CONTA_BANCO">
-          <End Type="ERP_CondominioModel.CONTA_BANCO" Role="CONTA_BANCO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTA_BANCO_CONTATO" Role="CONTA_BANCO_CONTATO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CONTA_BANCO">
-              <PropertyRef Name="COBA_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTA_BANCO_CONTATO">
-              <PropertyRef Name="COBA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO">
-          <End Type="ERP_CondominioModel.CONTA_BANCO" Role="CONTA_BANCO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTA_BANCO_LANCAMENTO" Role="CONTA_BANCO_LANCAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CONTA_BANCO">
-              <PropertyRef Name="COBA_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTA_BANCO_LANCAMENTO">
-              <PropertyRef Name="COBA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTA_BANCO_TIPO_CONTA">
-          <End Type="ERP_CondominioModel.TIPO_CONTA" Role="TIPO_CONTA" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTA_BANCO" Role="CONTA_BANCO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TIPO_CONTA">
-              <PropertyRef Name="TICO_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTA_BANCO">
-              <PropertyRef Name="TICO_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="CATEGORIA_EQUIPAMENTO">
-          <Key>
-            <PropertyRef Name="CAEQ_CD_ID" />
-          </Key>
-          <Property Name="CAEQ_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="CAEQ_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CAEQ_IN_ATIVO" Type="Int32" />
-          <NavigationProperty Name="EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" FromRole="CATEGORIA_EQUIPAMENTO" ToRole="EQUIPAMENTO" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" FromRole="CATEGORIA_EQUIPAMENTO" ToRole="ASSINANTE" />
-        </EntityType>
-        <EntityType Name="EQUIPAMENTO">
-          <Key>
-            <PropertyRef Name="EQUI_CD_ID" />
-          </Key>
-          <Property Name="EQUI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="PERI_CD_ID" Type="Int32" />
-          <Property Name="CAEQ_CD_ID" Type="Int32" />
-          <Property Name="EQUI_NR_NUMERO" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="EQUI_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EQUI_DS_DESCRICAO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="EQUI_DT_COMPRA" Type="DateTime" Precision="0" />
-          <Property Name="EQUI_VL_VALOR" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="EQUI_NR_VIDA_UTIL" Type="Int32" />
-          <Property Name="EQUI_DT_BAIXA" Type="DateTime" Precision="0" />
-          <Property Name="EQUI_DS_MOTIVO_BAIXA" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="EQUI_IN_ATIVO" Type="Int32" Nullable="false" />
-          <Property Name="EQUI_DT_CADASTRO" Type="DateTime" Precision="0" />
-          <Property Name="EQUI_AQ_FOTO" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="EQUI_DT_MANUTENCAO" Type="DateTime" Precision="0" />
-          <Property Name="EQUI_IN_AVISA_MANUTENCAO" Type="Int32" />
-          <Property Name="EQUI_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="EQUI_IN_DEPRECIADOS" Type="Int32" />
-          <Property Name="EQUI_IN_MANUTENCAO" Type="Int32" />
-          <Property Name="EQUI_IN_BAIXADOS" Type="Int32" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_ASSINANTE" FromRole="EQUIPAMENTO" ToRole="ASSINANTE" />
-          <NavigationProperty Name="CATEGORIA_EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="CATEGORIA_EQUIPAMENTO" />
-          <NavigationProperty Name="EQUIPAMENTO_ANEXO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_ANEXO" />
-          <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_MANUTENCAO" />
-          <NavigationProperty Name="PERIODICIDADE" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="EQUIPAMENTO" ToRole="PERIODICIDADE" />
-        </EntityType>
-        <EntityType Name="EQUIPAMENTO_ANEXO">
-          <Key>
-            <PropertyRef Name="EQAN_CD_ID" />
-          </Key>
-          <Property Name="EQAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EQUI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="EQAN_NM_TITULO" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EQAN_DT_ANEXO" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="EQAN_IN_TIPO" Type="Int32" Nullable="false" />
-          <Property Name="EQAN_AQ_ARQUIVO" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="EQAN_IN_ATIVO" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" FromRole="EQUIPAMENTO_ANEXO" ToRole="EQUIPAMENTO" />
-        </EntityType>
-        <EntityType Name="EQUIPAMENTO_MANUTENCAO">
-          <Key>
-            <PropertyRef Name="EQMA_CD_ID" />
-          </Key>
-          <Property Name="EQMA_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ASSI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="EQUI_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="EQMA_DT_MANUTENCAO" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FORN_CD_ID" Type="Int32" />
-          <Property Name="EQMA_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="EQMA_IN_ATIVO" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO_MANUTENCAO" ToRole="EQUIPAMENTO" />
-          <NavigationProperty Name="FORNECEDOR" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" FromRole="EQUIPAMENTO_MANUTENCAO" ToRole="FORNECEDOR" />
-          <NavigationProperty Name="ASSINANTE" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" FromRole="EQUIPAMENTO_MANUTENCAO" ToRole="ASSINANTE" />
-        </EntityType>
-        <EntityType Name="PERIODICIDADE">
-          <Key>
-            <PropertyRef Name="PERI_CD_ID" />
-          </Key>
-          <Property Name="PERI_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PERI_NM_NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PERI_NR_DIAS" Type="Int32" Nullable="false" />
-          <Property Name="PERI_IN_ATIVO" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EQUIPAMENTO" Relationship="ERP_CondominioModel.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="PERIODICIDADE" ToRole="EQUIPAMENTO" />
-        </EntityType>
-        <Association Name="FK_EQUIPAMENTO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO" Role="EQUIPAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO">
-          <End Type="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO" Role="CATEGORIA_EQUIPAMENTO" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO" Role="EQUIPAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CATEGORIA_EQUIPAMENTO">
-              <PropertyRef Name="CAEQ_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO">
-              <PropertyRef Name="CAEQ_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO">
-          <End Type="ERP_CondominioModel.EQUIPAMENTO" Role="EQUIPAMENTO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO_ANEXO" Role="EQUIPAMENTO_ANEXO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EQUIPAMENTO">
-              <PropertyRef Name="EQUI_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO_ANEXO">
-              <PropertyRef Name="EQUI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO">
-          <End Type="ERP_CondominioModel.EQUIPAMENTO" Role="EQUIPAMENTO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO" Role="EQUIPAMENTO_MANUTENCAO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EQUIPAMENTO">
-              <PropertyRef Name="EQUI_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO_MANUTENCAO">
-              <PropertyRef Name="EQUI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EQUIPAMENTO_PERIODICIDADE">
-          <End Type="ERP_CondominioModel.PERIODICIDADE" Role="PERIODICIDADE" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO" Role="EQUIPAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PERIODICIDADE">
-              <PropertyRef Name="PERI_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO">
-              <PropertyRef Name="PERI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR">
-          <End Type="ERP_CondominioModel.FORNECEDOR" Role="FORNECEDOR" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO" Role="EQUIPAMENTO_MANUTENCAO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FORNECEDOR">
-              <PropertyRef Name="FORN_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO_MANUTENCAO">
-              <PropertyRef Name="FORN_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CATEGORIA_EQUIPAMENTO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO" Role="CATEGORIA_EQUIPAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="CATEGORIA_EQUIPAMENTO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO" Role="EQUIPAMENTO_MANUTENCAO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="EQUIPAMENTO_MANUTENCAO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PRODUTO_UNIDADE_MATERIAL">
-          <End Type="ERP_CondominioModel.UNIDADE_MATERIAL" Role="UNIDADE_MATERIAL" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.PRODUTO" Role="PRODUTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UNIDADE_MATERIAL">
-              <PropertyRef Name="UNMA_CD_ID" />
-            </Principal>
-            <Dependent Role="PRODUTO">
-              <PropertyRef Name="UNMA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CATEGORIA_PRODUTO_ASSINANTE">
-          <End Type="ERP_CondominioModel.ASSINANTE" Role="ASSINANTE" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.CATEGORIA_PRODUTO" Role="CATEGORIA_PRODUTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ASSINANTE">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Principal>
-            <Dependent Role="CATEGORIA_PRODUTO">
-              <PropertyRef Name="ASSI_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO">
-          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO" Role="MOVIMENTO_ESTOQUE_PRODUTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USUARIO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Principal>
-            <Dependent Role="MOVIMENTO_ESTOQUE_PRODUTO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="LISTA_CONVIDADO_ANEXO">
-          <Key>
-            <PropertyRef Name="LCAN_CD_ID" />
-          </Key>
-          <Property Name="LCAN_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LICO_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="LCAN_DT_ANEXO" Type="DateTime" Precision="0" />
-          <Property Name="LCAN_NM_TITULO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LCAN_IN_TIPO" Type="Int32" />
-          <Property Name="LCAN_AQ_ARQUIVO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="LCAN_IN_ATIVO" Type="Int32" />
-          <NavigationProperty Name="LISTA_CONVIDADO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO_ANEXO" ToRole="LISTA_CONVIDADO" />
-        </EntityType>
-        <Association Name="FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO">
-          <End Type="ERP_CondominioModel.LISTA_CONVIDADO" Role="LISTA_CONVIDADO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO" Role="LISTA_CONVIDADO_ANEXO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LISTA_CONVIDADO">
-              <PropertyRef Name="LICO_CD_ID" />
-            </Principal>
-            <Dependent Role="LISTA_CONVIDADO_ANEXO">
-              <PropertyRef Name="LICO_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="LISTA_CONVIDADO_COMENTARIO">
-          <Key>
-            <PropertyRef Name="LCCM_CD_ID" />
-          </Key>
-          <Property Name="LCCM_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LICO_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="LCCM_DT_COMENTARIO" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LCCM_DS_COMENTARIO" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="LCCM_IN_ATIVO" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="LISTA_CONVIDADO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" FromRole="LISTA_CONVIDADO_COMENTARIO" ToRole="LISTA_CONVIDADO" />
-          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" FromRole="LISTA_CONVIDADO_COMENTARIO" ToRole="USUARIO" />
-        </EntityType>
-        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO">
-          <End Type="ERP_CondominioModel.LISTA_CONVIDADO" Role="LISTA_CONVIDADO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" Role="LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LISTA_CONVIDADO">
-              <PropertyRef Name="LICO_CD_ID" />
-            </Principal>
-            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
-              <PropertyRef Name="LICO_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LISTA_CONVIDADO_COMENTARIO_USUARIO">
-          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO" Role="LISTA_CONVIDADO_COMENTARIO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USUARIO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Principal>
-            <Dependent Role="LISTA_CONVIDADO_COMENTARIO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10545,6 +10544,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BANCO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.BANCO">
+              <MappingFragment StoreEntitySet="BANCO">
+                <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="BANC_SG_CODIGO" ColumnName="BANC_SG_CODIGO" />
+                <ScalarProperty Name="BANC_NM_NOME" ColumnName="BANC_NM_NOME" />
+                <ScalarProperty Name="BANC_IN_ATIVO" ColumnName="BANC_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CARGO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CARGO">
               <MappingFragment StoreEntitySet="CARGO">
@@ -10563,6 +10573,16 @@
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAAG_NM_NOME" ColumnName="CAAG_NM_NOME" />
                 <ScalarProperty Name="CAAG_IN_ATIVO" ColumnName="CAAG_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIA_EQUIPAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO">
+              <MappingFragment StoreEntitySet="CATEGORIA_EQUIPAMENTO">
+                <ScalarProperty Name="CAEQ_CD_ID" ColumnName="CAEQ_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CAEQ_NM_NOME" ColumnName="CAEQ_NM_NOME" />
+                <ScalarProperty Name="CAEQ_IN_ATIVO" ColumnName="CAEQ_IN_ATIVO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10597,8 +10617,8 @@
           <EntitySetMapping Name="CATEGORIA_PRODUTO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_PRODUTO">
               <MappingFragment StoreEntitySet="CATEGORIA_PRODUTO">
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAPR_NM_NOME" ColumnName="CAPR_NM_NOME" />
                 <ScalarProperty Name="CAPR_IN_ATIVO" ColumnName="CAPR_IN_ATIVO" />
               </MappingFragment>
@@ -10621,6 +10641,22 @@
                 <ScalarProperty Name="CAUS_NM_NOME" ColumnName="CAUS_NM_NOME" />
                 <ScalarProperty Name="CAUS_IN_ATIVO" ColumnName="CAUS_IN_ATIVO" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CENTRO_CUSTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.CENTRO_CUSTO">
+              <MappingFragment StoreEntitySet="CENTRO_CUSTO">
+                <ScalarProperty Name="CECU_CD_ID" ColumnName="CECU_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="CECU_NR_NUMERO" ColumnName="CECU_NR_NUMERO" />
+                <ScalarProperty Name="CECU_NM_NOME" ColumnName="CECU_NM_NOME" />
+                <ScalarProperty Name="CECU_IN_ATIVO" ColumnName="CECU_IN_ATIVO" />
+                <ScalarProperty Name="GRUP_CD_ID" ColumnName="GRUP_CD_ID" />
+                <ScalarProperty Name="SUBG_CD_ID" ColumnName="SUBG_CD_ID" />
+                <ScalarProperty Name="CECU_IN_TIPO" ColumnName="CECU_IN_TIPO" />
+                <ScalarProperty Name="CECU_IN_MOVTO" ColumnName="CECU_IN_MOVTO" />
+                <ScalarProperty Name="CECU_NM_EXIBE" ColumnName="CECU_NM_EXIBE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10652,6 +10688,64 @@
                 <ScalarProperty Name="COAS_NM_EXTENSAO" ColumnName="COAS_NM_EXTENSAO" />
                 <ScalarProperty Name="COAS_NM_APLICATIVO_PADRAO" ColumnName="COAS_NM_APLICATIVO_PADRAO" />
                 <ScalarProperty Name="COAS_IN_ATIVO" ColumnName="COAS_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTA_BANCO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO">
+              <MappingFragment StoreEntitySet="CONTA_BANCO">
+                <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />
+                <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
+                <ScalarProperty Name="COBA_IN_PRINCIPAL" ColumnName="COBA_IN_PRINCIPAL" />
+                <ScalarProperty Name="COBA_NM_NOME" ColumnName="COBA_NM_NOME" />
+                <ScalarProperty Name="COBA_VL_SALDO_INICIAL" ColumnName="COBA_VL_SALDO_INICIAL" />
+                <ScalarProperty Name="COBA_NR_AGENCIA" ColumnName="COBA_NR_AGENCIA" />
+                <ScalarProperty Name="COBA_NR_CONTA" ColumnName="COBA_NR_CONTA" />
+                <ScalarProperty Name="COBA_DT_CADASTRO" ColumnName="COBA_DT_CADASTRO" />
+                <ScalarProperty Name="COBA_IN_ATIVO" ColumnName="COBA_IN_ATIVO" />
+                <ScalarProperty Name="COBA_NM_AGENCIA" ColumnName="COBA_NM_AGENCIA" />
+                <ScalarProperty Name="COBA_NM_GERENTE" ColumnName="COBA_NM_GERENTE" />
+                <ScalarProperty Name="COBA_NR_TELEFONE" ColumnName="COBA_NR_TELEFONE" />
+                <ScalarProperty Name="COBA_DT_ABERTURA" ColumnName="COBA_DT_ABERTURA" />
+                <ScalarProperty Name="COBA_VL_SALDO_ATUAL" ColumnName="COBA_VL_SALDO_ATUAL" />
+                <ScalarProperty Name="COBA_NM_NOME_EXIBE" ColumnName="COBA_NM_NOME_EXIBE" />
+                <ScalarProperty Name="COBA_IN_CONTA_PADRAO" ColumnName="COBA_IN_CONTA_PADRAO" />
+                <ScalarProperty Name="COBA_IN_CONTA_SELECAO" ColumnName="COBA_IN_CONTA_SELECAO" />
+                <ScalarProperty Name="COBA_IN_DIAS" ColumnName="COBA_IN_DIAS" />
+                <ScalarProperty Name="COBA_DT_SELECAO" ColumnName="COBA_DT_SELECAO" />
+                <ScalarProperty Name="COBA_IN_TIPO_FILTRO" ColumnName="COBA_IN_TIPO_FILTRO" />
+                <ScalarProperty Name="COBA_IN_MES" ColumnName="COBA_IN_MES" />
+                <ScalarProperty Name="COBA_DT_SELECAO_FINAL" ColumnName="COBA_DT_SELECAO_FINAL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTA_BANCO_CONTATO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO_CONTATO">
+              <MappingFragment StoreEntitySet="CONTA_BANCO_CONTATO">
+                <ScalarProperty Name="CBCT_CD_ID" ColumnName="CBCT_CD_ID" />
+                <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
+                <ScalarProperty Name="CBCT_NM_NOME" ColumnName="CBCT_NM_NOME" />
+                <ScalarProperty Name="CBCT_NM_EMAIL" ColumnName="CBCT_NM_EMAIL" />
+                <ScalarProperty Name="CBCT_NM_CARGO" ColumnName="CBCT_NM_CARGO" />
+                <ScalarProperty Name="CBCT_NR_TELEFONES" ColumnName="CBCT_NR_TELEFONES" />
+                <ScalarProperty Name="CBCT_IN_ATIVO" ColumnName="CBCT_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTA_BANCO_LANCAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO_LANCAMENTO">
+              <MappingFragment StoreEntitySet="CONTA_BANCO_LANCAMENTO">
+                <ScalarProperty Name="CBLA_CD_ID" ColumnName="CBLA_CD_ID" />
+                <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
+                <ScalarProperty Name="CBLA_DT_LANCAMENTO" ColumnName="CBLA_DT_LANCAMENTO" />
+                <ScalarProperty Name="CBLA_IN_TIPO" ColumnName="CBLA_IN_TIPO" />
+                <ScalarProperty Name="CBLA_DS_DESCRICAO" ColumnName="CBLA_DS_DESCRICAO" />
+                <ScalarProperty Name="CBLA_VL_VALOR" ColumnName="CBLA_VL_VALOR" />
+                <ScalarProperty Name="CBLA_IN_ATIVO" ColumnName="CBLA_IN_ATIVO" />
+                <ScalarProperty Name="CBLA_NR_NUMERO" ColumnName="CBLA_NR_NUMERO" />
+                <ScalarProperty Name="CBLA_IN_ORIGEM" ColumnName="CBLA_IN_ORIGEM" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10784,6 +10878,59 @@
                 <ScalarProperty Name="ENSA_IN_LISTA_NEGRA" ColumnName="ENSA_IN_LISTA_NEGRA" />
                 <ScalarProperty Name="ENSA_IN_STATUS" ColumnName="ENSA_IN_STATUS" />
                 <ScalarProperty Name="ENSA_DS_JUSTIFICATIVA" ColumnName="ENSA_DS_JUSTIFICATIVA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EQUIPAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO">
+              <MappingFragment StoreEntitySet="EQUIPAMENTO">
+                <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
+                <ScalarProperty Name="CAEQ_CD_ID" ColumnName="CAEQ_CD_ID" />
+                <ScalarProperty Name="EQUI_NR_NUMERO" ColumnName="EQUI_NR_NUMERO" />
+                <ScalarProperty Name="EQUI_NM_NOME" ColumnName="EQUI_NM_NOME" />
+                <ScalarProperty Name="EQUI_DS_DESCRICAO" ColumnName="EQUI_DS_DESCRICAO" />
+                <ScalarProperty Name="EQUI_DT_COMPRA" ColumnName="EQUI_DT_COMPRA" />
+                <ScalarProperty Name="EQUI_VL_VALOR" ColumnName="EQUI_VL_VALOR" />
+                <ScalarProperty Name="EQUI_NR_VIDA_UTIL" ColumnName="EQUI_NR_VIDA_UTIL" />
+                <ScalarProperty Name="EQUI_DT_BAIXA" ColumnName="EQUI_DT_BAIXA" />
+                <ScalarProperty Name="EQUI_DS_MOTIVO_BAIXA" ColumnName="EQUI_DS_MOTIVO_BAIXA" />
+                <ScalarProperty Name="EQUI_IN_ATIVO" ColumnName="EQUI_IN_ATIVO" />
+                <ScalarProperty Name="EQUI_DT_CADASTRO" ColumnName="EQUI_DT_CADASTRO" />
+                <ScalarProperty Name="EQUI_AQ_FOTO" ColumnName="EQUI_AQ_FOTO" />
+                <ScalarProperty Name="EQUI_DT_MANUTENCAO" ColumnName="EQUI_DT_MANUTENCAO" />
+                <ScalarProperty Name="EQUI_IN_AVISA_MANUTENCAO" ColumnName="EQUI_IN_AVISA_MANUTENCAO" />
+                <ScalarProperty Name="EQUI_TX_OBSERVACOES" ColumnName="EQUI_TX_OBSERVACOES" />
+                <ScalarProperty Name="EQUI_IN_DEPRECIADOS" ColumnName="EQUI_IN_DEPRECIADOS" />
+                <ScalarProperty Name="EQUI_IN_MANUTENCAO" ColumnName="EQUI_IN_MANUTENCAO" />
+                <ScalarProperty Name="EQUI_IN_BAIXADOS" ColumnName="EQUI_IN_BAIXADOS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EQUIPAMENTO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO_ANEXO">
+              <MappingFragment StoreEntitySet="EQUIPAMENTO_ANEXO">
+                <ScalarProperty Name="EQAN_CD_ID" ColumnName="EQAN_CD_ID" />
+                <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
+                <ScalarProperty Name="EQAN_NM_TITULO" ColumnName="EQAN_NM_TITULO" />
+                <ScalarProperty Name="EQAN_DT_ANEXO" ColumnName="EQAN_DT_ANEXO" />
+                <ScalarProperty Name="EQAN_IN_TIPO" ColumnName="EQAN_IN_TIPO" />
+                <ScalarProperty Name="EQAN_AQ_ARQUIVO" ColumnName="EQAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="EQAN_IN_ATIVO" ColumnName="EQAN_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EQUIPAMENTO_MANUTENCAO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO">
+              <MappingFragment StoreEntitySet="EQUIPAMENTO_MANUTENCAO">
+                <ScalarProperty Name="EQMA_CD_ID" ColumnName="EQMA_CD_ID" />
+                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
+                <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
+                <ScalarProperty Name="EQMA_DT_MANUTENCAO" ColumnName="EQMA_DT_MANUTENCAO" />
+                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
+                <ScalarProperty Name="EQMA_TX_OBSERVACOES" ColumnName="EQMA_TX_OBSERVACOES" />
+                <ScalarProperty Name="EQMA_IN_ATIVO" ColumnName="EQMA_IN_ATIVO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10956,6 +11103,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="LISTA_CONVIDADO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO">
+              <MappingFragment StoreEntitySet="LISTA_CONVIDADO_ANEXO">
+                <ScalarProperty Name="LCAN_CD_ID" ColumnName="LCAN_CD_ID" />
+                <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
+                <ScalarProperty Name="LCAN_DT_ANEXO" ColumnName="LCAN_DT_ANEXO" />
+                <ScalarProperty Name="LCAN_NM_TITULO" ColumnName="LCAN_NM_TITULO" />
+                <ScalarProperty Name="LCAN_IN_TIPO" ColumnName="LCAN_IN_TIPO" />
+                <ScalarProperty Name="LCAN_AQ_ARQUIVO" ColumnName="LCAN_AQ_ARQUIVO" />
+                <ScalarProperty Name="LCAN_IN_ATIVO" ColumnName="LCAN_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LISTA_CONVIDADO_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO">
+              <MappingFragment StoreEntitySet="LISTA_CONVIDADO_COMENTARIO">
+                <ScalarProperty Name="LCCM_CD_ID" ColumnName="LCCM_CD_ID" />
+                <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="LCCM_DT_COMENTARIO" ColumnName="LCCM_DT_COMENTARIO" />
+                <ScalarProperty Name="LCCM_DS_COMENTARIO" ColumnName="LCCM_DS_COMENTARIO" />
+                <ScalarProperty Name="LCCM_IN_ATIVO" ColumnName="LCCM_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LOG">
             <EntityTypeMapping TypeName="ERP_CondominioModel.LOG">
               <MappingFragment StoreEntitySet="LOG">
@@ -11027,8 +11199,6 @@
           <EntitySetMapping Name="MATERIAL_MOVIMENTO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.MATERIAL_MOVIMENTO">
               <MappingFragment StoreEntitySet="MATERIAL_MOVIMENTO">
-                <ScalarProperty Name="MAMO_IN_OPERACAO" ColumnName="MAMO_IN_OPERACAO" />
-                <ScalarProperty Name="MAMO_QN_ALTERADA" ColumnName="MAMO_QN_ALTERADA" />
                 <ScalarProperty Name="MAMO_CD_ID" ColumnName="MAMO_CD_ID" />
                 <ScalarProperty Name="MATE_CD_ID" ColumnName="MATE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11040,6 +11210,8 @@
                 <ScalarProperty Name="MAMO_DS_JUSTIFICATIVA" ColumnName="MAMO_DS_JUSTIFICATIVA" />
                 <ScalarProperty Name="MAMO_QN_ANTES" ColumnName="MAMO_QN_ANTES" />
                 <ScalarProperty Name="MAMO_QN_DEPOIS" ColumnName="MAMO_QN_DEPOIS" />
+                <ScalarProperty Name="MAMO_QN_ALTERADA" ColumnName="MAMO_QN_ALTERADA" />
+                <ScalarProperty Name="MAMO_IN_OPERACAO" ColumnName="MAMO_IN_OPERACAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11187,6 +11359,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PERIODICIDADE">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.PERIODICIDADE">
+              <MappingFragment StoreEntitySet="PERIODICIDADE">
+                <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
+                <ScalarProperty Name="PERI_NM_NOME" ColumnName="PERI_NM_NOME" />
+                <ScalarProperty Name="PERI_NR_DIAS" ColumnName="PERI_NR_DIAS" />
+                <ScalarProperty Name="PERI_IN_ATIVO" ColumnName="PERI_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PERIODICIDADE_TAREFA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.PERIODICIDADE_TAREFA">
               <MappingFragment StoreEntitySet="PERIODICIDADE_TAREFA">
@@ -11201,12 +11383,12 @@
           <EntitySetMapping Name="PRODUTO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO">
               <MappingFragment StoreEntitySet="PRODUTO">
-                <ScalarProperty Name="UNMA_CD_ID" ColumnName="UNMA_CD_ID" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
                 <ScalarProperty Name="SCPR_CD_ID" ColumnName="SCPR_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
+                <ScalarProperty Name="UNMA_CD_ID" ColumnName="UNMA_CD_ID" />
                 <ScalarProperty Name="PROD_NM_NOME" ColumnName="PROD_NM_NOME" />
                 <ScalarProperty Name="PROD_DS_DESCRICAO" ColumnName="PROD_DS_DESCRICAO" />
                 <ScalarProperty Name="PROD_QN_QUANTIDADE_MINIMA" ColumnName="PROD_QN_QUANTIDADE_MINIMA" />
@@ -11540,6 +11722,14 @@
                 <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
                 <ScalarProperty Name="TICO_NM_NOME" ColumnName="TICO_NM_NOME" />
                 <ScalarProperty Name="TICO_IN_ATIVO" ColumnName="TICO_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_CONTA">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_CONTA">
+              <MappingFragment StoreEntitySet="TIPO_CONTA">
+                <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
+                <ScalarProperty Name="TICO_NM_NOME" ColumnName="TICO_NM_NOME" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11880,197 +12070,6 @@
                 <ScalarProperty Name="VEAN_DT_ANEXO" ColumnName="VEAN_DT_ANEXO" />
                 <ScalarProperty Name="VEAN_AQ_ARQUIVO" ColumnName="VEAN_AQ_ARQUIVO" />
                 <ScalarProperty Name="VEAN_IN_ATIVO" ColumnName="VEAN_IN_ATIVO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BANCO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.BANCO">
-              <MappingFragment StoreEntitySet="BANCO">
-                <ScalarProperty Name="BANC_IN_ATIVO" ColumnName="BANC_IN_ATIVO" />
-                <ScalarProperty Name="BANC_NM_NOME" ColumnName="BANC_NM_NOME" />
-                <ScalarProperty Name="BANC_SG_CODIGO" ColumnName="BANC_SG_CODIGO" />
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
-                <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CENTRO_CUSTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CENTRO_CUSTO">
-              <MappingFragment StoreEntitySet="CENTRO_CUSTO">
-                <ScalarProperty Name="CECU_NM_EXIBE" ColumnName="CECU_NM_EXIBE" />
-                <ScalarProperty Name="CECU_IN_MOVTO" ColumnName="CECU_IN_MOVTO" />
-                <ScalarProperty Name="CECU_IN_TIPO" ColumnName="CECU_IN_TIPO" />
-                <ScalarProperty Name="SUBG_CD_ID" ColumnName="SUBG_CD_ID" />
-                <ScalarProperty Name="GRUP_CD_ID" ColumnName="GRUP_CD_ID" />
-                <ScalarProperty Name="CECU_IN_ATIVO" ColumnName="CECU_IN_ATIVO" />
-                <ScalarProperty Name="CECU_NM_NOME" ColumnName="CECU_NM_NOME" />
-                <ScalarProperty Name="CECU_NR_NUMERO" ColumnName="CECU_NR_NUMERO" />
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
-                <ScalarProperty Name="CECU_CD_ID" ColumnName="CECU_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CONTA_BANCO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO">
-              <MappingFragment StoreEntitySet="CONTA_BANCO">
-                <ScalarProperty Name="COBA_DT_SELECAO_FINAL" ColumnName="COBA_DT_SELECAO_FINAL" />
-                <ScalarProperty Name="COBA_IN_MES" ColumnName="COBA_IN_MES" />
-                <ScalarProperty Name="COBA_IN_TIPO_FILTRO" ColumnName="COBA_IN_TIPO_FILTRO" />
-                <ScalarProperty Name="COBA_DT_SELECAO" ColumnName="COBA_DT_SELECAO" />
-                <ScalarProperty Name="COBA_IN_DIAS" ColumnName="COBA_IN_DIAS" />
-                <ScalarProperty Name="COBA_IN_CONTA_SELECAO" ColumnName="COBA_IN_CONTA_SELECAO" />
-                <ScalarProperty Name="COBA_IN_CONTA_PADRAO" ColumnName="COBA_IN_CONTA_PADRAO" />
-                <ScalarProperty Name="COBA_NM_NOME_EXIBE" ColumnName="COBA_NM_NOME_EXIBE" />
-                <ScalarProperty Name="COBA_VL_SALDO_ATUAL" ColumnName="COBA_VL_SALDO_ATUAL" />
-                <ScalarProperty Name="COBA_DT_ABERTURA" ColumnName="COBA_DT_ABERTURA" />
-                <ScalarProperty Name="COBA_NR_TELEFONE" ColumnName="COBA_NR_TELEFONE" />
-                <ScalarProperty Name="COBA_NM_GERENTE" ColumnName="COBA_NM_GERENTE" />
-                <ScalarProperty Name="COBA_NM_AGENCIA" ColumnName="COBA_NM_AGENCIA" />
-                <ScalarProperty Name="COBA_IN_ATIVO" ColumnName="COBA_IN_ATIVO" />
-                <ScalarProperty Name="COBA_DT_CADASTRO" ColumnName="COBA_DT_CADASTRO" />
-                <ScalarProperty Name="COBA_NR_CONTA" ColumnName="COBA_NR_CONTA" />
-                <ScalarProperty Name="COBA_NR_AGENCIA" ColumnName="COBA_NR_AGENCIA" />
-                <ScalarProperty Name="COBA_VL_SALDO_INICIAL" ColumnName="COBA_VL_SALDO_INICIAL" />
-                <ScalarProperty Name="COBA_NM_NOME" ColumnName="COBA_NM_NOME" />
-                <ScalarProperty Name="COBA_IN_PRINCIPAL" ColumnName="COBA_IN_PRINCIPAL" />
-                <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
-                <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
-                <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CONTA_BANCO_CONTATO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO_CONTATO">
-              <MappingFragment StoreEntitySet="CONTA_BANCO_CONTATO">
-                <ScalarProperty Name="CBCT_IN_ATIVO" ColumnName="CBCT_IN_ATIVO" />
-                <ScalarProperty Name="CBCT_NR_TELEFONES" ColumnName="CBCT_NR_TELEFONES" />
-                <ScalarProperty Name="CBCT_NM_CARGO" ColumnName="CBCT_NM_CARGO" />
-                <ScalarProperty Name="CBCT_NM_EMAIL" ColumnName="CBCT_NM_EMAIL" />
-                <ScalarProperty Name="CBCT_NM_NOME" ColumnName="CBCT_NM_NOME" />
-                <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
-                <ScalarProperty Name="CBCT_CD_ID" ColumnName="CBCT_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CONTA_BANCO_LANCAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO_LANCAMENTO">
-              <MappingFragment StoreEntitySet="CONTA_BANCO_LANCAMENTO">
-                <ScalarProperty Name="CBLA_IN_ORIGEM" ColumnName="CBLA_IN_ORIGEM" />
-                <ScalarProperty Name="CBLA_NR_NUMERO" ColumnName="CBLA_NR_NUMERO" />
-                <ScalarProperty Name="CBLA_IN_ATIVO" ColumnName="CBLA_IN_ATIVO" />
-                <ScalarProperty Name="CBLA_VL_VALOR" ColumnName="CBLA_VL_VALOR" />
-                <ScalarProperty Name="CBLA_DS_DESCRICAO" ColumnName="CBLA_DS_DESCRICAO" />
-                <ScalarProperty Name="CBLA_IN_TIPO" ColumnName="CBLA_IN_TIPO" />
-                <ScalarProperty Name="CBLA_DT_LANCAMENTO" ColumnName="CBLA_DT_LANCAMENTO" />
-                <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
-                <ScalarProperty Name="CBLA_CD_ID" ColumnName="CBLA_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TIPO_CONTA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_CONTA">
-              <MappingFragment StoreEntitySet="TIPO_CONTA">
-                <ScalarProperty Name="TICO_NM_NOME" ColumnName="TICO_NM_NOME" />
-                <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CATEGORIA_EQUIPAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO">
-              <MappingFragment StoreEntitySet="CATEGORIA_EQUIPAMENTO">
-                <ScalarProperty Name="CAEQ_IN_ATIVO" ColumnName="CAEQ_IN_ATIVO" />
-                <ScalarProperty Name="CAEQ_NM_NOME" ColumnName="CAEQ_NM_NOME" />
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
-                <ScalarProperty Name="CAEQ_CD_ID" ColumnName="CAEQ_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EQUIPAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO">
-              <MappingFragment StoreEntitySet="EQUIPAMENTO">
-                <ScalarProperty Name="EQUI_IN_BAIXADOS" ColumnName="EQUI_IN_BAIXADOS" />
-                <ScalarProperty Name="EQUI_IN_MANUTENCAO" ColumnName="EQUI_IN_MANUTENCAO" />
-                <ScalarProperty Name="EQUI_IN_DEPRECIADOS" ColumnName="EQUI_IN_DEPRECIADOS" />
-                <ScalarProperty Name="EQUI_TX_OBSERVACOES" ColumnName="EQUI_TX_OBSERVACOES" />
-                <ScalarProperty Name="EQUI_IN_AVISA_MANUTENCAO" ColumnName="EQUI_IN_AVISA_MANUTENCAO" />
-                <ScalarProperty Name="EQUI_DT_MANUTENCAO" ColumnName="EQUI_DT_MANUTENCAO" />
-                <ScalarProperty Name="EQUI_AQ_FOTO" ColumnName="EQUI_AQ_FOTO" />
-                <ScalarProperty Name="EQUI_DT_CADASTRO" ColumnName="EQUI_DT_CADASTRO" />
-                <ScalarProperty Name="EQUI_IN_ATIVO" ColumnName="EQUI_IN_ATIVO" />
-                <ScalarProperty Name="EQUI_DS_MOTIVO_BAIXA" ColumnName="EQUI_DS_MOTIVO_BAIXA" />
-                <ScalarProperty Name="EQUI_DT_BAIXA" ColumnName="EQUI_DT_BAIXA" />
-                <ScalarProperty Name="EQUI_NR_VIDA_UTIL" ColumnName="EQUI_NR_VIDA_UTIL" />
-                <ScalarProperty Name="EQUI_VL_VALOR" ColumnName="EQUI_VL_VALOR" />
-                <ScalarProperty Name="EQUI_DT_COMPRA" ColumnName="EQUI_DT_COMPRA" />
-                <ScalarProperty Name="EQUI_DS_DESCRICAO" ColumnName="EQUI_DS_DESCRICAO" />
-                <ScalarProperty Name="EQUI_NM_NOME" ColumnName="EQUI_NM_NOME" />
-                <ScalarProperty Name="EQUI_NR_NUMERO" ColumnName="EQUI_NR_NUMERO" />
-                <ScalarProperty Name="CAEQ_CD_ID" ColumnName="CAEQ_CD_ID" />
-                <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
-                <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EQUIPAMENTO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO_ANEXO">
-              <MappingFragment StoreEntitySet="EQUIPAMENTO_ANEXO">
-                <ScalarProperty Name="EQAN_IN_ATIVO" ColumnName="EQAN_IN_ATIVO" />
-                <ScalarProperty Name="EQAN_AQ_ARQUIVO" ColumnName="EQAN_AQ_ARQUIVO" />
-                <ScalarProperty Name="EQAN_IN_TIPO" ColumnName="EQAN_IN_TIPO" />
-                <ScalarProperty Name="EQAN_DT_ANEXO" ColumnName="EQAN_DT_ANEXO" />
-                <ScalarProperty Name="EQAN_NM_TITULO" ColumnName="EQAN_NM_TITULO" />
-                <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
-                <ScalarProperty Name="EQAN_CD_ID" ColumnName="EQAN_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="EQUIPAMENTO_MANUTENCAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO">
-              <MappingFragment StoreEntitySet="EQUIPAMENTO_MANUTENCAO">
-                <ScalarProperty Name="EQMA_IN_ATIVO" ColumnName="EQMA_IN_ATIVO" />
-                <ScalarProperty Name="EQMA_TX_OBSERVACOES" ColumnName="EQMA_TX_OBSERVACOES" />
-                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
-                <ScalarProperty Name="EQMA_DT_MANUTENCAO" ColumnName="EQMA_DT_MANUTENCAO" />
-                <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
-                <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
-                <ScalarProperty Name="EQMA_CD_ID" ColumnName="EQMA_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PERIODICIDADE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PERIODICIDADE">
-              <MappingFragment StoreEntitySet="PERIODICIDADE">
-                <ScalarProperty Name="PERI_IN_ATIVO" ColumnName="PERI_IN_ATIVO" />
-                <ScalarProperty Name="PERI_NR_DIAS" ColumnName="PERI_NR_DIAS" />
-                <ScalarProperty Name="PERI_NM_NOME" ColumnName="PERI_NM_NOME" />
-                <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LISTA_CONVIDADO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO">
-              <MappingFragment StoreEntitySet="LISTA_CONVIDADO_ANEXO">
-                <ScalarProperty Name="LCAN_IN_ATIVO" ColumnName="LCAN_IN_ATIVO" />
-                <ScalarProperty Name="LCAN_AQ_ARQUIVO" ColumnName="LCAN_AQ_ARQUIVO" />
-                <ScalarProperty Name="LCAN_IN_TIPO" ColumnName="LCAN_IN_TIPO" />
-                <ScalarProperty Name="LCAN_NM_TITULO" ColumnName="LCAN_NM_TITULO" />
-                <ScalarProperty Name="LCAN_DT_ANEXO" ColumnName="LCAN_DT_ANEXO" />
-                <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
-                <ScalarProperty Name="LCAN_CD_ID" ColumnName="LCAN_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LISTA_CONVIDADO_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO">
-              <MappingFragment StoreEntitySet="LISTA_CONVIDADO_COMENTARIO">
-                <ScalarProperty Name="LCCM_IN_ATIVO" ColumnName="LCCM_IN_ATIVO" />
-                <ScalarProperty Name="LCCM_DS_COMENTARIO" ColumnName="LCCM_DS_COMENTARIO" />
-                <ScalarProperty Name="LCCM_DT_COMENTARIO" ColumnName="LCCM_DT_COMENTARIO" />
-                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
-                <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
-                <ScalarProperty Name="LCCM_CD_ID" ColumnName="LCCM_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

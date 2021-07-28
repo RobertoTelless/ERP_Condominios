@@ -37,12 +37,12 @@ namespace EntitiesServices.Model
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONVIDADO> CONVIDADO { get; set; }
-        public virtual RESERVA RESERVA { get; set; }
-        public virtual UNIDADE UNIDADE { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LISTA_CONVIDADO_ANEXO> LISTA_CONVIDADO_ANEXO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LISTA_CONVIDADO_COMENTARIO> LISTA_CONVIDADO_COMENTARIO { get; set; }
+        public virtual RESERVA RESERVA { get; set; }
+        public virtual UNIDADE UNIDADE { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

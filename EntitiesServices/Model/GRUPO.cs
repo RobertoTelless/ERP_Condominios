@@ -17,8 +17,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GRUPO()
         {
-            this.SUBGRUPO = new HashSet<SUBGRUPO>();
             this.CENTRO_CUSTO = new HashSet<CENTRO_CUSTO>();
+            this.SUBGRUPO = new HashSet<SUBGRUPO>();
         }
     
         public int GRUP_CD_ID { get; set; }
@@ -31,10 +31,10 @@ namespace EntitiesServices.Model
         public Nullable<int> GRUP_IN_ATIVO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
         public virtual TIPO_GRUPO TIPO_GRUPO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUBGRUPO> SUBGRUPO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CENTRO_CUSTO> CENTRO_CUSTO { get; set; }
     }
 }

@@ -15,12 +15,10 @@ namespace ERP_Condominios_Solution.ViewModels
         public int ASSI_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo PERFIL obrigatorio")]
         public int PERF_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo CATEGORIA obrigatorio")]
         public Nullable<int> CAUS_CD_ID { get; set; }
         public Nullable<int> CARG_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
         public Nullable<int> COLA_CD_ID { get; set; }
-        [Required(ErrorMessage = "Campo NOME obrigatorio")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "O NOME deve ter no minimo 1 e no máximo 50 caracteres.")]
         public string USUA_NM_NOME { get; set; }
         [Required(ErrorMessage = "Campo LOGIN obrigatorio")]
