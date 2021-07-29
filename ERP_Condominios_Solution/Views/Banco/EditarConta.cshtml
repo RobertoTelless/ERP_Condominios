@@ -4,6 +4,26 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-title">
         <h3 class="title">Bancos & Contas Bancárias</h3>
         <br />
@@ -122,8 +142,8 @@
                         <div class="tabs-container">
                             <ul class="nav nav-tabs">
                                 <li class="@ViewBag.TabDadosGer"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                                <li class="@ViewBag.TabLanc"><a data-toggle="tab" href="#tab-2">Lançamento</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-3">Contato</a></li>
+                                <li class="@ViewBag.TabLanc"><a data-toggle="tab" href="#tab-2">Lançamentos</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3">Contatos</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -139,6 +159,7 @@
                                                 @Html.HiddenFor(m => m.COBA_IN_ATIVO)
                                                 @Html.HiddenFor(m => m.COBA_VL_SALDO_ATUAL)
                                                 @Html.HiddenFor(m => m.COBA_VL_SALDO_INICIAL)
+                                                @Html.HiddenFor(m => m.TICO_CD_ID)
                                                 Tipo de Conta*
                                                 @Html.TextBoxFor(m => m.TIPO_CONTA.TICO_NM_NOME, new { @class = "form-control", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(m => m.TICO_CD_ID, "", new { @style = "color:red" })
@@ -197,8 +218,6 @@
                                                 @Html.TextBoxFor(m => m.COBA_NR_TELEFONE, new { @class = "form-control", autofocus = true, placeholder = "(99) 9999-9999 R: 99", @id = "tel" })
                                                 @Html.ValidationMessageFor(m => m.COBA_NR_TELEFONE, "", new { @style = "color:red" })
                                             </div>
-                                        </div>
-                                        <div class="form-group">
                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                 <div class="input-group">
                                                     Conta Padrão
@@ -223,118 +242,129 @@
                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                 <h4>Lançamentos</h4>
                                                 <br />
-                                                @if (Model.CONTA_BANCO_LANCAMENTO.Count > 0)
+                                                @if (Model.CONTA_BANCO_LANCAMENTO != null)
                                                 {
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Data</th>
-                                                                <th>Número</th>
-                                                                <th>Tipo</th>
-                                                                <th>Descrição</th>
-                                                                <th>Valor</th>
-                                                                <th>Ativo</th>
-                                                                <th class="td-one-action">Ações</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (Model.CONTA_BANCO_LANCAMENTO))
-                                                            {
-                                                                if (cond.CBLA_IN_ATIVO == 1)
+                                                    if (Model.CONTA_BANCO_LANCAMENTO.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <th>Data</th>
+                                                                    <th>Número</th>
+                                                                    <th>Tipo</th>
+                                                                    <th>Descrição</th>
+                                                                    <th>Valor</th>
+                                                                    <th>Ativo</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CONTA_BANCO_LANCAMENTO))
                                                                 {
-                                                                    <tr>
-                                                                        <td>@cond.CBLA_DT_LANCAMENTO.Value.ToShortDateString()</td>
-                                                                        <td>@cond.CBLA_NR_NUMERO</td>
-                                                                        @if (cond.CBLA_IN_TIPO == 1)
-                                                                        {
-                                                                            <td>C</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>D</td>
-                                                                        }
-                                                                        <td>@cond.CBLA_DS_DESCRICAO</td>
-                                                                        @if (cond.CBLA_VL_VALOR != null)
-                                                                        {
-                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>0,00</td>
-                                                                        }
-                                                                        @if (cond.CBLA_IN_ATIVO == 1)
-                                                                        {
-                                                                            <td>Ativo</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>Inativo</td>
-                                                                        }
-                                                                        <td class="td-one-action">
-                                                                            @Html.TableLinkDetails(cond.CBLA_CD_ID, "EditarLancamento", "fa-edit", "Editar/Consultar")
-                                                                            @if (cond.CBLA_IN_ORIGEM == 1)
+                                                                    if (cond.CBLA_IN_ATIVO == 1)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.CBLA_DT_LANCAMENTO.Value.ToShortDateString()</td>
+                                                                            <td>@cond.CBLA_NR_NUMERO</td>
+                                                                            @if (cond.CBLA_IN_TIPO == 1)
                                                                             {
-                                                                                if (cond.CBLA_IN_ATIVO == 1)
+                                                                                <td>C</td>
+                                                                                if (cond.CBLA_VL_VALOR != null)
                                                                                 {
-                                                                                    @Html.TableLinkDetails(cond.CBLA_CD_ID, "ExcluirLancamento", "fa-trash-o", "Desativar")
+                                                                                    <td style="color: darkgreen">@CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    @Html.TableLinkDetails(cond.CBLA_CD_ID, "ReativarLancamento", "fa-refresh", "Reativar")
+                                                                                    <td style="color: darkgreen">0,00</td>
                                                                                 }
                                                                             }
-                                                                        </td>
-                                                                    </tr>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <tr style="color: red">
-                                                                        <td>@cond.CBLA_DT_LANCAMENTO.Value.ToShortDateString()</td>
-                                                                        <td>@cond.CBLA_NR_NUMERO</td>
-                                                                        @if (cond.CBLA_IN_TIPO == 1)
-                                                                        {
-                                                                            <td>C</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>D</td>
-                                                                        }
-                                                                        <td>@cond.CBLA_DS_DESCRICAO</td>
-                                                                        @if (cond.CBLA_VL_VALOR != null)
-                                                                        {
-                                                                            <td>@CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>0,00</td>
-                                                                        }
-                                                                        @if (cond.CBLA_IN_ATIVO == 1)
-                                                                        {
-                                                                            <td>Ativo</td>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <td>Inativo</td>
-                                                                        }
-                                                                        <td class="td-one-action">
-                                                                            @Html.TableLinkDetails(cond.CBLA_CD_ID, "EditarLancamento", "fa-edit", "Editar/Consultar")
-                                                                            @if (cond.CBLA_IN_ORIGEM == 1)
+                                                                            else
                                                                             {
-                                                                                if (cond.CBLA_IN_ATIVO == 1)
+                                                                                <td>D</td>
+                                                                                if (cond.CBLA_VL_VALOR != null)
                                                                                 {
-                                                                                    @Html.TableLinkDetails(cond.CBLA_CD_ID, "ExcluirLancamento", "fa-trash-o", "Desativar")
+                                                                                    <td style="color: red">- @CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
                                                                                 }
                                                                                 else
                                                                                 {
-                                                                                    @Html.TableLinkDetails(cond.CBLA_CD_ID, "ReativarLancamento", "fa-refresh", "Reativar")
+                                                                                    <td style="color: red">0,00</td>
                                                                                 }
                                                                             }
-                                                                        </td>
-                                                                    </tr>
+                                                                            <td>@cond.CBLA_DS_DESCRICAO</td>
+                                                                            @if (cond.CBLA_IN_ATIVO == 1)
+                                                                            {
+                                                                                <td>Ativo</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Inativo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @Html.TableLinkDetails(cond.CBLA_CD_ID, "EditarLancamento", "fa-edit", "Editar/Consultar")
+                                                                                @if (cond.CBLA_IN_ORIGEM == 1)
+                                                                                {
+                                                                                    if (cond.CBLA_IN_ATIVO == 1)
+                                                                                    {
+                                                                                        <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Banco/ExcluirLancamento/@cond.CBLA_CD_ID')" title="Excluir"></span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.TableLinkDetails(cond.CBLA_CD_ID, "ReativarLancamento", "fa-refresh", "Reativar")
+                                                                                    }
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <tr style="background-color: burlywood">
+                                                                            <td>@cond.CBLA_DT_LANCAMENTO.Value.ToShortDateString()</td>
+                                                                            <td>@cond.CBLA_NR_NUMERO</td>
+                                                                            @if (cond.CBLA_IN_TIPO == 1)
+                                                                            {
+                                                                                <td>C</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>D</td>
+                                                                            }
+                                                                            <td>@cond.CBLA_DS_DESCRICAO</td>
+                                                                            @if (cond.CBLA_VL_VALOR != null)
+                                                                            {
+                                                                                <td>@CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>0,00</td>
+                                                                            }
+                                                                            @if (cond.CBLA_IN_ATIVO == 1)
+                                                                            {
+                                                                                <td>Ativo</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Inativo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @Html.TableLinkDetails(cond.CBLA_CD_ID, "EditarLancamento", "fa-edit", "Editar/Consultar")
+                                                                                @if (cond.CBLA_IN_ORIGEM == 1)
+                                                                                {
+                                                                                    if (cond.CBLA_IN_ATIVO == 1)
+                                                                                    {
+                                                                                        <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Banco/ExcluirLancamento/@cond.CBLA_CD_ID')" title="Excluir"></span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Banco/ReativarLancamento/@cond.CBLA_CD_ID')" title="Reativar"></span>
+                                                                                    }
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
                                                                 }
-                                                            }
-                                                        </tbody>
-                                                    </table>
+                                                            </tbody>
+                                                        </table>
+                                                    }
                                                 }
                                             </div>
                                         </div>
@@ -353,57 +383,90 @@
                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                 <h4>Contatos</h4>
                                                 <br />
-                                                @if (Model.CONTA_BANCO_CONTATO.Count > 0)
+                                                @if (Model.CONTA_BANCO_CONTATO != null)
                                                 {
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Nome</th>
-                                                                <th>Cargo</th>
-                                                                <th>E-Mail</th>
-                                                                <th>Telefone</th>
-                                                                <th>Ativo</th>
-                                                                <th class="td-one-action">Ações</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (Model.CONTA_BANCO_CONTATO))
-                                                            {
+                                                    if (Model.CONTA_BANCO_CONTATO.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style="background-color:lightsteelblue">
                                                                 <tr>
-                                                                    <td>@cond.CBCT_NM_NOME</td>
-                                                                    <td>@cond.CBCT_NM_CARGO</td>
-                                                                    <td>@cond.CBCT_NM_EMAIL</td>
-                                                                    <td>@cond.CBCT_NR_TELEFONES</td>
-                                                                    @if (cond.CBCT_IN_ATIVO == 1)
+                                                                    <th>Nome</th>
+                                                                    <th>Cargo</th>
+                                                                    <th>E-Mail</th>
+                                                                    <th>Telefone</th>
+                                                                    <th>Ativo</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CONTA_BANCO_CONTATO))
+                                                                {
+                                                                    if (cond.CBCT_IN_ATIVO == 1)
                                                                     {
-                                                                        <td>Sim</td>
+                                                                        <tr>
+                                                                            <td>@cond.CBCT_NM_NOME</td>
+                                                                            <td>@cond.CBCT_NM_CARGO</td>
+                                                                            <td>@cond.CBCT_NM_EMAIL</td>
+                                                                            <td>@cond.CBCT_NR_TELEFONES</td>
+                                                                            @if (cond.CBCT_IN_ATIVO == 1)
+                                                                            {
+                                                                                <td>Sim</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Não</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @Html.TableLinkDetails(cond.CBCT_CD_ID, "EditarContato", "fa-edit", "Editar/Consultar")
+                                                                                @if (cond.CBCT_IN_ATIVO == 1)
+                                                                                {
+                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Banco/ExcluirContato/@cond.CBCT_CD_ID')" title="Excluir"></span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Banco/ReativarContato/@cond.CBCT_CD_ID')" title="Reativar"></span>
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <td>Não</td>
+                                                                        <tr style="background-color: burlywood">
+                                                                            <td>@cond.CBCT_NM_NOME</td>
+                                                                            <td>@cond.CBCT_NM_CARGO</td>
+                                                                            <td>@cond.CBCT_NM_EMAIL</td>
+                                                                            <td>@cond.CBCT_NR_TELEFONES</td>
+                                                                            @if (cond.CBCT_IN_ATIVO == 1)
+                                                                            {
+                                                                                <td>Sim</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Não</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @Html.TableLinkDetails(cond.CBCT_CD_ID, "EditarContato", "fa-edit", "Editar/Consultar")
+                                                                                @if (cond.CBCT_IN_ATIVO == 1)
+                                                                                {
+                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Banco/ExcluirContato/@cond.CBCT_CD_ID')" title="Excluir"></span>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Banco/ReativarContato/@cond.CBCT_CD_ID')" title="Reativar"></span>
+                                                                                }
+                                                                            </td>
+                                                                        </tr>
                                                                     }
-                                                                    <td class="td-one-action">
-                                                                        @Html.TableLinkDetails(cond.CBCT_CD_ID, "EditarContato", "fa-edit", "Editar/Consultar")
-                                                                        @if (cond.CBCT_IN_ATIVO == 1)
-                                                                        {
-                                                                            @Html.TableLinkDetails(cond.CBCT_CD_ID, "ExcluirContato", "fa-trash-o", "Desativar")
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            @Html.TableLinkDetails(cond.CBCT_CD_ID, "ReativarContato", "fa-refresh", "Reativar")
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
                                                 }
                                             </div>
                                         </div>
                                     <div class="form-group">
                                         <div class="col-lg-12 col-md-12 col-xs-12">
                                             @Html.ButtonLinkIndex(text: "Incluir Novo Contato", action: "IncluirContato", controller: "Banco")
-                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseConta", controller: "Banco")
                                         </div>
                                     </div>
                                     </div>
@@ -444,6 +507,31 @@
     @Scripts.Render("~/plugins/touchSpin")
     @Scripts.Render("~/plugins/iCheck")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+        <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
 
     @*<script type="text/javascript">
         $(document).ready(function () {

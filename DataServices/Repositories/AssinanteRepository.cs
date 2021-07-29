@@ -26,7 +26,8 @@ namespace DataServices.Repositories
             query = query.Include(p => p.USUARIO);
             query = query.Include(p => p.UNIDADE);
             query = query.Include(p => p.VAGA);
-            query = query.Include(p => p.ASSINANTE_ANEXO);
+            query = query.Include(p => p.VAGA);
+            query = query.Include(p => p.CORPO_DIRETIVO);
             return query.FirstOrDefault();
         }
 

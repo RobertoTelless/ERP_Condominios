@@ -163,7 +163,7 @@ namespace ModelServices.EntitiesServices
             }
         }
 
-        public Int32 Edit(ASSINANTE item)
+        public Int32    Edit(ASSINANTE item)
         {
             using (DbContextTransaction transaction = Db.Database.BeginTransaction(IsolationLevel.ReadCommitted))
             {

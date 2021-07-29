@@ -274,6 +274,7 @@ namespace ERP_Condominios_Solution.Controllers
 
                     // Sucesso
                     Session["Banco"] = item;
+                    Session["IdBanco"] = item.BANC_CD_ID;
                     listaMasterBanco = new List<BANCO>();
                     Session["ListaBanco"] = null;
                     Session["VoltaConta"] = 1;
@@ -591,6 +592,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
+        //[ValidateAntiForgeryToken]
         public ActionResult EditarConta(Int32 id)
         {
             // Verifica se tem usuario logado
@@ -661,7 +663,6 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditarConta(ContaBancariaViewModel vm)
         {
             Int32 idAss = (Int32)Session["IdAssinante"];

@@ -15,12 +15,21 @@ namespace ERP_Condominios_Solution.ViewModels
         public int BANC_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo TIPO DE CONTA obrigatorio")]
         public int TICO_CD_ID { get; set; }
+        public int COBA_IN_PRINCIPAL { get; set; }
+        [Required(ErrorMessage = "Campo NOME DA CONTA obrigatorio")]
+        [StringLength(30, MinimumLength = 1, ErrorMessage = "O NOME DA CONTA deve conter no minimo 1 caracteres e no máximo 30 caracteres.")]
+        public string COBA_NM_NOME { get; set; }
+        [Required(ErrorMessage = "Campo SALDO INICIAL obrigatorio")]
+        [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
+        public decimal COBA_VL_SALDO_INICIAL { get; set; }
         [Required(ErrorMessage = "Campo NÚMERO DA AGENCIA obrigatorio")]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "O NÚMERO DA AGENCIA deve conter no minimo 3 caracteres e no máximo 10 caracteres.")]
         public string COBA_NR_AGENCIA { get; set; }
         [Required(ErrorMessage = "Campo NÚMERO DA CONTA obrigatorio")]
         [StringLength(20, MinimumLength = 3, ErrorMessage = "O NÚMERO DA CONTA deve conter no minimo 3 caracteres e no máximo 20 caracteres.")]
         public string COBA_NR_CONTA { get; set; }
+        public System.DateTime COBA_DT_CADASTRO { get; set; }
+        public int COBA_IN_ATIVO { get; set; }
         [StringLength(50, ErrorMessage = "O NOME DA AGENCIA DA CONTA deve conter no máximo 50 caracteres.")]
         public string COBA_NM_AGENCIA { get; set; }
         [StringLength(50, ErrorMessage = "O NOME DO GERENTE deve conter no máximo 50 caracteres.")]
@@ -30,10 +39,6 @@ namespace ERP_Condominios_Solution.ViewModels
         [Required(ErrorMessage = "Campo DATA DE ABERTURA obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]
         public Nullable<System.DateTime> COBA_DT_ABERTURA { get; set; }
-        public int COBA_IN_ATIVO { get; set; }
-        [Required(ErrorMessage = "Campo SALDO INICIAL obrigatorio")]
-        [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
-        public Nullable<decimal> COBA_VL_SALDO_INICIAL { get; set; }
         [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<decimal> COBA_VL_SALDO_ATUAL { get; set; }
         public string COBA_NM_NOME_EXIBE { get; set; }
@@ -44,10 +49,6 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<int> COBA_IN_TIPO_FILTRO { get; set; }
         public Nullable<int> COBA_IN_MES { get; set; }
         public Nullable<System.DateTime> COBA_DT_SELECAO_FINAL { get; set; }
-        [Required(ErrorMessage = "Campo NOME DA CONTA obrigatorio")]
-        [StringLength(30, MinimumLength = 1, ErrorMessage = "O NOME DA CONTA deve conter no minimo 1 caracteres e no máximo 30 caracteres.")]
-        public string COBA_NM_NOME { get; set; }
-        public int COBA_IN_PRINCIPAL { get; set; }
 
         public Nullable<decimal> SaldoInicial
         {

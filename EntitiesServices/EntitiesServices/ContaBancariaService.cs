@@ -194,6 +194,7 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.TIPO_CONTA = null;
                     CONTA_BANCO obj = _baseRepository.GetById(item.COBA_CD_ID);
                     _baseRepository.Detach(obj);
                     _baseRepository.Update(item);

@@ -209,6 +209,7 @@ namespace Presentation.Start
             kernel.Bind<IConvidadoRepository>().To<ConvidadoRepository>();
             kernel.Bind<IReservaRepository>().To<ReservaRepository>();
             kernel.Bind<IListaConvidadoComentarioRepository>().To<ListaConvidadoComentarioRepository>();
+            kernel.Bind<ITipoContaRepository>().To<TipoContaRepository>();
 
         }
     }
