@@ -432,7 +432,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CATE_NM_NOME), "CATE_CD_ID", "CATE_NM_NOME");
             ViewBag.UF = new SelectList(fornApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
-            ViewBag.Incluir = (Int32)Session["IncluirTele"];
+            //ViewBag.Incluir = (Int32)Session["IncluirTele"];
 
             TELEFONE item = fornApp.GetItemById(id);
             objetoFornAntes = item;
@@ -674,7 +674,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Chama servico ECT
             //Address end = ExternalServices.ECT_Services.GetAdressCEP(item.CLIE_NR_CEP_BUSCA);
             //Endereco end = ExternalServices.ECT_Services.GetAdressCEPService(item.CLIE_NR_CEP_BUSCA);
-            TELEFONE cli = fornApp.GetItemById((Int32)Session["IdVolta"]);
+            //TELEFONE cli = fornApp.GetItemById((Int32)Session["IdVolta"]);
 
             ZipCodeLoad zipLoad = new ZipCodeLoad();
             ZipCodeInfo end = new ZipCodeInfo();

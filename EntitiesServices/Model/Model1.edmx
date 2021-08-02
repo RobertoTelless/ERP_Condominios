@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -367,7 +367,7 @@
           <Property Name="COBA_NR_TELEFONE" Type="varchar" MaxLength="50" />
           <Property Name="COBA_DT_ABERTURA" Type="date" />
           <Property Name="COBA_VL_SALDO_ATUAL" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="COBA_NM_NOME_EXIBE" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
+          <Property Name="COBA_NM_NOME_EXIBE_OLD" Type="varchar" MaxLength="63" StoreGeneratedPattern="Computed" />
           <Property Name="COBA_IN_CONTA_PADRAO" Type="int" />
           <Property Name="COBA_IN_CONTA_SELECAO" Type="int" />
           <Property Name="COBA_IN_DIAS" Type="int" />
@@ -375,6 +375,7 @@
           <Property Name="COBA_IN_TIPO_FILTRO" Type="int" />
           <Property Name="COBA_IN_MES" Type="int" />
           <Property Name="COBA_DT_SELECAO_FINAL" Type="date" />
+          <Property Name="COBA_NM_NOME_EXIBE" Type="varchar" MaxLength="400" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_BANCO_CONTATO">
           <Key>
@@ -4958,8 +4959,7 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERP_CondominioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -5445,7 +5445,7 @@
           <Property Name="COBA_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="COBA_DT_ABERTURA" Type="DateTime" Precision="0" />
           <Property Name="COBA_VL_SALDO_ATUAL" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="COBA_NM_NOME_EXIBE" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COBA_NM_NOME_EXIBE" Type="String" MaxLength="400" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="COBA_IN_CONTA_PADRAO" Type="Int32" />
           <Property Name="COBA_IN_CONTA_SELECAO" Type="Int32" />
           <Property Name="COBA_IN_DIAS" Type="Int32" />
@@ -5458,6 +5458,7 @@
           <NavigationProperty Name="CONTA_BANCO_CONTATO" Relationship="Self.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_CONTATO" />
           <NavigationProperty Name="CONTA_BANCO_LANCAMENTO" Relationship="Self.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_LANCAMENTO" />
           <NavigationProperty Name="TIPO_CONTA" Relationship="Self.FK_CONTA_BANCO_TIPO_CONTA" FromRole="CONTA_BANCO" ToRole="TIPO_CONTA" />
+          <Property Name="COBA_NM_NOME_EXIBE_OLD" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_BANCO_CONTATO">
           <Key>
@@ -10694,6 +10695,7 @@
           <EntitySetMapping Name="CONTA_BANCO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO">
               <MappingFragment StoreEntitySet="CONTA_BANCO">
+                <ScalarProperty Name="COBA_NM_NOME_EXIBE_OLD" ColumnName="COBA_NM_NOME_EXIBE_OLD" />
                 <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />

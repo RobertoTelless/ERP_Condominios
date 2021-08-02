@@ -49,6 +49,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<int> COBA_IN_TIPO_FILTRO { get; set; }
         public Nullable<int> COBA_IN_MES { get; set; }
         public Nullable<System.DateTime> COBA_DT_SELECAO_FINAL { get; set; }
+        public string COBA_NM_NOME_EXIBE_OLD { get; set; }
 
         public Nullable<decimal> SaldoInicial
         {

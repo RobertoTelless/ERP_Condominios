@@ -116,7 +116,7 @@ namespace ApplicationServices.Services
                 }
                 if (item.UF_CD_ID == null)
                 {
-                    item.UF_CD_ID = 28;
+                    item.UF_CD_ID = 18;
                 }
 
                 // Monta Log

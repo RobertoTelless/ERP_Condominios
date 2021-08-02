@@ -67,31 +67,25 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">     
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Número da Conta
                                                     <input type="text" readonly="readonly" class="form-control" value="@Model.GRUPO.GRUP_NR_NUMERO . @Model.SUBGRUPO.SUBG_NR_NUMERO . @Model.CECU_NR_NUMERO" />
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     @Html.HiddenFor(m => m.CECU_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.CECU_CD_ID)
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.CECU_IN_MOVTO)
                                                     Tipo de Conta*
                                                     @Html.DropDownListFor(m => m.CECU_IN_TIPO, (SelectList)ViewBag.TiposLancamento, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                                     @Html.ValidationMessageFor(m => m.CECU_IN_TIPO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Tipo de Movimento*
-                                                    @Html.DropDownListFor(m => m.CECU_IN_MOVTO, (SelectList)ViewBag.TipoMov, "Selecionar", new { @class = "form-control", autofocus = true })                            
-                                                    @Html.ValidationMessageFor(m => m.CECU_IN_MOVTO, "", new { @style = "color:red" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Grupo*
                                                     @Html.DropDownListFor(m => m.GRUP_CD_ID, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarSubGrupoCC($(this).val())" })                            
                                                     @Html.ValidationMessageFor(m => m.GRUP_CD_ID, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Subgrupo*
                                                     @Html.DropDownListFor(m => m.SUBG_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                                     @Html.ValidationMessageFor(m => m.SUBG_CD_ID, "", new { @style = "color:red" })

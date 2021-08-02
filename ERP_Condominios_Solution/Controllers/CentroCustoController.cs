@@ -283,11 +283,12 @@ namespace ERP_Condominios_Solution.Controllers
             CentroCustoViewModel vm = Mapper.Map<CENTRO_CUSTO, CentroCustoViewModel>(item);
             vm.CECU_IN_ATIVO = 1;
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+            vm.CECU_IN_MOVTO = 1;
             return View(vm);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult IncluirCC(CentroCustoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)

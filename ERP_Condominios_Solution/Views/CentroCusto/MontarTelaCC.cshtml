@@ -74,10 +74,6 @@
                                 Tipo de Conta
                                 @Html.DropDownListFor(m => m.CECU_IN_TIPO, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
                             </div>
-                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                Tipo de Movimento
-                                @Html.DropDownListFor(m => m.CECU_IN_MOVTO, (SelectList)ViewBag.TipoMov, "Selecionar", new { @class = "form-control", autofocus = true })
-                            </div>
                             <div class="col-lg-3 col-md-3 col-xs-12">
                                 Grupo
                                 @Html.DropDownListFor(m => m.GRUP_CD_ID, (SelectList)ViewBag.Grupos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarSubGrupoCC($(this).val())" })
@@ -157,7 +153,6 @@
                                         <th>Subgrupo</th>
                                         <th>Nome</th>
                                         <th>Tipo</th>
-                                        <th>Movimento</th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
                                 </thead>
@@ -167,7 +162,7 @@
                                         if (cond.GRUPO != null)
                                         {
                                             <tr>
-                                                <td>@cond.GRUPO.GRUP_NR_NUMERO . @cond.SUBGRUPO.SUBG_NR_NUMERO . @cond.CECU_NR_NUMERO</td>
+                                                <td style="font-weight: bold; color: green">@cond.GRUPO.GRUP_NR_NUMERO . @cond.SUBGRUPO.SUBG_NR_NUMERO . @cond.CECU_NR_NUMERO</td>
                                                 <td>@cond.GRUPO.GRUP_NM_NOME</td>
                                                 <td>@cond.SUBGRUPO.SUBG_NM_NOME</td>
                                                 <td>@cond.CECU_NM_NOME</td>
@@ -178,18 +173,6 @@
                                                 else
                                                 {
                                                     <td>Débito</td>
-                                                }
-                                                @if (cond.CECU_IN_MOVTO.Value == 1)
-                                                {
-                                                    <td>Todas</td>
-                                                }
-                                                else if (cond.CECU_IN_MOVTO.Value == 2)
-                                                {
-                                                    <td>Compras</td>
-                                                }
-                                                else
-                                                {
-                                                    <td>Vendas</td>
                                                 }
                                                 <td class="td-one-action">
                                                     @Html.TableLinkDetails(cond.CECU_CD_ID, "EditarCC", "fa-edit", "Editar/Consultar")
