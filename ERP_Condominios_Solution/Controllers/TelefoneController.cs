@@ -107,7 +107,7 @@ namespace ERP_Condominios_Solution.Controllers
                 String routing = "1";
 
                 // Monta texto
-                String texto = String.Empty;
+                String texto = mensagem;
                 //texto = texto.Replace("{Cliente}", clie.CLIE_NM_NOME);
 
                 // inicia processo

@@ -28,6 +28,7 @@ namespace ERP_Condominios_Solution.Controllers
     {
         private readonly IUnidadeAppService baseApp;
         private readonly ILogAppService logApp;
+        private readonly IConfiguracaoAppService confApp;
 
         private String msg;
         private Exception exception;
@@ -36,10 +37,11 @@ namespace ERP_Condominios_Solution.Controllers
         List<UNIDADE> listaMaster = new List<UNIDADE>();
         String extensao;
 
-        public UnidadeController(IUnidadeAppService baseApps, ILogAppService logApps)
+        public UnidadeController(IUnidadeAppService baseApps, ILogAppService logApps, IConfiguracaoAppService confApps)
         {
             baseApp = baseApps; ;
             logApp = logApps;
+            confApp = confApps;
         }
 
         [HttpGet]
@@ -106,6 +108,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Indicadores
             ViewBag.Unids = ((List<UNIDADE>)Session["ListaUnidade"]).Count;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Mensagem
             if ((Int32)Session["MensUnidade"] == 1)
@@ -123,6 +126,27 @@ namespace ERP_Condominios_Solution.Controllers
             if ((Int32)Session["MensUnidade"] == 4)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0018", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensUnidade"] == 8)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0048", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensUnidade"] == 9)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0049", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensUnidade"] == 10)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0050", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensUnidade"] == 11)
+            {
+                String msg = ERP_Condominios_Resource.ResourceManager.GetString("M0051", CultureInfo.CurrentCulture) + " - " + (String)Session["MensSMSError"];
+                ModelState.AddModelError("", msg);
+            }
+            if ((Int32)Session["MensUnidade"] == 12)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0052", CultureInfo.CurrentCulture));
             }
 
             // Abre view
@@ -606,7 +630,7 @@ namespace ERP_Condominios_Solution.Controllers
                 tipo = 2;
             }
             foto.UNAN_IN_TIPO = tipo;
-            foto.UNAN_NM_TITULO = fileName;
+            foto.UNAN_NM_TITULO = fileName.Substring(0, 50);
             foto.UNID_CD_ID = item.UNID_CD_ID;
 
             item.UNIDADE_ANEXO.Add(foto);
@@ -844,5 +868,96 @@ namespace ERP_Condominios_Solution.Controllers
                 return View(vm);
             }
         }
+
+        public ActionResult EnviarSmsUnidade(Int32 id, String mensagem)
+        {
+            try
+            {
+                UNIDADE unid = baseApp.GetById(id);
+                Int32 idAss = (Int32)Session["IdAssinante"];
+
+                // Verifica existencia prévia
+                if (unid == null)
+                {
+                    Session["MensUnidade"] = 8;
+                    return RedirectToAction("MontarTelaUnidade");
+                }
+
+                //Recupera responsavel
+                USUARIO resp = unid.USUARIO.Where(p => p.USUA_IN_RESPONSAVEL == 1).FirstOrDefault();
+                if (resp == null)
+                {
+                    Session["MensUnidade"] = 9;
+                    return RedirectToAction("MontarTelaUnidade");
+                }
+
+                // Criticas
+                if (resp.USUA_NR_CELULAR == null)
+                {
+                    Session["MensUnidade"] = 10;
+                    return RedirectToAction("MontarTelaUnidade");
+                }
+
+                // Monta token
+                CONFIGURACAO conf = confApp.GetItemById(idAss);
+                String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+                byte[] textBytes = Encoding.UTF8.GetBytes(text);
+                String token = Convert.ToBase64String(textBytes);
+                String auth = "Basic " + token;
+
+                // Monta routing
+                String routing = "1";
+
+                // Monta texto
+                String texto = mensagem;
+
+                // inicia processo
+                List<String> resposta = new List<string>();
+                WebRequest request = WebRequest.Create("https://api.smsfire.com.br/v1/sms/send");
+                request.Headers["Authorization"] = auth;
+                request.Method = "POST";
+                request.ContentType = "application/json";
+
+                // Monta destinatarios
+                String listaDest = "55" + Regex.Replace(resp.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+
+                // Processa lista
+                String responseFromServer = null;
+                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                {
+                    String campanha = "ERP";
+                    String json = null;
+                    json = "{\"to\":[\"" + listaDest + "\"]," +
+                            "\"from\":\"SMSFire\", " +
+                            "\"campaignName\":\"" + campanha + "\", " +
+                            "\"text\":\"" + texto + "\"} ";
+
+                    streamWriter.Write(json);
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+
+                WebResponse response = request.GetResponse();
+                resposta.Add(response.ToString());
+
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                responseFromServer = reader.ReadToEnd();
+                resposta.Add(responseFromServer);
+
+                // Saída
+                reader.Close();
+                response.Close();
+                Session["MensUnidade"] = 12;
+                return RedirectToAction("MontarTelaUnidade");
+            }
+            catch (Exception ex)
+            {
+                Session["MensUnidade"] = 11;
+                Session["MensSMSErro"] = ex.Message;
+                return RedirectToAction("MontarTelaUnidade");
+            }
+        }
+
     }
 }

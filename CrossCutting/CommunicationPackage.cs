@@ -27,9 +27,12 @@ namespace CrossCutting
                 mensagem.Body = email.CORPO;
                 mensagem.Priority = email.PRIORIDADE;
                 mensagem.IsBodyHtml = true;
-                foreach(var attachment in email.ATTACHMENT)
+                if (email.ATTACHMENT != null)
                 {
-                    mensagem.Attachments.Add(attachment);
+                    foreach (var attachment in email.ATTACHMENT)
+                    {
+                        mensagem.Attachments.Add(attachment);
+                    }
                 }
                 smtp.EnableSsl = email.ENABLE_SSL;
                 smtp.Port = Convert.ToInt32(email.PORTA);

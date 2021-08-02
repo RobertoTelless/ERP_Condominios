@@ -26,5 +26,6 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<TORRE> GetAllTorres(Int32 idAss);
         List<CATEGORIA_NOTIFICACAO> GetAllCatNotificacao(Int32 idAss);
         List<USUARIO> GetAllUsuarios(Int32 idAss);
+        TORRE GetTorreById(Int32 id);
     }
 }

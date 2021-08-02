@@ -252,6 +252,21 @@
   <data name="M0047" xml:space="preserve">
     <value>Não é possível excluir essa lista. Existem informações vinculadas a ela</value>
   </data>
+  <data name="M0048" xml:space="preserve">
+    <value>Nenhuma unidade especificada</value>
+  </data>
+  <data name="M0049" xml:space="preserve">
+    <value>Nenhum responsável definido para a unidade</value>
+  </data>
+  <data name="M0050" xml:space="preserve">
+    <value>Nenhum celular definido para o responsável da unidade</value>
+  </data>
+  <data name="M0051" xml:space="preserve">
+    <value>Falha no envio do SMS</value>
+  </data>
+  <data name="M0052" xml:space="preserve">
+    <value>SMS enviado com sucesso</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

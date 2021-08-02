@@ -50,6 +50,12 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
+        public TORRE GetTorreById(Int32 id)
+        {
+            TORRE item = _toRepository.GetItemById(id);
+            return item;
+        }
+
         public UNIDADE_ANEXO GetAnexoById(Int32 id)
         {
             return _anexoRepository.GetItemById(id);

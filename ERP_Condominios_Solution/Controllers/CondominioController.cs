@@ -175,8 +175,8 @@ namespace ERP_Condominios_Solution.Controllers
         public JsonResult PesquisaCEP_Javascript(String cep, int tipoEnd)
         {
             // Chama servico ECT
-            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-            ASSINANTE item = baseApp.GetItemById(usuarioLogado.ASSI_CD_ID);
+            //USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            //ASSINANTE item = baseApp.GetItemById(usuarioLogado.ASSI_CD_ID);
 
             ZipCodeLoad zipLoad = new ZipCodeLoad();
             ZipCodeInfo end = new ZipCodeInfo();

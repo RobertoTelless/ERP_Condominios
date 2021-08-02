@@ -466,6 +466,51 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhuma unidade especificada.
+        /// </summary>
+        internal static string M0048 {
+            get {
+                return ResourceManager.GetString("M0048", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum responsável definido para a unidade.
+        /// </summary>
+        internal static string M0049 {
+            get {
+                return ResourceManager.GetString("M0049", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum celular definido para o responsável da unidade.
+        /// </summary>
+        internal static string M0050 {
+            get {
+                return ResourceManager.GetString("M0050", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Falha no envio do SMS.
+        /// </summary>
+        internal static string M0051 {
+            get {
+                return ResourceManager.GetString("M0051", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a SMS enviado com sucesso.
+        /// </summary>
+        internal static string M0052 {
+            get {
+                return ResourceManager.GetString("M0052", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {

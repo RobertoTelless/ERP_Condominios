@@ -82,6 +82,9 @@
                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.UNID_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.UNID_CD_ID)
                                                         Tipo de Unidade*
                                                         @Html.DropDownListFor(m => m.TIUN_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.TIUN_CD_ID, "", new { @style = "color:red" })
@@ -210,7 +213,14 @@
                                                                 {
                                                                     <tr>
                                                                         <td>@cond.USUA_NM_NOME</td>
-                                                                        <td>@cond.USUA_DT_NASCIMENTO.Value.ToShortDateString()</td>
+                                                                        @if (cond.USUA_DT_NASCIMENTO != null)
+                                                                        {
+                                                                            <td>@cond.USUA_DT_NASCIMENTO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
                                                                         <td>@cond.USUA_NR_CELULAR</td>
                                                                         @if (cond.USUA_IN_RESPONSAVEL == 1)
                                                                         {
@@ -253,7 +263,14 @@
                                                                         <td>@cond.TIPO_VEICULO.TIVE_NM_NOME</td>
                                                                         <td>@cond.VEIC_NM_PLACA</td>
                                                                         <td>@cond.VEIC_NM_MARCA</td>
-                                                                        <td>@cond.VAGA.VAGA_NR_NUMERO</td>
+                                                                        @if (cond.VAGA != null)
+                                                                        {
+                                                                            <td>@cond.VAGA.VAGA_NR_NUMERO</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
                                                                     </tr>
                                                                 }
                                                             </tbody>

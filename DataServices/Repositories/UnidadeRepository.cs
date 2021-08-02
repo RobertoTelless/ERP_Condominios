@@ -59,7 +59,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.UNID_NR_NUMERO == numero);
             }
-            if (torre != null)
+            if (torre != 0)
             {
                 query = query.Where(p => p.TORR_CD_ID == torre);
             }

@@ -21,13 +21,15 @@ namespace ApplicationServices.Services
         private readonly INotificacaoService _notiService;
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
+        private readonly IUsuarioService _usuService;
 
-        public UnidadeAppService(IUnidadeService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService): base(baseService)
+        public UnidadeAppService(IUnidadeService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioService usuService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
             _temService = temService;
             _confService = confService;
+            _usuService = usuService;
         }
 
         public UNIDADE CheckExist(UNIDADE unid, Int32 idAss)
@@ -51,6 +53,12 @@ namespace ApplicationServices.Services
         public UNIDADE GetItemById(Int32 id)
         {
             UNIDADE item = _baseService.GetItemById(id);
+            return item;
+        }
+
+        public TORRE GetTorreById(Int32 id)
+        {
+            TORRE item = _baseService.GetTorreById(id);
             return item;
         }
 
@@ -110,7 +118,6 @@ namespace ApplicationServices.Services
         {
             try
             {
-
                 // Verifica existencia prévia
                 if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
@@ -120,7 +127,15 @@ namespace ApplicationServices.Services
                 // Completa objeto
                 item.UNID_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.UNID_NM_NOME_TORRE = item.TORRE.TORR_NM_NOME;
+                if (item.TORR_CD_ID != 0)
+                {
+                    TORRE torre = _baseService.GetTorreById(item.TORR_CD_ID);
+                    item.UNID_NM_NOME_TORRE = torre.TORR_NM_NOME;
+                }
+                else
+                {
+                    item.UNID_NM_NOME_TORRE = "Única";
+                }
 
                 //Verifica Campos
                 if (item.TIPO_UNIDADE != null)
@@ -208,7 +223,15 @@ namespace ApplicationServices.Services
                 // Completa objeto
                 item.UNID_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.UNID_NM_NOME_TORRE = item.TORRE.TORR_NM_NOME;
+                if (item.TORR_CD_ID != 0)
+                {
+                    TORRE torre = _baseService.GetTorreById(item.TORR_CD_ID);
+                    item.UNID_NM_NOME_TORRE = torre.TORR_NM_NOME;
+                }
+                else
+                {
+                    item.UNID_NM_NOME_TORRE = "Única";
+                }
 
                 // Monta Log
                 LOG log = new LOG
@@ -236,7 +259,15 @@ namespace ApplicationServices.Services
             try
             {
                 // Persiste
-                item.UNID_NM_NOME_TORRE = item.TORRE.TORR_NM_NOME;
+                if (item.TORR_CD_ID != 0)
+                {
+                    TORRE torre = _baseService.GetTorreById(item.TORR_CD_ID);
+                    item.UNID_NM_NOME_TORRE = torre.TORR_NM_NOME;
+                }
+                else
+                {
+                    item.UNID_NM_NOME_TORRE = "Única";
+                }
                 return _baseService.Edit(item);
             }
             catch (Exception ex)
@@ -371,18 +402,18 @@ namespace ApplicationServices.Services
                     // Recupera template e-mail
                     String header = _temService.GetByCode("NOTIUNID").TEMP_TX_CABECALHO;
                     String body = _temService.GetByCode("NOTIUNID").TEMP_TX_CORPO;
-                    String footer = _temService.GetByCode("NOTIUNID").TEMP_TX_DADOS;
+                    String data = _temService.GetByCode("NOTIUNID").TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
+                    USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);
                     String frase = String.Empty;
-                    body = body.Replace("{unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
-                    body = body.Replace("{data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
-                    body = body.Replace("{assunto}", item.NOTI_NM_TITULO);
-                    body = body.Replace("{texto}", item.NOTI_TX_TEXTO);
-                    header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
+                    body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
+                    data = data.Replace("{Usuario}", usuario.USUA_NM_NOME);
+                    data = data.Replace("{Data}", DateTime.Today.Date.ToLongDateString());
+                    header = header.Replace("{Nome}", usu.USUA_NM_NOME);
 
                     // Concatena
-                    String emailBody = header + body;
+                    String emailBody = header + body + data;
                     CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
@@ -404,9 +435,6 @@ namespace ApplicationServices.Services
                     // Envia mensagem
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
 
-                    // Envia SMS
-                    String voltaSMS = ValidateCreateMensagem(usuario);
-                    return volta;
                 }
                 return volta;
             }
@@ -416,74 +444,5 @@ namespace ApplicationServices.Services
             }
         }
 
-        public String ValidateCreateMensagem(USUARIO usuario)
-        {
-            try
-            {
-                // Criticas
-                if (usuario.USUA_NR_CELULAR == null)
-                {
-                    return "1";
-                }
-
-                // Monta token
-                CONFIGURACAO conf = _confService.GetItemById(1);
-                String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
-                byte[] textBytes = Encoding.UTF8.GetBytes(text);
-                String token = Convert.ToBase64String(textBytes);
-                String auth = "Basic " + token;
-
-                // Monta routing
-                String routing = "1";
-
-                // Monta texto
-                String texto = _temService.GetByCode("UNIDSMS").TEMP_TX_CORPO;
-                texto = usuario.USUA_NM_NOME;
-
-                // inicia processo
-                List<String> resposta = new List<string>();
-                WebRequest request = WebRequest.Create("https://api.smsfire.com.br/v1/sms/send");
-                request.Headers["Authorization"] = auth;
-                request.Method = "POST";
-                request.ContentType = "application/json";
-
-                // Monta destinatarios
-                String listaDest = "55" + Regex.Replace(usuario.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
-
-                // Processa lista
-                String responseFromServer = null;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-                {
-                    String campanha = "ERP_Condominio";
-
-                    String json = null;
-                    json = "{\"to\":[\"" + listaDest + "\"]," +
-                            "\"from\":\"SMSFire\", " +
-                            "\"campaignName\":\"" + campanha + "\", " +
-                            "\"text\":\"" + texto + "\"} ";
-
-                    streamWriter.Write(json);
-                    streamWriter.Close();
-                    streamWriter.Dispose();
-                }
-
-                WebResponse response = request.GetResponse();
-                resposta.Add(response.ToString());
-
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseFromServer = reader.ReadToEnd();
-                resposta.Add(responseFromServer);
-
-                // Saída
-                reader.Close();
-                response.Close();
-                return responseFromServer;
-            }
-            catch (Exception ex)
-            {
-                return "3";
-            }
-        }
     }
 }
