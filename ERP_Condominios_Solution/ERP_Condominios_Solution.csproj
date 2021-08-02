@@ -679,11 +679,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagens\1\Fornecedores\1\Fotos\FotoBase.jpg" />
     <Content Include="Imagens\1\Noticias\1\Fotos\162596622360ea468f148f4_1625966223_3x2_lg.jpg" />
     <Content Include="Imagens\1\Noticias\2\Fotos\_117875883_cuba-esposa-promo05.png" />
+    <Content Include="Imagens\1\Unidade\7\Anexos\1243152.jpg" />
+    <Content Include="Imagens\1\Unidade\7\Anexos\60559151_2315865115103548_1977158868676902912_n.jpg" />
     <Content Include="Imagens\1\Usuario\1\Fotos\FotoOficial.jpg" />
     <Content Include="Imagens\1\Usuario\2\Fotos\FotoCouve.jpg" />
     <Content Include="Imagens\1\Usuario\3\Fotos\FotoCouve.jpg" />
+    <Content Include="Imagens\Base\FotoBase.jpg" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\1.png" />
     <Content Include="Images\5.png" />
@@ -2052,6 +2056,7 @@
     <Content Include="Scripts\api\typehead_collection.json" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Imagens\1\Unidade\7\Anexos\AgendaLista_28072021 %281%29.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\characterCount.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -3073,6 +3078,7 @@
     <Folder Include="Imagens\1\Ambiente\2\Fotos\" />
     <Folder Include="Imagens\1\Condominio\1\Anexos\" />
     <Folder Include="Imagens\1\Condominio\1\Fotos\" />
+    <Folder Include="Imagens\1\Fornecedores\1\Anexos\" />
     <Folder Include="Imagens\1\Notificacao\1\Anexos\" />
     <Folder Include="Imagens\1\Notificacao\2\Anexos\" />
     <Folder Include="Imagens\1\Ocorrencias\" />
@@ -3089,7 +3095,7 @@
     <Folder Include="Imagens\1\Unidade\4\Anexos\" />
     <Folder Include="Imagens\1\Unidade\5\Anexos\" />
     <Folder Include="Imagens\1\Unidade\6\Anexos\" />
-    <Folder Include="Imagens\1\Unidade\7\Anexos\" />
+    <Folder Include="Imagens\1\Unidade\8\Anexos\" />
     <Folder Include="Imagens\1\Usuario\1\Anexos\" />
     <Folder Include="Imagens\1\Usuario\2\Anexos\" />
     <Folder Include="Imagens\1\Usuario\3\Anexos\" />

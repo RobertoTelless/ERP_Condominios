@@ -142,9 +142,9 @@
                                 <table class="table table-striped table-bordered table-hover dataTables-example">
                                     <thead style ="background-color:lightsteelblue">
                                         <tr>
+                                            <th>Número</th>
                                             <th>Tipo</th>   
                                             <th>Andar</th>   
-                                            <th>Número</th>
                                             <th>Unidade</th>
                                             <th>Data Atribuição</th>   
                                             <th>Placa</th>
@@ -157,9 +157,9 @@
                                         @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.VAGA>).OrderBy(p => p.VAGA_NR_NUMERO))
                                         {
                                             <tr>
+                                                <td>@cond.VAGA_NR_NUMERO</td>
                                                 <td>@cond.TIPO_VAGA.TIVA_NM_NOME</td>
                                                 <td>@cond.VAGA_NR_ANDAR</td>
-                                                <td>@cond.VAGA_NR_NUMERO</td>
                                                 @if (cond.UNIDADE != null)
                                                 {
                                                     <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
@@ -172,14 +172,23 @@
                                                 }
                                                 @if (cond.VEICULO != null)
                                                 {
-                                                    <td>@cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_NM_PLACA</td>
-                                                    <td>@cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_NM_MARCA</td>
-                                                    if (!String.IsNullOrEmpty(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))
+                                                    if (cond.VEICULO.Count > 0)
                                                     {
-                                                        <td><img src="@Url.Content(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.VAGA_NM_EXIBE', '@Url.Content(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))')"></td>
+                                                        <td>@cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_NM_PLACA</td>
+                                                        <td>@cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_NM_MARCA</td>
+                                                        if (!String.IsNullOrEmpty(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))
+                                                        {
+                                                            <td><img src="@Url.Content(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.VAGA_NM_EXIBE', '@Url.Content(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))')"></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td></td>
+                                                        }
                                                     }
                                                     else
                                                     {
+                                                        <td>-</td>
+                                                        <td>-</td>
                                                         <td></td>
                                                     }
                                                 }

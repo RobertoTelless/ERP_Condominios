@@ -20,7 +20,7 @@
                 <div class="modal-body">
                     @Html.Hidden("id", null, new { id = "idForn" })
                     Mensagem
-                    @Html.TextBox("mensagem", null, new { @style = "height: 200px;", @class = "form-control" })
+                    @Html.TextBox("mensagem", null, new { @style = "height: 100px;", @class = "form-control" })
                 </div>
                 <div class="modal-footer">
                     @Html.ButtonActionSubmit("Enviar")
@@ -175,7 +175,7 @@
                                     Cidade
                                     @Html.TextBoxFor(m => m.FORN_NM_CIDADE, new { @class = "form-control", autofocus = true })
                                 </div>
-                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-xs-12">
                                     UF
                                     @Html.DropDownListFor(m => m.UF_CD_ID, (SelectList)ViewBag.UF, "Selecionar", new { @class = "form-control" })                            
                                 </div>

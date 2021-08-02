@@ -511,6 +511,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum Fornecedor especificado.
+        /// </summary>
+        internal static string M0053 {
+            get {
+                return ResourceManager.GetString("M0053", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Nenhum celular definido para o fornecedor.
+        /// </summary>
+        internal static string M0054 {
+            get {
+                return ResourceManager.GetString("M0054", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Tarefa ja cadastrada.
         /// </summary>
         internal static string M0058 {

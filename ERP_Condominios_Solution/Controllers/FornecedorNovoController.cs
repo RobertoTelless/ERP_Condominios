@@ -121,7 +121,7 @@ namespace ERP_Condominios_Solution.Controllers
             return Json(listResult);
         }
 
-        public ActionResult EnviarSmsCliente(Int32 id, String mensagem)
+        public ActionResult EnviarSmsFornecedor(Int32 id, String mensagem)
         {
             try
             {
@@ -131,14 +131,14 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verifica existencia prévia
                 if (forn == null)
                 {
-                    Session["MensSMSForn"] = 1;
+                    Session["MensFornecedor"] = 8;
                     return RedirectToAction("MontarTelaFornecedor");
                 }
 
                 // Criticas
                 if (forn.FORN_NR_CELULAR == null)
                 {
-                    Session["MensSMSForn"] = 2;
+                    Session["MensFornecedor"] = 9;
                     return RedirectToAction("MontarTelaFornecedor");
                 }
 
@@ -153,8 +153,7 @@ namespace ERP_Condominios_Solution.Controllers
                 String routing = "1";
 
                 // Monta texto
-                String texto = String.Empty;
-                //texto = texto.Replace("{Cliente}", clie.CLIE_NM_NOME);
+                String texto = mensagem;
 
                 // inicia processo
                 List<String> resposta = new List<string>();
@@ -194,13 +193,13 @@ namespace ERP_Condominios_Solution.Controllers
                 // Saída
                 reader.Close();
                 response.Close();
-                Session["MensSMSForn"] = 200;
+                Session["MensFornecedor"] = 10;
                 return RedirectToAction("MontarTelaFornecedor");
             }
             catch (Exception ex)
             {
-                Session["MensSMSForn"] = 3;
-                Session["MensSMSFornErro"] = ex.Message;
+                Session["MensFornecedor"] = 11;
+                Session["MensSMSErro"] = ex.Message;
                 return RedirectToAction("MontarTelaFornecedor");
             }
         }
@@ -410,6 +409,23 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0027", CultureInfo.CurrentCulture));
                 }
+                if ((Int32)Session["MensFornecedor"] == 8)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0053", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensFornecedor"] == 9)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0054", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensFornecedor"] == 11)
+                {
+                    String msg = ERP_Condominios_Resource.ResourceManager.GetString("M0051", CultureInfo.CurrentCulture) + " - " + (String)Session["MensSMSError"];
+                    ModelState.AddModelError("", msg);
+                }
+                if ((Int32)Session["MensFornecedor"] == 10)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0052", CultureInfo.CurrentCulture));
+                }
             }
 
             // Abre view
@@ -539,6 +555,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CAFO_NM_NOME), "CAFO_CD_ID", "CAFO_NM_NOME");
             ViewBag.Tipos = new SelectList((List<TIPO_PESSOA>)Session["TiposPessoas"], "TIPE_CD_ID", "TIPE_NM_NOME");
             ViewBag.UF = new SelectList(fornApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             Session["VoltaProp"] = 4;
 
             // Prepara view
@@ -706,7 +723,6 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditarFornecedor(FornecedorViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -953,6 +969,10 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CAFO_NM_NOME), "CAFO_CD_ID", "CAFO_NM_NOME");
             ViewBag.Tipos = new SelectList((List<TIPO_PESSOA>)Session["TiposPessoas"], "TIPE_CD_ID", "TIPE_NM_NOME");
             ViewBag.UF = new SelectList(fornApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
+            List<SelectListItem> ativo = new List<SelectListItem>();
+            ativo.Add(new SelectListItem() { Text = "Ativo", Value = "1" });
+            ativo.Add(new SelectListItem() { Text = "Inativo", Value = "0" });
+            ViewBag.Ativos = new SelectList(ativo, "Value", "Text");
 
             // Indicadores
             ViewBag.Fornecedores = ((List<FORNECEDOR>)Session["ListaFornecedor"]).Count;
@@ -1393,7 +1413,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Chama servico ECT
             //Address end = ExternalServices.ECT_Services.GetAdressCEP(item.CLIE_NR_CEP_BUSCA);
             //Endereco end = ExternalServices.ECT_Services.GetAdressCEPService(item.CLIE_NR_CEP_BUSCA);
-            FORNECEDOR cli = fornApp.GetItemById((Int32)Session["IdVolta"]);
+            //FORNECEDOR cli = fornApp.GetItemById((Int32)Session["IdVolta"]);
 
             ZipCodeLoad zipLoad = new ZipCodeLoad();
             ZipCodeInfo end = new ZipCodeInfo();

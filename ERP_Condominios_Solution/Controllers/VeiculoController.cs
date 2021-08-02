@@ -95,7 +95,7 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     listaMaster = baseApp.GetByUnidade(usuario.UNID_CD_ID.Value);
                 }
-                else if (usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                else if (usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "ADM")
                 {
                     listaMaster = baseApp.GetAllItens(idAss);
                 }
@@ -105,8 +105,9 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Listas = (List<VEICULO>)Session["ListaVeiculo"];
             ViewBag.Title = "Veiculos";
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
-            ViewBag.Vagas = new SelectList(baseApp.GetAllVagas(idAss), "VAGA_CD_ID", "VAGA_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Vagas = new SelectList(baseApp.GetAllVagas(idAss), "VAGA_CD_ID", "VAGA_NM_EXIBE");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Indicadores
             ViewBag.Veics = ((List<VEICULO>)Session["ListaVeiculo"]).Count;
@@ -243,7 +244,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara listas
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
 
             // Prepara view
             VEICULO item = new VEICULO();
@@ -268,7 +269,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
             if (ModelState.IsValid)
             {
                 try
@@ -354,7 +355,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara view
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
 
             if ((Int32)Session["MensVeiculo"] == 5)
             {
@@ -383,7 +384,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
             if (ModelState.IsValid)
             {
                 try

@@ -267,6 +267,12 @@
   <data name="M0052" xml:space="preserve">
     <value>SMS enviado com sucesso</value>
   </data>
+  <data name="M0053" xml:space="preserve">
+    <value>Nenhum Fornecedor especificado</value>
+  </data>
+  <data name="M0054" xml:space="preserve">
+    <value>Nenhum celular definido para o fornecedor</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

@@ -25,7 +25,7 @@ namespace DataServices.Repositories
         public VAGA GetItemById(Int32 id)
         {
             IQueryable<VAGA> query = Db.VAGA;
-            query = query.Where(p => p.UNID_CD_ID == id);
+            query = query.Where(p => p.VAGA_CD_ID == id);
             query = query.Include(p => p.UNIDADE);
             query = query.Include(p => p.VEICULO);
             return query.FirstOrDefault();
@@ -57,11 +57,11 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.VAGA_NR_ANDAR == andar);
             }
-            if (unid != null)
+            if (unid > 0)
             {
                 query = query.Where(p => p.UNID_CD_ID == unid);
             }
-            if (idTipo != null)
+            if (idTipo > 0)
             {
                 query = query.Where(p => p.TIVA_CD_ID == idTipo);
             }

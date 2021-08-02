@@ -89,7 +89,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Carrega listas
-            if ((List<UNIDADE>)Session["ListaVaga"] == null)
+            if ((List<VAGA>)Session["ListaVaga"] == null)
             {
                 if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
                 {
@@ -105,7 +105,8 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Listas = (List<VAGA>)Session["ListaVaga"];
             ViewBag.Title = "Vagas";
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVA_CD_ID", "TIVA_NM_NOME");
-            ViewBag.Unids = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_NOME");
+            ViewBag.Unids = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Indicadores
             ViewBag.Vagas = ((List<VAGA>)Session["ListaVaga"]).Count;
