@@ -102,6 +102,7 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["ListaVeiculo"] = listaMaster;
                 Session["FiltroVeiculo"] = null;
             }
+
             ViewBag.Listas = (List<VEICULO>)Session["ListaVeiculo"];
             ViewBag.Title = "Veiculos";
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
@@ -214,6 +215,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            Session["ListaVeiculo"] = null;
             return RedirectToAction("MontarTelaVeiculo");
         }
 
@@ -245,6 +247,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara listas
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
             VEICULO item = new VEICULO();
@@ -293,14 +296,20 @@ namespace ERP_Condominios_Solution.Controllers
                     Directory.CreateDirectory(Server.MapPath(caminho));
 
                     // Anexos
+                    Session["IdVeiculo"] = item.VEIC_CD_ID;
                     if (Session["FileQueueVeiculo"] != null)
                     {
                         List<FileQueue> fq = (List<FileQueue>)Session["FileQueueVeiculo"];
+
                         foreach (var file in fq)
                         {
                             if (file.Profile == null)
                             {
                                 UploadFileQueueVeiculo(file);
+                            }
+                            else
+                            {
+                                UploadFotoQueueVeiculo(file);
                             }
                         }
                         Session["FileQueueVeiculo"] = null;
@@ -371,6 +380,14 @@ namespace ERP_Condominios_Solution.Controllers
             Session["Veiculo"] = item;
             Session["IdVolta"] = id;
             Session["IdVeiculo"] = id;
+            if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                Session["IdUnidade"] = usuario.UNID_CD_ID;
+            }
+            else
+            {
+                Session["IdUnidade"] = null;
+            }
             VeiculoViewModel vm = Mapper.Map<VEICULO, VeiculoViewModel>(item);
             return View(vm);
         }
@@ -673,7 +690,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdVolta"];
+            Int32 idNot = (Int32)Session["IdVeiculo"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (file == null)
@@ -683,7 +700,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("VoltarAnexoVeiculo");
             }
 
-            VEICULO item = baseApp.GetById(idNot);
+            VEICULO item = baseApp.GetItemById(idNot);
             USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = file.Name;
             if (fileName.Length > 250)
@@ -731,7 +748,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdVolta"];
+            Int32 idNot = (Int32)Session["IdVeiculo"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (file == null)
@@ -857,8 +874,8 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            Int32 unidade = (Int32)Session["IdUnidade"];
-            List<USUARIO> lista = baseApp.GetAllUsuarios(idAss);
+            VEICULO veiculo = (VEICULO)Session["Veiculo"];
+            List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == veiculo.UNID_CD_ID).ToList();
 
             // Prepara view
             ViewBag.Cats = new SelectList(baseApp.GetAllCatNotificacao(idAss), "CANO_CD_ID", "CANO_NM_NOME");

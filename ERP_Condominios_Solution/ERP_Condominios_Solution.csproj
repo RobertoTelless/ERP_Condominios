@@ -687,6 +687,7 @@
     <Content Include="Imagens\1\Usuario\1\Fotos\FotoOficial.jpg" />
     <Content Include="Imagens\1\Usuario\2\Fotos\FotoCouve.jpg" />
     <Content Include="Imagens\1\Usuario\3\Fotos\FotoCouve.jpg" />
+    <Content Include="Imagens\1\Veiculo\3\Anexos\hondaCivic.jpg" />
     <Content Include="Imagens\Base\FotoBase.jpg" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\1.png" />
@@ -3101,6 +3102,7 @@
     <Folder Include="Imagens\1\Usuario\3\Anexos\" />
     <Folder Include="Imagens\1\Veiculo\2\Anexos\" />
     <Folder Include="Imagens\1\Veiculo\2\Fotos\" />
+    <Folder Include="Imagens\1\Veiculo\3\Fotos\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Usuario\" />
   </ItemGroup>

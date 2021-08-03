@@ -115,13 +115,14 @@
                                                             @Html.HiddenFor(m => m.VEIC_DT_CADASTRO)
                                                             @Html.HiddenFor(m => m.VEIC_IN_CONFIRMA_VAGA)
                                                             @Html.HiddenFor(m => m.VEIC_CD_ID)
+                                                            @Html.HiddenFor(m => m.VEIC_AQ_FOTO)
                                                             Tipo de Veículo*
                                                             @Html.DropDownListFor(m => m.TIVE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.TIVE_CD_ID, "", new { @style = "color:red" })
                                                         </div>
                                                         @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM")
 	                                                    {
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 Unidade*
                                                                 @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })
                                                                 @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
@@ -129,8 +130,9 @@
                                                         }
                                                         else
                                                         {
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            <div class="col-lg-3 col-md-3 col-xs-12">
                                                                 Unidade
+                                                                @Html.HiddenFor(m => m.UNID_CD_ID)
                                                                 @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                             </div>
                                                         }
@@ -138,7 +140,7 @@
                                                             Placa
                                                             @Html.TextBoxFor(m => m.VEIC_NM_PLACA, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                         </div>
-                                                        <div class="col-lg-5 col-md-5 col-xs-12">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
                                                             Marca
                                                             @Html.TextBoxFor(m => m.VEIC_NM_MARCA, new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.VEIC_NM_MARCA, "", new { @style = "color:red" })

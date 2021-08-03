@@ -63,17 +63,17 @@ namespace DataServices.Repositories
             }
             if (!String.IsNullOrEmpty(marca))
             {
-                query = query.Where(p => p.VEIC_NM_MARCA == marca);
+                query = query.Where(p => p.VEIC_NM_MARCA.Contains(marca));
             }
-            if (unid != null)
+            if (unid > 0)
             {
                 query = query.Where(p => p.UNID_CD_ID == unid);
             }
-            if (idTipo != null)
+            if (idTipo > 0)
             {
                 query = query.Where(p => p.TIVE_CD_ID == idTipo);
             }
-            if (vaga != null)
+            if (vaga > 0)
             {
                 query = query.Where(p => p.VAGA_CD_ID == vaga);
             }

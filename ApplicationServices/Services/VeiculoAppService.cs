@@ -305,11 +305,10 @@ namespace ApplicationServices.Services
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
-                    body = body.Replace("{veiculo}", veiculo.VEIC_NM_EXIBE);
-                    body = body.Replace("{unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
-                    body = body.Replace("{data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
-                    body = body.Replace("{assunto}", item.NOTI_NM_TITULO);
-                    body = body.Replace("{texto}", item.NOTI_TX_TEXTO);
+                    body = body.Replace("{Veiculo}", veiculo.VEIC_NM_EXIBE);
+                    footer = footer.Replace("{Unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
+                    footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
+                    body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
 
                     // Concatena
@@ -369,7 +368,6 @@ namespace ApplicationServices.Services
 
                 // Monta texto
                 String texto = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
-                texto = usuario.USUA_NM_NOME;
 
                 // inicia processo
                 List<String> resposta = new List<string>();
@@ -386,7 +384,6 @@ namespace ApplicationServices.Services
                 using (var streamWriter = new StreamWriter(request.GetRequestStream()))
                 {
                     String campanha = "ERP_Condominio";
-
                     String json = null;
                     json = "{\"to\":[\"" + listaDest + "\"]," +
                             "\"from\":\"SMSFire\", " +

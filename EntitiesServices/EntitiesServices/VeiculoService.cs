@@ -141,6 +141,7 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.UNIDADE = null;
                     VEICULO obj = _baseRepository.GetById(item.VEIC_CD_ID);
                     _baseRepository.Detach(obj);
                     _logRepository.Add(log);
