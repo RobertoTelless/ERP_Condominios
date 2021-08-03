@@ -58,6 +58,12 @@
                     <div class="tabs-container">
                         @using (Html.BeginForm("IncluirOcorrencia", "Ocorrencia", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
+                            <div class="form-group">
+                                <br />
+                                @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Ocorrência</button>
+                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseOcorrencia", controller: "Ocorrencia")
+                            </div>
 
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
@@ -65,12 +71,6 @@
                             </ul>
 
                             <div class="tab-content">
-                                <div class="form-group">
-                                    <br />
-                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Ocorrência</button>
-                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseOcorrencia", controller: "Ocorrencia")
-                                </div>
 
                                 @*Dados Gerais*@
                                 <div id="tab-1" class="tab-pane active">

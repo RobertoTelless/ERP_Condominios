@@ -77,7 +77,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.OCOR_TX_TEXTO.Contains(texto));
             }
-            if (unidade != null)
+            if (unidade > 0)
             {
                 query = query.Where(p => p.UNID_CD_ID == unidade);
             }
@@ -85,7 +85,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.USUA_CD_ID == usuario);
             }
-            if (cat != null)
+            if (cat > 0)
             {
                 query = query.Where(p => p.CAOC_CD_ID == cat);
             }

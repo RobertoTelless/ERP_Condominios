@@ -142,6 +142,7 @@ namespace ModelServices.EntitiesServices
                     item.USUARIO = null;
                     item.ASSINANTE = null;
                     item.CATEGORIA_OCORRENCIA = null;
+                    item.UNIDADE = null;
                     OCORRENCIA obj = _baseRepository.GetById(item.OCOR_CD_ID);
                     _baseRepository.Detach(obj);
                     _logRepository.Add(log);

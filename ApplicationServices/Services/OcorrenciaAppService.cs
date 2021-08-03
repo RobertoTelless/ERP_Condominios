@@ -194,7 +194,6 @@ namespace ApplicationServices.Services
         {
             try
             {
-
                 // Persiste
                 item.USUARIO = null;
                 return _baseService.Edit(item);

@@ -127,6 +127,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Abre view
             objetoForn = new OCORRENCIA();
             objetoForn.OCOR_IN_ATIVO = 1;
+            objetoForn.OCOR_DT_OCORRENCIA = DateTime.Today.Date;
             Session["MensOcorrencia"] = 0;
             Session["VoltaOcorrencia"] = 1;
             return View(objetoForn);
@@ -361,6 +362,7 @@ namespace ERP_Condominios_Solution.Controllers
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
 
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             OCORRENCIA item = fornApp.GetItemById(id);
             objetoFornAntes = item;
             Session["Ocorrencia"] = item;
@@ -371,7 +373,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult EditarOcorrencia(OcorrenciaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -920,6 +922,7 @@ namespace ERP_Condominios_Solution.Controllers
             OCORRENCIA_COMENTARIO coment = new OCORRENCIA_COMENTARIO();
             OcorrenciaComentarioViewModel vm = Mapper.Map<OCORRENCIA_COMENTARIO, OcorrenciaComentarioViewModel>(coment);
             vm.OCCO_DT_COMENTARIO = DateTime.Now;
+            vm.OCCO_DT_CADASTRO = DateTime.Now;
             vm.OCCO_IN_ATIVO = 1;
             vm.OCOR_CD_ID = item.OCOR_CD_ID;
             vm.USUARIO = usuarioLogado;

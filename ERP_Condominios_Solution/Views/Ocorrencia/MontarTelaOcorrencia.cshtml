@@ -10,7 +10,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalDesc">Texto da Ocorrência</h5>
+                        <h5 class="modal-title" id="modalDesc">Texto da Notificação</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                <div class="col-lg-3 col-md-3 col-xs-5ths">
+                                <div class="col-lg-6 col-md-6 col-xs-5ths">
                                     Texto
                                     @Html.TextBoxFor(m => m.OCOR_TX_TEXTO, new { @class = "form-control", autofocus = true })
                                 </div>
@@ -158,7 +158,6 @@
                                             <th>Título</th>   
                                             <th>Status</th>
                                             <th>Comentários</th>
-                                            <th></th>
                                             <th class="td-one-action">Ações</th>
                                         </tr>
                                     </thead>
@@ -187,13 +186,11 @@
                                                 <td>@cond.OCOR_NM_TITULO</td>
                                                 @if (cond.OCOR_IN_STATUS == 1)
                                                 {
-                                                    <td>Ativa</td>
-                                                    <td><span class="badge badge-primary">Ativa</span></td>
+                                                    <td><span class="badge badge-success">Ativa</span></td>
                                                 }
                                                 else
                                                 {
-                                                    <td>Encerrada</td>
-                                                    <td><span class="badge badge-warning">Encerrada</span></td>
+                                                    <td><span class="badge badge-primary">Encerrada</span></td>
                                                 }
                                                 @if (cond.OCORRENCIA_COMENTARIO.Count > 0)
                                                 {
@@ -204,21 +201,9 @@
                                                     <td>-</td>
                                                 }   
                                                 <td class="td-one-action">
-                                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                                    @if (cond.OCOR_IN_STATUS == 1)
                                                     {
-                                                        @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
-                                                        if (cond.OCOR_IN_ATIVO == 1)
-	                                                    {
-                                                            @Html.TableLinkDetails(cond.OCOR_CD_ID, "ExcluirOcorrencia","fa-trash-o", "Desativar")
-                                                        }
-                                                        else
-                                                        {   
-                                                            @Html.TableLinkDetails(cond.OCOR_CD_ID, "ReativarOcorrencia","fa-refresh", "Reativar")
-                                                        }
-                                                    }
-                                                    else if (ViewBag.Perfil == "MOR")
-                                                    {
-                                                        if (cond.UNID_CD_ID == ViewBag.Unidade)
+                                                        if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                                         {
                                                             @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
                                                             if (cond.OCOR_IN_ATIVO == 1)
@@ -230,29 +215,48 @@
                                                                 @Html.TableLinkDetails(cond.OCOR_CD_ID, "ReativarOcorrencia","fa-refresh", "Reativar")
                                                             }
                                                         }
-                                                        else
+                                                        else if (ViewBag.Perfil == "MOR")
                                                         {
-                                                            @Html.TableLinkDetails(cond.OCOR_CD_ID, "VerOcorrencia","fa-search", "Consultar")
-                                                        }
-                                                    }
-                                                    else if (ViewBag.Perfil == "POR")
-                                                    {
-                                                        if (cond.USUA_CD_ID == ViewBag.Usuario)
-                                                        {
-                                                            @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
-                                                            if (cond.OCOR_IN_ATIVO == 1)
-	                                                        {
-                                                                @Html.TableLinkDetails(cond.OCOR_CD_ID, "ExcluirOcorrencia","fa-trash-o", "Desativar")
+                                                            if (cond.UNID_CD_ID == ViewBag.Unidade)
+                                                            {
+                                                                @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
+                                                                if (cond.OCOR_IN_ATIVO == 1)
+	                                                            {
+                                                                    @Html.TableLinkDetails(cond.OCOR_CD_ID, "ExcluirOcorrencia","fa-trash-o", "Desativar")
+                                                                }
+                                                                else
+                                                                {   
+                                                                    @Html.TableLinkDetails(cond.OCOR_CD_ID, "ReativarOcorrencia","fa-refresh", "Reativar")
+                                                                }
                                                             }
                                                             else
-                                                            {   
-                                                                @Html.TableLinkDetails(cond.OCOR_CD_ID, "ReativarOcorrencia","fa-refresh", "Reativar")
+                                                            {
+                                                                @Html.TableLinkDetails(cond.OCOR_CD_ID, "VerOcorrencia","fa-search", "Consultar")
                                                             }
                                                         }
-                                                        else
+                                                        else if (ViewBag.Perfil == "POR")
                                                         {
-                                                            @Html.TableLinkDetails(cond.OCOR_CD_ID, "VerOcorrencia","fa-search", "Consultar")
+                                                            if (cond.USUA_CD_ID == ViewBag.Usuario)
+                                                            {
+                                                                @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
+                                                                if (cond.OCOR_IN_ATIVO == 1)
+	                                                            {
+                                                                    @Html.TableLinkDetails(cond.OCOR_CD_ID, "ExcluirOcorrencia","fa-trash-o", "Desativar")
+                                                                }
+                                                                else
+                                                                {   
+                                                                    @Html.TableLinkDetails(cond.OCOR_CD_ID, "ReativarOcorrencia","fa-refresh", "Reativar")
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TableLinkDetails(cond.OCOR_CD_ID, "VerOcorrencia","fa-search", "Consultar")
+                                                            }
                                                         }
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TableLinkDetails(cond.OCOR_CD_ID, "VerOcorrencia","fa-search", "Consultar")
                                                     }
                                                 </td>
                                             </tr>
@@ -268,16 +272,16 @@
 </div>
 
 @section Styles {
-    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
-}
+    @Styles.Render("~/plugins/sweetAlertStyles")}
 
 @section Scripts {
-
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sweetAlert")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     
     <script>
