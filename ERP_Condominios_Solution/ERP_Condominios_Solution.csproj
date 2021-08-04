@@ -3064,6 +3064,7 @@
     <Content Include="Views\ListaConvidado\IncluirConvidado.cshtml" />
     <Content Include="Views\ListaConvidado\IncluirComentarioLista.cshtml" />
     <Content Include="Views\ListaConvidado\ProcessarLista.cshtml" />
+    <Content Include="Views\Ambiente\DevolverAmbienteChave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

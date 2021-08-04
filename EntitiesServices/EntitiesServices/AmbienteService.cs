@@ -240,6 +240,9 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.UNIDADE = null;
+                    item.USUARIO = null;
+                    item.AMBIENTE = null;
                     AMBIENTE_CHAVE obj = _chaRepository.GetById(item.AMCH_CD_ID);
                     _chaRepository.Detach(obj);
                     _chaRepository.Update(item);

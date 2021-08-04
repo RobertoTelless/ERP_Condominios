@@ -85,8 +85,14 @@
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-7">Reservas Vinculadas</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">Imagens & Anexos</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-3">Preços</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-4">Chaves</a></li>
+                            @if (Model.AMBI_IN_GRATUITO == 2)
+                            {
+                                <li class=""><a data-toggle="tab" href="#tab-3">Preços</a></li>
+                            }
+                            @if (Model.AMBI_IN_CHAVE == 1)
+                            {
+                                <li class=""><a data-toggle="tab" href="#tab-4">Chaves</a></li>
+                            }
                             <li class=""><a data-toggle="tab" href="#tab-5">Descrição</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-6">Indicadores</a></li>
                         </ul>
@@ -98,7 +104,7 @@
                                     @using (Html.BeginForm("EditarAmbiente", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row" style="width: 100%;">
-                                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                            <div class="col-lg-1 col-md-1 col-xs-12">
                                                 <div style="text-align: center; margin-top: 25px; line-height: 10px;">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.AMBI_AQ_FOTO)
@@ -122,9 +128,9 @@
                                                     <br />
                                                 </div>
                                             </div>
-                                            <div class="col-md-10">
+                                            <div class="col-md-11">
                                                 <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12">
                                                         @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                         @Html.HiddenFor(m => m.AMBI_DT_CADASTRO)
                                                         @Html.HiddenFor(m => m.AMBI_IN_ATIVO)
@@ -137,7 +143,7 @@
                                                         @Html.TextBoxFor(m => m.AMBI_NM_AMBIENTE, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_NM_AMBIENTE, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-1 col-md-1 col-xs-12">
                                                         Lotação*
                                                         @Html.TextBoxFor(m => m.AMBI_NR_LOTACAO, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_NR_LOTACAO, "", new { @style = "color:red" })
@@ -149,7 +155,7 @@
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Término*
-                                                        @Html.TextBoxFor(m => m.AMBI_HR_FINAL, new { @class = "form-control", autofocus = true, @id = "Termino" })
+                                                        @Html.TextBoxFor(m => m.AMBI_HR_FINAL, new { @class = "form-control", autofocus = true, @id = "termino" })
                                                         @Html.ValidationMessageFor(m => m.AMBI_HR_FINAL, "", new { @style = "color:red" })
                                                     </div>
                                                 </div>
@@ -174,7 +180,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma edição de Fornecedor", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                            @Html.ButtonActionSubmit(text: "Confirma edição de Ambiente", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
                                         </div>
                                     }
                                 </div>
@@ -282,26 +288,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <hr />
+                                    @*<div class="row">
+                                          <div class="col-lg-6 col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <h4>Normas de Uso</h4>
                                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                                     Norma de Uso
                                                     @Html.TextBoxFor(m => m.AMBI_AQ_NORMAS_USO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <br />
-                                                @using (Html.BeginForm("UploadNormaUsuo", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
+                                                @using (Html.BeginForm("UploadNormaUso", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
                                                 {
                                                     <div class="form-group">
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <input style="float: left; margin-right: 5px;" type="file" accept=".pdf|PDF/*" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                        <div class="col-lg-5 col-md-5 col-xs-12">
+                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
                                                             <input style="float: left;" type="submit" value="Incluir Norma de Uso" class="btn btn-sm btn-success" />
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-5 col-xs-12">
+                                                            <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.AMIM_NM_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank" ></a>
+                                                            @Html.ButtonLinkIndex(text: "Download", action: "IncluirAmbienteChave", controller: "Ambiente")
                                                         </div>
                                                     </div>
                                                 }
                                             </div>
                                         </div>
+                                    </div>*@
+                                    @*<div class="row">
                                         <div class="col-lg-6 col-md-6 col-xs-12">
                                             <div class="form-group">
                                                 <h4>Lista de Material</h4>
@@ -309,21 +321,20 @@
                                                     Lista de Material
                                                     @Html.TextBoxFor(m => m.AMBI_AQ_LISTA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <br />
                                                 @using (Html.BeginForm("UploadListaMaterial", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
                                                 {
                                                     <div class="form-group">
                                                         <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <input style="float: left; margin-right: 5px;" type="file" accept=".pdf|PDF/*" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
                                                             <input style="float: left;" type="submit" value="Incluir Lista de Material" class="btn btn-sm btn-success" />
                                                         </div>
                                                     </div>
                                                 }
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>*@
                                     <div class="row">
-                                        <hr />
+                                        @*<hr />*@
                                         <div class="col-lg-12 col-md-12 col-xs-12">
                                             <h4>Anexos</h4>
                                             <br />
@@ -391,125 +402,137 @@
                             </div>
 
                             @*Preços*@
-                            <div id="tab-3" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <h4>Preços</h4>
-                                                <br />
-                                                @if (Model.AMBIENTE_CUSTO.Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Nome</th>
-                                                                <th>Valor Base</th>
-                                                                <th>Valor Reduzido</th>
-                                                                <th>Valor Hora</th>
-                                                                <th class="td-one-action">Ações</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (Model.AMBIENTE_CUSTO))
-                                                            {
+                            @if (Model.AMBI_IN_GRATUITO == 2)
+                            {
+                                <div id="tab-3" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Preços</h4>
+                                                    <br />
+                                                    @if (Model.AMBIENTE_CUSTO.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style="background-color:lightsteelblue">
                                                                 <tr>
-                                                                    <td>@cond.AMCU_DS_DESCRICAO</td>
-                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_BASE)</td>
-                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_REDUZIDO.Value)</td>
-                                                                    <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_HORA)</td>
-                                                                    <td class="td-one-action">
-                                                                        @Html.TableLinkDetails(cond.AMCU_CD_ID, "EditarAmbienteCusto", "fa-edit", "Editar/Consultar")
-                                                                        @if (cond.AMCU_NM_ATIVO == 1)
+                                                                    <th>Nome</th>
+                                                                    <th>Valor Base</th>
+                                                                    <th>Valor Reduzido</th>
+                                                                    <th>Valor Hora</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.AMBIENTE_CUSTO))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.AMCU_DS_DESCRICAO</td>
+                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_BASE)</td>
+                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_REDUZIDO.Value)</td>
+                                                                        <td>@CrossCutting.Formatters.DecimalFormatter(cond.AMCU_VL_HORA)</td>
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.AMCU_CD_ID, "EditarAmbienteCusto", "fa-edit", "Editar/Consultar")
+                                                                            @if (cond.AMCU_NM_ATIVO == 1)
+                                                                            {
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Ambiente/ExcluirAmbienteCusto/@cond.AMCU_CD_ID')" title="Excluir"></span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Ambiente/ReativarAmbienteCusto/@cond.AMCU_CD_ID')" title="Reativar"></span>
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonLinkIndex(text: "Incluir Novo Preço", action: "IncluirAmbienteCusto", controller: "Ambiente")
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @*Chaves*@
+                            @if (Model.AMBI_IN_CHAVE == 1)
+                            {
+                                <div id="tab-4" class="tab-pane">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                                    <h4>Movimentação de Chaves</h4>
+                                                    <br />
+                                                    @if (Model.AMBIENTE_CHAVE.Count > 0)
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style="background-color:lightsteelblue">
+                                                                <tr>
+                                                                    <th>Data Entrega</th>
+                                                                    <th>Unidade</th>
+                                                                    <th>Responsável</th>
+                                                                    <th>Data Prevista</th>
+                                                                    <th>Data Devolução</th>
+                                                                    <th>Situação</th>
+                                                                    <th>Observações</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.AMBIENTE_CHAVE))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.AMCH_DT_ENTREGA.ToShortDateString()</td>
+                                                                        <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                                        <td>@cond.AMCH_DT_PREVISTA.ToShortDateString()</td>
+                                                                        @if (cond.AMCH_DT_DEVOLUCAO != null)
                                                                         {
-                                                                            <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Ambiente/ExcluirAmbienteCusto/@cond.AMCU_CD_ID')" title="Excluir"></span>
+                                                                            <td>@cond.AMCH_DT_DEVOLUCAO.Value.ToShortDateString()</td>
+                                                                            <td><span class="badge badge-primary">Devolvida</span></td>
+                                                                        }
+                                                                        else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA >= DateTime.Today.Date)
+                                                                        {
+                                                                            <td>-</td>
+                                                                            <td><span class="badge badge-warning">Pendente</span></td>
+                                                                        }
+                                                                        else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA < DateTime.Today.Date)
+                                                                        {
+                                                                            <td>-</td>
+                                                                            <td><span class="badge badge-danger">Em Atraso</span></td>
                                                                         }
                                                                         else
                                                                         {
-                                                                            <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Ambiente/ReativarAmbienteCusto/@cond.AMCU_CD_ID')" title="Reativar"></span>
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
+                                                                            <td>-</td>
+                                                                            <td></td>
+                                                                        }  
+                                                                        <td>@cond.AMCH_TX_OBSERVACOES</td>
+                                                                        <td class="td-one-action">
+                                                                            @if (cond.AMCH_DT_DEVOLUCAO == null)
+                                                                            {
+                                                                                @Html.TableLinkDetails(cond.AMCH_CD_ID, "EditarAmbienteChave", "fa-edit", "Editar")
+                                                                                @Html.TableLinkDetails(cond.AMCH_CD_ID, "DevolverAmbienteChave", "fa-reply", "Devolução")
+                                                                            }
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.ButtonLinkIndex(text: "Incluir Novo Preço", action: "IncluirAmbienteCusto", controller: "Ambiente")
-                                    </div>
-                                </div>
-                            </div>
-
-                            @*Chaves*@
-                            <div id="tab-4" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                            <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <h4>Movimentação de Chaves</h4>
-                                                <br />
-                                                @if (Model.AMBIENTE_CHAVE.Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Data Entrega</th>
-                                                                <th>Unidade</th>
-                                                                <th>Usuário</th>
-                                                                <th>Data Prevista</th>
-                                                                <th>Data Devolução</th>
-                                                                <th></th>
-                                                                <th class="td-one-action">Ações</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (Model.AMBIENTE_CHAVE))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.AMCH_DT_ENTREGA.ToShortDateString()</td>
-                                                                    <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
-                                                                    <td>@cond.USUARIO.USUA_NM_NOME</td>
-                                                                    <td>@cond.AMCH_DT_PREVISTA.ToShortDateString()</td>
-                                                                    <td>@cond.AMCH_DT_DEVOLUCAO.Value.ToShortDateString()</td>
-                                                                    @if (cond.AMCH_DT_DEVOLUCAO != null)
-                                                                    {
-                                                                        <td><span class="badge badge-primary">Devolvida</span></td>
-                                                                    }
-                                                                    else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA >= DateTime.Today.Date)
-                                                                    {
-                                                                        <td><span class="badge badge-warning">Pendente</span></td>
-                                                                    }
-                                                                    else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA < DateTime.Today.Date)
-                                                                    {
-                                                                        <td><span class="badge badge-danger">Em Atraso</span></td>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <td></td>
-                                                                    }                                                          
-                                                                    <td class="td-one-action">
-                                                                        @if (cond.AMCH_DT_DEVOLUCAO == null)
-                                                                        {
-                                                                            @Html.TableLinkDetails(cond.AMCH_CD_ID, "EditarAmbienteChave", "fa-edit", "Editar")
-                                                                            @Html.TableLinkDetails(cond.AMCH_CD_ID, "DevolverAmbienteChave", "fa-reply", "Devolução")
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
-                                            </div>
+                                        <div class="form-group">
+                                            @Html.ButtonLinkIndex(text: "Incluir Nova Entrega de Chave", action: "IncluirAmbienteChave", controller: "Ambiente")
+                                            @Html.ButtonLinkIndex(text: "Ir para Controle de Chaves de Ambientes", action: "MontarTelaControleChave", controller: "ControleChave")
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        @Html.ButtonLinkIndex(text: "Incluir Nova Entrega de Chave", action: "IncluirAmbienteChave", controller: "Ambiente")
-                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             @*Descrição*@
                             <div id="tab-5" class="tab-pane">
@@ -535,7 +558,7 @@
                                                     @Html.HiddenFor(m => m.AMBI_NR_LOTACAO)
                                                     @Html.HiddenFor(m => m.TIAM_CD_ID)
                                                     Descrição
-                                                    @Html.TextAreaFor(m => m.AMBI_NM_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 300px;", autofocus = true })
+                                                    @Html.TextAreaFor(m => m.AMBI_NM_DESCRICAO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.AMBI_NM_DESCRICAO, "", new { @style = "color:red" })
                                                 </div>
                                             </div>
@@ -557,7 +580,7 @@
                 </div>
                 <div class="form-group">
                     <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "FornecedorNovo")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseAmbiente", controller: "Ambiente")
                 </div>
             </div>
         </div>
@@ -671,6 +694,8 @@
             $('#tel').mask("(99) 9999-9999");
             $('#cel').mask("(99) 99999-9999");
             $('#wpp').mask("(99) 99999-9999");
+            $('#inicio').mask("99:99");
+            $('#termino').mask("99:99");
         });
     </script>
     <script type="text/javascript">

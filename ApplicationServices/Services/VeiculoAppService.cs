@@ -305,7 +305,7 @@ namespace ApplicationServices.Services
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
-                    body = body.Replace("{Veiculo}", veiculo.VEIC_NM_EXIBE);
+                    footer = footer.Replace("{Veiculo}", veiculo.VEIC_NM_EXIBE);
                     footer = footer.Replace("{Unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
                     footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);

@@ -273,6 +273,9 @@
   <data name="M0054" xml:space="preserve">
     <value>Nenhum celular definido para o fornecedor</value>
   </data>
+  <data name="M0055" xml:space="preserve">
+    <value>Data de Devolução deve ser preenchida</value>
+  </data>
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>

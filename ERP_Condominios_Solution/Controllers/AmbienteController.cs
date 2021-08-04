@@ -220,6 +220,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Session["ListaAmbiente"] = null;
             return RedirectToAction("MontarTelaAmbiente");
         }
 
@@ -427,7 +428,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult EditarAmbiente(AmbienteViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -1199,6 +1200,66 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
+        public ActionResult DevolverAmbienteChave(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+
+            // Verifica
+            AMBIENTE_CHAVE ch = fornApp.GetAmbienteChaveById(id);
+            if (ch.AMCH_DT_DEVOLUCAO != null)
+            {
+                Session["MensAmbiente"] = 8;
+                return RedirectToAction("VoltarAnexoAmbiente");
+            }
+
+            // Prepara view
+            objetoFornAntes = (AMBIENTE)Session["Ambiente"];
+            AmbienteChaveViewModel vm = Mapper.Map<AMBIENTE_CHAVE, AmbienteChaveViewModel>(ch);
+            vm.AMCH_DT_DEVOLUCAO = DateTime.Today.Date;
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DevolverAmbienteChave(AmbienteChaveViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    AMBIENTE_CHAVE item = Mapper.Map<AmbienteChaveViewModel, AMBIENTE_CHAVE>(vm);
+                    if (item.AMCH_DT_DEVOLUCAO == null)
+                    {
+                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0055", CultureInfo.CurrentCulture));
+                        return View(vm);
+                    }
+                    Int32 volta = fornApp.ValidateEditAmbienteChave(item);
+
+                    // Verifica retorno
+                    return RedirectToAction("VoltarAnexoAmbiente");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
         public ActionResult ExcluirAmbienteChave(Int32 id)
         {
             if ((String)Session["Ativa"] == null)
@@ -1252,8 +1313,13 @@ namespace ERP_Condominios_Solution.Controllers
             AMBIENTE_CHAVE item = new AMBIENTE_CHAVE();
             AmbienteChaveViewModel vm = Mapper.Map<AMBIENTE_CHAVE, AmbienteChaveViewModel>(item);
             vm.AMBI_CD_ID = (Int32)Session["IdVolta"];
+            vm.ASSI_CD_ID = (Int32)Session["IdAssinante"];
             vm.AMCH_DT_ENTREGA = DateTime.Today.Date;
-            vm.AMCH_DT_PREVISTA = DateTime.Today.Date.AddDays(5);
+            if (amb.AMBI_NR_DIAS_CHAVE > 0)
+            {
+                Double dias = Convert.ToDouble(amb.AMBI_NR_DIAS_CHAVE);
+                vm.AMCH_DT_PREVISTA = DateTime.Today.Date.AddDays(dias);
+            }
             vm.AMCH_IN_ATIVO = 1;
             return View(vm);
         }
@@ -1266,6 +1332,9 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE).ToList(), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME).ToList(), "USUA_CD_ID", "USUA_NM_NOME");
             if (ModelState.IsValid)
             {
                 try

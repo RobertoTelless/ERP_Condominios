@@ -18,7 +18,7 @@
                 <a href="@Url.Action("EditarAmbiente", "Ambiente")">Ambiente - Edição</a>
             </li>
             <li class="active">
-                <strong>Chaves de Ambiente - Edição de Entrega</strong>
+                <strong>Chaves de Ambiente - Devolução</strong>
             </li>
         </ol>
         <br />
@@ -27,7 +27,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Chaves de Ambiente - Edição de Entrega</h5>
+                    <h5>Chaves de Ambiente - Devolução</h5>
                     <div class="ibox-tools">
                         <a class="collaps e-link">
                             <i class="fa fa-chevron-up"></i>
@@ -48,7 +48,7 @@
                         </a>
                     </div>
                 </div>
-                @using (Html.BeginForm("EditarAmbienteChave", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                @using (Html.BeginForm("DevolverAmbienteChave", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
                 {
                     <div class="ibox-content">
                         @Html.AntiForgeryToken()
@@ -64,29 +64,43 @@
                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                     @Html.HiddenFor(m => m.AMBI_CD_ID)
                                     @Html.HiddenFor(m => m.AMCH_IN_ATIVO)
-                                    Unidade*
-                                    @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarUsuarioUnidade($(this).val())", id = "unid" })
-                                    @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
+                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                    @Html.HiddenFor(m => m.AMCH_CD_ID)
+                                    @Html.HiddenFor(m => m.AMCH_DT_ENTREGA)
+                                    @Html.HiddenFor(m => m.AMCH_DT_PREVISTA)
+                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                    @Html.HiddenFor(m => m.UNID_CD_ID)
+                                    Unidade
+                                    @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true,  @readonly="readonly" })
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                    Responsável*
-                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarUnidadeUsuario($(this).val())", id = "usua" })
-                                    @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
+                                    Responsável
+                                    @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true,  @readonly="readonly" })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                     Data Entrega
-                                    @Html.TextBoxFor(m => m.AMCH_DT_ENTREGA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data1" })
-                                    @Html.ValidationMessageFor(m => m.AMCH_DT_ENTREGA, "",new { @style="color:red" })
+                                    @Html.TextBoxFor(m => m.AMCH_DT_ENTREGA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true,  @readonly="readonly"  })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                     Data Prevista
-                                    @Html.TextBoxFor(m => m.AMCH_DT_PREVISTA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data2" })
-                                    @Html.ValidationMessageFor(m => m.AMCH_DT_PREVISTA, "",new { @style="color:red" })
+                                    @Html.TextBoxFor(m => m.AMCH_DT_PREVISTA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true,  @readonly="readonly"  })
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                    Data Devolução*
+                                    @Html.TextBoxFor(m => m.AMCH_DT_DEVOLUCAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data1" })
+                                    @Html.ValidationMessageFor(m => m.AMCH_DT_DEVOLUCAO, "",new { @style="color:red" })
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-xs-12">
+                                    Observações
+                                    @Html.TextBoxFor(m => m.AMCH_TX_OBSERVACOES, new { @class = "form-control", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.AMCH_TX_OBSERVACOES, "",new { @style="color:red" })
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.ButtonActionSubmit(text: "Confirma Edição de Entrega de Chave", htmlAttributes: new { id = "basictoast" })
+                            @Html.ButtonActionSubmit(text: "Confirma Devolução de Chave", htmlAttributes: new { id = "basictoast" })
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoAmbiente", controller: "Ambiente")
                         </div>
                     </div>

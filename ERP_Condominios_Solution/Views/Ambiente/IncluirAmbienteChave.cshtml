@@ -64,13 +64,14 @@
                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                     @Html.HiddenFor(m => m.AMBI_CD_ID)
                                     @Html.HiddenFor(m => m.AMCH_IN_ATIVO)
+                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
                                     Unidade*
                                     @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarUsuarioUnidade($(this).val())", id = "unid" })
                                     @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12">
-                                    Usuário*
-                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarUnidadeUsuario($(this).val())", id = "usua" })
+                                    Responsável*
+                                    @Html.DropDownListFor(m => m.USUA_CD_ID, (SelectList)ViewBag.Usuarios, "Selecionar", new { @class = "form-control", autofocus = true, id = "usua" })
                                     @Html.ValidationMessageFor(m => m.USUA_CD_ID, "", new { @style = "color:red" })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-12">

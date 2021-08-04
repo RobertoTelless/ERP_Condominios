@@ -139,11 +139,12 @@
                                             <th>Nome</th>   
                                             <th>Tipo</th>   
                                             <th>Lotação</th>
-                                            <th>Gratuito</th>
-                                            <th>Chave</th>   
+                                            <th>Gratuito ?</th>
+                                            <th>Tem Chave ?</th>   
                                             <th>Início</th>
                                             <th>Término</th>   
-                                            <th>Reservas</th>
+                                            <th>Chave</th>   
+                                            <th>Reservado</th>
                                             <th></th>
                                             <th class="td-one-action">Ações</th>
                                         </tr>
@@ -173,13 +174,28 @@
                                                 }
                                                 <td>@cond.AMBI_HR_INICIO</td>
                                                 <td>@cond.AMBI_HR_FINAL</td>
-                                                @if (cond.RESERVA.Where(p => p.AMBI_CD_ID == cond.AMBI_CD_ID & p.RESE_IN_STATUS == 1).ToList().Count > 0)
+                                                @if (cond.AMBI_IN_CHAVE == 1)
                                                 {
-                                                    <td>@cond.RESERVA.Where(p => p.AMBI_CD_ID == cond.AMBI_CD_ID & p.RESE_IN_STATUS == 1).ToList().Count</td>
+                                                    if (cond.AMBIENTE_CHAVE.Where(p => p.AMCH_DT_DEVOLUCAO == null).ToList().Count > 0)
+                                                    {
+                                                        <td><span class="badge badge-warning">Entregue</span></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><span class="badge badge-primary">Disponível</span></td>
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    <td>-</td>
+                                                    <td>Não tem Chave</td>
+                                                }
+                                                @if (cond.RESERVA.Where(p => p.AMBI_CD_ID == cond.AMBI_CD_ID & p.RESE_IN_STATUS == 1).ToList().Count > 0)
+                                                {
+                                                    <td><span class="badge badge-warning">Reservado</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge badge-success">Disponível</span></td>
                                                 }
                                                 @if (!String.IsNullOrEmpty(cond.AMBI_AQ_FOTO))
                                                 {

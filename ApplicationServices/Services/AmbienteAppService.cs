@@ -9,16 +9,27 @@ using ApplicationServices.Interfaces;
 using ModelServices.Interfaces.EntitiesServices;
 using CrossCutting;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace ApplicationServices.Services
 {
     public class AmbienteAppService : AppServiceBase<AMBIENTE>, IAmbienteAppService
     {
         private readonly IAmbienteService _baseService;
+        private readonly INotificacaoService _notiService;
+        private readonly ITemplateService _temService;
+        private readonly IConfiguracaoService _confService;
+        private readonly IUnidadeAppService _unidService;
+        private readonly IUsuarioAppService _usuService;
 
-        public AmbienteAppService(IAmbienteService baseService): base(baseService)
+        public AmbienteAppService(IAmbienteService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUnidadeAppService unidService, IUsuarioAppService usuService): base(baseService)
         {
             _baseService = baseService;
+            _notiService = notiService;
+            _temService = temService;
+            _confService = confService;
+            _unidService = unidService;
+            _usuService = usuService;
         }
 
         public List<AMBIENTE> GetAllItens(Int32 idAss)
@@ -292,6 +303,62 @@ namespace ApplicationServices.Services
                 // Persiste
                 item.AMCH_IN_ATIVO = 1;
                 Int32 volta = _baseService.CreateAmbienteChave(item);
+
+                // Gera Notificação
+                AMBIENTE amb = _baseService.GetItemById(item.AMBI_CD_ID);
+                UNIDADE unid = _unidService.GetItemById(item.UNID_CD_ID);
+                USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);
+                NOTIFICACAO vm = new NOTIFICACAO();
+                vm.CANO_CD_ID = 3;
+                vm.USUA_CD_ID = item.USUA_CD_ID;
+                vm.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                vm.ASSI_CD_ID = item.ASSI_CD_ID;
+                vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                vm.NOTI_IN_ATIVO = 1;
+                vm.NOTI_IN_NIVEL = 1;
+                vm.NOTI_IN_ORIGEM = 1;
+                vm.NOTI_IN_STATUS = 1;
+                vm.NOTI_IN_VISTA = 0;
+                vm.NOTI_NM_TITULO = "Notificação de Entrega de Chave";
+                vm.NOTI_TX_TEXTO = "A chave do ambiente " + amb.AMBI_NM_AMBIENTE + " foi entrege em " + item.AMCH_DT_ENTREGA.ToShortDateString() + " para a unidade " + unid.UNID_NM_EXIBE + " com devolução prevista para " + item.AMCH_DT_PREVISTA.ToShortDateString() + ".";
+                volta = _notiService.Create(vm);
+
+                // Recupera template e-mail
+                String header = _temService.GetByCode("NOTICHAVE").TEMP_TX_CABECALHO;
+                String body = _temService.GetByCode("NOTICHAVE").TEMP_TX_CORPO;
+                String footer = _temService.GetByCode("NOTICHAVE").TEMP_TX_DADOS;
+
+                // Prepara corpo do e-mail  
+                String frase = String.Empty;
+                footer = footer.Replace("{Ambiente}", amb.AMBI_NM_AMBIENTE);
+                footer = footer.Replace("{Unidade}", unid.UNID_NM_EXIBE);
+                footer = footer.Replace("{DataEntrega}", item.AMCH_DT_ENTREGA.ToShortDateString());
+                footer = footer.Replace("{DataPrevista}", item.AMCH_DT_PREVISTA.ToShortDateString());
+                body = body.Replace("{Texto}", "A chave do ambiente especificado abaixo foi entregue ao responsável da unidade na data abaixo");
+                header = header.Replace("{Nome}", usu.USUA_NM_NOME);
+
+                // Concatenana 
+                String emailBody = header + body;
+                CONFIGURACAO conf = _confService.GetItemById(item.ASSI_CD_ID);
+
+                // Monta e-mail
+                NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                Email mensagem = new Email();
+                mensagem.ASSUNTO = "NOTIFICAÇÃO - ENTREGA DE CHAVES";
+                mensagem.CORPO = emailBody;
+                mensagem.DEFAULT_CREDENTIALS = false;
+                mensagem.EMAIL_DESTINO = usu.USUA_NM_EMAIL;
+                mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                mensagem.ENABLE_SSL = true;
+                mensagem.NOME_EMISSOR = "ERP Condomínios";
+                mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                mensagem.NETWORK_CREDENTIAL = net;
+
+                // Envia mensagem
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
                 return volta;
             }
             catch (Exception ex)

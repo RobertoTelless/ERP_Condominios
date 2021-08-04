@@ -47,7 +47,7 @@ namespace DataServices.Repositories
         {
             List<AMBIENTE> lista = new List<AMBIENTE>();
             IQueryable<AMBIENTE> query = Db.AMBIENTE;
-            if (tipo != null)
+            if (tipo > 0)
             {
                 query = query.Where(p => p.TIAM_CD_ID == tipo);
             }

@@ -17,6 +17,9 @@ namespace DataServices.Repositories
         {
             IQueryable<AMBIENTE_CHAVE> query = Db.AMBIENTE_CHAVE;
             query = query.Where(p => p.AMCH_CD_ID == id);
+            query = query.Include(p => p.AMBIENTE);
+            query = query.Include(p => p.UNIDADE);
+            query = query.Include(p => p.USUARIO);
             return query.FirstOrDefault();
         }
 
