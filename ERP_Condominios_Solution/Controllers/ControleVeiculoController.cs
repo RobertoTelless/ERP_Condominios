@@ -29,6 +29,7 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IControleVeiculoAppService baseApp;
         private readonly ILogAppService logApp;
         private readonly IConfiguracaoAppService confApp;
+        private readonly IFornecedorAppService forApp;
 
         private String msg;
         private Exception exception;
@@ -37,11 +38,12 @@ namespace ERP_Condominios_Solution.Controllers
         List<CONTROLE_VEICULO> listaMaster = new List<CONTROLE_VEICULO>();
         String extensao;
 
-        public ControleVeiculoController(IControleVeiculoAppService baseApps, ILogAppService logApps, IConfiguracaoAppService confApps)
+        public ControleVeiculoController(IControleVeiculoAppService baseApps, ILogAppService logApps, IConfiguracaoAppService confApps, IFornecedorAppService forApps)
         {
             baseApp = baseApps; ;
             logApp = logApps;
             confApp = confApps;
+            forApp = forApps;
         }
 
         [HttpGet]
@@ -254,6 +256,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara listas
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Fornecedores = new SelectList(forApp.GetAllItens(idAss), "FORN_CD_ID", "FORN_NM_NOME");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
@@ -277,6 +280,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Fornecedores = new SelectList(forApp.GetAllItens(idAss), "FORN_CD_ID", "FORN_NM_NOME");
             if (ModelState.IsValid)
             {
                 try
@@ -288,8 +292,6 @@ namespace ERP_Condominios_Solution.Controllers
 
                     // Verifica retorno
 
-                    // Anexos
-
                     // Sucesso
                     listaMaster = new List<CONTROLE_VEICULO>();
                     Session["ListaControleVeiculo"] = null;
@@ -297,6 +299,12 @@ namespace ERP_Condominios_Solution.Controllers
                     Session["IdControleVeiculoVolta"] = item.COVE_CD_ID;
                     Session["ControleVeiculo"] = item;
                     Session["MensControleVeiculo"] = 0;
+
+                    // Notificação
+                    if (item.UNID_CD_ID != null & item.UNID_CD_ID > 0)
+                    {
+                        return RedirectToAction("GerarNotificacaoControleVeiculo");
+                    }
                     return RedirectToAction("MontarTelaControleVeiculo");
                 }
                 catch (Exception ex)
@@ -346,6 +354,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["ControleVeiculo"] = item;
             Session["IdVolta"] = id;
             Session["IdControleVeiculo"] = id;
+            Session["VoltaControleVeiculo"] = 2;
             ControleVeiculoViewModel vm = Mapper.Map<CONTROLE_VEICULO, ControleVeiculoViewModel>(item);
             return View(vm);
         }
@@ -508,7 +517,11 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idVeic = (Int32)Session["IdControleVeiculo"];
-            return RedirectToAction("EditarControleVeiculo", new { id = idVeic });
+            if ((Int32)Session["VoltaControleVeiculo"] == 2)
+            {
+                return RedirectToAction("EditarControleVeiculo", new { id = idVeic });
+            }
+            return RedirectToAction("MontarTelaControleVeiculo");
         }
 
         [HttpGet]

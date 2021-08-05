@@ -421,6 +421,7 @@
           <Property Name="UNID_CD_ID" Type="int" />
           <Property Name="ASSI_CD_ID" Type="int" />
           <Property Name="USUA_CD_ID" Type="int" />
+          <Property Name="FORN_CD_ID" Type="int" />
           <Property Name="COVE_DT_ENTRADA" Type="datetime" />
           <Property Name="COVE_DT_SAIDA" Type="datetime" />
           <Property Name="COVE_NM_PLACA" Type="varchar" MaxLength="10" Nullable="false" />
@@ -431,6 +432,7 @@
           <Property Name="COVE_NM_COR" Type="varchar" MaxLength="50" />
           <Property Name="COVE_DT_PREVISAO_SAIDA" Type="datetime" />
           <Property Name="COVE_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
+          <Property Name="COVE_NM_PESSOA" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
           <Key>
@@ -2285,6 +2287,18 @@
             </Principal>
             <Dependent Role="CONTROLE_VEICULO">
               <PropertyRef Name="ASSI_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_FORNECEDOR">
+          <End Role="FORNECEDOR" Type="Self.FORNECEDOR" Multiplicity="0..1" />
+          <End Role="CONTROLE_VEICULO" Type="Self.CONTROLE_VEICULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO">
+              <PropertyRef Name="FORN_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4407,6 +4421,10 @@
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
             <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_FORNECEDOR" Association="Self.FK_CONTROLE_VEICULO_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONTROLE_VEICULO_TIPO_VEICULO" Association="Self.FK_CONTROLE_VEICULO_TIPO_VEICULO">
             <End Role="TIPO_VEICULO" EntitySet="TIPO_VEICULO" />
             <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
@@ -5567,6 +5585,9 @@
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_CONTROLE_VEICULO_UNIDADE" FromRole="CONTROLE_VEICULO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTROLE_VEICULO_USUARIO" FromRole="CONTROLE_VEICULO" ToRole="USUARIO" />
           <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          <Property Name="FORN_CD_ID" Type="Int32" />
+          <Property Name="COVE_NM_PESSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FORNECEDOR" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_FORNECEDOR" FromRole="CONTROLE_VEICULO" ToRole="FORNECEDOR" />
         </EntityType>
         <EntityType Name="CONVIDADO">
           <Key>
@@ -5805,6 +5826,7 @@
           <NavigationProperty Name="UF" Relationship="Self.FK_FORNECEDOR_UF" FromRole="FORNECEDOR" ToRole="UF" />
           <NavigationProperty Name="MATERIAL_FORNECEDOR" Relationship="Self.FK_MATERIAL_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="MATERIAL_FORNECEDOR" />
           <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="Self.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="PRODUTO_FORNECEDOR" />
+          <NavigationProperty Name="CONTROLE_VEICULO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="CONTROLE_VEICULO" />
         </EntityType>
         <EntityType Name="FORNECEDOR_ANEXO">
           <Key>
@@ -10373,6 +10395,10 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_FORNECEDOR" Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
           <Key>
@@ -10408,6 +10434,18 @@
             </Principal>
             <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
               <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_FORNECEDOR">
+          <End Type="ERP_CondominioModel.FORNECEDOR" Role="FORNECEDOR" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.CONTROLE_VEICULO" Role="CONTROLE_VEICULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO">
+              <PropertyRef Name="FORN_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10858,6 +10896,8 @@
           <EntitySetMapping Name="CONTROLE_VEICULO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CONTROLE_VEICULO">
               <MappingFragment StoreEntitySet="CONTROLE_VEICULO">
+                <ScalarProperty Name="COVE_NM_PESSOA" ColumnName="COVE_NM_PESSOA" />
+                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
                 <ScalarProperty Name="COVE_CD_ID" ColumnName="COVE_CD_ID" />
                 <ScalarProperty Name="TIVE_CD_ID" ColumnName="TIVE_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />

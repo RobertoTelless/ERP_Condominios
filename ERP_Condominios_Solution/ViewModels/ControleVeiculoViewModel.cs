@@ -39,6 +39,9 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<System.DateTime> COVE_DT_PREVISAO_SAIDA { get; set; }
         [StringLength(250, ErrorMessage = "A JUSTIFICATIVA deve conter no máximo 250 caracteres.")]
         public string COVE_DS_JUSTIFICATIVA { get; set; }
+        public Nullable<int> FORN_CD_ID { get; set; }
+        [StringLength(50, ErrorMessage = "O NOME DO MOTORISTA/EMPRESA deve conter no máximo 50 caracteres.")]
+        public string COVE_NM_PESSOA { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual TIPO_VEICULO TIPO_VEICULO { get; set; }
@@ -46,6 +49,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
+        public virtual FORNECEDOR FORNECEDOR { get; set; }
 
     }
 }
