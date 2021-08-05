@@ -34,6 +34,7 @@ namespace EntitiesServices.Model
         public Nullable<int> CONF_NR_CORPO_DIRETIVO_PERIODO { get; set; }
         public string CONF_SG_LOGIN_SMS { get; set; }
         public string CONF_SG_SENHA_SMS { get; set; }
+        public Nullable<int> CONF_IN_LIMITE_HORA_VEICULO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -284,6 +284,7 @@
     <Compile Include="Controllers\CentroCustoController.cs" />
     <Compile Include="Controllers\CondominioController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
+    <Compile Include="Controllers\ControleVeiculoController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\FornecedorNovoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -3067,6 +3068,12 @@
     <Content Include="Views\ListaConvidado\IncluirComentarioLista.cshtml" />
     <Content Include="Views\ListaConvidado\ProcessarLista.cshtml" />
     <Content Include="Views\Ambiente\DevolverAmbienteChave.cshtml" />
+    <Content Include="Views\ControleVeiculo\MontarTelaControleVeiculo.cshtml" />
+    <Content Include="Views\ControleVeiculo\IncluirControleVeiculo.cshtml" />
+    <Content Include="Views\ControleVeiculo\EditarControleVeiculo.cshtml" />
+    <Content Include="Views\ControleVeiculo\VerControleVeiculo.cshtml" />
+    <Content Include="Views\ControleVeiculo\GerarNotificacaoControleVeiculo.cshtml" />
+    <Content Include="Views\ControleVeiculo\IncluirAcompanhamentoControleVeiculo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
