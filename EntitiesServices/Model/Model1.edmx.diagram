@@ -322,6 +322,9 @@
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_USUARIO" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_VAGA" ManuallyRouted="false" />
         <AssociationConnector Association="ERP_CondominioModel.FK_VEICULO_ANEXO_VEICULO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" Width="1.5" PointX="15" PointY="174.25" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" />
+        <AssociationConnector Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

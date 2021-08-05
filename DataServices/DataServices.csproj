@@ -208,6 +208,7 @@
     <Compile Include="Repositories\GrupoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Repositories\ListaConvidadoComentarioRepository.cs" />
+    <Compile Include="Repositories\ControleVeiculoAcompanhamentoRepository.cs" />
     <Compile Include="Repositories\OcorrenciaRepository.cs" />
     <Compile Include="Repositories\OcorrenciaAnexoRepository.cs" />
     <Compile Include="Repositories\OcorrenciaComentarioRepository.cs" />
@@ -259,6 +260,7 @@
     <Compile Include="Repositories\UFRepository.cs" />
     <Compile Include="Repositories\ReservaRepository.cs" />
     <Compile Include="Repositories\ListaConvidadoRepository.cs" />
+    <Compile Include="Repositories\ControleVeiculoRepository.cs" />
     <Compile Include="Repositories\VeiculoRepository.cs" />
     <Compile Include="Repositories\VagaRepository.cs" />
     <Compile Include="Repositories\UnidadeRepository.cs" />

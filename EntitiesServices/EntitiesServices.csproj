@@ -219,6 +219,7 @@
     <Compile Include="EntitiesServices\TemplateService.cs" />
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
     <Compile Include="EntitiesServices\ListaConvidadoService.cs" />
+    <Compile Include="EntitiesServices\ControleVeiculoService.cs" />
     <Compile Include="EntitiesServices\VeiculoService.cs" />
     <Compile Include="EntitiesServices\VagaService.cs" />
     <Compile Include="EntitiesServices\UnidadeService.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Interfaces\Repositories\IMaterialAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IListaConvidadoComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IControleVeiculoAcompanhamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaComentarioRepository.cs" />
@@ -301,6 +303,7 @@
     <Compile Include="Interfaces\Repositories\IUFRepository.cs" />
     <Compile Include="Interfaces\Repositories\IReservaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IListaConvidadoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IControleVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVeiculoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVagaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUnidadeRepository.cs" />
@@ -335,6 +338,7 @@
     <Compile Include="Interfaces\Services\ITemplateService.cs" />
     <Compile Include="Interfaces\Services\ITipoPessoaService.cs" />
     <Compile Include="Interfaces\Services\IListaConvidadoService.cs" />
+    <Compile Include="Interfaces\Services\IControleVeiculoService.cs" />
     <Compile Include="Interfaces\Services\IVeiculoService.cs" />
     <Compile Include="Interfaces\Services\IVagaService.cs" />
     <Compile Include="Interfaces\Services\IUnidadeService.cs" />
@@ -433,6 +437,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTROLE_VEICULO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CONTROLE_VEICULO_ACOMPANHAMENTO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONVIDADO.cs">

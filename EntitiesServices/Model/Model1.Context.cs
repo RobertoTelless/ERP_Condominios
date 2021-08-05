@@ -142,5 +142,6 @@ namespace EntitiesServices.Model
         public virtual DbSet<VAGA> VAGA { get; set; }
         public virtual DbSet<VEICULO> VEICULO { get; set; }
         public virtual DbSet<VEICULO_ANEXO> VEICULO_ANEXO { get; set; }
+        public virtual DbSet<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
     }
 }

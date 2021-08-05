@@ -14,6 +14,12 @@ namespace EntitiesServices.Model
     
     public partial class CONTROLE_VEICULO
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CONTROLE_VEICULO()
+        {
+            this.CONTROLE_VEICULO_ACOMPANHAMENTO = new HashSet<CONTROLE_VEICULO_ACOMPANHAMENTO>();
+        }
+    
         public int COVE_CD_ID { get; set; }
         public Nullable<int> TIVE_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
@@ -34,5 +40,7 @@ namespace EntitiesServices.Model
         public virtual TIPO_VEICULO TIPO_VEICULO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
     }
 }

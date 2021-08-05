@@ -431,6 +431,17 @@
           <Property Name="COVE_DT_PREVISAO_SAIDA" Type="datetime" />
           <Property Name="COVE_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="CVAC_CD_ID" />
+          </Key>
+          <Property Name="CVAC_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COVE_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="CVAC_DT_ACOMPANHAMENTO" Type="datetime" />
+          <Property Name="CVAC_DS_TEXTO" Type="varchar" MaxLength="5000" />
+          <Property Name="CVAC_IN_ATIVO" Type="int" />
+        </EntityType>
         <EntityType Name="CONVIDADO">
           <Key>
             <PropertyRef Name="CONV_CD_ID" />
@@ -2237,6 +2248,30 @@
             </Principal>
             <Dependent Role="CONTA_BANCO">
               <PropertyRef Name="TICO_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
+          <End Role="CONTROLE_VEICULO" Type="Self.CONTROLE_VEICULO" Multiplicity="1" />
+          <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Type="Self.CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTROLE_VEICULO">
+              <PropertyRef Name="COVE_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <PropertyRef Name="COVE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Type="Self.CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4073,6 +4108,7 @@
           <EntitySet Name="CONTA_BANCO_LANCAMENTO" EntityType="Self.CONTA_BANCO_LANCAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONTA_RECEBER" EntityType="Self.CONTA_RECEBER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONTROLE_VEICULO" EntityType="Self.CONTROLE_VEICULO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CONTROLE_VEICULO_ACOMPANHAMENTO" EntityType="Self.CONTROLE_VEICULO_ACOMPANHAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONVIDADO" EntityType="Self.CONVIDADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CORPO_DIRETIVO" EntityType="Self.CORPO_DIRETIVO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ENCOMENDA" EntityType="Self.ENCOMENDA" Schema="dbo" store:Type="Tables" />
@@ -4357,6 +4393,14 @@
           <AssociationSet Name="FK_CONTA_BANCO_TIPO_CONTA" Association="Self.FK_CONTA_BANCO_TIPO_CONTA">
             <End Role="TIPO_CONTA" EntitySet="TIPO_CONTA" />
             <End Role="CONTA_BANCO" EntitySet="CONTA_BANCO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" Association="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
+            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" Association="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CONTROLE_VEICULO_ASSINANTE" Association="Self.FK_CONTROLE_VEICULO_ASSINANTE">
             <End Role="ASSINANTE" EntitySet="ASSINANTE" />
@@ -5520,6 +5564,7 @@
           <NavigationProperty Name="TIPO_VEICULO" Relationship="Self.FK_CONTROLE_VEICULO_TIPO_VEICULO" FromRole="CONTROLE_VEICULO" ToRole="TIPO_VEICULO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_CONTROLE_VEICULO_UNIDADE" FromRole="CONTROLE_VEICULO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTROLE_VEICULO_USUARIO" FromRole="CONTROLE_VEICULO" ToRole="USUARIO" />
+          <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
         </EntityType>
         <EntityType Name="CONVIDADO">
           <Key>
@@ -6854,6 +6899,7 @@
           <NavigationProperty Name="USUARIO_ESCALA_TRABALHO" Relationship="Self.FK_USUARIO_ESCALA_TRABALHO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ESCALA_TRABALHO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
+          <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -10316,7 +10362,53 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
             <End Role="VEICULO_ANEXO" EntitySet="VEICULO_ANEXO" />
           </AssociationSet>
+          <EntitySet Name="CONTROLE_VEICULO_ACOMPANHAMENTO" EntityType="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
+            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="CVAC_CD_ID" />
+          </Key>
+          <Property Name="CVAC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COVE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CVAC_DT_ACOMPANHAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="CVAC_DS_TEXTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CVAC_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="CONTROLE_VEICULO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO_ACOMPANHAMENTO" ToRole="CONTROLE_VEICULO" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="CONTROLE_VEICULO_ACOMPANHAMENTO" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
+          <End Type="ERP_CondominioModel.CONTROLE_VEICULO" Role="CONTROLE_VEICULO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTROLE_VEICULO">
+              <PropertyRef Name="COVE_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <PropertyRef Name="COVE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
+          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12072,6 +12164,18 @@
                 <ScalarProperty Name="VEAN_DT_ANEXO" ColumnName="VEAN_DT_ANEXO" />
                 <ScalarProperty Name="VEAN_AQ_ARQUIVO" ColumnName="VEAN_AQ_ARQUIVO" />
                 <ScalarProperty Name="VEAN_IN_ATIVO" ColumnName="VEAN_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <MappingFragment StoreEntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO">
+                <ScalarProperty Name="CVAC_IN_ATIVO" ColumnName="CVAC_IN_ATIVO" />
+                <ScalarProperty Name="CVAC_DS_TEXTO" ColumnName="CVAC_DS_TEXTO" />
+                <ScalarProperty Name="CVAC_DT_ACOMPANHAMENTO" ColumnName="CVAC_DT_ACOMPANHAMENTO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="COVE_CD_ID" ColumnName="COVE_CD_ID" />
+                <ScalarProperty Name="CVAC_CD_ID" ColumnName="CVAC_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
