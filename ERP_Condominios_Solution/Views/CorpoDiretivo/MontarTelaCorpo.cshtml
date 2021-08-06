@@ -1,7 +1,278 @@
-﻿
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.CORPO_DIRETIVO
 @{
-    ViewBag.Title = "MontarTelaCorpo";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-title"> 
+        <h3 class="title">Corpo Diretivo</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Corpo Diretivo</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Corpo Diretivo</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                            {
+                                @Html.ButtonLinkIndex(text: "Exibir Corpo Atual", controller: "CorpoDiretivo", action: "RetirarFiltroCorpo")
+                                @Html.ButtonLinkIndex(text: "Exibir Antigos", controller: "CorpoDiretivo", action: "MostrarInativosCorpo")
+                                @Html.ButtonLinkIndex(text: "Exibir Excluídos", controller: "CorpoDiretivo", action: "MostrarTudoCorpo")
+                                @Html.ButtonLinkIndex(text: "Novo Membro do Corpo Diretivo", controller: "v", action: "IncluirCorpo")
+                            }
+                            @Html.ButtonLinkIndex(text: "Ver Organograma", controller: "CorpoDiretivo", action: "MontarTelaCorpoGrafica")
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "CorpoDiretivo", action: "Voltar")
+                        </div>
+                    </div>
+                    <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.CORPO_DIRETIVO>).Count > 0)                                        {
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead style ="background-color:lightsteelblue">
+                                        <tr>
+                                            <th>Função</th>   
+                                            <th>Nome</th>   
+                                            <th>Unidade</th>
+                                            <th>Telefone</th>
+                                            <th>Data Início</th>   
+                                            <th>Data Prevista</th>
+                                            <th>Data Saída</th>
+                                            <th>Situação</th>
+                                            <th class="td-one-action">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.CORPO_DIRETIVO>).OrderBy(p => p.FUCO_CD_ID))
+                                        {
+                                            <tr>
+                                                <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
+                                                <td>@cond.USUARIO.USUA_NM_NOME</td>
+                                                <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
+                                                <td>@cond.USUARIO.USUA_NR_TELEFONE</td>
+                                                <td>@cond.CODI_DT_INICIO.ToShortDateString()</td>
+                                                @if (cond.CODI_DT_SAIDA_REAL > DateTime.Today.Date)
+                                                {
+                                                    <td>@cond.CODI_DT_SAIDA_REAL.Value.ToShortDateString()</td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="font-weight: bold; color: crimson">@cond.CODI_DT_SAIDA_REAL.Value.ToShortDateString()</td>
+                                                }
+                                                @if (cond.CODI_DT_FINAL != null)
+                                                {
+                                                    <td>@cond.CODI_DT_FINAL.Value.ToShortDateString()</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>-</td>
+                                                }
+                                                @if (cond.CODI_DT_FINAL == null & cond.CODI_DT_SAIDA_REAL > DateTime.Today.Date)
+                                                {
+                                                    <td><span class="badge badge-success">Ativo</span></td>
+                                                }
+                                                else if (cond.CODI_DT_FINAL == null & cond.CODI_DT_SAIDA_REAL <= DateTime.Today.Date)
+                                                {
+                                                    <td><span class="badge badge-danger">Pendente</span></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge badge-warning">Encerrado</span></td>
+                                                }
+                                                <td class="td-one-action">
+                                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                                    {
+                                                        if (cond.CODI_DT_FINAL == null)
+                                                        {
+                                                            @Html.TableLinkDetails(cond.CODI_CD_ID, "EditarCorpo","fa-edit", "Editar")
+                                                            if (cond.CODI_IN_ATIVO == 1)
+                                                            {
+                                                                <span style="color: #337ab7; cursor:pointer;" alt="Desativar" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/CorpoDiretivo/ExcluirCorpo/@cond.CODI_CD_ID')" title="Excluir"></span>
+                                                            }
+                                                            else
+                                                            {   
+                                                                <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/CorpoDiretivo/ReativarCorpo/@cond.CODI_CD_ID')" title="Reativar"></span>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TableLinkDetails(cond.CODI_CD_ID, "VerCorpo","fa-search", "Consultar")
+                                                        }
+                                                    }
+                                                    else 
+                                                    {
+                                                        @Html.TableLinkDetails(cond.CODI_CD_ID, "VerCorpo","fa-search", "Consultar")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sweetAlert")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    
+    <script>
+        function mostrarDesc(desc) {
+            $('#modalDescBody').html(desc);
+            $('#modalDesc').modal('show');
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#data").mask("99/99/9999");
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+
+     <script>
+        function MudaIdForn(id) {
+            $('#idForn').val(id);
+        }
+    </script>
 }
 
-<h2>MontarTelaCorpo</h2>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+
+
 

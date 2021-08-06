@@ -15,10 +15,12 @@ namespace ApplicationServices.Services
     public class CorpoDiretivoAppService : AppServiceBase<CORPO_DIRETIVO>, ICorpoDiretivoAppService
     {
         private readonly ICorpoDiretivoService _baseService;
+        private readonly IConfiguracaoService _confService;
 
-        public CorpoDiretivoAppService(ICorpoDiretivoService baseService): base(baseService)
+        public CorpoDiretivoAppService(ICorpoDiretivoService baseService, IConfiguracaoService confService): base(baseService)
         {
             _baseService = baseService;
+            _confService = confService;
         }
 
         public List<CORPO_DIRETIVO> GetAllItens(Int32 idAss)
@@ -62,9 +64,31 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
+                List<CORPO_DIRETIVO> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID);
+                List<CORPO_DIRETIVO> lista_proc = lista.Where(p => p.USUA_CD_ID == item.USUA_CD_ID & p.CODI_DT_FINAL == null).ToList();
+                if (lista_proc.Count > 0)
                 {
                     return 1;
+                }
+
+                if (item.FUCO_CD_ID != 4)
+                {
+                    // Verifica se cargo já está preenchido
+                    lista_proc = lista.Where(p => p.FUCO_CD_ID == item.FUCO_CD_ID & p.CODI_DT_FINAL == null).ToList();
+                    if (lista_proc.Count > 0)
+                    {
+                        return 2;
+                    }
+                }
+                else
+                {
+                    // Verifica numero de conselheiros
+                    lista_proc = lista.Where(p => p.FUCO_CD_ID == 4 & p.CODI_DT_FINAL == null).ToList();
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+                    if (lista_proc.Count >= conf.CONF_NR_NUMERO_CONSELHEIROS)
+                    {
+                        return 3;
+                    }
                 }
 
                 // Completa objeto

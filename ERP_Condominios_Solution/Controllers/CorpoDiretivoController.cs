@@ -195,7 +195,6 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMasterForn = fornApp.GetAllItensAdm(idAss);
-            Session["FiltroCorpo"] = null;
             Session["ListaCorpo"] = listaMasterForn;
             return RedirectToAction("MontarTelaCorpo");
         }
@@ -207,8 +206,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            listaMasterForn = fornApp.GetAllItensAdm(idAss);
-            Session["FiltroCorpo"] = null;
+            listaMasterForn = fornApp.GetAllItens(idAss);
             Session["ListaCorpo"] = listaMasterForn;
             return RedirectToAction("MontarTelaCorpo");
         }
@@ -250,16 +248,18 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara listas
             ViewBag.Funcoes = new SelectList(fornApp.GetAllFuncoes(idAss).OrderBy(x => x.FUCO_NM_NOME), "FUCO_CD_ID", "FUCO_NM_NOME");
-            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).Where(p => p.USUA_IN_PROPRIETARIO == 1).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
             ViewBag.Unidade = usuario.UNID_CD_ID;
             ViewBag.Usuario = usuario.USUA_CD_ID;
 
             // Prepara view
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
             CORPO_DIRETIVO item = new CORPO_DIRETIVO();
             CorpoDiretivoViewModel vm = Mapper.Map<CORPO_DIRETIVO, CorpoDiretivoViewModel>(item);
             vm.CODI_DT_CADASTRO = DateTime.Today.Date;
             vm.CODI_IN_ATIVO = 1;
             vm.CODI_DT_INICIO = DateTime.Today.Date;
+            vm.CODI_DT_SAIDA_REAL = DateTime.Today.Date.AddDays(Convert.ToDouble(conf.CONF_NR_CORPO_DIRETIVO_PERIODO));
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
             return View(vm);
         }
@@ -336,7 +336,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara view
             ViewBag.Funcoes = new SelectList(fornApp.GetAllFuncoes(idAss).OrderBy(x => x.FUCO_NM_NOME), "FUCO_CD_ID", "FUCO_NM_NOME");
-            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).Where(p => p.USUA_IN_PROPRIETARIO == 1).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
 
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             CORPO_DIRETIVO item = fornApp.GetItemById(id);

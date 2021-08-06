@@ -22,6 +22,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public System.DateTime CODI_DT_INICIO { get; set; }
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]
         public Nullable<System.DateTime> CODI_DT_FINAL { get; set; }
+        [Required(ErrorMessage = "Campo DATA PREVISTA obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]
         public Nullable<System.DateTime> CODI_DT_SAIDA_REAL { get; set; }
         [DataType(DataType.Date, ErrorMessage = "Deve ser uma data válida")]

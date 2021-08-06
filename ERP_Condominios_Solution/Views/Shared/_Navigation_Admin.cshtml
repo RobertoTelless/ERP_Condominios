@@ -67,7 +67,7 @@
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarPortaria")"><a href="@Url.Action("CarregarPortaria", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Consultas</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Corpo Diretivo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCorpo")"><a href="@Url.Action("MontarTelaCorpo", "CorpoDiretivo")">Corpo Diretivo</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaVeiculo")"><a href="@Url.Action("MontarTelaVeiculo", "Veiculo")">Veículos Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAmbiente")"><a href="@Url.Action("MontarTelaAmbiente", "Ambiente")">Ambientes</a></li>
@@ -95,7 +95,7 @@
                         <li class="@Html.IsSelected(action: "CarregarSindico")"><a href="@Url.Action("CarregarSindico", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Operacional</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Contratos</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Corpo Diretivo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCorpo")"><a href="@Url.Action("MontarTelaCorpo", "CorpoDiretivo")">Corpo Diretivo</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaUnidade")"><a href="@Url.Action("MontarTelaUnidade", "Unidade")">Unidades</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaVaga")"><a href="@Url.Action("MontarTelaVaga", "Vaga")">Vagas</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaVeiculo")"><a href="@Url.Action("MontarTelaVeiculo", "Veiculo")">Veículos de Moradores</a></li>
@@ -156,7 +156,7 @@
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarMorador")"><a href="@Url.Action("CarregarPortaria", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Consultas</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Corpo Diretivo</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaCorpo")"><a href="@Url.Action("MontarTelaCorpo", "CorpoDiretivo")">Corpo Diretivo</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Escala de Trabalho</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAmbiente")"><a href="@Url.Action("MontarTelaAmbiente", "Ambiente")">Ambientes</a></li>
