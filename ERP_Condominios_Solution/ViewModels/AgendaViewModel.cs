@@ -12,12 +12,6 @@ namespace ERP_Condominios_Solution.ViewModels
     {
         [Key]
         public int AGEN_CD_ID { get; set; }
-
-
-
-
-
-
         [Required(ErrorMessage = "Campo USUÁRIO obrigatorio")]
         public int USUA_CD_ID { get; set; }
         [Required(ErrorMessage = "Campo ASSINANTE obrigatorio")]

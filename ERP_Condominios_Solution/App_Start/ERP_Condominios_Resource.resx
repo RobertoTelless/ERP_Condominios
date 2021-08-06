@@ -279,6 +279,9 @@
   <data name="M0058" xml:space="preserve">
     <value>Tarefa ja cadastrada</value>
   </data>
+  <data name="M0059" xml:space="preserve">
+    <value>Morador já incluído como ativo no CorpoDiretivo</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

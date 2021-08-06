@@ -203,6 +203,7 @@
     <Compile Include="Interfaces\IAmbienteAppService.cs" />
     <Compile Include="Interfaces\IContaBancariaAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
+    <Compile Include="Interfaces\ICorpoDiretivoAppService.cs" />
     <Compile Include="Interfaces\IGrupoAppService.cs" />
     <Compile Include="Interfaces\IMovimentoEstoqueProdutoAppService.cs" />
     <Compile Include="Interfaces\IOcorrenciaAppService.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Services\AmbienteAppService.cs" />
     <Compile Include="Services\ContaBancariaAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />
+    <Compile Include="Services\CorpoDiretivoAppService.cs" />
     <Compile Include="Services\GrupoAppService.cs" />
     <Compile Include="Services\MovimentoEstoqueProdutoAppService.cs" />
     <Compile Include="Services\OcorrenciaAppService.cs" />

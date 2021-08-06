@@ -285,6 +285,7 @@
     <Compile Include="Controllers\CondominioController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\ControleVeiculoController.cs" />
+    <Compile Include="Controllers\CorpoDiretivoController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\FornecedorNovoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -308,6 +309,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CorpoDiretivoViewModel.cs" />
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\AmbienteChaveViewModel.cs" />
     <Compile Include="ViewModels\AutorizacaoViewModel.cs" />
@@ -3074,6 +3076,11 @@
     <Content Include="Views\ControleVeiculo\VerControleVeiculo.cshtml" />
     <Content Include="Views\ControleVeiculo\GerarNotificacaoControleVeiculo.cshtml" />
     <Content Include="Views\ControleVeiculo\IncluirAcompanhamentoControleVeiculo.cshtml" />
+    <Content Include="Views\CorpoDiretivo\MontarTelaCorpo.cshtml" />
+    <Content Include="Views\CorpoDiretivo\IncluirCorpo.cshtml" />
+    <Content Include="Views\CorpoDiretivo\MontarTelaCorpoGrafica.cshtml" />
+    <Content Include="Views\CorpoDiretivo\EditarCorpo.cshtml" />
+    <Content Include="Views\CorpoDiretivo\VerCorpo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

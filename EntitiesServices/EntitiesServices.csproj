@@ -202,6 +202,7 @@
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
     <Compile Include="EntitiesServices\AmbienteService.cs" />
+    <Compile Include="EntitiesServices\CorpoDiretivoService.cs" />
     <Compile Include="EntitiesServices\GrupoService.cs" />
     <Compile Include="EntitiesServices\MovimentoEstoqueProdutoService.cs" />
     <Compile Include="EntitiesServices\OcorrenciaService.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICentroCustoRepository.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="Interfaces\Repositories\IEquipamentoManutencaoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IConvidadoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICorpoDiretivoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IGrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMaterialFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IMaterialAnexoRepository.cs" />
@@ -321,6 +324,7 @@
     <Compile Include="Interfaces\Services\IEquipamentoService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />
     <Compile Include="Interfaces\Services\IAmbienteService.cs" />
+    <Compile Include="Interfaces\Services\ICorpoDiretivoService.cs" />
     <Compile Include="Interfaces\Services\IGrupoService.cs" />
     <Compile Include="Interfaces\Services\IMovimentoEstoqueProdutoService.cs" />
     <Compile Include="Interfaces\Services\IOcorrenciaService.cs" />

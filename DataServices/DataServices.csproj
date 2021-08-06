@@ -195,6 +195,7 @@
     <Compile Include="Repositories\AutorizacaoAnexoRepository.cs" />
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
+    <Compile Include="Repositories\FuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Repositories\CategoriaOcorrenciaRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\CentroCustoRepository.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Repositories\EquipamentoManutencaoRepository.cs" />
     <Compile Include="Repositories\EquipamentoRepository.cs" />
     <Compile Include="Repositories\ConvidadoRepository.cs" />
+    <Compile Include="Repositories\CorpoDiretivoRepository.cs" />
     <Compile Include="Repositories\GrupoRepository.cs" />
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Repositories\ListaConvidadoComentarioRepository.cs" />

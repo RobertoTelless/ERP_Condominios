@@ -547,6 +547,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Morador já incluído como ativo no CorpoDiretivo.
+        /// </summary>
+        internal static string M0059 {
+            get {
+                return ResourceManager.GetString("M0059", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {

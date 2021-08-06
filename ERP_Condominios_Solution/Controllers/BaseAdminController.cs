@@ -142,6 +142,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensLista"] = 0;
             Session["MensSMSError"] = 0;
             Session["MensControleVeiculo"] = 0;
+            Session["MensCorpo"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
