@@ -11,8 +11,8 @@ namespace ModelServices.Interfaces.EntitiesServices
     public interface IUsuarioService : IServiceBase<USUARIO>
     {
         Boolean VerificarCredenciais(String senha, USUARIO usuario);
-        USUARIO GetByEmail(String email);
-        USUARIO GetByLogin(String login);
+        USUARIO GetByEmail(String email, Int32 idAss);
+        USUARIO GetByLogin(String login, Int32 idAss);
         USUARIO RetriveUserByEmail(String email);
         Int32 CreateUser(USUARIO usuario, LOG log);
         Int32 CreateUser(USUARIO usuario);

@@ -236,6 +236,7 @@
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICategoriaUsuarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaProdutoRepository.cs" />

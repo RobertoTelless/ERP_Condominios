@@ -26,14 +26,14 @@ namespace ApplicationServices.Services
             _notiService = notiService;
         }
 
-        public USUARIO GetByEmail(String email)
+        public USUARIO GetByEmail(String email, Int32 idAss)
         {
-            return _usuarioService.GetByEmail(email);
+            return _usuarioService.GetByEmail(email, idAss);
         }
 
-        public USUARIO GetByLogin(String login)
+        public USUARIO GetByLogin(String login, Int32 idAss)
         {
-            return _usuarioService.GetByLogin(login);
+            return _usuarioService.GetByLogin(login, idAss);
         }
 
         public List<USUARIO> GetAllUsuariosAdm(Int32 idAss)
@@ -108,11 +108,11 @@ namespace ApplicationServices.Services
                 }
 
                 // Verifica existencia prévia
-                if (_usuarioService.GetByEmail(usuario.USUA_NM_EMAIL) != null)
+                if (_usuarioService.GetByEmail(usuario.USUA_NM_EMAIL, usuarioLogado.ASSI_CD_ID) != null)
                 {
                     return 3;
                 }
-                if (_usuarioService.GetByLogin(usuario.USUA_NM_LOGIN) != null)
+                if (_usuarioService.GetByLogin(usuario.USUA_NM_LOGIN, usuarioLogado.ASSI_CD_ID) != null)
                 {
                     return 4;
                 }
@@ -172,11 +172,11 @@ namespace ApplicationServices.Services
                 }
 
                 // Verifica existencia prévia
-                if (_usuarioService.GetByEmail(usuario.USUA_NM_EMAIL) != null)
+                if (_usuarioService.GetByEmail(usuario.USUA_NM_EMAIL, usuarioLogado.ASSI_CD_ID) != null)
                 {
                     return 3;
                 }
-                if (_usuarioService.GetByLogin(usuario.USUA_NM_LOGIN) != null)
+                if (_usuarioService.GetByLogin(usuario.USUA_NM_LOGIN, usuarioLogado.ASSI_CD_ID) != null)
                 {
                     return 4;
                 }
@@ -230,7 +230,7 @@ namespace ApplicationServices.Services
                 }
 
                 // Verifica existencia prévia
-                USUARIO usu = _usuarioService.GetByEmail(usuario.USUA_NM_EMAIL);
+                USUARIO usu = _usuarioService.GetByEmail(usuario.USUA_NM_EMAIL, usuarioLogado.ASSI_CD_ID);
                 if (usu != null)
                 {
                     if (usu.USUA_CD_ID != usuario.USUA_CD_ID)
@@ -238,7 +238,7 @@ namespace ApplicationServices.Services
                         return 2;
                     }
                 }
-                usu = _usuarioService.GetByLogin(usuario.USUA_NM_LOGIN);
+                usu = _usuarioService.GetByLogin(usuario.USUA_NM_LOGIN, usuarioLogado.ASSI_CD_ID);
                 if (usu != null)
                 {
                     if (usu.USUA_CD_ID != usuario.USUA_CD_ID)
@@ -285,7 +285,7 @@ namespace ApplicationServices.Services
                 }
 
                 // Verifica existencia prévia
-                USUARIO usu = _usuarioService.GetByEmail(usuario.USUA_NM_EMAIL);
+                USUARIO usu = _usuarioService.GetByEmail(usuario.USUA_NM_EMAIL, usuarioLogado.ASSI_CD_ID);
                 if (usu != null)
                 {
                     if (usu.USUA_CD_ID != usuario.USUA_CD_ID)
@@ -293,7 +293,7 @@ namespace ApplicationServices.Services
                         return 2;
                     }
                 }
-                usu = _usuarioService.GetByLogin(usuario.USUA_NM_LOGIN);
+                usu = _usuarioService.GetByLogin(usuario.USUA_NM_LOGIN, usuarioLogado.ASSI_CD_ID);
                 if (usu != null)
                 {
                     if (usu.USUA_CD_ID != usuario.USUA_CD_ID)
@@ -451,7 +451,7 @@ namespace ApplicationServices.Services
                 }
 
                 // Checa login
-                usuario = _usuarioService.GetByLogin(login);
+                usuario = _usuarioService.GetByLogin(login, usuario.ASSI_CD_ID);
                 if (usuario == null)
                 {
                     usuario = new USUARIO();
