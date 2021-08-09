@@ -37,5 +37,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<NOTICIA> GetAllNoticias(Int32 idAss);
         TEMPLATE GetTemplate(String code);
         USUARIO GetAdministrador(Int32 idAss);
+        List<UNIDADE> GetAllUnidades(Int32 idAss);
+        List<USUARIO> ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss);
     }
 }

@@ -291,6 +291,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListaConvidadoController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\MoradorController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\OcorrenciaController.cs" />
@@ -3081,6 +3082,9 @@
     <Content Include="Views\CorpoDiretivo\MontarTelaCorpoGrafica.cshtml" />
     <Content Include="Views\CorpoDiretivo\EditarCorpo.cshtml" />
     <Content Include="Views\CorpoDiretivo\VerCorpo.cshtml" />
+    <Content Include="Views\Morador\MontarTelaMorador.cshtml" />
+    <Content Include="Views\Morador\VerMorador.cshtml" />
+    <Content Include="Views\Morador\MontarTelaMoradores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

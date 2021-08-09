@@ -226,6 +226,10 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaAutorizacao"] == 1)
+            {
+                return RedirectToAction("Morador", "Morador");
+            }
             return RedirectToAction("MontarTelaAutorizacao");
         }
 
@@ -532,6 +536,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["Autorizacao"] = item;
             Session["IdVolta"] = id;
             Session["IdAutorizacao"] = id;
+            Session["VoltaAutorizacao"] = 1;
             AutorizacaoViewModel vm = Mapper.Map<AUTORIZACAO_ACESSO, AutorizacaoViewModel>(item);
             return View(vm);
         }

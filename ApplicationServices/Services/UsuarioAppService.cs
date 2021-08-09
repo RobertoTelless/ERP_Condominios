@@ -56,6 +56,12 @@ namespace ApplicationServices.Services
             return _usuarioService.GetAllItens(idAss);
         }
 
+        public List<UNIDADE> GetAllUnidades(Int32 idAss)
+        {
+            return _usuarioService.GetAllUnidades(idAss);
+        }
+
+
         public USUARIO GetAdministrador(Int32 idAss)
         {
             return _usuarioService.GetAdministrador(idAss);
@@ -726,6 +732,27 @@ namespace ApplicationServices.Services
 
                 // Processa filtro
                 objeto = _usuarioService.ExecuteFilter(perfilId, cargoId, nome, login, email, idAss);
+                if (objeto.Count == 0)
+                {
+                    volta = 1;
+                }
+                return volta;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public Int32 ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss, out List<USUARIO> objeto)
+        {
+            try
+            {
+                objeto = new List<USUARIO>();
+                Int32 volta = 0;
+
+                // Processa filtro
+                objeto = _usuarioService.ExecuteFilterMorador(nome, idUnid, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;

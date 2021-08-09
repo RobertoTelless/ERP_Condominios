@@ -127,5 +127,27 @@ namespace DataServices.Repositories
             }
             return lista;
         }
+
+        public List<USUARIO> ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss)
+        {
+            List<USUARIO> lista = new List<USUARIO>();
+            IQueryable<USUARIO> query = Db.USUARIO;
+            if (!String.IsNullOrEmpty(nome))
+            {
+                query = query.Where(p => p.USUA_NM_NOME.Contains(nome));
+            }
+            if (idUnid != 0)
+            {
+                query = query.Where(p => p.UNID_CD_ID == idUnid);
+            }
+            if (query != null)
+            {
+                query = query.Where(p => p.ASSI_CD_ID == idAss);
+                query = query.OrderBy(a => a.USUA_NM_NOME);
+                lista = query.ToList<USUARIO>();
+            }
+            return lista;
+        }
+
     }
 }

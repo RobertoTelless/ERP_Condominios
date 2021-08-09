@@ -198,6 +198,10 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaOcorrencia"] == 2)
+            {
+                return RedirectToAction("MontarTelaMorador", "Morador");
+            }
             return RedirectToAction("MontarTelaOcorrencia");
         }
 
@@ -454,6 +458,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["Ocorrencia"] = item;
             Session["IdVolta"] = id;
             Session["IdOcorrencia"] = id;
+            Session["VoltaOcorrencia"] = 1;
             OcorrenciaViewModel vm = Mapper.Map<OCORRENCIA, OcorrenciaViewModel>(item);
             return View(vm);
         }

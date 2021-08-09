@@ -26,9 +26,10 @@ namespace ModelServices.EntitiesServices
         private readonly IUsuarioAnexoRepository _anexoRepository;
         private readonly INotificacaoRepository _notRepository;
         private readonly INoticiaRepository _ntcRepository;
+        private readonly IUnidadeRepository _uniRepository;
         protected ERP_CondominioEntities Db = new ERP_CondominioEntities();
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, ILogRepository logRepository, IConfiguracaoRepository configuracaoRepository, IPerfilRepository perfRepository, ITemplateRepository tempRepository, IUsuarioAnexoRepository anexoRepository, INotificacaoRepository notRepository, INoticiaRepository ntcRepository) : base(usuarioRepository)
+        public UsuarioService(IUsuarioRepository usuarioRepository, ILogRepository logRepository, IConfiguracaoRepository configuracaoRepository, IPerfilRepository perfRepository, ITemplateRepository tempRepository, IUsuarioAnexoRepository anexoRepository, INotificacaoRepository notRepository, INoticiaRepository ntcRepository, IUnidadeRepository uniRepository) : base(usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
             _logRepository = logRepository;
@@ -38,6 +39,7 @@ namespace ModelServices.EntitiesServices
             _anexoRepository = anexoRepository;
             _notRepository = notRepository;
             _ntcRepository = ntcRepository;
+            _uniRepository = uniRepository;
         }
 
         public USUARIO RetriveUserByEmail(String email)
@@ -103,6 +105,11 @@ namespace ModelServices.EntitiesServices
         public List<USUARIO> GetAllItens(Int32 idAss)
         {
             return _usuarioRepository.GetAllItens(idAss);
+        }
+
+        public List<UNIDADE> GetAllUnidades(Int32 idAss)
+        {
+            return _uniRepository.GetAllItens(idAss);
         }
 
         public List<USUARIO> GetAllItensBloqueados(Int32 idAss)
@@ -213,6 +220,12 @@ namespace ModelServices.EntitiesServices
         public List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss)
         {
             List<USUARIO> lista = _usuarioRepository.ExecuteFilter(perfilId, cargoId, nome, login, email, idAss);
+            return lista;
+        }
+
+        public List<USUARIO> ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss)
+        {
+            List<USUARIO> lista = _usuarioRepository.ExecuteFilterMorador(nome, idUnid, idAss);
             return lista;
         }
 
