@@ -221,6 +221,7 @@
     <Compile Include="EntitiesServices\TipoPessoaService.cs" />
     <Compile Include="EntitiesServices\ListaConvidadoService.cs" />
     <Compile Include="EntitiesServices\ControleVeiculoService.cs" />
+    <Compile Include="EntitiesServices\MudancaService.cs" />
     <Compile Include="EntitiesServices\VeiculoService.cs" />
     <Compile Include="EntitiesServices\VagaService.cs" />
     <Compile Include="EntitiesServices\UnidadeService.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaUsuarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMudancaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaProdutoRepository.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Interfaces\Repositories\IMovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IListaConvidadoComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IControleVeiculoAcompanhamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMudancaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IOcorrenciaComentarioRepository.cs" />
@@ -264,6 +267,7 @@
     <Compile Include="Interfaces\Repositories\IProdutoFornecedorRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoMovimentoEstoqueRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProdutoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMudancaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISubcategoriaProdutoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISubgrupoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IUnidadeMaterialRepository.cs" />
@@ -344,6 +348,7 @@
     <Compile Include="Interfaces\Services\ITipoPessoaService.cs" />
     <Compile Include="Interfaces\Services\IListaConvidadoService.cs" />
     <Compile Include="Interfaces\Services\IControleVeiculoService.cs" />
+    <Compile Include="Interfaces\Services\IMudancaService.cs" />
     <Compile Include="Interfaces\Services\IVeiculoService.cs" />
     <Compile Include="Interfaces\Services\IVagaService.cs" />
     <Compile Include="Interfaces\Services\IUnidadeService.cs" />

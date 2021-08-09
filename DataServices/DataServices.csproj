@@ -196,6 +196,7 @@
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaUsuarioRepository.cs" />
+    <Compile Include="Repositories\MudancaAnexoRepository.cs" />
     <Compile Include="Repositories\FuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Repositories\CategoriaOcorrenciaRepository.cs" />
     <Compile Include="Repositories\CategoriaProdutoRepository.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Repositories\MovimentoEstoqueProdutoRepository.cs" />
     <Compile Include="Repositories\ListaConvidadoComentarioRepository.cs" />
     <Compile Include="Repositories\ControleVeiculoAcompanhamentoRepository.cs" />
+    <Compile Include="Repositories\MudancaComentarioRepository.cs" />
     <Compile Include="Repositories\OcorrenciaRepository.cs" />
     <Compile Include="Repositories\OcorrenciaAnexoRepository.cs" />
     <Compile Include="Repositories\OcorrenciaComentarioRepository.cs" />
@@ -221,6 +223,7 @@
     <Compile Include="Repositories\ProdutoFornecedorRepository.cs" />
     <Compile Include="Repositories\ProdutoMovimentoEstoqueRepository.cs" />
     <Compile Include="Repositories\ProdutoRepository.cs" />
+    <Compile Include="Repositories\MudancaRepository.cs" />
     <Compile Include="Repositories\SubcategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\SubgrupoRepository.cs" />
     <Compile Include="Repositories\TipoContaRepository.cs" />
