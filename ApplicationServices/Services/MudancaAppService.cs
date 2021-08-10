@@ -177,6 +177,57 @@ namespace ApplicationServices.Services
                 item.SOMU_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
+                // Criticas
+                if (item.SOMU_IN_STATUS == 2)
+                {
+                    if (item.SOMU_DT_APROVACAO == null)
+                    {
+                        return 3;
+                    }
+                    if (item.SOMU_DT_APROVACAO.Value.Date > DateTime.Today.Date)
+                    {
+                        return 1;
+                    }
+                    if (item.SOMU_DT_APROVACAO.Value.Date < item.SOMU_DT_CRIACAO.Value.Date)
+                    {
+                        return 2;
+                    }
+                }
+                if (item.SOMU_IN_STATUS == 3)
+                {
+                    if (item.SOMU_DT_VETADA == null)
+                    {
+                        return 4;
+                    }
+                    if (item.SOMU_DT_VETADA.Value.Date > DateTime.Today.Date)
+                    {
+                        return 5;
+                    }
+                    if (item.SOMU_DT_VETADA.Value.Date < item.SOMU_DT_CRIACAO.Value.Date)
+                    {
+                        return 6;
+                    }
+                }
+                if (item.SOMU_IN_STATUS == 5)
+                {
+                    if (item.SOMU_DT_SUSPENSA == null)
+                    {
+                        return 7;
+                    }
+                    if (item.SOMU_DS_JUSTIFICATIVA == null)
+                    {
+                        return 10;
+                    }
+                    if (item.SOMU_DT_SUSPENSA.Value.Date > DateTime.Today.Date)
+                    {
+                        return 8;
+                    }
+                    if (item.SOMU_DT_SUSPENSA.Value.Date < item.SOMU_DT_CRIACAO.Value.Date)
+                    {
+                        return 9;
+                    }
+                }
+
                 // Monta Log
                 LOG log = new LOG
                 {

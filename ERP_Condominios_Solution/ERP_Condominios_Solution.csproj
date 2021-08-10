@@ -3093,6 +3093,10 @@
     <Content Include="Views\Mudanca\EditarMudanca.cshtml" />
     <Content Include="Views\Mudanca\GerarNotificacaoMudanca.cshtml" />
     <Content Include="Views\Mudanca\IncluirComentarioMudanca.cshtml" />
+    <Content Include="Views\Mudanca\AprovarMudanca.cshtml" />
+    <Content Include="Views\Mudanca\ReprovarMudanca.cshtml" />
+    <Content Include="Views\Mudanca\ExecutarMudanca.cshtml" />
+    <Content Include="Views\Mudanca\CancelarMudanca.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

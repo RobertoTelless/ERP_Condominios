@@ -53,6 +53,7 @@ namespace EntitiesServices.Model
             this.USUARIO_FUNCIONARIO = new HashSet<USUARIO_FUNCIONARIO>();
             this.VEICULO = new HashSet<VEICULO>();
             this.CONTROLE_VEICULO_ACOMPANHAMENTO = new HashSet<CONTROLE_VEICULO_ACOMPANHAMENTO>();
+            this.ENTRADA_SAIDA_COMENTARIO = new HashSet<ENTRADA_SAIDA_COMENTARIO>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -177,5 +178,7 @@ namespace EntitiesServices.Model
         public virtual ICollection<VEICULO> VEICULO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ENTRADA_SAIDA_COMENTARIO> ENTRADA_SAIDA_COMENTARIO { get; set; }
     }
 }

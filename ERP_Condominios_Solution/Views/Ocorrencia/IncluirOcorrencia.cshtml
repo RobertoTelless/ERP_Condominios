@@ -90,6 +90,7 @@
                                                 @if (ViewBag.Perfil == "MOR")
                                                 {
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        @Html.HiddenFor(m => m.UNID_CD_ID)
                                                         Unidade
                                                         @Html.TextBox("uni", (String)ViewBag.Unidade, new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
                                                     </div>

@@ -14,6 +14,12 @@ namespace EntitiesServices.Model
     
     public partial class ENTRADA_SAIDA
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ENTRADA_SAIDA()
+        {
+            this.ENTRADA_SAIDA_COMENTARIO = new HashSet<ENTRADA_SAIDA_COMENTARIO>();
+        }
+    
         public int ENSA_CD_ID { get; set; }
         public Nullable<int> ASSI_CD_ID { get; set; }
         public Nullable<int> UNID_CD_ID { get; set; }
@@ -31,10 +37,14 @@ namespace EntitiesServices.Model
         public int ENSA_IN_LISTA_NEGRA { get; set; }
         public int ENSA_IN_STATUS { get; set; }
         public string ENSA_DS_JUSTIFICATIVA { get; set; }
+        public Nullable<int> GRPA_CD_ID { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual AUTORIZACAO_ACESSO AUTORIZACAO_ACESSO { get; set; }
         public virtual UNIDADE UNIDADE { get; set; }
         public virtual USUARIO USUARIO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ENTRADA_SAIDA_COMENTARIO> ENTRADA_SAIDA_COMENTARIO { get; set; }
+        public virtual GRAU_PARENTESCO GRAU_PARENTESCO { get; set; }
     }
 }

@@ -28,8 +28,11 @@
             <li>
                 <a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Solicitações de Mudança</a>
             </li>
+            <li>
+                <a href="@Url.Action("EditarMudanca", "Mudanca")">Solicitações de Mudança - Edição</a>
+            </li>
             <li class="active">
-                <strong>Solicitações de Mudança - Edição</strong>
+                <strong>Solicitações de Mudança - Reprovação</strong>
             </li>
         </ol>
         <br />
@@ -115,7 +118,7 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Solicitações de Mudança - Edição</h5>
+                    <h5>Solicitações de Mudança - Reprovação</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -140,44 +143,6 @@
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
-                        @if (ViewBag.Perfil == "SIN")
-                        {
-                            if (Model.SOMU_IN_STATUS == 1)
-                            {
-                                @Html.ButtonLinkIndex(text: "Aprovar Solicitação", action: "AprovarMudanca", controller: "Mudanca")
-                                @Html.ButtonLinkIndex(text: "Reprovar Solicitação", action: "ReprovarMudanca", controller: "Mudanca")
-                           }
-                            @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoMudanca", controller: "Mudanca")
-                        }
-                        else if (ViewBag.Perfil == "POR")
-                        {
-                            if (Model.SOMU_IN_STATUS == 2)
-                            {
-                                @Html.ButtonLinkIndex(text: "Executar Mudança", action: "ExecutarMudanca", controller: "Mudanca")
-                            }
-                        }
-                        else if (ViewBag.Perfil == "MOR")
-                        {
-                            if (Model.SOMU_IN_STATUS == 1 || Model.SOMU_IN_STATUS == 2)
-                            {
-                                @Html.ButtonLinkIndex(text: "Cancelar Solicitação", action: "CancelarMudanca", controller: "Mudanca")
-                            }
-                        }
-                        else if (ViewBag.Perfil == "ADM")
-                        {
-                            if (Model.SOMU_IN_STATUS == 1)
-                            {
-                                @Html.ButtonLinkIndex(text: "Aprovar Solicitação", action: "AprovarMudanca", controller: "Mudanca")
-                                @Html.ButtonLinkIndex(text: "Reprovar Solicitação", action: "ReprovarMudanca", controller: "Mudanca")
-                                @Html.ButtonLinkIndex(text: "Cancelar Solicitação", action: "CancelarMudanca", controller: "Mudanca")
-                            }
-                            else if (Model.SOMU_IN_STATUS == 2)
-                            {
-                                @Html.ButtonLinkIndex(text: "Executar Mudança", action: "ExecutarMudanca", controller: "Mudanca")
-                                @Html.ButtonLinkIndex(text: "Cancelar Solicitação", action: "CancelarMudanca", controller: "Mudanca")
-                            }
-                            @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoMudanca", controller: "Mudanca")
-                        }
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
                     </div>
                     @Html.AntiForgeryToken()
@@ -191,14 +156,13 @@
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">Comentários</a></li>
                         </ul>
                         <div class="tab-content">   
 
                             @*Dados Gerais*@
                             <div id="tab-1" class="tab-pane active">
                                 <div class="panel-body">
-                                    @using (Html.BeginForm("EditarMudanca", "Mudanca", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("ReprovarMudanca", "Mudanca", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {                                        
                                         <div class="row" style="width: 100%;">
                                             <div class="col-md-12">
@@ -276,21 +240,15 @@
                                                             Unidade
                                                             @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                         </div>
-                                                        @if (Model.SOMU_IN_STATUS == 1)
-                                                        {
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Data da Mudança*
-                                                                @Html.TextBoxFor(m => m.SOMU_DT_MUDANCA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data1" })
-                                                                @Html.ValidationMessageFor(m => m.SOMU_DT_MUDANCA, "",new { @style="color:red" })
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="col-lg-2 col-md-2 col-xs-12">
-                                                                Data da Mudança
-                                                                @Html.TextBoxFor(m => m.SOMU_DT_MUDANCA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
-                                                            </div>
-                                                        }
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Data da Mudança
+                                                            @Html.TextBoxFor(m => m.SOMU_DT_MUDANCA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            Data da Reprovação*
+                                                            @Html.TextBoxFor(m => m.SOMU_DT_VETADA, new { @class = "form-control datetime-picker", autofocus = true, @id = "aprov", @style = "color:green; font-weight:bold" })
+                                                            @Html.ValidationMessageFor(m => m.SOMU_DT_VETADA, "",new { @style="color:red" })
+                                                        </div>
                                                     </div>
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                         <div class="col-lg-12 col-md-12 col-xs-12">
@@ -304,48 +262,9 @@
                                             </div>
                                         </div>  
                                         <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma edição da Solicitação?", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                            @Html.ButtonActionSubmit(text: "Confirma Reprovação da Solicitação?", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
                                         </div>
                                     }
-                                </div>
-                            </div>
-
-                            @*Comentários*@
-                            <div id="tab-2" class="tab-pane">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <h4>Comentários:</h4>
-                                            @if (Model.SOLICITACAO_MUDANCA_COMENTARIO.Count > 0)
-                                            {
-                                                foreach (var item in (Model.SOLICITACAO_MUDANCA_COMENTARIO).OrderByDescending(a => a.SMCO_DT_COMENTARIO))
-                                                {
-                                                    <div class="social-feed-box">
-                                                        <div class="social-avatar">
-                                                            <a href="" class="pull-left">
-                                                                <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                            </a>
-                                                            <div class="media-body">
-                                                                <a href="#">
-                                                                    @item.USUARIO.USUA_NM_NOME
-                                                                </a>
-                                                                <small class="text-muted">@item.SMCO_DT_COMENTARIO.Value.ToString("dd/MM/yyyy HH:mm")</small>
-                                                            </div>
-                                                        </div>
-                                                        <div class="social-body">
-                                                            <p>
-                                                                @item.SMCO_DS_COMENTARIO
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        @Html.ButtonLinkIndex(text: "Incluir Novo Comentário", action: "IncluirComentarioMudanca", controller: "Mudanca")
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -362,26 +281,30 @@
 
 
 @section Styles {
-    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
-    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
-
-    @Scripts.Render("~/plugins/toastr")
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/plugins/touchSpin")
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
-
+    <script src="~/Scripts/uploadAnexo.js"></script>
+    
     <script type="text/javascript" language="javascript">
         $(function () {
             $('.date-picker').datepicker(
@@ -438,6 +361,38 @@
         });
 
     </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.datetime-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Agora',
+                    closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
     <script type="text/javascript">
         $(function () {
             $("#cpf").mask("999.999.999-99");
@@ -446,6 +401,7 @@
             $('#tel').mask("(99) 9999-9999");
             $('#cel').mask("(99) 99999-9999");
             $('#wpp').mask("(99) 99999-9999");
+            $('#aprov').mask("99/99/9999 99:99");
         });
     </script>
 

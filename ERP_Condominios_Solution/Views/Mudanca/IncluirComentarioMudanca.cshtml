@@ -1,1 +1,185 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_Condominios_Solution.ViewModels.MudancaComentarioViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Solicitações de Mudança</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Solicitações de Mudança</a>
+            </li>
+            <li>
+                <a href="@Url.Action("EditarMudanca", "Mudanca")">Solicitações de Mudança - Edição</a>
+            </li>
+            <li class="active">
+                <strong>Solicitações de Mudança - Incluir Comentário</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Solicitações de Mudança - Comentário</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                @using (Html.BeginForm("IncluirComentarioMudanca", "Mudanca", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                {
+                    <div class="ibox-content">
+                        @Html.AntiForgeryToken()
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                        <div class="form-group">
+                            @Html.ButtonActionSubmit(text: "Confirma Criação de Comentário")
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoMudanca", controller: "Mudanca")
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    @if (!String.IsNullOrEmpty(Model.USUARIO.USUA_AQ_FOTO))
+	                                {
+                                        <img src="@Url.Content(Model.USUARIO.USUA_AQ_FOTO)" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Imagens/Base/5.png" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                    }
+                                </div>                       
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-2 col-md-2 col-sm-12">
+                                        @Html.HiddenFor(m => m.SMCO_IN_ATIVO)
+                                        @Html.HiddenFor(m => m.SOMU_CD_ID)
+                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                        @Html.HiddenFor(m => m.SMCO_DT_COMENTARIO)
+                                        Data
+                                        @Html.TextBoxFor(m => m.SMCO_DT_COMENTARIO, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12">
+                                        Nome 
+                                        @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true , @readonly="readonly"})
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;"> 
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    Texto do Comentário*
+                                    @Html.TextAreaFor(m => m.SMCO_DS_COMENTARIO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.SMCO_DS_COMENTARIO, "", new { @style = "color:red" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.ButtonActionSubmit(text: "Confirma Criação de Comentário")
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoMudanca", controller: "Mudanca")
+                        </div>
+                    </div>
+                }
+            </div>
+         </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+}
+@section Scripts {
+   
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+            .css("display", "normal")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Selecione uma data",
+                text: false 
+            });
+        });
+    </script>  
+    
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+        });
+    </script>
+
+    @Scripts.Render("~/plugins/iCheck")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+        });
+    </script>
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

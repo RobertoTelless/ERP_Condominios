@@ -470,6 +470,9 @@
     <Compile Include="Model\ENTRADA_SAIDA.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ENTRADA_SAIDA_COMENTARIO.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\EQUIPAMENTO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

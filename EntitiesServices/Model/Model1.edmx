@@ -528,6 +528,7 @@
           <Property Name="UNID_CD_ID" Type="int" />
           <Property Name="AUAC_CD_ID" Type="int" />
           <Property Name="USUA_CD_ID" Type="int" />
+          <Property Name="GRPA_CD_ID" Type="int" />
           <Property Name="ENSA_NM_NOME" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ENSA_NR_DOCUMENTO" Type="varchar" MaxLength="50" />
           <Property Name="ENSA_NM_EMPRESA" Type="varchar" MaxLength="50" />
@@ -540,6 +541,17 @@
           <Property Name="ENSA_IN_LISTA_NEGRA" Type="int" Nullable="false" />
           <Property Name="ENSA_IN_STATUS" Type="int" Nullable="false" />
           <Property Name="ENSA_DS_JUSTIFICATIVA" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="ENTRADA_SAIDA_COMENTARIO">
+          <Key>
+            <PropertyRef Name="ESCO_CD_ID" />
+          </Key>
+          <Property Name="ESCO_CD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ENSA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="int" Nullable="false" />
+          <Property Name="ESCO_DT_COMENTARIO" Type="datetime" />
+          <Property Name="ESCO_DS_COMENTARIO" Type="varchar" MaxLength="500" />
+          <Property Name="ESCO_IN_ATIVO" Type="int" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO">
           <Key>
@@ -2507,6 +2519,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
+          <End Role="ENTRADA_SAIDA" Type="Self.ENTRADA_SAIDA" Multiplicity="1" />
+          <End Role="ENTRADA_SAIDA_COMENTARIO" Type="Self.ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRADA_SAIDA">
+              <PropertyRef Name="ENSA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
+              <PropertyRef Name="ENSA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="ENTRADA_SAIDA_COMENTARIO" Type="Self.ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
+          <End Role="GRAU_PARENTESCO" Type="Self.GRAU_PARENTESCO" Multiplicity="0..1" />
+          <End Role="ENTRADA_SAIDA" Type="Self.ENTRADA_SAIDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRAU_PARENTESCO">
+              <PropertyRef Name="GRPA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA">
+              <PropertyRef Name="GRPA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ENTRADA_SAIDA_UNIDADE">
           <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="0..1" />
           <End Role="ENTRADA_SAIDA" Type="Self.ENTRADA_SAIDA" Multiplicity="*" />
@@ -4131,6 +4179,7 @@
           <EntitySet Name="ENCOMENDA_ANEXO" EntityType="Self.ENCOMENDA_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ENCOMENDA_COMENTARIO" EntityType="Self.ENCOMENDA_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ENTRADA_SAIDA" EntityType="Self.ENTRADA_SAIDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ENTRADA_SAIDA_COMENTARIO" EntityType="Self.ENTRADA_SAIDA_COMENTARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="Self.EQUIPAMENTO_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPAMENTO_MANUTENCAO" EntityType="Self.EQUIPAMENTO_MANUTENCAO" Schema="dbo" store:Type="Tables" />
@@ -4492,6 +4541,18 @@
           </AssociationSet>
           <AssociationSet Name="FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO" Association="Self.FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO">
             <End Role="AUTORIZACAO_ACESSO" EntitySet="AUTORIZACAO_ACESSO" />
+            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" Association="Self.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
+            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" Association="Self.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO" Association="Self.FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
+            <End Role="GRAU_PARENTESCO" EntitySet="GRAU_PARENTESCO" />
             <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
           </AssociationSet>
           <AssociationSet Name="FK_ENTRADA_SAIDA_UNIDADE" Association="Self.FK_ENTRADA_SAIDA_UNIDADE">
@@ -5703,6 +5764,9 @@
           <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="Self.FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO" FromRole="ENTRADA_SAIDA" ToRole="AUTORIZACAO_ACESSO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENTRADA_SAIDA_UNIDADE" FromRole="ENTRADA_SAIDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENTRADA_SAIDA_USUARIO" FromRole="ENTRADA_SAIDA" ToRole="USUARIO" />
+          <Property Name="GRPA_CD_ID" Type="Int32" />
+          <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA" ToRole="ENTRADA_SAIDA_COMENTARIO" />
+          <NavigationProperty Name="GRAU_PARENTESCO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="ENTRADA_SAIDA" ToRole="GRAU_PARENTESCO" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO">
           <Key>
@@ -5917,6 +5981,7 @@
           <Property Name="GRPA_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GRPA_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="Self.FK_AUTORIZACAO_ACESSO_GRAU_PARENTESCO" FromRole="GRAU_PARENTESCO" ToRole="AUTORIZACAO_ACESSO" />
+          <NavigationProperty Name="ENTRADA_SAIDA" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="GRAU_PARENTESCO" ToRole="ENTRADA_SAIDA" />
         </EntityType>
         <EntityType Name="GRUPO">
           <Key>
@@ -6926,6 +6991,7 @@
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
           <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="ENTRADA_SAIDA_COMENTARIO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -10401,6 +10467,19 @@
             <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
             <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
           </AssociationSet>
+          <EntitySet Name="ENTRADA_SAIDA_COMENTARIO" EntityType="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO" />
+          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" Association="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
+            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO" Association="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
+            <End Role="GRAU_PARENTESCO" EntitySet="GRAU_PARENTESCO" />
+            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" Association="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
           <Key>
@@ -10448,6 +10527,55 @@
             </Principal>
             <Dependent Role="CONTROLE_VEICULO">
               <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ENTRADA_SAIDA_COMENTARIO">
+          <Key>
+            <PropertyRef Name="ESCO_CD_ID" />
+          </Key>
+          <Property Name="ESCO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ENSA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ESCO_DT_COMENTARIO" Type="DateTime" Precision="3" />
+          <Property Name="ESCO_DS_COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ESCO_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ENTRADA_SAIDA" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA_COMENTARIO" ToRole="ENTRADA_SAIDA" />
+          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" FromRole="ENTRADA_SAIDA_COMENTARIO" ToRole="USUARIO" />
+        </EntityType>
+        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
+          <End Type="ERP_CondominioModel.ENTRADA_SAIDA" Role="ENTRADA_SAIDA" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO" Role="ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRADA_SAIDA">
+              <PropertyRef Name="ENSA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
+              <PropertyRef Name="ENSA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
+          <End Type="ERP_CondominioModel.GRAU_PARENTESCO" Role="GRAU_PARENTESCO" Multiplicity="0..1" />
+          <End Type="ERP_CondominioModel.ENTRADA_SAIDA" Role="ENTRADA_SAIDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRAU_PARENTESCO">
+              <PropertyRef Name="GRPA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA">
+              <PropertyRef Name="GRPA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
+          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
+          <End Type="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO" Role="ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
+              <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11000,6 +11128,7 @@
           <EntitySetMapping Name="ENTRADA_SAIDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ENTRADA_SAIDA">
               <MappingFragment StoreEntitySet="ENTRADA_SAIDA">
+                <ScalarProperty Name="GRPA_CD_ID" ColumnName="GRPA_CD_ID" />
                 <ScalarProperty Name="ENSA_CD_ID" ColumnName="ENSA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -12222,6 +12351,18 @@
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="COVE_CD_ID" ColumnName="COVE_CD_ID" />
                 <ScalarProperty Name="CVAC_CD_ID" ColumnName="CVAC_CD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ENTRADA_SAIDA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO">
+              <MappingFragment StoreEntitySet="ENTRADA_SAIDA_COMENTARIO">
+                <ScalarProperty Name="ESCO_IN_ATIVO" ColumnName="ESCO_IN_ATIVO" />
+                <ScalarProperty Name="ESCO_DS_COMENTARIO" ColumnName="ESCO_DS_COMENTARIO" />
+                <ScalarProperty Name="ESCO_DT_COMENTARIO" ColumnName="ESCO_DT_COMENTARIO" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ENSA_CD_ID" ColumnName="ENSA_CD_ID" />
+                <ScalarProperty Name="ESCO_CD_ID" ColumnName="ESCO_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

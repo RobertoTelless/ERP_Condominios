@@ -283,6 +283,7 @@ namespace ERP_Condominios_Solution.Controllers
             if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 vm.UNID_CD_ID = usuario.UNID_CD_ID.Value;
+                ViewBag.Unidade = usuario.UNIDADE.UNID_NM_EXIBE;
             }
             return View(vm);
         }
@@ -375,11 +376,72 @@ namespace ERP_Condominios_Solution.Controllers
             ent.Add(new SelectListItem() { Text = "Saída", Value = "2" });
             ViewBag.Entrada = new SelectList(ent, "Value", "Text");
 
+            // Prepara status
             SOLICITACAO_MUDANCA item = baseApp.GetItemById(id);
+            String perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Perfil = perfil;
+            List<SelectListItem> status = new List<SelectListItem>();
+            if (perfil == "ADM" || perfil == "SIN")
+            {
+                if (item.SOMU_IN_STATUS == 1)
+                {
+                    status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
+                    status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
+                    status.Add(new SelectListItem() { Text = "Não Aprovada", Value = "3" });
+                }
+            }
+            else if (perfil == "MOR")
+            {
+                if (item.SOMU_IN_STATUS == 1 || item.SOMU_IN_STATUS == 2)
+                {
+                    status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
+                    status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
+                    status.Add(new SelectListItem() { Text = "Cancelada", Value = "5" });
+                }
+            }
+            else if (perfil == "POR")
+            {
+                if (item.SOMU_IN_STATUS == 2)
+                {
+                    status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
+                    status.Add(new SelectListItem() { Text = "Executada", Value = "4" });
+                }
+            }
+            ViewBag.Status = new SelectList(status, "Value", "Text");
+            if (item.SOMU_IN_STATUS == 1)
+            {
+                ViewBag.NomeStatus = "Em Aprovação";
+            }
+            else if (item.SOMU_IN_STATUS == 2)
+            {
+                ViewBag.NomeStatus = "Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 3)
+            {
+                ViewBag.NomeStatus = "Não Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 4)
+            {
+                ViewBag.NomeStatus = "Executada/Encerrada";
+            }
+            else if (item.SOMU_IN_STATUS == 5)
+            {
+                ViewBag.NomeStatus = "Cancelada";
+            }
+
+            // Monta view
             objetoAntes = item;
             Session["Mudanca"] = item;
             Session["IdVolta"] = id;
             Session["IdMudanca"] = id;
+            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
+            {
+                ViewBag.ES = "Entrada";
+            }
+            else
+            {
+                ViewBag.ES = "Saída";
+            }
             if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 Session["IdUnidade"] = usuario.UNID_CD_ID;
@@ -573,6 +635,570 @@ namespace ERP_Condominios_Solution.Controllers
             Session["IdMudanca"] = id;
             MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
             return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult AprovarMudanca()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN"  || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+                {
+                    Session["MensMudanca"] = 2;
+                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+
+            // Prepara status
+            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["IdMudanca"];
+            String perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Perfil = perfil;
+
+            if (item.SOMU_IN_STATUS == 1)
+            {
+                ViewBag.NomeStatus = "Em Aprovação";
+            }
+            else if (item.SOMU_IN_STATUS == 2)
+            {
+                ViewBag.NomeStatus = "Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 3)
+            {
+                ViewBag.NomeStatus = "Não Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 4)
+            {
+                ViewBag.NomeStatus = "Executada/Encerrada";
+            }
+            else if (item.SOMU_IN_STATUS == 5)
+            {
+                ViewBag.NomeStatus = "Cancelada";
+            }
+
+            // Monta view
+            objetoAntes = item;
+            Session["Mudanca"] = item;
+            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
+            {
+                ViewBag.ES = "Entrada";
+            }
+            else
+            {
+                ViewBag.ES = "Saída";
+            }
+            if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                Session["IdUnidade"] = usuario.UNID_CD_ID;
+            }
+            else
+            {
+                Session["IdUnidade"] = null;
+            }
+            ViewBag.NovoStatus = "Aprovada";
+            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
+            vm.SOMU_DT_APROVACAO = DateTime.Now;
+            vm.SOMU_IN_STATUS = 2;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult AprovarMudanca(MudancaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
+
+                    // Verifica retorno
+                    if (item.SOMU_IN_STATUS == 2)
+                    {
+                        NOTIFICACAO not = new NOTIFICACAO();
+                        not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        not.ASSI_CD_ID = idAss;
+                        not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                        not.NOTI_IN_ATIVO = 1;
+                        not.NOTI_IN_NIVEL = 1;
+                        not.NOTI_IN_ORIGEM = 1;
+                        not.NOTI_IN_STATUS = 1;
+                        not.NOTI_IN_VISTA = 0;
+                        not.NOTI_NM_TITULO = "Notificação para Morador - Aprovação de Mudança";
+                        not.USUA_CD_ID = item.USUA_CD_ID;
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                        Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
+
+                        List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
+                        foreach (USUARIO usu in port)
+                        {
+                            not = new NOTIFICACAO();
+                            not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                            not.ASSI_CD_ID = idAss;
+                            not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                            not.NOTI_IN_ATIVO = 1;
+                            not.NOTI_IN_NIVEL = 1;
+                            not.NOTI_IN_ORIGEM = 1;
+                            not.NOTI_IN_STATUS = 1;
+                            not.NOTI_IN_VISTA = 0;
+                            not.NOTI_NM_TITULO = "Notificação para Portaria - Aprovação de Mudança";
+                            not.USUA_CD_ID = usu.USUA_CD_ID;
+                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                            Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
+                        }
+
+                    }
+
+                    // Sucesso
+                    Session["MensMudanca"] = 0;
+                    return RedirectToAction("VoltarAnexoMudanca");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ReprovarMudanca()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN"  || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+                {
+                    Session["MensMudanca"] = 2;
+                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+
+            // Prepara status
+            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["IdMudanca"];
+            String perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Perfil = perfil;
+
+            if (item.SOMU_IN_STATUS == 1)
+            {
+                ViewBag.NomeStatus = "Em Aprovação";
+            }
+            else if (item.SOMU_IN_STATUS == 2)
+            {
+                ViewBag.NomeStatus = "Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 3)
+            {
+                ViewBag.NomeStatus = "Não Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 4)
+            {
+                ViewBag.NomeStatus = "Executada/Encerrada";
+            }
+            else if (item.SOMU_IN_STATUS == 5)
+            {
+                ViewBag.NomeStatus = "Cancelada";
+            }
+
+            // Monta view
+            objetoAntes = item;
+            Session["Mudanca"] = item;
+            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
+            {
+                ViewBag.ES = "Entrada";
+            }
+            else
+            {
+                ViewBag.ES = "Saída";
+            }
+            if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                Session["IdUnidade"] = usuario.UNID_CD_ID;
+            }
+            else
+            {
+                Session["IdUnidade"] = null;
+            }
+            ViewBag.NovoStatus = "Não Aprovada";
+            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
+            vm.SOMU_DT_VETADA = DateTime.Now;
+            vm.SOMU_IN_STATUS = 3;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult ReprovarMudanca(MudancaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
+
+                    // Verifica retorno
+                    if (item.SOMU_IN_STATUS == 3)
+                    {
+                        NOTIFICACAO not = new NOTIFICACAO();
+                        not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        not.ASSI_CD_ID = idAss;
+                        not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                        not.NOTI_IN_ATIVO = 1;
+                        not.NOTI_IN_NIVEL = 1;
+                        not.NOTI_IN_ORIGEM = 1;
+                        not.NOTI_IN_STATUS = 1;
+                        not.NOTI_IN_VISTA = 0;
+                        not.NOTI_NM_TITULO = "Notificação para Morador - Reprovação de Mudança";
+                        not.USUA_CD_ID = item.USUA_CD_ID;
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.SOMU_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                        Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
+                    }
+
+                    // Sucesso
+                    Session["MensMudanca"] = 0;
+                    return RedirectToAction("VoltarAnexoMudanca");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CancelarMudanca()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                {
+                    Session["MensMudanca"] = 2;
+                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+
+            // Prepara status
+            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["IdMudanca"];
+            String perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Perfil = perfil;
+
+            if (item.SOMU_IN_STATUS == 1)
+            {
+                ViewBag.NomeStatus = "Em Aprovação";
+            }
+            else if (item.SOMU_IN_STATUS == 2)
+            {
+                ViewBag.NomeStatus = "Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 3)
+            {
+                ViewBag.NomeStatus = "Não Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 4)
+            {
+                ViewBag.NomeStatus = "Executada/Encerrada";
+            }
+            else if (item.SOMU_IN_STATUS == 5)
+            {
+                ViewBag.NomeStatus = "Cancelada";
+            }
+
+            // Monta view
+            objetoAntes = item;
+            Session["Mudanca"] = item;
+            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
+            {
+                ViewBag.ES = "Entrada";
+            }
+            else
+            {
+                ViewBag.ES = "Saída";
+            }
+            if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                Session["IdUnidade"] = usuario.UNID_CD_ID;
+            }
+            else
+            {
+                Session["IdUnidade"] = null;
+            }
+            ViewBag.NovoStatus = "Cancelada";
+            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
+            vm.SOMU_DT_SUSPENSA = DateTime.Now;
+            vm.SOMU_IN_STATUS = 5;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult CancelarMudanca(MudancaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
+
+                    // Verifica retorno
+                    if (item.SOMU_IN_STATUS == 5)
+                    {
+                        USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
+                        NOTIFICACAO not = new NOTIFICACAO();
+                        not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        not.ASSI_CD_ID = idAss;
+                        not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                        not.NOTI_IN_ATIVO = 1;
+                        not.NOTI_IN_NIVEL = 1;
+                        not.NOTI_IN_ORIGEM = 1;
+                        not.NOTI_IN_STATUS = 1;
+                        not.NOTI_IN_VISTA = 0;
+                        not.NOTI_NM_TITULO = "Notificação para Síndico - Cancelamento de Mudança";
+                        not.USUA_CD_ID = sind.USUA_CD_ID;
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                        Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
+
+                        List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
+                        foreach (USUARIO usu in port)
+                        {
+                            not = new NOTIFICACAO();
+                            not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                            not.ASSI_CD_ID = idAss;
+                            not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                            not.NOTI_IN_ATIVO = 1;
+                            not.NOTI_IN_NIVEL = 1;
+                            not.NOTI_IN_ORIGEM = 1;
+                            not.NOTI_IN_STATUS = 1;
+                            not.NOTI_IN_VISTA = 0;
+                            not.NOTI_NM_TITULO = "Notificação para Portaria - Cancelamento de Mudança";
+                            not.USUA_CD_ID = usu.USUA_CD_ID;
+                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                            Int32 volta3 = notiApp.ValidateCreate(not, usuarioLogado);
+                        }
+                    }
+
+                    // Sucesso
+                    Session["MensMudanca"] = 0;
+                    return RedirectToAction("VoltarAnexoMudanca");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ExecutarMudanca()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                {
+                    Session["MensMudanca"] = 2;
+                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Prepara view
+
+            // Prepara status
+            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["IdMudanca"];
+            String perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            ViewBag.Perfil = perfil;
+
+            if (item.SOMU_IN_STATUS == 1)
+            {
+                ViewBag.NomeStatus = "Em Aprovação";
+            }
+            else if (item.SOMU_IN_STATUS == 2)
+            {
+                ViewBag.NomeStatus = "Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 3)
+            {
+                ViewBag.NomeStatus = "Não Aprovada";
+            }
+            else if (item.SOMU_IN_STATUS == 4)
+            {
+                ViewBag.NomeStatus = "Executada/Encerrada";
+            }
+            else if (item.SOMU_IN_STATUS == 5)
+            {
+                ViewBag.NomeStatus = "Cancelada";
+            }
+
+            // Monta view
+            objetoAntes = item;
+            Session["Mudanca"] = item;
+            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
+            {
+                ViewBag.ES = "Entrada";
+            }
+            else
+            {
+                ViewBag.ES = "Saída";
+            }
+            if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+            {
+                Session["IdUnidade"] = usuario.UNID_CD_ID;
+            }
+            else
+            {
+                Session["IdUnidade"] = null;
+            }
+            ViewBag.NovoStatus = "Executada";
+            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
+            vm.SOMU_DT_EXECUCAO_FINAL = DateTime.Now;
+            vm.SOMU_DT_EXECUCAO_INICIO = DateTime.Now;
+            vm.SOMU_IN_STATUS = 4;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult ExecutarMudanca(MudancaViewModel vm)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Executa a operação
+                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
+
+                    // Verifica retorno
+                    if (item.SOMU_IN_STATUS == 4)
+                    {
+                        USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
+                        NOTIFICACAO not = new NOTIFICACAO();
+                        not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        not.ASSI_CD_ID = idAss;
+                        not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                        not.NOTI_IN_ATIVO = 1;
+                        not.NOTI_IN_NIVEL = 1;
+                        not.NOTI_IN_ORIGEM = 1;
+                        not.NOTI_IN_STATUS = 1;
+                        not.NOTI_IN_VISTA = 0;
+                        not.NOTI_NM_TITULO = "Notificação para Síndico - Execução/Encerramento de Mudança";
+                        not.USUA_CD_ID = sind.USUA_CD_ID;
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi executada/encerrada em " + item.SOMU_DT_EXECUCAO_INICIO.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                        Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
+                    }
+
+                    // Sucesso
+                    Session["MensMudanca"] = 0;
+                    return RedirectToAction("VoltarAnexoMudanca");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = ex.Message;
+                    return View(vm);
+                }
+            }
+            else
+            {
+                return View(vm);
+            }
         }
 
         [HttpGet]

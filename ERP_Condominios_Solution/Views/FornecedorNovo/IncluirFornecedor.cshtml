@@ -78,7 +78,7 @@
                                                     @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
                                                     @Html.HiddenFor(m => m.FORN_IN_ATIVO)
                                                     Tipo de Pessoa*
-                                                    @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa" })
+                                                    @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.TiposPessoa, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
                                                     @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
@@ -122,7 +122,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-6 col-md-6 col-xs-12" id="razao">
+                                                <div class="col-lg-6 col-md-6 col-xs-12" id="RS">
                                                     Razão Social
                                                     @Html.TextBoxFor(m => m.FORN_NM_RAZAO_SOCIAL, new { @class = "form-control", autofocus = true, id = "valRazao" })
                                                     @Html.ValidationMessageFor(m => m.FORN_NM_RAZAO_SOCIAL, "", new { @style = "color:red" })
@@ -551,7 +551,45 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        function ValidaDiv(valPessoa) {
+            if (valPessoa == '2') {
+                $("#PF").hide();
+                $("#PJ").show();
+                $("#RS").show();
+                $("#QS").show();
+                LimpaPF();
+            } else if (valPessoa == '1') { //Se o tempo for mé igual a 2 mostra a divCpf
+                $("#PJ").hide();
+                $("#PF").show();
+                $("#RS").hide();
+                $("#QS").hide();
+                LimpaPJ();
+            } else { //Se não for 1, 2 ou 4 esconde as duas
+                $("#PJ").hide();
+                $("#PF").hide();
+                $("#RS").hide();
+                $("#QS").hide();
+            }
+        }
 
+        $(document).ready(function () {
+            ValidaDiv($('#pessoa').val());
+        });
+
+        function LimpaPJ() {
+            $('#cnpj').val('');
+
+            //$('select#rt option:selected').removeAttr('selected');
+            $('#is').val('');
+            $('#FORN_NR_INSCRICAO_ESTADUAL').val('');
+        //    $('#FORN_NR_INSCRICAO_MUNICIPAL').val('');
+        }
+
+        function LimpaPF() {
+            $('#cpf').val('');
+        }
+    </script>
     @if (ViewBag.Message != null)
     {
         <script type="text/javascript">

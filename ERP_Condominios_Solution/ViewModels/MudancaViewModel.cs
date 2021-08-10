@@ -20,6 +20,7 @@ namespace ERP_Condominios_Solution.ViewModels
         [Required(ErrorMessage = "Campo DATA DA MUDANÇA obrigatorio")]
         [DataType(DataType.Date, ErrorMessage = "DATA DA MUDANÇA Deve ser uma data válida")]
         public System.DateTime SOMU_DT_MUDANCA { get; set; }
+        [RegularExpression(@"^[0-9]+([,][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
         public Nullable<int> SOMU_NR_DURACAO { get; set; }
         [Required(ErrorMessage = "Campo ENTRADA/SAÌDA obrigatorio")]
         public int SOMU_IN_ENTRADA_SAIDA { get; set; }

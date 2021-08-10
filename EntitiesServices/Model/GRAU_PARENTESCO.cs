@@ -18,6 +18,7 @@ namespace EntitiesServices.Model
         public GRAU_PARENTESCO()
         {
             this.AUTORIZACAO_ACESSO = new HashSet<AUTORIZACAO_ACESSO>();
+            this.ENTRADA_SAIDA = new HashSet<ENTRADA_SAIDA>();
         }
     
         public int GRPA_CD_ID { get; set; }
@@ -26,5 +27,7 @@ namespace EntitiesServices.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AUTORIZACAO_ACESSO> AUTORIZACAO_ACESSO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ENTRADA_SAIDA> ENTRADA_SAIDA { get; set; }
     }
 }
