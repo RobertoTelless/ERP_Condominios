@@ -556,6 +556,33 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Solicitação de Mudança já cadastrada.
+        /// </summary>
+        internal static string M0060 {
+            get {
+                return ResourceManager.GetString("M0060", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa solicitação de mudança. Ela não está mais Em Aprovação.
+        /// </summary>
+        internal static string M0061 {
+            get {
+                return ResourceManager.GetString("M0061", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data da Mudança não pode ser inferior a data corrente.
+        /// </summary>
+        internal static string M0062 {
+            get {
+                return ResourceManager.GetString("M0062", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {

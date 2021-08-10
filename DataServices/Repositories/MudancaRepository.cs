@@ -53,7 +53,7 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<SOLICITACAO_MUDANCA> ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32 idAss)
+        public List<SOLICITACAO_MUDANCA> ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32? idUnid, Int32 idAss)
         {
             List<SOLICITACAO_MUDANCA> lista = new List<SOLICITACAO_MUDANCA>();
             IQueryable<SOLICITACAO_MUDANCA> query = Db.SOLICITACAO_MUDANCA;
@@ -68,6 +68,10 @@ namespace DataServices.Repositories
             if (status > 0)
             {
                 query = query.Where(p => p.SOMU_IN_STATUS == status);
+            }
+            if (idUnid > 0)
+            {
+                query = query.Where(p => p.UNID_CD_ID == idUnid);
             }
             if (query != null)
             {

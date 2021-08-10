@@ -282,6 +282,15 @@
   <data name="M0059" xml:space="preserve">
     <value>Morador já incluído como ativo no CorpoDiretivo</value>
   </data>
+  <data name="M0060" xml:space="preserve">
+    <value>Solicitação de Mudança já cadastrada</value>
+  </data>
+  <data name="M0061" xml:space="preserve">
+    <value>Não é possível excluir essa solicitação de mudança. Ela não está mais Em Aprovação</value>
+  </data>
+  <data name="M0062" xml:space="preserve">
+    <value>Data da Mudança não pode ser inferior a data corrente</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

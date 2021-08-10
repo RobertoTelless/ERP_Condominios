@@ -1147,6 +1147,7 @@
           <Property Name="SOMU_IN_SUSENSA" Type="int" Nullable="false" />
           <Property Name="SOMU_IN_STATUS" Type="int" />
           <Property Name="SOMU_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="SOMU_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="SOLICITACAO_MUDANCA_ANEXO">
           <Key>
@@ -6429,6 +6430,7 @@
           <NavigationProperty Name="SOLICITACAO_MUDANCA_MOVIMENTO" Relationship="Self.FK_SOLICITACAO_MUDANCA_MOVIMENTO_SOLICITACAO_MUDANCA" FromRole="SOLICITACAO_MUDANCA" ToRole="SOLICITACAO_MUDANCA_MOVIMENTO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_SOLICITACAO_MUDANCA_UNIDADE" FromRole="SOLICITACAO_MUDANCA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_SOLICITACAO_MUDANCA_USUARIO" FromRole="SOLICITACAO_MUDANCA" ToRole="USUARIO" />
+          <Property Name="SOMU_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SOLICITACAO_MUDANCA_ANEXO">
           <Key>
@@ -11638,6 +11640,7 @@
           <EntitySetMapping Name="SOLICITACAO_MUDANCA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.SOLICITACAO_MUDANCA">
               <MappingFragment StoreEntitySet="SOLICITACAO_MUDANCA">
+                <ScalarProperty Name="SOMU_DS_JUSTIFICATIVA" ColumnName="SOMU_DS_JUSTIFICATIVA" />
                 <ScalarProperty Name="SOMU_CD_ID" ColumnName="SOMU_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />

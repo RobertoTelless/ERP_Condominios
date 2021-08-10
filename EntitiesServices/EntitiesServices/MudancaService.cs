@@ -189,9 +189,9 @@ namespace ModelServices.EntitiesServices
             }
         }
 
-        public List<SOLICITACAO_MUDANCA> ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32 idAss)
+        public List<SOLICITACAO_MUDANCA> ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32? idUnid, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(data, entrada, status, idAss);
+            return _baseRepository.ExecuteFilter(data, entrada, status, idUnid, idAss);
         }
     }
 }

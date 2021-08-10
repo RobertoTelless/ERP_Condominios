@@ -102,6 +102,7 @@ namespace Presentation.Start
             kernel.Bind<ICategoriaTelefoneAppService>().To<CategoriaTelefoneAppService>();
             kernel.Bind<IControleVeiculoAppService>().To<ControleVeiculoAppService>();
             kernel.Bind<ICorpoDiretivoAppService>().To<CorpoDiretivoAppService>();
+            kernel.Bind<IMudancaAppService>().To<MudancaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -137,6 +138,7 @@ namespace Presentation.Start
             kernel.Bind<ICategoriaTelefoneService>().To<CategoriaTelefoneService>();
             kernel.Bind<IControleVeiculoService>().To<ControleVeiculoService>();
             kernel.Bind<ICorpoDiretivoService>().To<CorpoDiretivoService>();
+            kernel.Bind<IMudancaService>().To<MudancaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -220,6 +222,9 @@ namespace Presentation.Start
             kernel.Bind<IControleVeiculoAcompanhamentoRepository>().To<ControleVeiculoAcompanhamentoRepository>();
             kernel.Bind<ICorpoDiretivoRepository>().To<CorpoDiretivoRepository>();
             kernel.Bind<IFuncaoCorpoDiretivoRepository>().To<FuncaoCorpoDiretivoRepository>();
+            kernel.Bind<IMudancaRepository>().To<MudancaRepository>();
+            kernel.Bind<IMudancaAnexoRepository>().To<MudancaAnexoRepository>();
+            kernel.Bind<IMudancaComentarioRepository>().To<MudancaComentarioRepository>();
 
         }
     }

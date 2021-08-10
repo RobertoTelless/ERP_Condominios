@@ -21,7 +21,7 @@ namespace ApplicationServices.Interfaces
         List<SOLICITACAO_MUDANCA> GetAllItens(Int32 idAss);
         List<SOLICITACAO_MUDANCA> GetAllItensAdm(Int32 idAss);
         List<SOLICITACAO_MUDANCA> GetByUnidade(Int32 idUnid);
-        Int32 ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32 idAss, out List<SOLICITACAO_MUDANCA> objeto);
+        Int32 ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32? idUnid, Int32 idAss, out List<SOLICITACAO_MUDANCA> objeto);
 
         SOLICITACAO_MUDANCA_ANEXO GetAnexoById(Int32 id);
         List<UNIDADE> GetAllUnidades(Int32 idAss);

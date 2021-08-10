@@ -292,6 +292,7 @@
     <Compile Include="Controllers\ListaConvidadoController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MoradorController.cs" />
+    <Compile Include="Controllers\MudancaController.cs" />
     <Compile Include="Controllers\NoticiaController.cs" />
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\OcorrenciaController.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="ViewModels\GrupoViewModel.cs" />
     <Compile Include="ViewModels\ListaConvidadoComentarioViewModel.cs" />
     <Compile Include="ViewModels\ControleVeiculoAcompanhamentoViewModel.cs" />
+    <Compile Include="ViewModels\MudancaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaViewModel.cs" />
     <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
@@ -345,6 +347,7 @@
     <Compile Include="ViewModels\TarefaAcompanhamentoViewModel.cs" />
     <Compile Include="ViewModels\ListaConvidadoViewModel.cs" />
     <Compile Include="ViewModels\ControleVeiculoViewModel.cs" />
+    <Compile Include="ViewModels\MudancaViewModel.cs" />
     <Compile Include="ViewModels\VeiculoViewModel.cs" />
     <Compile Include="ViewModels\VagaViewModel.cs" />
     <Compile Include="ViewModels\UnidadeViewModel.cs" />
@@ -3085,6 +3088,11 @@
     <Content Include="Views\Morador\MontarTelaMorador.cshtml" />
     <Content Include="Views\Morador\VerMorador.cshtml" />
     <Content Include="Views\Morador\MontarTelaMoradores.cshtml" />
+    <Content Include="Views\Mudanca\MontarTelaMudanca.cshtml" />
+    <Content Include="Views\Mudanca\IncluirMudanca.cshtml" />
+    <Content Include="Views\Mudanca\EditarMudanca.cshtml" />
+    <Content Include="Views\Mudanca\GerarNotificacaoMudanca.cshtml" />
+    <Content Include="Views\Mudanca\IncluirComentarioMudanca.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -88,7 +88,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32 idAss, out List<SOLICITACAO_MUDANCA> objeto)
+        public Int32 ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32? idUnid, Int32 idAss, out List<SOLICITACAO_MUDANCA> objeto)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(data, entrada, status, idAss);
+                objeto = _baseService.ExecuteFilter(data, entrada, status, idUnid, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -114,13 +114,17 @@ namespace ApplicationServices.Services
         {
             try
             {
-
                 // Verifica existencia prévia
                 if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
 
+                // Criticas
+                if (item.SOMU_DT_MUDANCA.Date < DateTime.Today.Date)
+                {
+                    return 2;
+                }
 
                 // Completa objeto
                 item.SOMU_IN_ATIVO = 1;
@@ -212,6 +216,10 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica integridade referencial
+                if (item.SOMU_IN_STATUS != 1)
+                {
+                    return 1;
+                }
 
                 // Acerta campos
                 item.SOMU_IN_ATIVO = 0;

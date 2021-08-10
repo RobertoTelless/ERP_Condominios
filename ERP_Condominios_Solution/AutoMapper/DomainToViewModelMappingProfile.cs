@@ -58,6 +58,8 @@ namespace MvcMapping.Mappers
             CreateMap<CONTROLE_VEICULO, ControleVeiculoViewModel>();
             CreateMap<CONTROLE_VEICULO_ACOMPANHAMENTO, ControleVeiculoAcompanhamentoViewModel>();
             CreateMap<CORPO_DIRETIVO, CorpoDiretivoViewModel>();
+            CreateMap<SOLICITACAO_MUDANCA, MudancaViewModel>();
+            CreateMap<SOLICITACAO_MUDANCA_COMENTARIO, MudancaComentarioViewModel>();
 
         }
     }

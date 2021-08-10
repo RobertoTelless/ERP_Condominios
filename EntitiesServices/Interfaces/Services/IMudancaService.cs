@@ -21,7 +21,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<SOLICITACAO_MUDANCA> GetAllItens(Int32 idAss);
         List<SOLICITACAO_MUDANCA> GetAllItensAdm(Int32 idAss);
         List<SOLICITACAO_MUDANCA> GetByUnidade(Int32 idUnid);
-        List<SOLICITACAO_MUDANCA> ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32 idAss);
+        List<SOLICITACAO_MUDANCA> ExecuteFilter(DateTime? data, Int32? entrada, Int32? status, Int32? idUnid, Int32 idAss);
 
         SOLICITACAO_MUDANCA_ANEXO GetAnexoById(Int32 id);
         List<UNIDADE> GetAllUnidades(Int32 idAss);

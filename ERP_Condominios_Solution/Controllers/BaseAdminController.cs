@@ -144,6 +144,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensControleVeiculo"] = 0;
             Session["MensCorpo"] = 0;
             Session["MensMorador"] = 0;
+            Session["MensMudanca"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
@@ -299,6 +300,10 @@ namespace ERP_Condominios_Solution.Controllers
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensMorador"] == 2)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensMudanca"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
