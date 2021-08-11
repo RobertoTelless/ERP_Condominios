@@ -102,13 +102,11 @@
                                         @Html.ButtonActionSubmit(text: "Filtrar")
                                         @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "ControleVeiculo", action: "RetirarFiltroControleVeiculo")
                                         @Html.ButtonLinkIndex(text: "Ver Todas as Datas", controller: "ControleVeiculo", action: "MostrarGeralControleVeiculo")
-                                       
+                                        @Html.ButtonLinkIndex(text: "Novo Registro de Entrada", controller: "ControleVeiculo", action: "IncluirControleVeiculo")
                                         @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                         {
                                             @Html.ButtonLinkIndex(text: "Exibir Inativos", controller: "ControleVeiculo", action: "MostrarTudoControleVeiculo")
-                                            @Html.ButtonLinkIndex(text: "Novo Registro de Entrada", controller: "ControleVeiculo", action: "IncluirControleVeiculo")
                                         }
-                                        @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "ControleVeiculo", action: "GerarRelatorioControleVeiculo")
                                         @Html.ButtonLinkIndex(text: "Voltar", controller: "ControleVeiculo", action: "Voltar")
                                     </div>
                                 </div>

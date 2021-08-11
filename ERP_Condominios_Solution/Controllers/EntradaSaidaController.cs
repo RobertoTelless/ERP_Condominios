@@ -256,7 +256,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
-            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPE_CD_ID", "GRPE_NM_NOME");
+            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
@@ -280,7 +280,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPE_CD_ID", "GRPE_NM_NOME");
+            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
             if (ModelState.IsValid)
@@ -348,7 +348,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara view
-            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPE_CD_ID", "GRPE_NM_NOME");
+            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
 
             ENTRADA_SAIDA item = baseApp.GetItemById(id);
@@ -369,7 +369,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPE_CD_ID", "GRPE_NM_NOME");
+            ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
             if (ModelState.IsValid)
             {
