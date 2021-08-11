@@ -286,6 +286,7 @@
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\ControleVeiculoController.cs" />
     <Compile Include="Controllers\CorpoDiretivoController.cs" />
+    <Compile Include="Controllers\EntradaSaidaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\FornecedorNovoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -311,6 +312,8 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EntradaSaidaViewModel.cs" />
+    <Compile Include="ViewModels\EntradaSaidaComentarioViewModel.cs" />
     <Compile Include="ViewModels\CorpoDiretivoViewModel.cs" />
     <Compile Include="ViewModels\AgendaViewModel.cs" />
     <Compile Include="ViewModels\AmbienteChaveViewModel.cs" />
@@ -3097,6 +3100,12 @@
     <Content Include="Views\Mudanca\ReprovarMudanca.cshtml" />
     <Content Include="Views\Mudanca\ExecutarMudanca.cshtml" />
     <Content Include="Views\Mudanca\CancelarMudanca.cshtml" />
+    <Content Include="Views\EntradaSaida\MontarTelaES.cshtml" />
+    <Content Include="Views\EntradaSaida\IncluirES.cshtml" />
+    <Content Include="Views\EntradaSaida\VerES.cshtml" />
+    <Content Include="Views\EntradaSaida\EditarES.cshtml" />
+    <Content Include="Views\EntradaSaida\GerarNotificacaoES.cshtml" />
+    <Content Include="Views\EntradaSaida\IncluirComentarioES.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

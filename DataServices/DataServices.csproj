@@ -196,6 +196,8 @@
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaUsuarioRepository.cs" />
+    <Compile Include="Repositories\EntradaSaidaRepository.cs" />
+    <Compile Include="Repositories\EntradaSaidaComentarioRepository.cs" />
     <Compile Include="Repositories\MudancaAnexoRepository.cs" />
     <Compile Include="Repositories\FuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Repositories\CategoriaOcorrenciaRepository.cs" />

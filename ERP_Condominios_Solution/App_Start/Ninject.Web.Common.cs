@@ -103,6 +103,7 @@ namespace Presentation.Start
             kernel.Bind<IControleVeiculoAppService>().To<ControleVeiculoAppService>();
             kernel.Bind<ICorpoDiretivoAppService>().To<CorpoDiretivoAppService>();
             kernel.Bind<IMudancaAppService>().To<MudancaAppService>();
+            kernel.Bind<IEntradaSaidaAppService>().To<EntradaSaidaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -139,6 +140,7 @@ namespace Presentation.Start
             kernel.Bind<IControleVeiculoService>().To<ControleVeiculoService>();
             kernel.Bind<ICorpoDiretivoService>().To<CorpoDiretivoService>();
             kernel.Bind<IMudancaService>().To<MudancaService>();
+            kernel.Bind<IEntradaSaidaService>().To<IEntradaSaidaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -225,6 +227,8 @@ namespace Presentation.Start
             kernel.Bind<IMudancaRepository>().To<MudancaRepository>();
             kernel.Bind<IMudancaAnexoRepository>().To<MudancaAnexoRepository>();
             kernel.Bind<IMudancaComentarioRepository>().To<MudancaComentarioRepository>();
+            kernel.Bind<IEntradaSaidaRepository>().To<EntradaSaidaRepository>();
+            kernel.Bind<IEntradaSaidaComentarioRepository>().To<EntradaSaidaComentarioRepository>();
 
         }
     }

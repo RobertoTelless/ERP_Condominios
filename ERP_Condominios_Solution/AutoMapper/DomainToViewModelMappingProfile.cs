@@ -60,6 +60,8 @@ namespace MvcMapping.Mappers
             CreateMap<CORPO_DIRETIVO, CorpoDiretivoViewModel>();
             CreateMap<SOLICITACAO_MUDANCA, MudancaViewModel>();
             CreateMap<SOLICITACAO_MUDANCA_COMENTARIO, MudancaComentarioViewModel>();
+            CreateMap<ENTRADA_SAIDA, EntradaSaidaViewModel>();
+            CreateMap<ENTRADA_SAIDA_COMENTARIO, EntradaSaidaComentarioViewModel>();
 
         }
     }

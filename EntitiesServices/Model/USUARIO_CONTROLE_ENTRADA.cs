@@ -19,6 +19,12 @@ namespace EntitiesServices.Model
         public System.DateTime USCE_DT_MARCACAO { get; set; }
         public int USCE_IN_DIRECAO { get; set; }
         public int USCE_IN_ATIVO { get; set; }
+        public Nullable<System.DateTime> USCE_HR_ENTRADA { get; set; }
+        public Nullable<System.DateTime> USCE_HR_SAIDA_ALMOCO { get; set; }
+        public Nullable<System.DateTime> USCE_HR_VOLTA_ALMOCO { get; set; }
+        public Nullable<System.DateTime> USCE_HR_SAIDA { get; set; }
+        public Nullable<int> USCE_IN_VALIDADO { get; set; }
+        public string USCE_DS_JUSTIFICATIVA { get; set; }
     
         public virtual USUARIO USUARIO { get; set; }
     }

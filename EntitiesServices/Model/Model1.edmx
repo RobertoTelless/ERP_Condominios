@@ -495,6 +495,7 @@
           <Property Name="ENCO_TX_OBSERVACOES" Type="text" />
           <Property Name="ENCO_AQ_FOTO" Type="varchar" MaxLength="250" />
           <Property Name="ENCO_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
+          <Property Name="ENCO_IN_STATUS" Type="int" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -541,6 +542,7 @@
           <Property Name="ENSA_IN_LISTA_NEGRA" Type="int" Nullable="false" />
           <Property Name="ENSA_IN_STATUS" Type="int" Nullable="false" />
           <Property Name="ENSA_DS_JUSTIFICATIVA" Type="varchar" MaxLength="1000" />
+          <Property Name="ENSA_IN_ATIVO" Type="int" />
         </EntityType>
         <EntityType Name="ENTRADA_SAIDA_COMENTARIO">
           <Key>
@@ -1560,6 +1562,12 @@
           <Property Name="USCE_DT_MARCACAO" Type="datetime" Nullable="false" />
           <Property Name="USCE_IN_DIRECAO" Type="int" Nullable="false" />
           <Property Name="USCE_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="USCE_HR_ENTRADA" Type="datetime" />
+          <Property Name="USCE_HR_SAIDA_ALMOCO" Type="datetime" />
+          <Property Name="USCE_HR_VOLTA_ALMOCO" Type="datetime" />
+          <Property Name="USCE_HR_SAIDA" Type="datetime" />
+          <Property Name="USCE_IN_VALIDADO" Type="int" />
+          <Property Name="USCE_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="USUARIO_ESCALA_TRABALHO">
           <Key>
@@ -5712,6 +5720,7 @@
           <NavigationProperty Name="TIPO_ENCOMENDA" Relationship="Self.FK_ENCOMENDA_TIPO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="TIPO_ENCOMENDA" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENCOMENDA_UNIDADE" FromRole="ENCOMENDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENCOMENDA_USUARIO" FromRole="ENCOMENDA" ToRole="USUARIO" />
+          <Property Name="ENCO_IN_STATUS" Type="Int32" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -5767,6 +5776,7 @@
           <Property Name="GRPA_CD_ID" Type="Int32" />
           <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA" ToRole="ENTRADA_SAIDA_COMENTARIO" />
           <NavigationProperty Name="GRAU_PARENTESCO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="ENTRADA_SAIDA" ToRole="GRAU_PARENTESCO" />
+          <Property Name="ENSA_IN_ATIVO" Type="Int32" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO">
           <Key>
@@ -7016,6 +7026,12 @@
           <Property Name="USCE_IN_DIRECAO" Type="Int32" Nullable="false" />
           <Property Name="USCE_IN_ATIVO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_CONTROLE_ENTRADA_USUARIO" FromRole="USUARIO_CONTROLE_ENTRADA" ToRole="USUARIO" />
+          <Property Name="USCE_HR_ENTRADA" Type="DateTime" Precision="3" />
+          <Property Name="USCE_HR_SAIDA_ALMOCO" Type="DateTime" Precision="3" />
+          <Property Name="USCE_HR_VOLTA_ALMOCO" Type="DateTime" Precision="3" />
+          <Property Name="USCE_HR_SAIDA" Type="DateTime" Precision="3" />
+          <Property Name="USCE_IN_VALIDADO" Type="Int32" />
+          <Property Name="USCE_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="USUARIO_ESCALA_TRABALHO">
           <Key>
@@ -11078,6 +11094,7 @@
           <EntitySetMapping Name="ENCOMENDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA">
               <MappingFragment StoreEntitySet="ENCOMENDA">
+                <ScalarProperty Name="ENCO_IN_STATUS" ColumnName="ENCO_IN_STATUS" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -11128,6 +11145,7 @@
           <EntitySetMapping Name="ENTRADA_SAIDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ENTRADA_SAIDA">
               <MappingFragment StoreEntitySet="ENTRADA_SAIDA">
+                <ScalarProperty Name="ENSA_IN_ATIVO" ColumnName="ENSA_IN_ATIVO" />
                 <ScalarProperty Name="GRPA_CD_ID" ColumnName="GRPA_CD_ID" />
                 <ScalarProperty Name="ENSA_CD_ID" ColumnName="ENSA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12223,6 +12241,12 @@
           <EntitySetMapping Name="USUARIO_CONTROLE_ENTRADA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO_CONTROLE_ENTRADA">
               <MappingFragment StoreEntitySet="USUARIO_CONTROLE_ENTRADA">
+                <ScalarProperty Name="USCE_DS_JUSTIFICATIVA" ColumnName="USCE_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="USCE_IN_VALIDADO" ColumnName="USCE_IN_VALIDADO" />
+                <ScalarProperty Name="USCE_HR_SAIDA" ColumnName="USCE_HR_SAIDA" />
+                <ScalarProperty Name="USCE_HR_VOLTA_ALMOCO" ColumnName="USCE_HR_VOLTA_ALMOCO" />
+                <ScalarProperty Name="USCE_HR_SAIDA_ALMOCO" ColumnName="USCE_HR_SAIDA_ALMOCO" />
+                <ScalarProperty Name="USCE_HR_ENTRADA" ColumnName="USCE_HR_ENTRADA" />
                 <ScalarProperty Name="USCE_CD_ID" ColumnName="USCE_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="USCE_DT_MARCACAO" ColumnName="USCE_DT_MARCACAO" />
