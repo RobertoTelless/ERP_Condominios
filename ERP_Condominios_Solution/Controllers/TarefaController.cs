@@ -232,11 +232,11 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID);
                 Session["ListaTarefa"] = listaMaster;
             }
-            if (((List<TAREFA>)Session["ListaTarefa"]).Count == 0)
-            {
-                listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID);
-                Session["ListaTarefa"] = listaMaster;
-            }
+            //if (((List<TAREFA>)Session["ListaTarefa"]).Count == 0)
+            //{
+            //    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID);
+            //    Session["ListaTarefa"] = listaMaster;
+            //}
 
             if (id == null)
             {
@@ -329,8 +329,8 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensTarefa"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaTarefa");
+                    //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                    //return RedirectToAction("MontarTelaTarefa");
                 }
 
                 // Sucesso
@@ -1097,7 +1097,7 @@ namespace ERP_Condominios_Solution.Controllers
             pdfDoc.Add(line1);
 
             // Grid
-            table = new PdfPTable(new float[] { 80f, 60f, 120f, 60f, 80f, 60f, 60f});
+            table = new PdfPTable(new float[] { 80f, 60f, 120f, 60f, 80f, 60f});
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;

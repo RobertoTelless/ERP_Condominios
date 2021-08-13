@@ -258,7 +258,7 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensNotificacao"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                    //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                 }
 
                 // Sucesso
@@ -447,7 +447,7 @@ namespace ERP_Condominios_Solution.Controllers
                     if (volta == 1)
                     {
                         Session["MensNotificacao"] = 1;
-                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                        //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                     }
 
                     // Sucesso
@@ -548,6 +548,7 @@ namespace ERP_Condominios_Solution.Controllers
                     Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
                     // Verifica retorno
+
 
                     // Cria pastas
                     String caminho = "/Imagens/" + idAss.ToString() + "/Notificacao/" + item.NOTI_CD_ID.ToString() + "/Anexos/";
@@ -928,7 +929,7 @@ namespace ERP_Condominios_Solution.Controllers
             pdfDoc.Add(line1);
 
             // Grid
-            table = new PdfPTable(new float[] { 50f, 120f, 120f, 50f, 50f, 40f});
+            table = new PdfPTable(new float[] { 50f, 120f, 120f, 50f, 50f, 40f, 40f});
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
@@ -938,7 +939,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
             };
-            cell.Colspan = 6;
+            cell.Colspan = 7;
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
 

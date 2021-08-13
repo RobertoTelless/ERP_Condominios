@@ -172,6 +172,8 @@ namespace ERP_Condominios_Solution.Controllers
             vm = cache.Get("vm" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as UsuarioViewModel;
             noti = cache.Get("noti" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as List<NOTIFICACAO>;
 
+            //noti = notfApp.GetAllItens(idAss).Where(p => p.USUA_CD_ID == usu.USUA_CD_ID).ToList();
+            noti = notfApp.GetAllItensUser(usu.USUA_CD_ID, usu.ASSI_CD_ID);
             Session["Notificacoes"] = noti; //usu.NOTIFICACAO.ToList();
             Session["ListaNovas"] = noti.Where(p => p.NOTI_IN_VISTA == 0).ToList();
             Session["NovasNotificacoes"] = noti.Where(p => p.NOTI_IN_VISTA == 0).Count();
@@ -185,7 +187,8 @@ namespace ERP_Condominios_Solution.Controllers
             Session["TarefasLista"] = tarApp.GetByUser(usu.USUA_CD_ID);
             Session["Tarefas"] = ((List<TAREFA>)Session["TarefasLista"]).Count;
 
-            Session["Agendas"] = usu.AGENDA.ToList();
+            //Session["Agendas"] = usu.AGENDA.ToList();
+            Session["Agendas"] = ageApp.GetByUser(usu.USUA_CD_ID, usu.ASSI_CD_ID);
             Session["NumAgendas"] = ((List<AGENDA>)Session["Agendas"]).Count;
             Session["AgendasHoje"] = ((List<AGENDA>)Session["Agendas"]).Where(p => p.AGEN_DT_DATA == DateTime.Today.Date).ToList();
             Session["NumAgendasHoje"] = ((List<AGENDA>)Session["AgendasHoje"]).Count;

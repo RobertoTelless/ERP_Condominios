@@ -188,11 +188,11 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss);
                 Session["ListaAgenda"] = listaMaster;
             }
-            if (((List<AGENDA>)Session["ListaAgenda"]).Count == 0)
-            {
-                listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss);
-                Session["ListaAgenda"] = listaMaster;
-            }
+            //if (((List<AGENDA>)Session["ListaAgenda"]).Count == 0)
+            //{
+            //    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss);
+            //    Session["ListaAgenda"] = listaMaster;
+            //}
             ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderBy(x => x.AGEN_DT_DATA.Date).ThenBy(x => x.AGEN_HR_HORA).ToList<AGENDA>();
             ViewBag.Itens = ((List<AGENDA>)Session["ListaAgenda"]).Count;
             ViewBag.Title = "Agenda";

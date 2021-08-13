@@ -44,11 +44,10 @@
                 </div>
 
                 <div class="ibox-content">
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <br />
-                        @Html.ButtonLinkIndex(text: "Imprimir", action: "GerarRelatorioDetalhe", controller: "Condominio")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Condominio")
-                    </div>
+                    </div>*@
                     @*@Html.AntiForgeryToken()*@
                     @if (!ViewData.ModelState.IsValid)
                     {
@@ -72,6 +71,14 @@
                                 <div class="panel-body">
                                     @using (Html.BeginForm("MontarTelaCondominio", "Condominio", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
+                                        <div class="row" style="width: 100%;">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast" })
+                                                    @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Condominio")
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row" style="width: 100%;">
                                             <div class="col-lg-2 col-md-2 col-xs-12">
                                                 <div style="text-align: center; margin-top: 25px; line-height: 10px;">
@@ -176,7 +183,7 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Número*
-                                                    @Html.TextBoxFor(m => m.ASSI_NR_NUMERO, new { @class = "form-control", autofocus = true, @id = "numero" })
+                                                    @Html.TextBoxFor(m => m.ASSI_NR_NUMERO, new { @class = "form-control", autofocus = true, @id = "nmr" })
                                                     @Html.ValidationMessageFor(m => m.ASSI_NR_NUMERO, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
@@ -609,24 +616,41 @@
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
-    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
-    @Styles.Render("~/plugins/touchSpinStyles")
-    @Styles.Render("~/plugins/sweetAlertStyles")
     @Styles.Render("~/plugins/toastrStyles")
-    <link href="~/Content/plugins/summernote/summernote.css" rel="stylesheet" />
 }
 @section Scripts {
-    @Scripts.Render("~/plugins/toastr")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
-    @Scripts.Render("~/plugins/sparkline")
-    @Scripts.Render("~/plugins/switchery")
-    @Scripts.Render("~/plugins/touchSpin")
-    @Scripts.Render("~/plugins/iCheck")
-    @Scripts.Render("~/plugins/sweetAlert")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
-    <script src="~/Scripts/plugins/summernote/summernote.min.js"></script>
+
+    <script>
+        function PesquisaCep(cep, btn, tipoEnd) {
+            data = {
+                cep: cep
+                , tipoEnd: tipoEnd
+            }
+
+            $('#btnBuscaCep').attr("disabled", "disabled");
+
+            $.ajax({
+                url: '../Condominio/PesquisaCEP_Javascript'
+                , type: 'POST'
+                , data: data
+                , success: function (r) {
+                    if (tipoEnd == 1) {
+                        $('#endereco').val(r.ASSI_NM_ENDERECO);
+                        $('#nmr').val(r.ASSI_NR_NUMERO);
+                        $('#bairro').val(r.ASSI_NM_BAIRRO);
+                        $('#cidade').val(r.ASSI_NM_CIDADE);
+
+                        $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
+                        $('#btnBuscaCep').removeAttr("disabled");
+                    }
+                }
+            });
+        }
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -721,31 +745,6 @@
         }
     </script>
 
-        <script>
-        function PesquisaCep(cep, btn, tipoEnd) {
-            data = {
-                cep: cep
-                , tipoEnd: tipoEnd
-            }
-
-            $(btn).attr("disabled", "disabled");
-
-            $.ajax({
-                url: '../Condominio/PesquisaCEP_Javascript'
-                , type: 'POST'
-                , data: data
-                , success: function (r) {
-                    $('#endereco').val(r.ASSI_NM_ENDERECO);
-                    $('#nmr').val(r.ASSI_NR_NUMERO);
-                    $('#bairro').val(r.ASSI_NM_BAIRRO);
-                    $('#cidade').val(r.ASSI_NM_CIDADE);
-
-                    $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
-                    $('#btnBuscaCep').removeAttr("disabled");
-                }
-            });
-        }
-    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -848,34 +847,6 @@
 
         });
     </script>
-
-    <script>
-        function PesquisaCep(cep, btn, tipoEnd) {
-            data = {
-                cep: cep
-                , tipoEnd: tipoEnd
-            }
-
-            $('#btnBuscaCep').attr("disabled", "disabled");
-
-            $.ajax({
-                url: '../PesquisaCEP_Javascript'
-                , type: 'POST'
-                , data: data
-                , success: function (r) {
-                    if (tipoEnd == 1) {
-                        $('#endereco').val(r.ASSI_NM_ENDERECO);
-                        $('#bairro').val(r.ASSI_NM_BAIRRO);
-                        $('#cidade').val(r.ASSI_NM_CIDADE);
-
-                        $('#uf option[value="' + r.UF_CD_ID + '"]').attr("selected", "selected");
-                        $('#btnBuscaCep').removeAttr("disabled");
-                    }
-                }
-            });
-        }
-    </script>
-
 
     @if (ViewBag.Message != null)
     {

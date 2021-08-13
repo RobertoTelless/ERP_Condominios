@@ -64,46 +64,59 @@
                                         <div class="form-group">
                                             @Html.ButtonActionSubmit(text: "Leitura Confirmada", htmlAttributes: new { id = "basictoast" })
                                         </div>
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row" style="width: 100%;">
+                                            <div class="col-lg-1 col-md-1 col-xs-12">
+                                                <div style="text-align: center; margin-top: 25px; line-height: 10px;">
+                                                    @if (!String.IsNullOrEmpty(Model.USUARIO.USUA_AQ_FOTO))
+                                                    {
+                                                        <img src="@Url.Content(Model.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                    }
                                                     <br />
-                                                    <img src="@Url.Content(Model.USUARIO.USUA_AQ_FOTO)" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;">
-                                                </div>                       
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    @Html.HiddenFor(m => m.NOTI_CD_ID)
-                                                    @Html.HiddenFor(m => m.NOTI_IN_ATIVO)
-                                                    @Html.HiddenFor(m => m.NOTI_IN_NIVEL)
-                                                    @Html.HiddenFor(m => m.NOTI_IN_VISTA)
-                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
-                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                    @Html.HiddenFor(m => m.CANO_CD_ID)
-                                                    Data de Emissão
-                                                    @Html.TextBoxFor(m => m.NOTI_DT_EMISSAO,"{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Data de Visualização
-                                                    @Html.TextBoxFor(m => m.NOTI_DT_VISTA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
-                                                    Data de Validade
-                                                    @Html.TextBoxFor(m => m.NOTI_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                </div>                                            
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Categoria
-                                                    @Html.TextBoxFor(m => m.CATEGORIA_NOTIFICACAO.CANO_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
                                                 </div>
                                             </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                <div class="col-lg-4 col-md-4 col-xs-12">
-                                                    Nome
-                                                    @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                            <div class="col-md-11">
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        @Html.HiddenFor(m => m.NOTI_CD_ID)
+                                                        @Html.HiddenFor(m => m.NOTI_IN_ATIVO)
+                                                        @Html.HiddenFor(m => m.NOTI_IN_NIVEL)
+                                                        @Html.HiddenFor(m => m.NOTI_IN_VISTA)
+                                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.CANO_CD_ID)
+                                                        Data de Emissão
+                                                        @Html.TextBoxFor(m => m.NOTI_DT_EMISSAO,"{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Visualização
+                                                        @Html.TextBoxFor(m => m.NOTI_DT_VISTA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data de Validade
+                                                        @Html.TextBoxFor(m => m.NOTI_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>                                            
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        Categoria
+                                                        @Html.TextBoxFor(m => m.CATEGORIA_NOTIFICACAO.CANO_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                                    Título
-                                                    @Html.TextBoxFor(m => m.NOTI_NM_TITULO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
+                                                    <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        Nome
+                                                        @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-xs-12">
+                                                        Título
+                                                        @Html.TextBoxFor(m => m.NOTI_NM_TITULO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                

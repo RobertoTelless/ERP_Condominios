@@ -457,7 +457,7 @@ namespace ApplicationServices.Services
                 }
 
                 // Checa login
-                usuario = _usuarioService.GetByLogin(login, usuario.ASSI_CD_ID);
+                usuario = _usuarioService.GetByLogin(login, 1);
                 if (usuario == null)
                 {
                     usuario = new USUARIO();

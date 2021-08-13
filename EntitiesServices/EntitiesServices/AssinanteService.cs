@@ -150,7 +150,6 @@ namespace ModelServices.EntitiesServices
                 {
                     ASSINANTE obj = _baseRepository.GetById(item.ASSI_CD_ID);
                     _baseRepository.Detach(obj);
-                    _logRepository.Add(log);
                     _baseRepository.Update(item);
                     transaction.Commit();
                     return 0;

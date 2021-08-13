@@ -156,7 +156,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Abre view
             Session["MensNoticia"] = 0;
-            Session["VoltaNoticia"] = 2;
+            Session["VoltaNoticia"] = 1;
             objeto = new NOTICIA();
             return View(objeto);
         }

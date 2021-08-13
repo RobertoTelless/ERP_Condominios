@@ -148,6 +148,8 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.USUARIO = null;
+                    item.PERIODICIDADE_TAREFA = null;
                     TAREFA obj = _baseRepository.GetById(item.TARE_CD_ID);
                     _baseRepository.Detach(obj);
                     _logRepository.Add(log);
