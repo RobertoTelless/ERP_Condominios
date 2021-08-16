@@ -408,6 +408,7 @@ namespace ApplicationServices.Services
                     USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);
                     String frase = String.Empty;
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
+                    body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
                     data = data.Replace("{Usuario}", usuario.USUA_NM_NOME);
                     data = data.Replace("{Data}", DateTime.Today.Date.ToLongDateString());
                     header = header.Replace("{Nome}", usu.USUA_NM_NOME);

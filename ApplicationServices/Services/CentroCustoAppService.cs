@@ -82,6 +82,13 @@ namespace ApplicationServices.Services
         {
             try
             {
+                // Critica
+                List<CENTRO_CUSTO> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID).Where(p => p.GRUP_CD_ID == item.GRUP_CD_ID & p.SUBG_CD_ID == item.SUBG_CD_ID & p.CECU_NR_NUMERO == item.CECU_NR_NUMERO).ToList();
+                if (lista.Count > 0)
+                {
+                    return 1;
+                }             
+                
                 // Completa objeto
                 item.CECU_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;

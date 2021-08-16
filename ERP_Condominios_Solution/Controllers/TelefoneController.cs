@@ -186,11 +186,6 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 Session["ListaTelefone"] = listaMasterForn;
             }
-            if (((List<TELEFONE>)Session["ListaTelefone"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                Session["ListaTelefone"] = listaMasterForn;
-            }
             ViewBag.Listas = (List<TELEFONE>)Session["ListaTelefone"];
             ViewBag.Title = "Telefones";
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CATE_NM_NOME), "CATE_CD_ID", "CATE_NM_NOME");
@@ -208,10 +203,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensTelefone"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensTelefone"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensTelefone"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensTelefone"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -281,8 +276,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensTelefone"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaTelefone");
                 }
 
                 // Sucesso

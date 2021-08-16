@@ -217,7 +217,7 @@
     <value>Não é possível excluir essa autorização/restrição. Existem informações vinculadas a ela</value>
   </data>
   <data name="M0036" xml:space="preserve">
-    <value>Centro de Custo já cadastrado</value>
+    <value>Centro de Custo já cadastrado. Já existem um centro de custo com os mesmos grupo, subgrupo e número.</value>
   </data>
   <data name="M0037" xml:space="preserve">
     <value>Não é possível excluir esse centro de custo. Existem informações vinculadas a ele</value>
@@ -290,6 +290,9 @@
   </data>
   <data name="M0062" xml:space="preserve">
     <value>Data da Mudança não pode ser inferior a data corrente</value>
+  </data>
+  <data name="M0063" xml:space="preserve">
+    <value>Já existe uma conta bancária definida como conta principal. Não pode haver duas contas nessa situação.</value>
   </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>

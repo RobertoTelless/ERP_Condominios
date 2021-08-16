@@ -269,6 +269,7 @@
                                                                             @if (cond.CBLA_IN_TIPO == 1)
                                                                             {
                                                                                 <td>C</td>
+                                                                                <td>@cond.CBLA_DS_DESCRICAO</td>
                                                                                 if (cond.CBLA_VL_VALOR != null)
                                                                                 {
                                                                                     <td style="color: darkgreen">@CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
@@ -281,6 +282,7 @@
                                                                             else
                                                                             {
                                                                                 <td>D</td>
+                                                                                <td>@cond.CBLA_DS_DESCRICAO</td>
                                                                                 if (cond.CBLA_VL_VALOR != null)
                                                                                 {
                                                                                     <td style="color: red">- @CrossCutting.Formatters.DecimalFormatter(cond.CBLA_VL_VALOR.Value)</td>
@@ -290,7 +292,6 @@
                                                                                     <td style="color: red">0,00</td>
                                                                                 }
                                                                             }
-                                                                            <td>@cond.CBLA_DS_DESCRICAO</td>
                                                                             @if (cond.CBLA_IN_ATIVO == 1)
                                                                             {
                                                                                 <td>Ativo</td>

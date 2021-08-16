@@ -358,7 +358,7 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Centro de Custo já cadastrado.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Centro de Custo já cadastrado. Já existem um centro de custo com os mesmos grupo, subgrupo e número..
         /// </summary>
         internal static string M0036 {
             get {
@@ -579,6 +579,15 @@ namespace ERP_Condominios_Solution.App_Start {
         internal static string M0062 {
             get {
                 return ResourceManager.GetString("M0062", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Já existe uma conta bancária definida como conta principal. Não pode haver duas contas nessa situação..
+        /// </summary>
+        internal static string M0063 {
+            get {
+                return ResourceManager.GetString("M0063", resourceCulture);
             }
         }
         

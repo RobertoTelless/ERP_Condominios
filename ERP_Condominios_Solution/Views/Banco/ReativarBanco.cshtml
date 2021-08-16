@@ -45,7 +45,7 @@
                         </a>
                     </div>
                 </div>
-                @using (Html.BeginForm("ReativarBanco", "Financeiro", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                @using (Html.BeginForm("ReativarBanco", "Banco", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
                 {
                     <div class="ibox-content">
                         <div class="row">
@@ -68,7 +68,7 @@
                         </div>
                         <div class="form-group">
                             @Html.ButtonActionSubmit(text: "Confirma Reativação", htmlAttributes: new { id = "basictoast" })
-                            @Html.ButtonLinkIndex(text: "Cancelar", action: "VoltarBaseBanco", controller: "Banco")
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseBanco", controller: "Banco")
                         </div>
                     </div>
                 }

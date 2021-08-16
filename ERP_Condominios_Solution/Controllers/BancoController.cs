@@ -186,7 +186,7 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensBanco"] = 1;
-                    return RedirectToAction("MontarTelaBanco");
+                    //return RedirectToAction("MontarTelaBanco");
                 }
 
                 // Sucesso
@@ -332,6 +332,10 @@ namespace ERP_Condominios_Solution.Controllers
                 if ((Int32)Session["MensBanco"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensBanco"] == 7)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0063", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -565,8 +569,14 @@ namespace ERP_Condominios_Solution.Controllers
                         Session["MensBanco"] = 5;
                         return RedirectToAction("EditarBanco", new { id = (Int32)Session["IdBanco"] });
                     }
+                    if (volta == 2)
+                    {
+                        Session["MensBanco"] = 7;
+                        return RedirectToAction("EditarBanco", new { id = (Int32)Session["IdBanco"] });
+                    }
 
                     // Sucesso
+                    Session["MensBanco"] = 0;
                     listaMasterConta = new List<CONTA_BANCO>();
                     Session["ListaContaBancaria"] = null;
                     Session["ContasBancarias"] = contaApp.GetAllItens(idAss);
@@ -681,8 +691,14 @@ namespace ERP_Condominios_Solution.Controllers
                     Int32 volta = contaApp.ValidateEdit(item, objContaAntes, usuarioLogado);
 
                     // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensBanco"] = 7;
+                        return RedirectToAction("EditarBanco", new { id = (Int32)Session["IdBanco"] });
+                    }
 
                     // Sucesso
+                    Session["MensBanco"] = 0;
                     listaMasterConta = new List<CONTA_BANCO>();
                     Session["ListaContaBancaria"] = null;
                     return RedirectToAction("EditarBanco", new { id = (Int32)Session["IdBanco"] });

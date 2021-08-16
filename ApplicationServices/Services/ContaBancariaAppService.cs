@@ -147,6 +147,16 @@ namespace ApplicationServices.Services
                     return 1;
                 }
 
+                // Verifica se já existe conta padrão
+                if (item.COBA_IN_CONTA_PADRAO == 1)
+                {
+                    List<CONTA_BANCO> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID).Where(p => p.COBA_IN_CONTA_PADRAO == 1).ToList();
+                    if (lista.Count > 0)
+                    {
+                        return 2;
+                    }
+                }
+
                 // Completa objeto
                 item.COBA_IN_ATIVO = 1;
                 item.COBA_VL_SALDO_ATUAL = item.COBA_VL_SALDO_INICIAL;
@@ -176,6 +186,16 @@ namespace ApplicationServices.Services
         {
             try
             {
+                // Verifica se já existe conta padrão
+                if (item.COBA_IN_CONTA_PADRAO == 1)
+                {
+                    List<CONTA_BANCO> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID).Where(p => p.COBA_IN_CONTA_PADRAO == 1).ToList();
+                    if (lista.Count > 0)
+                    {
+                        return 1;
+                    }
+                }
+
                 // Persiste
                 return _baseService.Edit(item);
             }
