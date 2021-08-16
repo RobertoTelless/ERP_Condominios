@@ -78,7 +78,7 @@
                                                     @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
                                                     @Html.HiddenFor(m => m.FORN_IN_ATIVO)
                                                     Tipo de Pessoa*
-                                                    @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.TiposPessoa, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
+                                                    @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
                                                     @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
@@ -467,7 +467,7 @@
                 , type: 'POST'
                 , data: data
                 , success: function (r) {
-                    $('#endereco').val(r.FORM_NM_ENDERECO);
+                    $('#endereco').val(r.FORN_NM_ENDERECO);
                     $('#bairro').val(r.FORN_NM_BAIRRO);
                     $('#cidade').val(r.FORN_NM_CIDADE);
 

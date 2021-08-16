@@ -364,11 +364,6 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 Session["ListaFornecedor"] = listaMasterForn;
             }
-            if (((List<FORNECEDOR>)Session["ListaFornecedor"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                Session["ListaFornecedor"] = listaMasterForn;
-            }
             ViewBag.Listas = (List<FORNECEDOR>)Session["ListaFornecedor"];
             ViewBag.Title = "Fornecedores";
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CAFO_NM_NOME), "CAFO_CD_ID", "CAFO_NM_NOME");
@@ -393,10 +388,6 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensFornecedor"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensFornecedor"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
                 if ((Int32)Session["MensFornecedor"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -487,8 +478,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensFornecedor"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaFornecedor");
                 }
 
                 // Sucesso
@@ -553,7 +542,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara listas
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CAFO_NM_NOME), "CAFO_CD_ID", "CAFO_NM_NOME");
-            ViewBag.Tipos = new SelectList((List<TIPO_PESSOA>)Session["TiposPessoas"], "TIPE_CD_ID", "TIPE_NM_NOME");
+            ViewBag.Tipos = new SelectList(fornApp.GetAllTiposPessoa(), "TIPE_CD_ID", "TIPE_NM_NOME");
             ViewBag.UF = new SelectList(fornApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             Session["VoltaProp"] = 4;
