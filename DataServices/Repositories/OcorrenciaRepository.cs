@@ -69,7 +69,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.OCOR_NM_TITULO.Contains(titulo));
             }
-            if (data != null)
+            if (data != DateTime.MinValue)
             {
                 query = query.Where(p => DbFunctions.TruncateTime(p.OCOR_DT_OCORRENCIA) == DbFunctions.TruncateTime(data));
             }

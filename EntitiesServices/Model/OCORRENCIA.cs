@@ -35,6 +35,7 @@ namespace EntitiesServices.Model
         public string OCOR_TX_ENCERRAMENTO { get; set; }
         public System.DateTime OCOR_DT_CADASTRO { get; set; }
         public int OCOR_IN_ATIVO { get; set; }
+        public string OCOR_TX_TEXTO_PLANO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_OCORRENCIA CATEGORIA_OCORRENCIA { get; set; }

@@ -121,6 +121,7 @@ namespace ApplicationServices.Services
 
                 // Completa objeto
                 item.OCOR_IN_ATIVO = 1;
+                item.OCOR_TX_TEXTO_PLANO = item.OCOR_TX_TEXTO.Replace(System.Environment.NewLine, " ");
 
                 // Monta Log
                 LOG log = new LOG
@@ -170,6 +171,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Monta Log
+                item.OCOR_TX_TEXTO_PLANO = item.OCOR_TX_TEXTO.Replace(System.Environment.NewLine, " ");
                 LOG log = new LOG
                 {
                     LOG_DT_DATA = DateTime.Now,
@@ -195,6 +197,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Persiste
+                item.OCOR_TX_TEXTO_PLANO = item.OCOR_TX_TEXTO.Replace(System.Environment.NewLine, " ");
                 item.USUARIO = null;
                 return _baseService.Edit(item);
             }

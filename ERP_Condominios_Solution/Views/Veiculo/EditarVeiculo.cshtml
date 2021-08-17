@@ -93,11 +93,11 @@
                                                 <div style="text-align: center; margin-top: 25px; line-height: 10px;">
                                                     @if (!String.IsNullOrEmpty(Model.VEIC_AQ_FOTO))
                                                     {
-                                                        <img src="@Url.Content(Model.VEIC_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.VEIC_NM_PLACA', '@Url.Content(Model.VEIC_AQ_FOTO)')">
+                                                        <img src="@Url.Content(Model.VEIC_AQ_FOTO)" style="width: auto; height: auto; max-height: 200px; max-width: 170px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.VEIC_NM_PLACA', '@Url.Content(Model.VEIC_AQ_FOTO)')">
                                                     }
                                                     else
                                                     {
-                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.VEIC_NM_PLACA', '/Images/gallery/10s.jpg')">
+                                                        <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 200x; max-width: 170px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.VEIC_NM_PLACA', '/Images/gallery/10s.jpg')">
                                                     }
                                                     <br />
                                                     <br />

@@ -114,10 +114,10 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Veics = ((List<VEICULO>)Session["ListaVeiculo"]).Count;
 
             // Mensagem
-            if ((Int32)Session["MensVeiculo"] == 1)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-            }
+            //if ((Int32)Session["MensVeiculo"] == 1)
+            //{
+            //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+            //}
             if ((Int32)Session["MensVeiculo"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -185,8 +185,6 @@ namespace ERP_Condominios_Solution.Controllers
                     if (volta == 1)
                     {
                         Session["MensVeiculo"] = 1;
-                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                        return RedirectToAction("MontarTelaVeiculo");
                     }
 
                     // Sucesso

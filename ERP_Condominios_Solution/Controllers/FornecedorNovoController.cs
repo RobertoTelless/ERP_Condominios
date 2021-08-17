@@ -553,6 +553,7 @@ namespace ERP_Condominios_Solution.Controllers
             vm.FORN_DT_CADASTRO = DateTime.Today;
             vm.FORN_IN_ATIVO = 1;
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+            vm.FORN_NR_DOCUMENTO = "-";
             return View(vm);
         }
 

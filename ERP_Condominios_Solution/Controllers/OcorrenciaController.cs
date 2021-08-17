@@ -95,11 +95,11 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 Session["ListaOcorrencia"] = listaMasterForn;
             }
-            if (((List<OCORRENCIA>)Session["ListaOcorrencia"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                Session["ListaOcorrencia"] = listaMasterForn;
-            }
+            //if (((List<OCORRENCIA>)Session["ListaOcorrencia"]).Count == 0)
+            //{
+            //    listaMasterForn = fornApp.GetAllItens(idAss);
+            //    Session["ListaOcorrencia"] = listaMasterForn;
+            //}
             ViewBag.Listas = (List<OCORRENCIA>)Session["ListaOcorrencia"];
             ViewBag.Title = "Ocorrencias";
             ViewBag.Cats = new SelectList(fornApp.GetAllCategorias(idAss).OrderBy(x => x.CAOC_NM_NOME), "CAOC_CD_ID", "CAOC_NM_NOME");
@@ -114,10 +114,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensOcorrencia"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensOcorrencia"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensOcorrencia"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensOcorrencia"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -176,8 +176,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensOcorrencia"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaOcorrencia");
                 }
 
                 // Sucesso

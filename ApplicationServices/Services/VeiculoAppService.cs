@@ -309,16 +309,17 @@ namespace ApplicationServices.Services
                     footer = footer.Replace("{Unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
                     footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
+                    body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
 
                     // Concatena
-                    String emailBody = header + body;
+                    String emailBody = header + body + footer;
                     CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
-                    mensagem.ASSUNTO = "NOTIFICAÇÃO - VEÍCULO";
+                    mensagem.ASSUNTO = item.NOTI_NM_TITULO;
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = usuario.USUA_NM_EMAIL;
@@ -335,7 +336,7 @@ namespace ApplicationServices.Services
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
 
                     // Envia SMS
-                    String voltaSMS = ValidateCreateMensagem(usuario);
+                    String voltaSMS = ValidateCreateMensagem(usuario, veiculo, item);
                     return volta;
                 }
                 return volta;
@@ -346,7 +347,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public String ValidateCreateMensagem(USUARIO usuario)
+        public String ValidateCreateMensagem(USUARIO usuario, VEICULO veiculo, NOTIFICACAO item)
         {
             try
             {
@@ -367,7 +368,18 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                //String texto = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                String msg = item.NOTI_TX_TEXTO.Replace(System.Environment.NewLine, " ");
+                if (msg.Length > 750)
+                {
+                    msg = msg.Substring(0, 750);
+                }
+                String header = _temService.GetByCode("VEICSMS").TEMP_TX_CABECALHO;
+                String body = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                body = body.Replace("{Texto}", msg);
+                body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
+                header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
+                String texto = header + body;
 
                 // inicia processo
                 List<String> resposta = new List<string>();

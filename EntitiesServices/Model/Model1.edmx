@@ -966,6 +966,7 @@
           <Property Name="OCOR_TX_ENCERRAMENTO" Type="text" />
           <Property Name="OCOR_DT_CADASTRO" Type="date" Nullable="false" />
           <Property Name="OCOR_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="OCOR_TX_TEXTO_PLANO" Type="text" />
         </EntityType>
         <EntityType Name="OCORRENCIA_ANEXO">
           <Key>
@@ -6272,6 +6273,7 @@
           <NavigationProperty Name="OCORRENCIA_COMENTARIO" Relationship="Self.FK_OCORRENCIA_COMENTARIO_OCORRENCIA" FromRole="OCORRENCIA" ToRole="OCORRENCIA_COMENTARIO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_OCORRENCIA_UNIDADE" FromRole="OCORRENCIA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_OCORRENCIA_USUARIO" FromRole="OCORRENCIA" ToRole="USUARIO" />
+          <Property Name="OCOR_TX_TEXTO_PLANO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OCORRENCIA_ANEXO">
           <Key>
@@ -11590,6 +11592,7 @@
           <EntitySetMapping Name="OCORRENCIA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.OCORRENCIA">
               <MappingFragment StoreEntitySet="OCORRENCIA">
+                <ScalarProperty Name="OCOR_TX_TEXTO_PLANO" ColumnName="OCOR_TX_TEXTO_PLANO" />
                 <ScalarProperty Name="OCOR_CD_ID" ColumnName="OCOR_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />

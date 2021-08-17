@@ -77,6 +77,7 @@
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.FORN_DT_CADASTRO)
                                                     @Html.HiddenFor(m => m.FORN_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.FORN_NR_DOCUMENTO)
                                                     Tipo de Pessoa*
                                                     @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
                                                     @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
@@ -160,7 +161,7 @@
                                         <div class="row">
                                             <div style="margin-left: 15px;" class="col-lg-12 col-md-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <h4>Logotipo</h4><input type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="imgFornecedor" class="btn btn-sm btn-warning" multiple />
+                                                    <h4>Logotipo/Foto</h4><input type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="imgFornecedor" class="btn btn-sm btn-warning" multiple />
                                                     <br />
                                                 </div>
                                             </div>

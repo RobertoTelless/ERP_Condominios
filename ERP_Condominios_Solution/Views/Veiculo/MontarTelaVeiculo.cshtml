@@ -72,11 +72,11 @@
                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                     <div class="col-lg-2 col-md-2 col-xs-5ths">
                                         Tipo de Veículo
-                                        @Html.DropDownListFor(m => m.TIVE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control" })                            
+                                        @Html.DropDownListFor(m => m.TIVE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-xs-5ths">
                                         Unidade
-                                        @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control" })                            
+                                        @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                     </div>
                                     <div class="col-lg-2 col-md-2 col-xs-5ths">
                                         Placa
@@ -154,7 +154,7 @@
                         </div>
                     }
                     <div class="row">
-                            @if ((ViewBag.Listas as List<EntitiesServices.Model.VEICULO>).Count > 0)                                        {
+                            @if (ViewBag.Listas != null && (ViewBag.Listas as List<EntitiesServices.Model.VEICULO>).Count > 0)                                        {
                                 <table class="table table-striped table-bordered table-hover dataTables-example">
                                     <thead style ="background-color:lightsteelblue">
                                         <tr>
@@ -209,7 +209,24 @@
                                     </tbody>
                                 </table>
                             }
-                     </div>
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                    </div>
+                                    <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                        <h2 style="font-weight: bold">Sua pesquisa não retornou nenhum resultado</h2>
+                                        <p>Tente outras opções de pesquisa</p>
+
+                                        @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Veiculo", action: "RetirarFiltroVeiculo")
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                    </div>
+                                </div>
+                            }
+                    </div>
                 </div>
             </div>
         </div>
