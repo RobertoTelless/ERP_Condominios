@@ -277,12 +277,114 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ValidateEditAmbienteChave(AMBIENTE_CHAVE item)
+        public Int32 ValidateEditAmbienteChave(AMBIENTE_CHAVE item, USUARIO usuario)
         {
             try
             {
+                // Critica data
+                if (item.AMCH_DT_DEVOLUCAO != null)
+                {
+                    if (item.AMCH_DT_DEVOLUCAO > DateTime.Today.Date)
+                    {
+                        return 1;
+                    }
+                }
+
                 // Persiste
-                return _baseService.EditAmbienteChave(item);
+                Int32 volta1 = 0;
+
+                // Verifica data e gera mensagens
+                if (item.AMCH_DT_DEVOLUCAO > item.AMCH_DT_PREVISTA)
+                {
+                    // Persiste
+                    item.AMCH_TX_OBSERVACOES = "Devolvida com Atraso";
+                    volta1 = _baseService.EditAmbienteChave(item);
+
+                    // Recupera informações
+                    USUARIO usua = _usuService.GetItemById(item.USUA_CD_ID);
+                    AMBIENTE amb = _baseService.GetItemById(item.AMBI_CD_ID);
+                    UNIDADE unid = _unidService.GetItemById(item.UNID_CD_ID);
+
+                    // Recupera template e-mail
+                    String texto = "A devolução da chave do ambiente " + amb.AMBI_NM_AMBIENTE + " que estava sob sua responsabilidade foi devolvida após a data especificada. Isso poderá gerar multa. Você será contactado pela Administração";
+                    String header = _temService.GetByCode("NOTICHAVE").TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode("NOTICHAVE").TEMP_TX_CORPO;
+                    String data = _temService.GetByCode("NOTICHAVE").TEMP_TX_DADOS;
+
+                    body = body.Replace("{Texto}", texto);
+                    body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
+                    data = data.Replace("{Ambiente}", amb.AMBI_NM_AMBIENTE);
+                    data = data.Replace("{Unidade}", unid.UNID_NM_EXIBE);
+                    data = data.Replace("{DataEntrega}", item.AMCH_DT_ENTREGA.ToLongDateString());
+                    data = data.Replace("{DataPrevista}", item.AMCH_DT_DEVOLUCAO.Value.ToLongDateString());
+                    data = data.Replace("{Unidade}", DateTime.Today.Date.ToLongDateString());
+                    header = header.Replace("{Nome}", usua.USUA_NM_NOME);
+
+                    // Gera Notificação para morador
+                    NOTIFICACAO vm = new NOTIFICACAO();
+                    vm.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                    vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                    vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                    vm.NOTI_IN_ATIVO = 1;
+                    vm.NOTI_IN_NIVEL = 1;
+                    vm.NOTI_IN_ORIGEM = 1;
+                    vm.NOTI_IN_STATUS = 1;
+                    vm.NOTI_IN_VISTA = 0;
+                    vm.NOTI_NM_TITULO = "Notificação para Morador - Chave de Ambiente";
+                    vm.CANO_CD_ID = 3;
+                    vm.USUA_CD_ID = item.USUA_CD_ID;
+                    vm.NOTI_TX_TEXTO = texto;
+                    volta1 = _notiService.Create(vm);
+
+                    // Concatena
+                    String emailBody = header + body + data;
+                    CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
+
+                    // Monta e-mail
+                    NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+                    Email mensagem = new Email();
+                    mensagem.ASSUNTO = "Notificação para Morador - Chave de Ambiente";
+                    mensagem.CORPO = emailBody;
+                    mensagem.DEFAULT_CREDENTIALS = false;
+                    mensagem.EMAIL_DESTINO = usua.USUA_NM_EMAIL;
+                    mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+                    mensagem.ENABLE_SSL = true;
+                    mensagem.NOME_EMISSOR = "ERP Condomínios";
+                    mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+                    mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+                    mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+                    mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+                    mensagem.NETWORK_CREDENTIAL = net;
+
+                    // Envia mensagem
+                    Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+
+                    // Gera Notificação para sindico
+                    texto = "A devolução da chave do ambiente " + amb.AMBI_NM_AMBIENTE + " que estava sob a responsabilidade do morador " + usua.USUA_NM_NOME + " da unidade " + unid.UNID_NM_EXIBE + " foi devolvida após a data especificada. Favor verificar a possível incidência de multa e contactar o morador responsável";
+                    List<USUARIO> lista = _usuService.GetAllItens(usuario.ASSI_CD_ID).Where(p => p.PERF_CD_ID == 1 || p.PERF_CD_ID == 2).ToList();
+                    foreach (USUARIO usu in lista)
+                    {
+                        vm = new NOTIFICACAO();
+                        vm.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                        vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                        vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                        vm.NOTI_IN_ATIVO = 1;
+                        vm.NOTI_IN_NIVEL = 1;
+                        vm.NOTI_IN_ORIGEM = 1;
+                        vm.NOTI_IN_STATUS = 1;
+                        vm.NOTI_IN_VISTA = 0;
+                        vm.NOTI_NM_TITULO = "Notificação para Síndico - Chave de Ambiente";
+                        vm.CANO_CD_ID = 3;
+                        vm.USUA_CD_ID = usu.USUA_CD_ID;
+                        vm.NOTI_TX_TEXTO = texto;
+                        volta1 = _notiService.Create(vm);
+                    }
+                }
+                else
+                {
+                    volta1 = _baseService.EditAmbienteChave(item);
+                }
+                return volta1;
             }
             catch (Exception ex)
             {
@@ -290,7 +392,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateCreateAmbienteChave(AMBIENTE_CHAVE item)
+        public Int32 ValidateCreateAmbienteChave(AMBIENTE_CHAVE item, USUARIO usuario)
         {
             try
             {
@@ -334,11 +436,12 @@ namespace ApplicationServices.Services
                 footer = footer.Replace("{Unidade}", unid.UNID_NM_EXIBE);
                 footer = footer.Replace("{DataEntrega}", item.AMCH_DT_ENTREGA.ToShortDateString());
                 footer = footer.Replace("{DataPrevista}", item.AMCH_DT_PREVISTA.ToShortDateString());
-                body = body.Replace("{Texto}", "A chave do ambiente especificado abaixo foi entregue ao responsável da unidade na data abaixo");
+                body = body.Replace("{Texto}", "A chave do ambiente " + amb.AMBI_NM_AMBIENTE + " foi entrege em " + item.AMCH_DT_ENTREGA.ToShortDateString() + " para a unidade " + unid.UNID_NM_EXIBE + " com devolução prevista para " + item.AMCH_DT_PREVISTA.ToShortDateString() + ".");
+                body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
                 header = header.Replace("{Nome}", usu.USUA_NM_NOME);
 
                 // Concatenana 
-                String emailBody = header + body;
+                String emailBody = header + body + footer;
                 CONFIGURACAO conf = _confService.GetItemById(item.ASSI_CD_ID);
 
                 // Monta e-mail

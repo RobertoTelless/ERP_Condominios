@@ -116,7 +116,7 @@
                                                     @Html.HiddenFor(m => m.AMBI_NM_DESCRICAO)
                                                     @if (!String.IsNullOrEmpty(Model.AMBI_AQ_FOTO))
                                                     {
-                                                        <img src="@Url.Content(Model.AMBI_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.AMBI_NM_AMBIENTE', '@Url.Content(Model.AMBI_AQ_FOTO)')">                                                    }
+                                                        <img src="@Url.Content(Model.AMBI_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.AMBI_NM_AMBIENTE', '@Url.Content(Model.AMBI_AQ_FOTO)')">                                                    }
                                                     else
                                                     {
                                                         <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
@@ -130,7 +130,7 @@
                                             </div>
                                             <div class="col-md-11">
                                                 <div class="row">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                         @Html.HiddenFor(m => m.AMBI_DT_CADASTRO)
                                                         @Html.HiddenFor(m => m.AMBI_IN_ATIVO)
@@ -143,20 +143,30 @@
                                                         @Html.TextBoxFor(m => m.AMBI_NM_AMBIENTE, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_NM_AMBIENTE, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-1 col-md-1 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Lotação*
                                                         @Html.TextBoxFor(m => m.AMBI_NR_LOTACAO, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_NR_LOTACAO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Início*
-                                                        @Html.TextBoxFor(m => m.AMBI_HR_INICIO, new { @class = "form-control", autofocus = true, @id = "inicio" })
-                                                        @Html.ValidationMessageFor(m => m.AMBI_HR_INICIO, "", new { @style = "color:red" })
+                                                        <div class='input-group date' id='datetimepicker3'>
+                                                            @Html.TextBoxFor(m => m.AMBI_HR_INICIO, new { @class = "form-control time-picker", autofocus = true, @id = "hora" })
+                                                            @Html.ValidationMessageFor(m => m.AMBI_HR_INICIO, "", new { @style = "color:red" })
+                                                            <span class="input-group-addon">
+                                                                <span style="cursor: pointer;" class="glyphicon glyphicon-time"></span>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Término*
-                                                        @Html.TextBoxFor(m => m.AMBI_HR_FINAL, new { @class = "form-control", autofocus = true, @id = "termino" })
-                                                        @Html.ValidationMessageFor(m => m.AMBI_HR_FINAL, "", new { @style = "color:red" })
+                                                        <div class='input-group date' id='datetimepicker4'>
+                                                            @Html.TextBoxFor(m => m.AMBI_HR_FINAL, new { @class = "form-control time-picker", autofocus = true, @id = "hora1" })
+                                                            @Html.ValidationMessageFor(m => m.AMBI_HR_FINAL, "", new { @style = "color:red" })
+                                                            <span class="input-group-addon">
+                                                                <span style="cursor: pointer;" class="glyphicon glyphicon-time"></span>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <br />
@@ -289,50 +299,6 @@
                                         </div>
                                     </div>
                                     <hr />
-                                    @*<div class="row">
-                                          <div class="col-lg-6 col-md-6 col-xs-12">
-                                            <div class="form-group">
-                                                <h4>Normas de Uso</h4>
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Norma de Uso
-                                                    @Html.TextBoxFor(m => m.AMBI_AQ_NORMAS_USO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                </div>
-                                                @using (Html.BeginForm("UploadNormaUso", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
-                                                {
-                                                    <div class="form-group">
-                                                        <div class="col-lg-5 col-md-5 col-xs-12">
-                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                            <input style="float: left;" type="submit" value="Incluir Norma de Uso" class="btn btn-sm btn-success" />
-                                                        </div>
-                                                        <div class="col-lg-5 col-md-5 col-xs-12">
-                                                            <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.AMIM_NM_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank" ></a>
-                                                            @Html.ButtonLinkIndex(text: "Download", action: "IncluirAmbienteChave", controller: "Ambiente")
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>*@
-                                    @*<div class="row">
-                                        <div class="col-lg-6 col-md-6 col-xs-12">
-                                            <div class="form-group">
-                                                <h4>Lista de Material</h4>
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Lista de Material
-                                                    @Html.TextBoxFor(m => m.AMBI_AQ_LISTA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
-                                                </div>
-                                                @using (Html.BeginForm("UploadListaMaterial", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id = "pwd-container3" }))
-                                                {
-                                                    <div class="form-group">
-                                                        <div class="col-lg-12 col-md-12 col-xs-12">
-                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                            <input style="float: left;" type="submit" value="Incluir Lista de Material" class="btn btn-sm btn-success" />
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>*@
                                     <div class="row">
                                         @*<hr />*@
                                         <div class="col-lg-12 col-md-12 col-xs-12">
@@ -573,6 +539,56 @@
                             @*Indicadores*@
                             <div id="tab-6" class="tab-pane">
                                 <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaReserva", "Reserva")" class="pull-left btn-link"><u>Reservas</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.RESERVA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Ambiente</th>
+                                                                    <th>Data</th>
+                                                                    <th>Confirmada</th>
+                                                                    <th>Paga</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.RESERVA.OrderByDescending(a => a.RESE_DT_EVENTO)).Take(5))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.AMBIENTE.AMBI_NM_AMBIENTE</td>
+                                                                        <td>@cond.RESE_DT_EVENTO.ToShortDateString()</td>
+                                                                        @if (cond.RESE_IN_CONFIRMADA == 1)
+                                                                        {
+                                                                            <td>Sim</td>
+                                                                        }
+                                                                        else 
+                                                                        {
+                                                                            <td>Não</td>
+                                                                        }
+                                                                        @if (cond.RESE_IN_PAGA == 1)
+                                                                        {
+                                                                            <td>Sim</td>
+                                                                        }
+                                                                        else 
+                                                                        {
+                                                                            <td>Não</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -589,18 +605,26 @@
 
 
 @section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
     @Styles.Render("~/plugins/toastrStyles")
 }
 @section Scripts {
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+
     @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
-    @Scripts.Render("~/plugins/sparkline")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
 
     <script>
         $(function () {
@@ -696,6 +720,30 @@
             $('#wpp').mask("(99) 99999-9999");
             $('#inicio').mask("99:99");
             $('#termino').mask("99:99");
+            $("#hora").mask("99:99");
+            $("#hora1").mask("99:99");
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.time-picker').datetimepicker({
+                datepicker: false,
+                format: 'H:i'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker3').click(function () {
+                $('.time-picker').datetimepicker('show');
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker4').click(function () {
+                $('.time-picker').datetimepicker('show');
+            });
         });
     </script>
     <script type="text/javascript">

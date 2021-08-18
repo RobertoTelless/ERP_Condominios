@@ -108,11 +108,6 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterForn = fornApp.GetAllItens(idAss);
                 Session["ListaAmbiente"] = listaMasterForn;
             }
-            if (((List<AMBIENTE>)Session["ListaAmbiente"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                Session["ListaAmbiente"] = listaMasterForn;
-            }
             ViewBag.Listas = (List<AMBIENTE>)Session["ListaAmbiente"];
             ViewBag.Title = "Ambientes";
             ViewBag.Cats = new SelectList(fornApp.GetAllTipos(idAss).OrderBy(x => x.TIAM_NM_NOME), "TIAM_CD_ID", "TIAM_NM_NOME");
@@ -129,10 +124,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensAmbiente"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensAmbiente"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensAmbiente"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensAmbiente"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -198,8 +193,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensAmbiente"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaAmbiente");
                 }
 
                 // Sucesso
@@ -416,6 +409,10 @@ namespace ERP_Condominios_Solution.Controllers
             if ((Int32)Session["MensAmbiente"] == 9)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0033", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensAmbiente"] == 10)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0064", CultureInfo.CurrentCulture));
             }
 
             AMBIENTE item = fornApp.GetItemById(id);
@@ -1182,7 +1179,7 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     AMBIENTE_CHAVE item = Mapper.Map<AmbienteChaveViewModel, AMBIENTE_CHAVE>(vm);
-                    Int32 volta = fornApp.ValidateEditAmbienteChave(item);
+                    Int32 volta = fornApp.ValidateEditAmbienteChave(item, usuarioLogado);
 
                     // Verifica retorno
                     return RedirectToAction("VoltarAnexoAmbiente");
@@ -1242,9 +1239,15 @@ namespace ERP_Condominios_Solution.Controllers
                         ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0055", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
-                    Int32 volta = fornApp.ValidateEditAmbienteChave(item);
+                    Int32 volta = fornApp.ValidateEditAmbienteChave(item, usuarioLogado);
 
                     // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensAmbiente"] = 10;
+                        return RedirectToAction("VoltarAnexoAmbiente", "Ambiente");
+                    }
+                    Session["MensAmbiente"] = 0;
                     return RedirectToAction("VoltarAnexoAmbiente");
                 }
                 catch (Exception ex)
@@ -1266,10 +1269,11 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             AMBIENTE_CHAVE item = fornApp.GetAmbienteChaveById(id);
             objetoFornAntes = (AMBIENTE)Session["Ambiente"];
             item.AMCH_IN_ATIVO = 0;
-            Int32 volta = fornApp.ValidateEditAmbienteChave(item);
+            Int32 volta = fornApp.ValidateEditAmbienteChave(item, usuarioLogado);
             return RedirectToAction("VoltarAnexoAmbiente");
         }
 
@@ -1280,10 +1284,11 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             AMBIENTE_CHAVE item = fornApp.GetAmbienteChaveById(id);
             objetoFornAntes = (AMBIENTE)Session["Ambiente"];
             item.AMCH_IN_ATIVO = 1;
-            Int32 volta = fornApp.ValidateEditAmbienteChave(item);
+            Int32 volta = fornApp.ValidateEditAmbienteChave(item, usuarioLogado);
             return RedirectToAction("VoltarAnexoAmbiente");
         }
 
@@ -1342,7 +1347,7 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     AMBIENTE_CHAVE item = Mapper.Map<AmbienteChaveViewModel, AMBIENTE_CHAVE>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                    Int32 volta = fornApp.ValidateCreateAmbienteChave(item);
+                    Int32 volta = fornApp.ValidateCreateAmbienteChave(item, usuarioLogado);
 
                     // Verifica retorno
                     if (volta == 1)

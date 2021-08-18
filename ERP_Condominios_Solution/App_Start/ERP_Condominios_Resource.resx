@@ -294,6 +294,9 @@
   <data name="M0063" xml:space="preserve">
     <value>Já existe uma conta bancária definida como conta principal. Não pode haver duas contas nessa situação.</value>
   </data>
+  <data name="M0064" xml:space="preserve">
+    <value>Data da Devolução da chave não pode ser superior a data corrente</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

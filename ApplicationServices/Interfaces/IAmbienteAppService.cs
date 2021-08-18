@@ -31,7 +31,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateCreateAmbienteCusto(AMBIENTE_CUSTO item);
 
         AMBIENTE_CHAVE GetAmbienteChaveById(Int32 id);
-        Int32 ValidateEditAmbienteChave(AMBIENTE_CHAVE item);
-        Int32 ValidateCreateAmbienteChave(AMBIENTE_CHAVE item);
+        Int32 ValidateEditAmbienteChave(AMBIENTE_CHAVE item, USUARIO usuario);
+        Int32 ValidateCreateAmbienteChave(AMBIENTE_CHAVE item, USUARIO usuario);
     }
 }

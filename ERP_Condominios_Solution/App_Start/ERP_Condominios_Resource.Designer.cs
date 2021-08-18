@@ -592,6 +592,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data da Devolução da chave não pode ser superior a data corrente.
+        /// </summary>
+        internal static string M0064 {
+            get {
+                return ResourceManager.GetString("M0064", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {
