@@ -88,6 +88,12 @@ namespace ApplicationServices.Services
         {
             try
             {
+                // Criticas
+                if (String.IsNullOrEmpty(item.AUAC_NR_DOCUMENTO))
+                {
+                    item.AUAC_NR_DOCUMENTO = "-";
+                }              
+                
                 // Verifica existencia prévia
                 if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {

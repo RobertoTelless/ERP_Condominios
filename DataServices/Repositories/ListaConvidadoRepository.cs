@@ -35,6 +35,7 @@ namespace DataServices.Repositories
         {
             IQueryable<LISTA_CONVIDADO> query = Db.LISTA_CONVIDADO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Include(p => p.CONVIDADO);
             return query.ToList();
         }
 
@@ -42,6 +43,7 @@ namespace DataServices.Repositories
         {
             IQueryable<LISTA_CONVIDADO> query = Db.LISTA_CONVIDADO.Where(p => p.LICO_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Include(p => p.CONVIDADO);
             return query.ToList();
         }
 
@@ -49,6 +51,7 @@ namespace DataServices.Repositories
         {
             IQueryable<LISTA_CONVIDADO> query = Db.LISTA_CONVIDADO.Where(p => p.LICO_IN_ATIVO == 1);
             query = query.Where(p => p.UNID_CD_ID == idUnid);
+            query = query.Include(p => p.CONVIDADO);
             return query.ToList();
         }
 
@@ -76,6 +79,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.ASSI_CD_ID == idAss);
                 query = query.OrderBy(a => a.LICO_DT_EVENTO);
+                query = query.Include(p => p.CONVIDADO);
                 lista = query.ToList<LISTA_CONVIDADO>();
             }
             return lista;

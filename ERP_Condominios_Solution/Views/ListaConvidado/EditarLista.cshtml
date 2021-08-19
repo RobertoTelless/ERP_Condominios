@@ -153,45 +153,45 @@
                                                 @if (Model.CONVIDADO != null)
                                                 {
                                                     if (Model.CONVIDADO.Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                                        <thead style ="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Nome</th>
-                                                                <th>Hora de Chegada</th>
-                                                                <th class="td-one-action">Ações</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (Model.CONVIDADO))
-                                                            {
+                                                    {
+                                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                            <thead style ="background-color:lightsteelblue">
                                                                 <tr>
-                                                                    <td>@cond.CONV_NM_CONVIDADO</td>
-                                                                    @if (cond.CONV_DT_CHEGADA != null)
-                                                                    {
-                                                                        <td>@cond.CONV_DT_CHEGADA.Value.ToShortDateString() @cond.CONV_DT_CHEGADA.Value.ToShortTimeString()</td>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <td>-</td>
-                                                                    }
-                                                                    <td class="td-one-action">
-                                                                        @Html.TableLinkDetails(cond.CONV_CD_ID, "EditarConvidado","fa-edit", "ListaConvidado")
-                                                                        @if (cond.CONV_IN_ATIVO == 1)
+                                                                    <th>Nome</th>
+                                                                    <th>Hora de Chegada</th>
+                                                                    <th class="td-one-action">Ações</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.CONVIDADO))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.CONV_NM_CONVIDADO</td>
+                                                                        @if (cond.CONV_DT_CHEGADA != null)
                                                                         {
-                                                                            <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/ListaConvidado/ExcluirConvidado/@cond.CONV_CD_ID')" title="Excluir"></span>
+                                                                            <td>@cond.CONV_DT_CHEGADA.Value.ToShortDateString() @cond.CONV_DT_CHEGADA.Value.ToShortTimeString()</td>
                                                                         }
                                                                         else
                                                                         {
-                                                                            <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/ListaConvidado/ReativarConvidado/@cond.CONV_CD_ID')" title="Reativar"></span>
+                                                                            <td>-</td>
                                                                         }
-                                                                    </td>
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
+                                                                        <td class="td-one-action">
+                                                                            @Html.TableLinkDetails(cond.CONV_CD_ID, "EditarConvidado","fa-edit", "ListaConvidado")
+                                                                            @if (cond.CONV_IN_ATIVO == 1)
+                                                                            {
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/ListaConvidado/ExcluirConvidado/@cond.CONV_CD_ID')" title="Excluir"></span>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/ListaConvidado/ReativarConvidado/@cond.CONV_CD_ID')" title="Reativar"></span>
+                                                                            }
+                                                                        </td>
+                                                                        @*}*@
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
                                                 }
                                             </div>
                                         </div>

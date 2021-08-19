@@ -601,6 +601,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Cargo já preenchido no corpo diretivo.
+        /// </summary>
+        internal static string M0065 {
+            get {
+                return ResourceManager.GetString("M0065", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Número de conselheiros maior que o permitido.
+        /// </summary>
+        internal static string M0066 {
+            get {
+                return ResourceManager.GetString("M0066", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {

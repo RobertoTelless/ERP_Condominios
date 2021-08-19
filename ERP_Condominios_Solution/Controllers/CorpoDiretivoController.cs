@@ -84,15 +84,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["ListaCorpo"] == null)
             {
                 listaMasterForn = fornApp.GetAllItens(idAss);
-                listaMasterForn = listaMasterForn.Where(p => p.CODI_DT_FINAL == null).ToList();
+                listaMasterForn = listaMasterForn.Where(p => p.CODI_DT_SAIDA_REAL == null).ToList();
+                Session["ListaCorpo"] = listaMasterForn;
             }
-            if (((List<CORPO_DIRETIVO>)Session["ListaCorpo"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                listaMasterForn = listaMasterForn.Where(p => p.CODI_DT_FINAL == null).ToList();
-            }
-            Session["ListaCorpo"] = listaMasterForn;
-            ViewBag.Listas = (List<OCORRENCIA>)Session["ListaCorpo"];
+            ViewBag.Listas = (List<CORPO_DIRETIVO>)Session["ListaCorpo"];
             ViewBag.Title = "Corpo Diretivo";
 
             // Indicadores
@@ -105,9 +100,13 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0059", CultureInfo.CurrentCulture));
                 }
-                if ((Int32)Session["MensCorpo"] == 2)
+                if ((Int32)Session["MensCorpo"] == 4)
                 {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0065", CultureInfo.CurrentCulture));
+                }
+                if ((Int32)Session["MensCorpo"] == 3)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0066", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -143,15 +142,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["ListaCorpo"] == null)
             {
                 listaMasterForn = fornApp.GetAllItens(idAss);
-                listaMasterForn = listaMasterForn.Where(p => p.CODI_DT_FINAL == null).ToList();
+                listaMasterForn = listaMasterForn.Where(p => p.CODI_DT_SAIDA_REAL == null).ToList();
+                Session["ListaCorpo"] = listaMasterForn;
             }
-            if (((List<CORPO_DIRETIVO>)Session["ListaCorpo"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                listaMasterForn = listaMasterForn.Where(p => p.CODI_DT_FINAL == null).ToList();
-            }
-            Session["ListaCorpo"] = listaMasterForn;
-            ViewBag.Listas = (List<OCORRENCIA>)Session["ListaCorpo"];
+            ViewBag.Listas = (List<CORPO_DIRETIVO>)Session["ListaCorpo"];
             ViewBag.Title = "Corpo Diretivo";
 
             // Indicadores
@@ -217,6 +211,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            Session["ListaCorpo"] = null;
             return RedirectToAction("MontarTelaCorpo");
         }
 
@@ -259,7 +254,7 @@ namespace ERP_Condominios_Solution.Controllers
             vm.CODI_DT_CADASTRO = DateTime.Today.Date;
             vm.CODI_IN_ATIVO = 1;
             vm.CODI_DT_INICIO = DateTime.Today.Date;
-            vm.CODI_DT_SAIDA_REAL = DateTime.Today.Date.AddDays(Convert.ToDouble(conf.CONF_NR_CORPO_DIRETIVO_PERIODO));
+            vm.CODI_DT_FINAL = DateTime.Today.Date.AddDays(Convert.ToDouble(conf.CONF_NR_CORPO_DIRETIVO_PERIODO));
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
             return View(vm);
         }
@@ -287,6 +282,19 @@ namespace ERP_Condominios_Solution.Controllers
                     if (volta == 1)
                     {
                         Session["MensCorpo"] = 1;
+                        Session["ListaCorpo"] = null;
+                        return RedirectToAction("MontarTelaCorpo", "CorpoDiretivo");
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensCorpo"] = 4;
+                        Session["ListaCorpo"] = null;
+                        return RedirectToAction("MontarTelaCorpo", "CorpoDiretivo");
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensCorpo"] = 3;
+                        Session["ListaCorpo"] = null;
                         return RedirectToAction("MontarTelaCorpo", "CorpoDiretivo");
                     }
 

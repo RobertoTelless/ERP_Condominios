@@ -102,16 +102,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["ListaLista"] == null)
             {
                 listaMasterForn = fornApp.GetAllItens(idAss);
-                Session["ListaLista"] = listaMasterForn;
-            }
-            if (((List<FORNECEDOR>)Session["ListaLista"]).Count == 0)
-            {
-                listaMasterForn = fornApp.GetAllItens(idAss);
-                Session["ListaLista"] = listaMasterForn;
-            }
-            if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
-            {
-                listaMasterForn = listaMasterForn.Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+                {
+                    listaMasterForn = listaMasterForn.Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+                }
                 Session["ListaLista"] = listaMasterForn;
             }
 
@@ -122,16 +116,15 @@ namespace ERP_Condominios_Solution.Controllers
             Session["IncluirLista"] = 0;
 
             // Indicadores
-            ViewBag.Listas = ((List<LISTA_CONVIDADO>)Session["ListaLista"]).Count;
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             if (Session["MensLista"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensLista"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensLista"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensLista"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -148,6 +141,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Abre view
             objetoForn = new LISTA_CONVIDADO();
+            objetoForn.LICO_DT_EVENTO = DateTime.Today.Date;
             objetoForn.LICO_IN_ATIVO = 1;
             Session["MensLista"] = 0;
             Session["VoltaLista"] = 1;
@@ -197,8 +191,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensLista"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaLista");
                 }
 
                 // Sucesso
@@ -259,6 +251,7 @@ namespace ERP_Condominios_Solution.Controllers
             ListaConvidadoViewModel vm = Mapper.Map<LISTA_CONVIDADO, ListaConvidadoViewModel>(item);
             vm.LICO_DT_CADASTRO = DateTime.Today.Date;
             vm.LICO_IN_ATIVO = 1;
+            vm.LICO_DT_EVENTO = DateTime.Today.Date;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             vm.ASSI_CD_ID = usuario.ASSI_CD_ID;
             if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
@@ -302,7 +295,7 @@ namespace ERP_Condominios_Solution.Controllers
                     listaMasterForn = new List<LISTA_CONVIDADO>();
                     Session["ListaLista"] = null;
                     Session["IncluirLista"] = 1;
-                    Session["Listas"] = fornApp.GetAllItens(idAss);
+                    Session["IdLista"] = item.LICO_CD_ID;
 
                     Session["IdVolta"] = item.LICO_CD_ID;
                     if (Session["FileQueueLista"] != null)
@@ -324,7 +317,7 @@ namespace ERP_Condominios_Solution.Controllers
                     {
                         return RedirectToAction("IncluirLista");
                     }
-                    return RedirectToAction("MontarTelaLista");
+                    return RedirectToAction("VoltarAnexoLista");
                 }
                 catch (Exception ex)
                 {
@@ -388,7 +381,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult EditarLista(ListaConvidadoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)

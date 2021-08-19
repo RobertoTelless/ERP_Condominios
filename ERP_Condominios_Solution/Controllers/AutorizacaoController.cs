@@ -129,10 +129,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensAutorizacao"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensAutorizacao"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensAutorizacao"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensAutorizacao"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -204,8 +204,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensAutorizacao"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaAutorizacao");
                 }
 
                 // Sucesso
@@ -228,8 +226,8 @@ namespace ERP_Condominios_Solution.Controllers
             }
             if ((Int32)Session["VoltaAutorizacao"] == 1)
             {
-                return RedirectToAction("Morador", "Morador");
-            }
+                return RedirectToAction("MontarTelaAutorizacao");
+                }
             return RedirectToAction("MontarTelaAutorizacao");
         }
 
@@ -449,7 +447,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult EditarAutorizacao(AutorizacaoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)

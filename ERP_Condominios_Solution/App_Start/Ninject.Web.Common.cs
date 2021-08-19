@@ -215,7 +215,7 @@ namespace Presentation.Start
             kernel.Bind<IProdutoFornecedorRepository>().To<ProdutoFornecedorRepository>();
             kernel.Bind<IProdutoMovimentoEstoqueRepository>().To<ProdutoMovimentoEstoqueRepository>();
             kernel.Bind<IProdutoRepository>().To<ProdutoRepository>();
-            kernel.Bind<IListaConvidadoRepository>().To<IListaConvidadoRepository>();
+            kernel.Bind<IListaConvidadoRepository>().To<ListaConvidadoRepository>();
             kernel.Bind<IConvidadoRepository>().To<ConvidadoRepository>();
             kernel.Bind<IReservaRepository>().To<ReservaRepository>();
             kernel.Bind<IListaConvidadoComentarioRepository>().To<ListaConvidadoComentarioRepository>();
@@ -229,6 +229,7 @@ namespace Presentation.Start
             kernel.Bind<IMudancaComentarioRepository>().To<MudancaComentarioRepository>();
             kernel.Bind<IEntradaSaidaRepository>().To<EntradaSaidaRepository>();
             kernel.Bind<IEntradaSaidaComentarioRepository>().To<EntradaSaidaComentarioRepository>();
+            kernel.Bind<IListaConvidadoAnexoRepository>().To<ListaConvidadoAnexoRepository>();
 
         }
     }

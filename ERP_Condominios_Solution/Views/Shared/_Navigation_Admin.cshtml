@@ -52,7 +52,7 @@
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Visitantes</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaControleVeiculo")"><a href="@Url.Action("MontarTelaControleVeiculo", "ControleVeiculo")">Veículos Visitantes</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Lista de Convidados</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaLista")"><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Lista de Convidados</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAutorizacao")"><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Restrições/Autorizações</a></li>
                             </ul>                    
                         </li>
@@ -106,7 +106,7 @@
                                 <li class="@Html.IsSelected(action: "MontarTelaEquipamento")"><a href="@Url.Action("MontarTelaEquipamento", "Equipamento")">Equipamentos</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("MontarTelaTelefone", "Telefone")">Telefones</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Escala Trabalho</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Listas de Convidados</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaLista")"><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Listas de Convidados</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAutorizacao")"><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorização/Restrição</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaMoradores")"><a href="@Url.Action("MontarTelaMoradores", "Morador")">Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Estoque</a></li>
@@ -170,7 +170,7 @@
                         <li class="@Html.IsSelected(action: "CarregarMorador")"><a href="@Url.Action("CarregarPortaria", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Operacional</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Encomendas</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Lista Convidados</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaLista")"><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Lista Convidados</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAutorizacao")"><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorização/Restrição</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Dados Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaOcorrencia")"><a href="@Url.Action("MontarTelaOcorrencia", "Ocorrencia")">Livro Ocorrências</a></li>

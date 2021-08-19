@@ -297,6 +297,12 @@
   <data name="M0064" xml:space="preserve">
     <value>Data da Devolução da chave não pode ser superior a data corrente</value>
   </data>
+  <data name="M0065" xml:space="preserve">
+    <value>Cargo já preenchido no corpo diretivo</value>
+  </data>
+  <data name="M0066" xml:space="preserve">
+    <value>Número de conselheiros maior que o permitido</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

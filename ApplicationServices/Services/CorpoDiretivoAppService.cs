@@ -16,11 +16,13 @@ namespace ApplicationServices.Services
     {
         private readonly ICorpoDiretivoService _baseService;
         private readonly IConfiguracaoService _confService;
+        private readonly IUsuarioService _usuService;
 
-        public CorpoDiretivoAppService(ICorpoDiretivoService baseService, IConfiguracaoService confService): base(baseService)
+        public CorpoDiretivoAppService(ICorpoDiretivoService baseService, IConfiguracaoService confService, IUsuarioService usuService): base(baseService)
         {
             _baseService = baseService;
             _confService = confService;
+            _usuService = usuService;
         }
 
         public List<CORPO_DIRETIVO> GetAllItens(Int32 idAss)
@@ -65,7 +67,7 @@ namespace ApplicationServices.Services
             {
                 // Verifica existencia prévia
                 List<CORPO_DIRETIVO> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID);
-                List<CORPO_DIRETIVO> lista_proc = lista.Where(p => p.USUA_CD_ID == item.USUA_CD_ID & p.CODI_DT_FINAL == null).ToList();
+                List<CORPO_DIRETIVO> lista_proc = lista.Where(p => p.USUA_CD_ID == item.USUA_CD_ID & p.CODI_DT_SAIDA_REAL == null).ToList();
                 if (lista_proc.Count > 0)
                 {
                     return 1;
@@ -74,7 +76,7 @@ namespace ApplicationServices.Services
                 if (item.FUCO_CD_ID != 4)
                 {
                     // Verifica se cargo já está preenchido
-                    lista_proc = lista.Where(p => p.FUCO_CD_ID == item.FUCO_CD_ID & p.CODI_DT_FINAL == null).ToList();
+                    lista_proc = lista.Where(p => p.FUCO_CD_ID == item.FUCO_CD_ID & p.CODI_DT_SAIDA_REAL == null).ToList();
                     if (lista_proc.Count > 0)
                     {
                         return 2;
@@ -83,7 +85,7 @@ namespace ApplicationServices.Services
                 else
                 {
                     // Verifica numero de conselheiros
-                    lista_proc = lista.Where(p => p.FUCO_CD_ID == 4 & p.CODI_DT_FINAL == null).ToList();
+                    lista_proc = lista.Where(p => p.FUCO_CD_ID == 4 & p.CODI_DT_SAIDA_REAL == null).ToList();
                     CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
                     if (lista_proc.Count >= conf.CONF_NR_NUMERO_CONSELHEIROS)
                     {
@@ -108,6 +110,14 @@ namespace ApplicationServices.Services
 
                 // Persiste
                 Int32 volta = _baseService.Create(item, log);
+
+                // Acerta perfil de Usuario
+                USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID.Value);
+                if (usu.PERF_CD_ID != 1)
+                {
+                    usu.PERF_CD_ID = item.FUCO_CD_ID == 1 ? 2 : (item.FUCO_CD_ID == 2 ? 2 : 6);
+                    Int32 volta1 = _usuService.EditUser(usu);
+                }
                 return volta;
             }
             catch (Exception ex)
@@ -133,7 +143,16 @@ namespace ApplicationServices.Services
                 };
 
                 // Persiste
-                return _baseService.Edit(item, log);
+                Int32 volta = _baseService.Edit(item, log);
+
+                // Acerta perfis
+                if (item.CODI_DT_SAIDA_REAL != null & itemAntes.CODI_DT_SAIDA_REAL == null)
+                {
+                    USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID.Value);
+                    usu.PERF_CD_ID = 6;
+                    Int32 volta1 = _usuService.EditUser(usu);
+                }
+                return volta;
             }
             catch (Exception ex)
             {
