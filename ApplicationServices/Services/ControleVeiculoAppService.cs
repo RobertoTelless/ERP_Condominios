@@ -222,22 +222,6 @@ namespace ApplicationServices.Services
 
                 // Acerta campos
                 item.COVE_IN_ATIVO = 0;
-                if (item.TIPO_VEICULO != null)
-                {
-                    item.TIPO_VEICULO = null;
-                }
-                if (item.USUARIO != null)
-                {
-                    item.USUARIO = null;
-                }
-                if (item.ASSINANTE != null)
-                {
-                    item.ASSINANTE = null;
-                }
-                if (item.UNIDADE != null)
-                {
-                    item.UNIDADE = null;
-                }
 
                 // Monta Log
                 LOG log = new LOG
@@ -247,7 +231,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DeleCOVE",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTROLE_VEICULO>(item),
+                    LOG_TX_REGISTRO = "Exclusão de entrada de veículo em " + item.COVE_DT_ENTRADA.Value.ToShortDateString() + " " + item.COVE_DT_ENTRADA.Value.ToShortTimeString() + ". Veículo: " + item.COVE_NM_PLACA,
                 };
 
                 // Persiste
@@ -267,22 +251,6 @@ namespace ApplicationServices.Services
 
                 // Acerta campos
                 item.COVE_IN_ATIVO = 1;
-                if (item.TIPO_VEICULO != null)
-                {
-                    item.TIPO_VEICULO = null;
-                }
-                if (item.USUARIO != null)
-                {
-                    item.USUARIO = null;
-                }
-                if (item.ASSINANTE != null)
-                {
-                    item.ASSINANTE = null;
-                }
-                if (item.UNIDADE != null)
-                {
-                    item.UNIDADE = null;
-                }
 
                 // Monta Log
                 LOG log = new LOG
@@ -292,7 +260,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatCOVE",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<CONTROLE_VEICULO>(item),
+                    LOG_TX_REGISTRO = "Reativação de entrada de veículo em " + item.COVE_DT_ENTRADA.Value.ToShortDateString() + " " + item.COVE_DT_ENTRADA.Value.ToShortTimeString() + ". Veículo: " + item.COVE_NM_PLACA,
                 };
 
                 // Persiste
@@ -332,10 +300,11 @@ namespace ApplicationServices.Services
                     footer = footer.Replace("{Unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
                     footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
+                    body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
 
                     // Concatena
-                    String emailBody = header + body;
+                    String emailBody = header + body + footer;
                     CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
 
                     // Monta e-mail
@@ -358,7 +327,7 @@ namespace ApplicationServices.Services
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
 
                     // Envia SMS
-                    String voltaSMS = ValidateCreateMensagem(usuario);
+                    String voltaSMS = ValidateCreateMensagem(usuario, veiculo, item);
                     return volta;
                 }
                 return volta;
@@ -369,7 +338,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public String ValidateCreateMensagem(USUARIO usuario)
+        public String ValidateCreateMensagem(USUARIO usuario, CONTROLE_VEICULO item, NOTIFICACAO noti)
         {
             try
             {
@@ -390,7 +359,17 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                String msg = noti.NOTI_TX_TEXTO.Replace(System.Environment.NewLine, " ");
+                if (msg.Length > 750)
+                {
+                    msg = msg.Substring(0, 750);
+                }
+                String header = _temService.GetByCode("VEICSMS").TEMP_TX_CABECALHO;
+                String body = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                body = body.Replace("{Texto}", msg);
+                body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
+                header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
+                String texto = header + body;
 
                 // inicia processo
                 List<String> resposta = new List<string>();

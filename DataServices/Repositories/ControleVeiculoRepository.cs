@@ -64,7 +64,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.COVE_NM_MARCA.Contains(marca));
             }
-            if (unid > 0)
+            if (unid != null)
             {
                 query = query.Where(p => p.UNID_CD_ID == unid);
             }
@@ -72,17 +72,17 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.TIVE_CD_ID == idTipo);
             }
-            if (dataEntrada != null & dataSaida == null)
+            if (dataEntrada != DateTime.MinValue & dataSaida == null)
             {
-                query = query.Where(p => p.COVE_DT_ENTRADA == dataEntrada);
+                query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_ENTRADA) == DbFunctions.TruncateTime(dataEntrada));
             }
-            else if (dataEntrada == null & dataSaida != null)
+            else if (dataEntrada == DateTime.MinValue & dataSaida != null)
             {
-                query = query.Where(p => p.COVE_DT_SAIDA == dataSaida);
+                query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_SAIDA) == DbFunctions.TruncateTime(dataSaida));
             }
-            else if (dataEntrada != null & dataSaida != null)
+            else if (dataEntrada != DateTime.MinValue & dataSaida != null)
             {
-                query = query.Where(p => p.COVE_DT_SAIDA <= dataSaida & p.COVE_DT_ENTRADA >= dataEntrada);
+                query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_SAIDA) <= DbFunctions.TruncateTime(dataSaida) & DbFunctions.TruncateTime(p.COVE_DT_ENTRADA) >= DbFunctions.TruncateTime(dataEntrada));
             }
             if (query != null)
             {

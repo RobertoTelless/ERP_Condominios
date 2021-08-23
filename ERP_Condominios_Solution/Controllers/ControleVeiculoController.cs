@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using System.Data.Entity;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -103,7 +104,7 @@ namespace ERP_Condominios_Solution.Controllers
                 else if (usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "ADM")
                 {
                     listaMaster = baseApp.GetAllItens(idAss);
-                    Session["ListaControleVeiculo"] = listaMaster.Where(p => p.COVE_DT_ENTRADA == DateTime.Today.Date).ToList();
+                    Session["ListaControleVeiculo"] = listaMaster.Where(p => p.COVE_DT_ENTRADA.Value.Date == DateTime.Today.Date).ToList();
                 }
                 Session["FiltroControleVeiculo"] = null;
             }
@@ -115,13 +116,9 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Indicadores
-            ViewBag.Veics = ((List<VEICULO>)Session["ListaControleVeiculo"]).Count;
+            ViewBag.Veics = ((List<CONTROLE_VEICULO>)Session["ListaControleVeiculo"]).Count;
 
             // Mensagem
-            if ((Int32)Session["MensControleVeiculo"] == 1)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-            }
             if ((Int32)Session["MensControleVeiculo"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -194,8 +191,6 @@ namespace ERP_Condominios_Solution.Controllers
                     if (volta == 1)
                     {
                         Session["MensControleVeiculo"] = 1;
-                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                        return RedirectToAction("MontarTelaControleVeiculo");
                     }
 
                     // Sucesso
@@ -258,6 +253,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Fornecedores = new SelectList(forApp.GetAllItens(idAss), "FORN_CD_ID", "FORN_NM_NOME");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            Session["TipoNota"] = 1;
 
             // Prepara view
             CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
@@ -348,6 +344,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            Session["TipoNota"] = 2;
 
             CONTROLE_VEICULO item = baseApp.GetItemById(id);
             objetoAntes = item;
@@ -356,6 +353,10 @@ namespace ERP_Condominios_Solution.Controllers
             Session["IdControleVeiculo"] = id;
             Session["VoltaControleVeiculo"] = 2;
             ControleVeiculoViewModel vm = Mapper.Map<CONTROLE_VEICULO, ControleVeiculoViewModel>(item);
+            if (vm.COVE_DT_SAIDA == null)
+            {
+                vm.COVE_DT_SAIDA = DateTime.Now;
+            }
             return View(vm);
         }
 
@@ -567,6 +568,14 @@ namespace ERP_Condominios_Solution.Controllers
             vm.NOTI_IN_STATUS = 1;
             vm.NOTI_IN_VISTA = 0;
             vm.NOTI_NM_TITULO = "Notificação para Morador - Veículo Visitante";
+            if ((Int32)Session["TipoNota"] == 1)
+            {
+                vm.NOTI_TX_TEXTO = "O veículo de placa " + veiculo.COVE_NM_PLACA + " deu entrada as " + veiculo.COVE_DT_ENTRADA.Value.ToShortDateString() + " " + veiculo.COVE_DT_ENTRADA.Value.ToShortTimeString() + ".";
+            }
+            else
+            {
+                vm.NOTI_TX_TEXTO = "O veículo de placa " + veiculo.COVE_NM_PLACA + " saiu as " + veiculo.COVE_DT_SAIDA.Value.ToShortDateString() + " " + veiculo.COVE_DT_SAIDA.Value.ToShortTimeString() + ".";
+            }
             return View(vm);
         }
 

@@ -88,7 +88,7 @@
                                     @using (Html.BeginForm("EditarControleVeiculo", "ControleVeiculo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row">
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px; margin-bottom: 2px; margin-left: 2px; margin-top: 2px; margin-right: 2px;">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                 <div class="col-lg-3 col-md-3 col-xs-12" style="color:green;font-weight:bold">
                                                     Data/Hora Entrada
                                                     @Html.TextBoxFor(m => m.COVE_DT_ENTRADA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
@@ -108,6 +108,8 @@
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.COVE_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.COVE_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIVE_CD_ID)
+                                                    @Html.HiddenFor(m => m.UNID_CD_ID)
                                                     Tipo de Veículo
                                                     @Html.TextBoxFor(m => m.TIPO_VEICULO.TIVE_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
@@ -186,7 +188,7 @@
                                         </div>
                                     </div>
                                     <br />
-                                    @if (Model.COVE_DT_SAIDA != null)
+                                    @if (Model.COVE_DT_SAIDA == null)
                                     {
                                         <div class="form-group">
                                             @Html.ButtonLinkIndex(text: "Incluir Novo Comentário", action: "IncluirAcompanhamentoControleVeiculo", controller: "ControleVeiculo")

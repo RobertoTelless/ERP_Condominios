@@ -110,7 +110,7 @@
                                                     Data/Hora Prevista*
                                                     @Html.TextBoxFor(m => m.COVE_DT_PREVISAO_SAIDA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Motorista/Empresa
                                                     @Html.TextBoxFor(m => m.COVE_NM_PESSOA, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.COVE_NM_PESSOA, "", new { @style = "color:red" })
@@ -118,7 +118,7 @@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Fornecedor
                                                     <select name="FORN_CD_ID" id="lstForn" class="form-control" data-val="true" style="display: none;" autofocus>
-                                                        <option>Selecionar</option>
+                                                        @*<option>Selecionar</option>*@
                                                     </select>
                                                 </div>
                                             </div>
@@ -217,7 +217,7 @@
         $("#lstForn").select2({
             //data: filterSelect,
             ajax: {
-                url: '../Fornecedor/BuscaNomeRazao',
+                url: '../FornecedorNovo/BuscaNomeRazao',
                 type: 'POST',
                 data: function (params) {
                     var query = {

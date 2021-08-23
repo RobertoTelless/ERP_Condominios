@@ -148,6 +148,7 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.ASSINANTE = null;
                     CONTROLE_VEICULO obj = _baseRepository.GetById(item.COVE_CD_ID);
                     _baseRepository.Detach(obj);
                     _baseRepository.Update(item);
