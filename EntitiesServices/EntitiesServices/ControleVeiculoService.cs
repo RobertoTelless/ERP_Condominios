@@ -127,6 +127,7 @@ namespace ModelServices.EntitiesServices
                 try
                 {
                     item.UNIDADE = null;
+                    item.FORNECEDOR = null;
                     CONTROLE_VEICULO obj = _baseRepository.GetById(item.COVE_CD_ID);
                     _baseRepository.Detach(obj);
                     _logRepository.Add(log);

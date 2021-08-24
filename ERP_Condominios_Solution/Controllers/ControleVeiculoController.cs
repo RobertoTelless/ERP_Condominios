@@ -385,6 +385,10 @@ namespace ERP_Condominios_Solution.Controllers
                     listaMaster = new List<CONTROLE_VEICULO>();
                     Session["ListaControleVeiculo"] = null;
                     Session["MensControleVeiculo"] = 0;
+                    if (item.UNID_CD_ID != null & item.UNID_CD_ID > 0)
+                    {
+                        return RedirectToAction("GerarNotificacaoControleVeiculo");
+                    }
                     return RedirectToAction("MontarTelaControleVeiculo");
                 }
                 catch (Exception ex)
@@ -552,6 +556,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             CONTROLE_VEICULO veiculo = (CONTROLE_VEICULO)Session["ControleVeiculo"];
             List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == veiculo.UNID_CD_ID).ToList();
+            USUARIO topo = lista.First();
 
             // Prepara view
             ViewBag.Cats = new SelectList(baseApp.GetAllCatNotificacao(idAss), "CANO_CD_ID", "CANO_NM_NOME");
@@ -567,6 +572,8 @@ namespace ERP_Condominios_Solution.Controllers
             vm.NOTI_IN_ORIGEM = 1;
             vm.NOTI_IN_STATUS = 1;
             vm.NOTI_IN_VISTA = 0;
+            vm.CANO_CD_ID = 1;
+            vm.USUA_CD_ID = topo.USUA_CD_ID;
             vm.NOTI_NM_TITULO = "Notificação para Morador - Veículo Visitante";
             if ((Int32)Session["TipoNota"] == 1)
             {
@@ -574,6 +581,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             else
             {
+                veiculo = baseApp.GetItemById((Int32)Session["IdControleVeiculo"]);
                 vm.NOTI_TX_TEXTO = "O veículo de placa " + veiculo.COVE_NM_PLACA + " saiu as " + veiculo.COVE_DT_SAIDA.Value.ToShortDateString() + " " + veiculo.COVE_DT_SAIDA.Value.ToShortTimeString() + ".";
             }
             return View(vm);
