@@ -97,7 +97,7 @@
 
                             <div class="tab-content">
                                 @*Dados Gerais*@
-                                <div id="tab-1" class="tab-pane @ViewBag.TabGeral">
+                                <div id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
                                         <div class="row" style="width: 100%;">
                                             <div class="col-lg-1 col-md-1 col-xs-12">
@@ -142,14 +142,12 @@
                                             <div class="col-md-11">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Categoria*
-                                                        @Html.DropDownListFor(m => m.CAPR_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, onchange = "FiltrarSubCategoriaProduto($(this).val(), $(this))", id = "catProd" })
-                                                        @Html.ValidationMessageFor(m => m.CAPR_CD_ID, "", new { @style = "color:red" })
+                                                        Categoria
+                                                        @Html.TextBoxFor(m => m.CATEGORIA_PRODUTO.CAPR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                         Subcategoria
-                                                        @Html.DropDownListFor(m => m.SCPR_CD_ID, (SelectList)ViewBag.Subs, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.SCPR_CD_ID, "", new { @style = "color:red" })
+                                                        @Html.TextBoxFor(m => m.SUBCATEGORIA_PRODUTO.SCPR_NM_NOME, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Unidade
@@ -159,7 +157,6 @@
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Código*
                                                         @Html.TextBoxFor(m => m.PROD_CD_CODIGO, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
-                                                        @Html.ValidationMessageFor(m => m.PROD_CD_CODIGO, "", new { @style = "color:red" })
                                                     </div>
                                                     <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Código de Barras
@@ -216,9 +213,13 @@
                                                         <div class="form-group">
                                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                                 <input style="float:left; margin-right: 5px;" type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="file" class="btn btn-sm btn-warning" />
-                                                                <input style="float:left;" type="submit" value="Incluir Fotografia do Produto" class="btn btn-sm btn-success" />
+                                                                <input style="float:left;" type="submit" value="Incluir Imagem do Produto" class="btn btn-sm btn-success" />
                                                             </div>
                                                         </div>
+                                                        <br />
+                                                        
+                                                        <br />
+                                                        
                                                     }
                                                 </div>
                                             </div>

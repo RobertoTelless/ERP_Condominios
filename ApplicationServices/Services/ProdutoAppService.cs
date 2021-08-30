@@ -138,7 +138,7 @@ namespace ApplicationServices.Services
                 item.PROD_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
                 item.PROD_QN_ESTOQUE = item.PROD_QN_QUANTIDADE_INICIAL;
-                item.PROD_DT_ULTIMA_MOVIMENTACAO = DateTime.Today;
+                item.PROD_DT_ULTIMA_MOVIMENTACAO = DateTime.Today.Date;
 
                 MOVIMENTO_ESTOQUE_PRODUTO movto = new MOVIMENTO_ESTOQUE_PRODUTO();
 
@@ -157,6 +157,19 @@ namespace ApplicationServices.Services
 
                 // Persiste produto
                 Int32 volta = _baseService.Create(item, log, movto);
+
+                // Persiste movimentação
+                movto.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                movto.MOEP_DS_JUSTIFICATIVA = "Carga inicial";
+                movto.MOEP_DT_MOVIMENTO = DateTime.Today.Date;
+                movto.MOEP_IN_ATIVO = 1;
+                movto.MOEP_IN_OPERACAO = 1;
+                movto.MOEP_IN_TIPO_MOVIMENTO = 1;
+                movto.MOEP_IN_ORIGEM = "Cadastramento";
+                movto.MOEP_QN_QUANTIDADE = item.PROD_QN_QUANTIDADE_INICIAL;
+                movto.PROD_CD_ID = item.PROD_CD_ID;
+                movto.USUA_CD_ID = usuario.USUA_CD_ID;
+                volta = _movService.Create(movto);
                 return volta;
             }
             catch (Exception ex)

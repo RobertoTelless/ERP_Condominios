@@ -134,11 +134,11 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterProd = prodApp.GetAllItens(idAss);
                 Session["ListaProduto"] = listaMasterProd;
             }
-            if (((List<PRODUTO>)Session["ListaProduto"]).Count == 0)
-            {
-                listaMasterProd = prodApp.GetAllItens(idAss);
-                Session["ListaProduto"] = listaMasterProd;
-            }
+            //if (((List<PRODUTO>)Session["ListaProduto"]).Count == 0)
+            //{
+            //    listaMasterProd = prodApp.GetAllItens(idAss);
+            //    Session["ListaProduto"] = listaMasterProd;
+            //}
             ViewBag.Listas = Session["ListaProduto"];
 
             ViewBag.Title = "Produtos";
@@ -155,7 +155,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Novos indicadores
             List<PRODUTO> listaBase = (List<PRODUTO>)Session["ListaProduto"];
-            List<PRODUTO> pontoPedido = listaBase.Where(x => x.PROD_QN_ESTOQUE < x.PROD_QN_QUANTIDADE_MINIMA).ToList();
+            List<PRODUTO> pontoPedido = listaBase.Where(x => x.PROD_QN_ESTOQUE <= x.PROD_QN_QUANTIDADE_MINIMA).ToList();
             List<PRODUTO> estoqueZerado = listaBase.Where(x => x.PROD_QN_ESTOQUE == 0).ToList();
             List<PRODUTO> estoqueNegativo = listaBase.Where(x => x.PROD_QN_ESTOQUE < 0).ToList();
             Session["PontoPedido"] = pontoPedido;
@@ -169,10 +169,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensProduto"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensProduto"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensProduto"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensProduto"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -248,18 +248,19 @@ namespace ERP_Condominios_Solution.Controllers
                 }
                 Int32 idAss = (Int32)Session["IdAssinante"];
 
+
                 // Executa a operação
                 List<PRODUTO> listaObj = new List<PRODUTO>();
                 Session["FiltroProduto"] = item;
                 USUARIO usuario = (USUARIO)Session["UserCredentials"];
-                Int32 volta = prodApp.ExecuteFilter(item.CAPR_CD_ID, item.SCPR_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_NR_BARCODE, item.PROD_CD_CODIGO, idAss, item.PROD_IN_ATIVO, out listaObj);
+                Int32 volta = prodApp.ExecuteFilter(item.CAPR_CD_ID, item.SCPR_CD_ID, item.PROD_NM_NOME, item.PROD_NM_MARCA, item.PROD_NR_BARCODE, item.PROD_CD_CODIGO, idAss, 1, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
                 {
                     Session["MensProduto"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    return RedirectToAction("MontarTelaProduto");
+                    //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                    //return RedirectToAction("MontarTelaProduto");
                 }
 
                 // Sucesso
@@ -317,20 +318,13 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("VerProdutosEstoqueNegativo");
             }
 
-            if ((Int32)Session["FlagVoltaProduto"] == 1)
+            if ((Int32)Session["VoltaProduto"] == 2)
             {
-                if ((Int32)Session["VoltaProduto"] == 2)
-                {
-                    Session["ListaProduto"] = null;
-                    return RedirectToAction("VerCardsProduto");
-                }
                 Session["ListaProduto"] = null;
-                return RedirectToAction("MontarTelaProduto");
+                return RedirectToAction("VerCardsProduto");
             }
-            else
-            {
-                return RedirectToAction("CarregarBase", "BaseAdmin");
-            }
+            Session["ListaProduto"] = null;
+            return RedirectToAction("MontarTelaProduto");
         }
 
         [HttpGet]
@@ -380,11 +374,9 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult IncluirProduto(ProdutoViewModel vm, String tabelaProduto)
         {
             Hashtable result = new Hashtable();
-            vm.PROD_QN_QUANTIDADE_INICIAL = 0;
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(prodApp.GetAllTipos(idAss).OrderBy(x => x.CAPR_NM_NOME).ToList<CATEGORIA_PRODUTO>(), "CAPR_CD_ID", "CAPR_NM_NOME");
             ViewBag.Subs = new SelectList(prodApp.GetAllSubs(idAss).OrderBy(x => x.SCPR_NM_NOME).ToList<SUBCATEGORIA_PRODUTO>(), "SCPR_CD_ID", "SCPR_NM_NOME");
@@ -419,7 +411,7 @@ namespace ERP_Condominios_Solution.Controllers
                     }
 
                     // Carrega foto e processa alteracao
-                    item.PROD_AQ_FOTO = "~/Imagens/Base/FotoBase.jpg";
+                    item.PROD_AQ_FOTO = "~/Imagens/Base/icone_imagem.jpg";
                     volta = prodApp.ValidateEdit(item, item, usuarioLogado);
 
                     // Cria pastas
@@ -519,6 +511,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Quantidade = item.PROD_QN_ESTOQUE;
 
             Session["VoltaConsulta"] = 1;
+            Session["VoltaEstoque"] = 0;
             objetoProdAntes = item;
             Session["Produto"] = item;
             Session["IdVolta"] = id;
@@ -1521,6 +1514,9 @@ namespace ERP_Condominios_Solution.Controllers
             Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFontNormal = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.GREEN);
+            Font meuFontAbaixo = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.RED);
+            Font meuFontAcima = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLUE);
 
             // Cria documento
             Document pdfDoc = new Document(PageSize.A4.Rotate(), 10, 10, 10, 10);
@@ -1540,7 +1536,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/5.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -1562,7 +1558,7 @@ namespace ERP_Condominios_Solution.Controllers
             pdfDoc.Add(line1);
 
             // Grid
-            table = new PdfPTable(new float[] { 100f, 100f, 150f, 80f, 40f, 100f, 100f, 40f });
+            table = new PdfPTable(new float[] { 100f, 100f, 100f, 80f, 80f, 100f, 100f, 100f, 40f });
             table.WidthPercentage = 100;
             table.HorizontalAlignment = 0;
             table.SpacingBefore = 1f;
@@ -1598,14 +1594,21 @@ namespace ERP_Condominios_Solution.Controllers
             };
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Código de Barras", meuFont))
+            cell = new PdfPCell(new Paragraph("Cód.Barras", meuFont))
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE,
                 HorizontalAlignment = Element.ALIGN_LEFT
             };
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Código", meuFont))
+            cell = new PdfPCell(new Paragraph("Estoque", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Sit.Estoque", meuFont))
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE,
                 HorizontalAlignment = Element.ALIGN_LEFT
@@ -1660,12 +1663,48 @@ namespace ERP_Condominios_Solution.Controllers
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                cell = new PdfPCell(new Paragraph(item.PROD_CD_CODIGO, meuFont))
+                cell = new PdfPCell(new Paragraph(item.PROD_QN_ESTOQUE.ToString(), meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
                     HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
+                if (item.PROD_QN_ESTOQUE > item.PROD_QN_QUANTIDADE_MINIMA & item.PROD_QN_ESTOQUE < item.PROD_QN_QUANTIDADE_MAXIMA)
+                {
+                    cell = new PdfPCell(new Paragraph("Normal", meuFontNormal))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else if(item.PROD_QN_ESTOQUE <= item.PROD_QN_QUANTIDADE_MINIMA & item.PROD_QN_ESTOQUE<item.PROD_QN_QUANTIDADE_MAXIMA)
+                {
+                    cell = new PdfPCell(new Paragraph("Abaixo", meuFontAbaixo))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else if(item.PROD_QN_ESTOQUE > item.PROD_QN_QUANTIDADE_MAXIMA)
+                {
+                    cell = new PdfPCell(new Paragraph("Acima", meuFontAcima))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("Normal", meuFontNormal))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
                 cell = new PdfPCell(new Paragraph(item.PROD_NM_MARCA, meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -2140,7 +2179,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/5.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -2420,11 +2459,19 @@ namespace ERP_Condominios_Solution.Controllers
             // Lista de Fornecedores
             if (aten.PRODUTO_FORNECEDOR.Count > 0)
             {
+                pdfDoc.Add(line1);
                 table = new PdfPTable(new float[] { 120f, 120f, 120f, 50f });
                 table.WidthPercentage = 100;
                 table.HorizontalAlignment = 0;
                 table.SpacingBefore = 1f;
                 table.SpacingAfter = 1f;
+
+                cell = new PdfPCell(new Paragraph("Fornecedores", meuFontBold));
+                cell.Border = 0;
+                cell.Colspan = 4;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
 
                 cell = new PdfPCell(new Paragraph("Nome", meuFont))
                 {

@@ -35,7 +35,6 @@ namespace ERP_Condominios_Solution.ViewModels
         public System.DateTime PROD_DT_CADASTRO { get; set; }
         public int PROD_IN_ATIVO { get; set; }
         public string PROD_AQ_FOTO { get; set; }
-        [Required(ErrorMessage = "Campo CÓDIGO obrigatorio")]
         [StringLength(10, MinimumLength = 1, ErrorMessage = "O CÓDIGO deve conter no minimo 1 caracteres e no máximo 10 caracteres.")]
         public string PROD_CD_CODIGO { get; set; }
         [RegularExpression(@"^[0-9]+([,.][0-9]+)?$", ErrorMessage = "Deve ser um valor numérico positivo")]
