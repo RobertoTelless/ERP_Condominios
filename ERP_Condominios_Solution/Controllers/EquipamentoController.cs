@@ -43,7 +43,7 @@ namespace ERP_Condominios_Solution.Controllers
             forApp = forApps;
         }
 
-                [HttpGet]
+        [HttpGet]
         public ActionResult Index()
         {
             
@@ -102,11 +102,6 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMasterEqui = equiApp.GetAllItens(idAss);
                 Session["ListaEquipamento"] = listaMasterEqui;
             }
-            if (((List<EQUIPAMENTO>)Session["ListaEquipamento"]).Count == 0)
-            {
-                listaMasterEqui = equiApp.GetAllItens(idAss);
-                Session["ListaEquipamento"] = listaMasterEqui;
-            }
 
             ViewBag.Listas = (List<EQUIPAMENTO>)Session["ListaEquipamento"];
             ViewBag.Title = "Equipamentos";
@@ -130,10 +125,10 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensEquipamento"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensEquipamento"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
+                //if ((Int32)Session["MensEquipamento"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
                 if ((Int32)Session["MensEquipamento"] == 2)
                 {
                     ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -203,7 +198,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensEquipamento"] = 1;
-                    return RedirectToAction("MontarTelaEquipamento");
                 }
 
                 // Sucesso
@@ -225,7 +219,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            return RedirectToAction("CarregarBase", "BaseAdmin");
+            return RedirectToAction("MontarTelaEquipamento", "Equipamento");
         }
 
         [HttpGet]
@@ -937,6 +931,7 @@ namespace ERP_Condominios_Solution.Controllers
             vm.EQUI_CD_ID = (Int32)Session["idEquipamento"];
             vm.EQMA_IN_ATIVO = 1;
             vm.EQMA_DT_MANUTENCAO = DateTime.Today.Date;
+            vm.ASSI_CD_ID = idAss;
             return View(vm);
         }
 

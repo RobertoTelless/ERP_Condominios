@@ -64,6 +64,7 @@
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     @Html.HiddenFor(m => m.EQUI_CD_ID)
                                     @Html.HiddenFor(m => m.EQMA_IN_ATIVO)
+                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
                                     Fornecedor*
                                     @Html.DropDownListFor(m => m.FORN_CD_ID, (SelectList)ViewBag.Fornecedores, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                     @Html.ValidationMessageFor(m => m.FORN_CD_ID, "", new { @style = "color:red" })

@@ -42,6 +42,7 @@ namespace EntitiesServices.Model
         public Nullable<int> EQUI_IN_DEPRECIADOS { get; set; }
         public Nullable<int> EQUI_IN_MANUTENCAO { get; set; }
         public Nullable<int> EQUI_IN_BAIXADOS { get; set; }
+        public Nullable<int> EQUI_IN_AVISA_DEPRECIACAO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual CATEGORIA_EQUIPAMENTO CATEGORIA_EQUIPAMENTO { get; set; }

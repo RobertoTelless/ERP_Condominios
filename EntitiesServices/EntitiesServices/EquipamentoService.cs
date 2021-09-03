@@ -226,6 +226,7 @@ namespace ModelServices.EntitiesServices
             {
                 try
                 {
+                    item.ASSINANTE = null;
                     _manRepository.Add(item);
                     transaction.Commit();
                     return 0;

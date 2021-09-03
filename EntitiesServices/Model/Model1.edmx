@@ -580,6 +580,7 @@
           <Property Name="EQUI_IN_DEPRECIADOS" Type="int" />
           <Property Name="EQUI_IN_MANUTENCAO" Type="int" />
           <Property Name="EQUI_IN_BAIXADOS" Type="int" />
+          <Property Name="EQUI_IN_AVISA_DEPRECIACAO" Type="int" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO_ANEXO">
           <Key>
@@ -5809,6 +5810,7 @@
           <NavigationProperty Name="EQUIPAMENTO_ANEXO" Relationship="Self.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_ANEXO" />
           <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_MANUTENCAO" />
           <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="EQUIPAMENTO" ToRole="PERIODICIDADE" />
+          <Property Name="EQUI_IN_AVISA_DEPRECIACAO" Type="Int32" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO_ANEXO">
           <Key>
@@ -11172,6 +11174,7 @@
           <EntitySetMapping Name="EQUIPAMENTO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO">
               <MappingFragment StoreEntitySet="EQUIPAMENTO">
+                <ScalarProperty Name="EQUI_IN_AVISA_DEPRECIACAO" ColumnName="EQUI_IN_AVISA_DEPRECIACAO" />
                 <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />

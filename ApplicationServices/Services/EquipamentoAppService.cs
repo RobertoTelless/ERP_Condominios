@@ -100,28 +100,38 @@ namespace ApplicationServices.Services
         public Int32 CalcularDiasManutencao(EQUIPAMENTO item)
         {
             Int32 totalDias = 0;
-            if (item.EQUI_IN_AVISA_MANUTENCAO == 1)
+            if (item.EQUI_DT_COMPRA != null & item.EQUI_NR_VIDA_UTIL != null & item.PERIODICIDADE != null & item.EQUI_IN_AVISA_MANUTENCAO == 1)
             {
-                if (item.EQUI_DT_COMPRA != null & item.EQUI_NR_VIDA_UTIL != null)
+                if (item.EQUI_DT_COMPRA != DateTime.MinValue & item.EQUI_NR_VIDA_UTIL > 0)
                 {
-                    if (item.EQUI_DT_COMPRA != DateTime.MinValue & item.EQUI_NR_VIDA_UTIL > 0)
+                    if (item.EQUI_DT_MANUTENCAO == null)
+                    {
+                        DateTime dataLimite = item.EQUI_DT_COMPRA.Value.AddDays(item.PERIODICIDADE.PERI_NR_DIAS);
+                        totalDias = dataLimite.Subtract(DateTime.Today).Days;
+                    }
+                    else
                     {
                         DateTime dataLimite = item.EQUI_DT_MANUTENCAO.Value.AddDays(item.PERIODICIDADE.PERI_NR_DIAS);
                         totalDias = dataLimite.Subtract(DateTime.Today).Days;
                     }
                 }
             }
-           return totalDias;
+            return totalDias;
         }
 
         public static Int32 CalcularDiasManutencaoStatic(EQUIPAMENTO item)
         {
             Int32 totalDias = 0;
-            if (item.EQUI_IN_AVISA_MANUTENCAO == 1)
+            if (item.EQUI_DT_COMPRA != null & item.EQUI_NR_VIDA_UTIL != null & item.PERIODICIDADE != null & item.EQUI_IN_AVISA_MANUTENCAO == 1)
             {
-                if (item.EQUI_DT_COMPRA != null & item.EQUI_NR_VIDA_UTIL != null)
+                if (item.EQUI_DT_COMPRA != DateTime.MinValue & item.EQUI_NR_VIDA_UTIL > 0)
                 {
-                    if (item.EQUI_DT_COMPRA != DateTime.MinValue & item.EQUI_NR_VIDA_UTIL > 0)
+                    if (item.EQUI_DT_MANUTENCAO == null)
+                    {
+                        DateTime dataLimite = item.EQUI_DT_COMPRA.Value.AddDays(item.PERIODICIDADE.PERI_NR_DIAS);
+                        totalDias = dataLimite.Subtract(DateTime.Today).Days;
+                    }
+                    else
                     {
                         DateTime dataLimite = item.EQUI_DT_MANUTENCAO.Value.AddDays(item.PERIODICIDADE.PERI_NR_DIAS);
                         totalDias = dataLimite.Subtract(DateTime.Today).Days;
