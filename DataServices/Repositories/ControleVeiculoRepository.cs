@@ -48,7 +48,7 @@ namespace DataServices.Repositories
         {
             IQueryable<CONTROLE_VEICULO> query = Db.CONTROLE_VEICULO.Where(p => p.COVE_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
-            query = query.Where(p => p.COVE_DT_ENTRADA == data);
+            query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_ENTRADA) == DbFunctions.TruncateTime(data));
             return query.ToList();
         }
 

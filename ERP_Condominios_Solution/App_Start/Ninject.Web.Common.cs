@@ -140,7 +140,7 @@ namespace Presentation.Start
             kernel.Bind<IControleVeiculoService>().To<ControleVeiculoService>();
             kernel.Bind<ICorpoDiretivoService>().To<CorpoDiretivoService>();
             kernel.Bind<IMudancaService>().To<MudancaService>();
-            kernel.Bind<IEntradaSaidaService>().To<IEntradaSaidaService>();
+            kernel.Bind<IEntradaSaidaService>().To<EntradaSaidaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();

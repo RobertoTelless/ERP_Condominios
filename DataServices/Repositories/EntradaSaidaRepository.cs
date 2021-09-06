@@ -48,7 +48,7 @@ namespace DataServices.Repositories
         {
             IQueryable<ENTRADA_SAIDA> query = Db.ENTRADA_SAIDA.Where(p => p.ENSA_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
-            query = query.Where(p => p.ENSA_DT_ENTRADA == data);
+            query = query.Where(p => DbFunctions.TruncateTime(p.ENSA_DT_ENTRADA) == DbFunctions.TruncateTime(data));
             return query.ToList();
         }
 

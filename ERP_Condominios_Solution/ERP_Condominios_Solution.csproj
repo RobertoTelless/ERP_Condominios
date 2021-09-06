@@ -1559,6 +1559,14 @@
     <Content Include="Images\gallery\Rec_Sim.png" />
     <Content Include="Images\header.jpg" />
     <Content Include="Images\icone_imagem.jpg" />
+    <Content Include="Images\icon_ambiente.png" />
+    <Content Include="Images\icon_board.png" />
+    <Content Include="Images\icon_car.jpg" />
+    <Content Include="Images\icon_log.png" />
+    <Content Include="Images\icon_morador.png" />
+    <Content Include="Images\icon_ponto.png" />
+    <Content Include="Images\icon_ponto_1.png" />
+    <Content Include="Images\icon_telefone.png" />
     <Content Include="Images\landing\avatar1.jpg" />
     <Content Include="Images\landing\avatar2.jpg" />
     <Content Include="Images\landing\avatar3.jpg" />
@@ -3154,6 +3162,7 @@
     <Content Include="Views\EntradaSaida\EditarES.cshtml" />
     <Content Include="Views\EntradaSaida\GerarNotificacaoES.cshtml" />
     <Content Include="Views\EntradaSaida\IncluirComentarioES.cshtml" />
+    <Content Include="Views\BaseAdmin\CarregarPortaria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

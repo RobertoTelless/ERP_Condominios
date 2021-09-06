@@ -33,7 +33,7 @@
                             @Html.ButtonLinkIndex(text: "Perfil", action: "MontarTelaPerfilUsuario", controller: "Usuario", buttonClass: "btn btn-xs btn-white")
                             @if (Model.PERFIL.PERF_SG_SIGLA == "ADM" || Model.PERFIL.PERF_SG_SIGLA == "SIN")
                             {
-                                @Html.ButtonLinkIndex(text: "Dashboard Gerencial", action: "CarregarDashboardInicial", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
+                                @Html.ButtonLinkIndex(text: "Dashboard", action: "CarregarPortaria", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
                             }
                             else if (Model.PERFIL.PERF_SG_SIGLA == "POR")
                             {

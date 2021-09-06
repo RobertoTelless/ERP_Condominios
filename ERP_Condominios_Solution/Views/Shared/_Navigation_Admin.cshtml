@@ -1,4 +1,4 @@
-@using Inspinia_MVC5;
+        @using Inspinia_MVC5;
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
@@ -50,7 +50,7 @@
                     <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                         <li class="@Html.IsSelected(action: "CarregarPortaria")"><a href="@Url.Action("CarregarPortaria", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Acessos</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Visitantes</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaES")"><a href="@Url.Action("MontarTelaES", "EntradaSaida")">Visitantes</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaControleVeiculo")"><a href="@Url.Action("MontarTelaControleVeiculo", "ControleVeiculo")">Veículos Visitantes</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaLista")"><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Lista de Convidados</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAutorizacao")"><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Restrições/Autorizações</a></li>
@@ -97,6 +97,7 @@
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Contratos</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaCorpo")"><a href="@Url.Action("MontarTelaCorpo", "CorpoDiretivo")">Corpo Diretivo</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaUnidade")"><a href="@Url.Action("MontarTelaUnidade", "Unidade")">Unidades</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaES")"><a href="@Url.Action("MontarTelaES", "EntradaSaida")">Visitantes</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaVaga")"><a href="@Url.Action("MontarTelaVaga", "Vaga")">Vagas</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaVeiculo")"><a href="@Url.Action("MontarTelaVeiculo", "Veiculo")">Veículos de Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaControleVeiculo")"><a href="@Url.Action("MontarTelaControleVeiculo", "ControleVeiculo")">Veículos Visitantes</a></li>
@@ -172,6 +173,7 @@
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Encomendas</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaLista")"><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Lista Convidados</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAutorizacao")"><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorização/Restrição</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaES")"><a href="@Url.Action("MontarTelaES", "EntradaSaida")">Visitantes</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Dados Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaOcorrencia")"><a href="@Url.Action("MontarTelaOcorrencia", "Ocorrencia")">Livro Ocorrências</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Reservas</a></li>

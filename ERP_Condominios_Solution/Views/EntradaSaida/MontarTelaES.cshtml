@@ -171,7 +171,8 @@
                                         <tr>
                                             <th>Entrada</th>  
                                             <th>Saída</th>  
-                                            <th>Nome</th>   
+                                            <th>Nome</th>  
+                                            <th>Unidade</th>  
                                             <th>Documento</th>
                                             <th>Empresa</th>
                                             <th>Situação</th> 
@@ -193,6 +194,7 @@
                                                     <td>-</td>
                                                 }
                                                 <td>@cond.ENSA_NM_NOME</td>
+                                                <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
                                                 <td>@cond.ENSA_NR_DOCUMENTO</td>
                                                 <td>@cond.ENSA_NM_EMPRESA</td>
                                                 @if (cond.ENSA_DT_SAIDA ==  null)

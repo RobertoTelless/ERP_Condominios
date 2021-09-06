@@ -28,6 +28,8 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IAgendaAppService ageApp;
         private readonly IConfiguracaoAppService confApp;
         private readonly ITipoPessoaAppService tpApp;
+        private readonly IEntradaSaidaAppService esApp;
+        private readonly IControleVeiculoAppService cvApp;
 
         private String msg;
         private Exception exception;
@@ -35,7 +37,7 @@ namespace ERP_Condominios_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -46,6 +48,8 @@ namespace ERP_Condominios_Solution.Controllers
             ageApp = ageApps;
             confApp = confApps;
             tpApp = tpApps;
+            esApp = esApps;
+            cvApp = cvApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -92,6 +96,33 @@ namespace ERP_Condominios_Solution.Controllers
             hash.Add("CONF_NM_ARQUIVO_ALARME", conf.CONF_NM_ARQUIVO_ALARME);
             hash.Add("NOTIFICACAO", hasNotf);
             return Json(hash);
+        }
+
+        public ActionResult CarregarPortaria()
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            
+            // Visitantes
+            List<ENTRADA_SAIDA> listaES = esApp.GetItemByData(DateTime.Today.Date, idAss);
+            if (listaES.Count == 0)
+            {
+                listaES = esApp.GetAllItens(idAss);
+            }          
+            ViewBag.ListaES = listaES.Take(5).ToList();
+            ViewBag.NumES = listaES.Count;
+
+            // Veiculos
+            List<CONTROLE_VEICULO> listaCV = cvApp.GetItemByData(DateTime.Today.Date, idAss);
+            if (listaCV.Count == 0)
+            {
+                listaCV = cvApp.GetAllItens(idAss);
+            }
+            ViewBag.ListaCV = listaCV.Take(5).ToList();
+            ViewBag.NumCV = listaCV.Count;
+
+
+
+            return View();
         }
 
         public ActionResult CarregarBase()
@@ -326,7 +357,7 @@ namespace ERP_Condominios_Solution.Controllers
 
         public ActionResult VoltarDashboard()
         {
-            return RedirectToAction("CarregarDashboardInicial", "BaseAdmin");
+            return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
         public ActionResult MontarFaleConosco()
