@@ -62,7 +62,8 @@ namespace MvcMapping.Mappers
             CreateMap<SOLICITACAO_MUDANCA_COMENTARIO, MudancaComentarioViewModel>();
             CreateMap<ENTRADA_SAIDA, EntradaSaidaViewModel>();
             CreateMap<ENTRADA_SAIDA_COMENTARIO, EntradaSaidaComentarioViewModel>();
-
+            CreateMap<ENCOMENDA, EncomendaViewModel>();
+            CreateMap<ENCOMENDA_COMENTARIO, EncomendaComentarioViewModel>();
         }
     }
 }

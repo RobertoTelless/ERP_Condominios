@@ -15,14 +15,14 @@ using System.IO;
 
 namespace ApplicationServices.Services
 {
-    public class EntradaSaidaAppService : AppServiceBase<ENTRADA_SAIDA>, IEntradaSaidaAppService
+    public class EncomendaAppService : AppServiceBase<ENCOMENDA>, IEncomendaAppService
     {
-        private readonly IEntradaSaidaService _baseService;
+        private readonly IEncomendaService _baseService;
         private readonly INotificacaoService _notiService;
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
 
-        public EntradaSaidaAppService(IEntradaSaidaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService): base(baseService)
+        public EncomendaAppService(IEncomendaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
@@ -30,43 +30,43 @@ namespace ApplicationServices.Services
             _confService = confService;
         }
 
-        public List<ENTRADA_SAIDA> GetAllItens(Int32 idAss)
+        public List<ENCOMENDA> GetAllItens(Int32 idAss)
         {
-            List<ENTRADA_SAIDA> lista = _baseService.GetAllItens(idAss);
+            List<ENCOMENDA> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<ENTRADA_SAIDA> GetAllItensAdm(Int32 idAss)
+        public List<ENCOMENDA> GetAllItensAdm(Int32 idAss)
         {
-            List<ENTRADA_SAIDA> lista = _baseService.GetAllItensAdm(idAss);
+            List<ENCOMENDA> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
-        public List<ENTRADA_SAIDA> GetByUnidade(Int32 idUnid)
+        public List<ENCOMENDA> GetByUnidade(Int32 idUnid)
         {
             return _baseService.GetByUnidade(idUnid);
         }
 
-        public List<ENTRADA_SAIDA> GetItemByData(DateTime data, Int32 idAss)
+        public List<ENCOMENDA> GetItemByData(DateTime data, Int32 idAss)
         {
             return _baseService.GetByData(data, idAss);
         }
 
-        public ENTRADA_SAIDA GetItemById(Int32 id)
+        public ENCOMENDA GetItemById(Int32 id)
         {
-            ENTRADA_SAIDA item = _baseService.GetItemById(id);
+            ENCOMENDA item = _baseService.GetItemById(id);
             return item;
         }
 
-        public List<GRAU_PARENTESCO> GetAllGraus(Int32 idAss)
+        public List<FORMA_ENTREGA> GetAllFormas(Int32 idAss)
         {
-            List<GRAU_PARENTESCO> lista = _baseService.GetAllGraus(idAss);
+            List<FORMA_ENTREGA> lista = _baseService.GetAllFormas(idAss);
             return lista;
         }
 
-        public List<AUTORIZACAO_ACESSO> GetAllAutorizacoes(Int32 idAss)
+        public List<TIPO_ENCOMENDA> GetAllTipos(Int32 idAss)
         {
-            List<AUTORIZACAO_ACESSO> lista = _baseService.GetAllAutorizacoes(idAss);
+            List<TIPO_ENCOMENDA> lista = _baseService.GetAllTipos(idAss);
             return lista;
         }
 
@@ -76,27 +76,33 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public List<CATEGORIA_NOTIFICACAO> GetAllCatNotificacao(Int32 idAss)
-        {
-            List<CATEGORIA_NOTIFICACAO> lista = _baseService.GetAllCatNotificacao(idAss);
-            return lista;
-        }
-
         public List<USUARIO> GetAllUsuarios(Int32 idAss)
         {
             List<USUARIO> lista = _baseService.GetAllUsuarios(idAss);
             return lista;
         }
 
-        public Int32 ExecuteFilter(String nome, String documento, Int32? unid, Int32? autorizacao, DateTime? dataEntrada, DateTime? dataSaida, Int32? status, Int32 idAss, out List<ENTRADA_SAIDA> objeto)
+        public ENCOMENDA_ANEXO GetAnexoById(Int32 id)
+        {
+            ENCOMENDA_ANEXO lista = _baseService.GetAnexoById(id);
+            return lista;
+        }
+
+        public ENCOMENDA_COMENTARIO GetComentarioById(Int32 id)
+        {
+            ENCOMENDA_COMENTARIO lista = _baseService.GetComentarioById(id);
+            return lista;
+        }
+
+        public Int32 ExecuteFilter(Int32? unid, Int32? forma, Int32? tipo, DateTime? data, Int32? status, Int32 idAss, out List<ENCOMENDA> objeto)
         {
             try
             {
-                objeto = new List<ENTRADA_SAIDA>();
+                objeto = new List<ENCOMENDA>();
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(nome, documento, unid, autorizacao, dataEntrada, dataSaida, status, idAss);
+                objeto = _baseService.ExecuteFilter(unid, forma, tipo, data, status, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -110,7 +116,7 @@ namespace ApplicationServices.Services
         }
 
 
-        public Int32 ValidateCreate(ENTRADA_SAIDA item, USUARIO usuario)
+        public Int32 ValidateCreate(ENCOMENDA item, USUARIO usuario)
         {
             try
             {
@@ -118,14 +124,10 @@ namespace ApplicationServices.Services
                 // Verifica existencia prévia
 
                 // Completa objeto
-                item.ENSA_IN_ATIVO = 1;
+                item.ENCO_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 //Verifica Campos
-                if (item.GRAU_PARENTESCO != null)
-                {
-                    item.GRAU_PARENTESCO = null;
-                }
                 if (item.USUARIO != null)
                 {
                     item.USUARIO = null;
@@ -145,9 +147,9 @@ namespace ApplicationServices.Services
                     LOG_DT_DATA = DateTime.Now,
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "AddENSA",
+                    LOG_NM_OPERACAO = "AddENCO",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENTRADA_SAIDA>(item)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item)
                 };
 
                 // Persiste
@@ -160,19 +162,15 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(ENTRADA_SAIDA item, ENTRADA_SAIDA itemAntes, USUARIO usuario)
+        public Int32 ValidateEdit(ENCOMENDA item, ENCOMENDA itemAntes, USUARIO usuario)
         {
             try
             {
                 // Completa objeto
-                item.ENSA_IN_ATIVO = 1;
+                item.ENCO_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 //Verifica Campos
-                if (item.GRAU_PARENTESCO != null)
-                {
-                    item.GRAU_PARENTESCO = null;
-                }
                 if (item.USUARIO != null)
                 {
                     item.USUARIO = null;
@@ -192,10 +190,10 @@ namespace ApplicationServices.Services
                     LOG_DT_DATA = DateTime.Now,
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "EditENSA",
+                    LOG_NM_OPERACAO = "EditENCO",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENTRADA_SAIDA>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<ENTRADA_SAIDA>(itemAntes)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item),
+                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<ENCOMENDA>(itemAntes)
                 };
 
                 // Persiste
@@ -207,7 +205,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(ENTRADA_SAIDA item, ENTRADA_SAIDA itemAntes)
+        public Int32 ValidateEdit(ENCOMENDA item, ENCOMENDA itemAntes)
         {
             try
             {
@@ -220,18 +218,14 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateDelete(ENTRADA_SAIDA item, USUARIO usuario)
+        public Int32 ValidateDelete(ENCOMENDA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
 
                 // Acerta campos
-                item.ENSA_IN_ATIVO = 0;
-                if (item.GRAU_PARENTESCO != null)
-                {
-                    item.GRAU_PARENTESCO = null;
-                }
+                item.ENCO_IN_ATIVO = 0;
                 if (item.USUARIO != null)
                 {
                     item.USUARIO = null;
@@ -252,8 +246,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "DeleENSA",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENTRADA_SAIDA>(item),
+                    LOG_NM_OPERACAO = "DeleENCO",
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item),
                 };
 
                 // Persiste
@@ -265,18 +259,14 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateReativar(ENTRADA_SAIDA item, USUARIO usuario)
+        public Int32 ValidateReativar(ENCOMENDA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
 
                 // Acerta campos
-                item.ENSA_IN_ATIVO = 1;
-                if (item.GRAU_PARENTESCO != null)
-                {
-                    item.GRAU_PARENTESCO = null;
-                }
+                item.ENCO_IN_ATIVO = 1;
                 if (item.USUARIO != null)
                 {
                     item.USUARIO = null;
@@ -297,8 +287,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "ReatENSA",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENTRADA_SAIDA>(item),
+                    LOG_NM_OPERACAO = "ReatENCO",
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item),
                 };
 
                 // Persiste
@@ -310,7 +300,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENTRADA_SAIDA entrada, String template)
+        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENCOMENDA entrada, String template)
         {
             try
             {
@@ -334,7 +324,7 @@ namespace ApplicationServices.Services
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
-                    footer = footer.Replace("{Visita}", entrada.ENSA_NM_NOME);
+                    footer = footer.Replace("{Codigo}", entrada.ENCO_CD_CODIGO);
                     footer = footer.Replace("{Unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
                     footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
@@ -347,7 +337,7 @@ namespace ApplicationServices.Services
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
-                    mensagem.ASSUNTO = "NOTIFICAÇÃO - ENTRADA DE VEÍCULO";
+                    mensagem.ASSUNTO = "NOTIFICAÇÃO - ENCOMENDA";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = usuario.USUA_NM_EMAIL;
@@ -396,7 +386,7 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                String texto = _temService.GetByCode("ENCSMS").TEMP_TX_CORPO;
 
                 // inicia processo
                 List<String> resposta = new List<string>();

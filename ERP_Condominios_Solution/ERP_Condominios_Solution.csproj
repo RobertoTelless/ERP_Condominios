@@ -286,6 +286,7 @@
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\ControleVeiculoController.cs" />
     <Compile Include="Controllers\CorpoDiretivoController.cs" />
+    <Compile Include="Controllers\EncomendaController.cs" />
     <Compile Include="Controllers\EntradaSaidaController.cs" />
     <Compile Include="Controllers\EquipamentoController.cs" />
     <Compile Include="Controllers\FornecedorNovoController.cs" />
@@ -312,6 +313,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\EncomendaViewModel.cs" />
     <Compile Include="ViewModels\EntradaSaidaViewModel.cs" />
     <Compile Include="ViewModels\EntradaSaidaComentarioViewModel.cs" />
     <Compile Include="ViewModels\CorpoDiretivoViewModel.cs" />
@@ -334,6 +336,7 @@
     <Compile Include="ViewModels\ListaConvidadoComentarioViewModel.cs" />
     <Compile Include="ViewModels\ControleVeiculoAcompanhamentoViewModel.cs" />
     <Compile Include="ViewModels\MudancaComentarioViewModel.cs" />
+    <Compile Include="ViewModels\EncomendaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaComentarioViewModel.cs" />
     <Compile Include="ViewModels\OcorrenciaViewModel.cs" />
     <Compile Include="ViewModels\ProdutoFornecedorViewModel.cs" />
@@ -1562,11 +1565,15 @@
     <Content Include="Images\icon_ambiente.png" />
     <Content Include="Images\icon_board.png" />
     <Content Include="Images\icon_car.jpg" />
+    <Content Include="Images\icon_fornecedor.jpg" />
     <Content Include="Images\icon_log.png" />
+    <Content Include="Images\icon_material.jpg" />
     <Content Include="Images\icon_morador.png" />
     <Content Include="Images\icon_ponto.png" />
     <Content Include="Images\icon_ponto_1.png" />
     <Content Include="Images\icon_telefone.png" />
+    <Content Include="Images\icon_unidade.png" />
+    <Content Include="Images\icon_vaga.png" />
     <Content Include="Images\landing\avatar1.jpg" />
     <Content Include="Images\landing\avatar2.jpg" />
     <Content Include="Images\landing\avatar3.jpg" />
@@ -3163,6 +3170,7 @@
     <Content Include="Views\EntradaSaida\GerarNotificacaoES.cshtml" />
     <Content Include="Views\EntradaSaida\IncluirComentarioES.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarPortaria.cshtml" />
+    <Content Include="Views\Encomenda\MontarTelaEncomenda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,7 +9,7 @@ namespace ModelServices.Interfaces.Repositories
 {
     public interface IEncomendaAnexoRepository : IRepositoryBase<ENCOMENDA_ANEXO>
     {
-        List<ENCOMENDA_ANEXO> GetAllItens();
+        List<ENCOMENDA_ANEXO> GetAllItens(Int32 idAss);
         ENCOMENDA_ANEXO GetItemById(Int32 id);
     }
 }

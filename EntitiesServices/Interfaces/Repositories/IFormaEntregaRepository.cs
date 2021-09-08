@@ -11,6 +11,5 @@ namespace ModelServices.Interfaces.Repositories
     {
         List<FORMA_ENTREGA> GetAllItens(Int32 idAss);
         FORMA_ENTREGA GetItemById(Int32 id);
-        List<FORMA_ENTREGA> GetAllItensAdm(Int32 idAss);
     }
 }

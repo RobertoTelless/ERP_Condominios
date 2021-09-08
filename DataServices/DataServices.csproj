@@ -196,8 +196,11 @@
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaUsuarioRepository.cs" />
+    <Compile Include="Repositories\EncomendaComentarioRepository.cs" />
+    <Compile Include="Repositories\EncomendaRepository.cs" />
     <Compile Include="Repositories\EntradaSaidaRepository.cs" />
     <Compile Include="Repositories\EntradaSaidaComentarioRepository.cs" />
+    <Compile Include="Repositories\EncomendaAnexoRepository.cs" />
     <Compile Include="Repositories\MudancaAnexoRepository.cs" />
     <Compile Include="Repositories\FuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Repositories\CategoriaOcorrenciaRepository.cs" />
@@ -228,6 +231,8 @@
     <Compile Include="Repositories\MudancaRepository.cs" />
     <Compile Include="Repositories\SubcategoriaProdutoRepository.cs" />
     <Compile Include="Repositories\SubgrupoRepository.cs" />
+    <Compile Include="Repositories\FormaEntregaRepository.cs" />
+    <Compile Include="Repositories\TipoEncomendaRepository.cs" />
     <Compile Include="Repositories\TipoContaRepository.cs" />
     <Compile Include="Repositories\TipoDocumentoRepository.cs" />
     <Compile Include="Repositories\GrauParentescoRepository.cs" />

@@ -11,6 +11,5 @@ namespace ModelServices.Interfaces.Repositories
     {
         List<TIPO_ENCOMENDA> GetAllItens(Int32 idAss);
         TIPO_ENCOMENDA GetItemById(Int32 id);
-        List<TIPO_ENCOMENDA> GetAllItensAdm(Int32 idAss);
     }
 }

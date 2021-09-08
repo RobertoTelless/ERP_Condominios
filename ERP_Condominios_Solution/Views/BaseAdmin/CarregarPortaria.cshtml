@@ -17,10 +17,10 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12" style="border-top:solid; border-top-width:1px; border-top-color:gainsboro">
-        <div class="col-lg-10 col-md-10 col-sm-12">
+        <div class="col-lg-5 col-md-5 col-sm-12">
             <br />
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -50,7 +50,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -65,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-6">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -83,6 +85,58 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorizações</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Autorizacao</h1>
+                            <small>Autorizações Ativas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Restrições</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Restricao</h1>
+                            <small>Restrições Ativas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Convidados</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Convidado</h1>
+                            <small>Listas Ativas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ListaConvidado", action: "MontarTelaLista", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -111,7 +165,7 @@
                                             @foreach (var cond in (ViewBag.ListaES as List<EntitiesServices.Model.ENTRADA_SAIDA>).OrderByDescending(p => p.ENSA_DT_ENTRADA).Take(3))
                                             {
                                                 <tr>
-                                                    <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                    <td>@cond.UNIDADE.UNID_NR_NUMERO</td>
                                                     <td>@cond.ENSA_DT_ENTRADA.Value.ToShortDateString() @cond.ENSA_DT_ENTRADA.Value.ToShortTimeString()</td>
                                                     @if (cond.ENSA_DT_SAIDA !=  null)
                                                     {
@@ -121,7 +175,14 @@
                                                     {
                                                         <td>-</td>
                                                     }
-                                                    <td>@cond.ENSA_NM_NOME</td>
+                                                    @if (cond.ENSA_NM_NOME != null)
+                                                    {
+                                                        <td>@cond.ENSA_NM_NOME.Substring(0, cond.ENSA_NM_NOME.IndexOf(" "))</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Sem Identificação</td>
+                                                    }
                                                 </tr>
                                             }
                                         </tbody>
@@ -134,7 +195,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <span class="label label-primary pull-right">Hoje</span>
@@ -163,7 +226,14 @@
                                             @foreach (var cond in (ViewBag.ListaCV as List<EntitiesServices.Model.CONTROLE_VEICULO>))
                                             {
                                                 <tr>
-                                                    <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                    @if (cond.UNIDADE != null)
+	                                                {
+                                                        <td>@cond.UNIDADE.UNID_NR_NUMERO</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
                                                     <td>@cond.COVE_DT_ENTRADA.Value.ToShortDateString() @cond.COVE_DT_ENTRADA.Value.ToShortTimeString()</td>
                                                     @if (cond.COVE_DT_SAIDA !=  null)
                                                     {
@@ -186,14 +256,27 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
-
-
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-12" style="border-left: solid;border-left-color: gainsboro; border-left-width: 1px">
+        <div class="col-lg-2 col-md-2 col-sm-12" style="border-left: solid;border-left-color: gainsboro; border-left-width: 1px; border-bottom: solid; border-bottom-color: gainsboro; border-bottom-width: 1px">
+            <br />
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_unidade.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Unidades", controller: "Unidade", action: "MontarTelaUnidade", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_vaga.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Vagas", controller: "Vaga", action: "MontarTelaVaga", buttonClass: "primary")
+                </div>
+            </div>
             <br />
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-12">
@@ -266,6 +349,25 @@
                     @Html.ButtonLinkIndex(text: "Escala Trabalho", controller: "Escala", action: "MontarTelaEscala", buttonClass: "primary")
                 </div>
             </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_fornecedor.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Fornecedores", controller: "FornecedorNovo", action: "MontarTelaFornecedor", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Materiais", controller: "Produto", action: "MontarTelaProduto", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
         </div>
     </div>
 </div>

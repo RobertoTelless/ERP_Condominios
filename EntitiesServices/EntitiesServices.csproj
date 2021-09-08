@@ -199,6 +199,7 @@
     <Compile Include="EntitiesServices\CentroCustoService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\ContaBancariaService.cs" />
+    <Compile Include="EntitiesServices\EncomendaService.cs" />
     <Compile Include="EntitiesServices\EntradaSaidaService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
     <Compile Include="EntitiesServices\FornecedorCnpjService.cs" />
@@ -335,6 +336,7 @@
     <Compile Include="Interfaces\Services\ICentroCustoService.cs" />
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\Services\IContaBancariaService.cs" />
+    <Compile Include="Interfaces\Services\IEncomendaService.cs" />
     <Compile Include="Interfaces\Services\IEntradaSaidaService.cs" />
     <Compile Include="Interfaces\Services\IEquipamentoService.cs" />
     <Compile Include="Interfaces\Services\IFornecedorCnpjService.cs" />

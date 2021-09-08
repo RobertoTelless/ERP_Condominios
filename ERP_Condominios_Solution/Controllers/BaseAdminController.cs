@@ -30,6 +30,8 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly ITipoPessoaAppService tpApp;
         private readonly IEntradaSaidaAppService esApp;
         private readonly IControleVeiculoAppService cvApp;
+        private readonly IAutorizacaoAppService autApp;
+        private readonly IListaConvidadoAppService lisApp;
 
         private String msg;
         private Exception exception;
@@ -37,7 +39,7 @@ namespace ERP_Condominios_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -50,6 +52,8 @@ namespace ERP_Condominios_Solution.Controllers
             tpApp = tpApps;
             esApp = esApps;
             cvApp = cvApps;
+            autApp = autApps;
+            lisApp = lisApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -104,22 +108,33 @@ namespace ERP_Condominios_Solution.Controllers
             
             // Visitantes
             List<ENTRADA_SAIDA> listaES = esApp.GetItemByData(DateTime.Today.Date, idAss);
+            ViewBag.NumES = listaES.Count;
             if (listaES.Count == 0)
             {
                 listaES = esApp.GetAllItens(idAss);
             }          
             ViewBag.ListaES = listaES.Take(5).ToList();
-            ViewBag.NumES = listaES.Count;
 
             // Veiculos
             List<CONTROLE_VEICULO> listaCV = cvApp.GetItemByData(DateTime.Today.Date, idAss);
+            ViewBag.NumCV = listaCV.Count;
             if (listaCV.Count == 0)
             {
                 listaCV = cvApp.GetAllItens(idAss);
             }
             ViewBag.ListaCV = listaCV.Take(5).ToList();
-            ViewBag.NumCV = listaCV.Count;
 
+            // Autorizacao/Restricao
+            List<AUTORIZACAO_ACESSO> listaBase = autApp.GetAllItens(idAss);
+            Int32 aut = listaBase.Where(p => p.AUAC_IN_TIPO == 1).ToList().Count;
+            Int32 res = listaBase.Where(p => p.AUAC_IN_TIPO == 2).ToList().Count;
+            ViewBag.Autorizacao = aut;
+            ViewBag.Restricao = res;
+
+            // Listas de Convidados
+            List<LISTA_CONVIDADO> listaCon = lisApp.GetAllItens(idAss);
+            Int32 lis = listaCon.Where(p => p.LICO_DT_EVENTO >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Convidado = lis;
 
 
             return View();
@@ -177,6 +192,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensMorador"] = 0;
             Session["MensMudanca"] = 0;
             Session["MensES"] = 0;
+            Session["MensEncomenda"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
@@ -346,7 +362,10 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
-
+            if ((Int32)Session["MensEncomenda"] == 2)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+            }
             return View(vm);
         }
 
