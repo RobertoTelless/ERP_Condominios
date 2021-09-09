@@ -44,6 +44,8 @@ namespace ERP_Condominios_Solution.ViewModels
         [StringLength(500, ErrorMessage = "A JUSTIFICATIVA deve conter no máximo 500 caracteres.")]
         public string ENCO_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> ENCO_IN_STATUS { get; set; }
+        [DataType(DataType.Date, ErrorMessage = "DATA DE DEVOLUÇÃO Deve ser uma data válida")]
+        public Nullable<System.DateTime> ENCO_DT_DEVOLUCAO { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

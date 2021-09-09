@@ -3171,6 +3171,14 @@
     <Content Include="Views\EntradaSaida\IncluirComentarioES.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarPortaria.cshtml" />
     <Content Include="Views\Encomenda\MontarTelaEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\IncluirEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\EditarEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\VerEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\ExcluirEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\ReativarEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\VerAnexoEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\GerarNotificacaoEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\IncluirComentarioEncomenda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

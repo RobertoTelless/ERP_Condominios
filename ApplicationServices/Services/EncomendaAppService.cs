@@ -21,13 +21,15 @@ namespace ApplicationServices.Services
         private readonly INotificacaoService _notiService;
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
+        private readonly IUsuarioAppService _usuService;
 
-        public EncomendaAppService(IEncomendaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService): base(baseService)
+        public EncomendaAppService(IEncomendaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
             _temService = temService;
             _confService = confService;
+            _usuService = usuService;
         }
 
         public List<ENCOMENDA> GetAllItens(Int32 idAss)
@@ -122,10 +124,28 @@ namespace ApplicationServices.Services
             {
 
                 // Verifica existencia prévia
+                String unid = item.UNIDADE.UNID_NM_EXIBE;
+                USUARIO usu = null;
+                if (item.USUARIO == null)
+                {
+                    usu = item.USUARIO;
+                }
+                else
+                {
+                    USUARIO usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().FirstOrDefault();
+                    if (usua == null)
+                    {
+                        usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID).ToList().FirstOrDefault();
+                    }
+                    usu = usua;       
+                }
 
                 // Completa objeto
                 item.ENCO_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                item.ENCO_CD_CODIGO = Cryptography.GenerateRandomPassword(6);
+                item.ENCO_IN_CONFIRMADO = 0;
+                item.ENCO_IN_STATUS = 1;
 
                 //Verifica Campos
                 if (item.USUARIO != null)
@@ -154,6 +174,22 @@ namespace ApplicationServices.Services
 
                 // Persiste
                 Int32 volta = _baseService.Create(item, log);
+
+                // Gera Notificações
+                NOTIFICACAO noti = new NOTIFICACAO();
+                noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                noti.CANO_CD_ID = 1;
+                noti.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                noti.NOTI_IN_ATIVO = 1;
+                noti.NOTI_IN_NIVEL = 1;
+                noti.NOTI_IN_ORIGEM = 1;
+                noti.NOTI_IN_STATUS = 1;
+                noti.NOTI_IN_VISTA = 0;
+                noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA";
+                noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". Uma encomenda chegou para essa unidade em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + ". Está disponível para entrega na portaria. Código: " + item.ENCO_CD_CODIGO + ".";
+                noti.USUA_CD_ID = usu.USUA_CD_ID;
+                Int32 volta1 = GerarNotificacao(noti, usu, item, "NOTIENCO");
                 return volta;
             }
             catch (Exception ex)
@@ -166,6 +202,22 @@ namespace ApplicationServices.Services
         {
             try
             {
+                String unid = item.UNIDADE.UNID_NM_EXIBE;
+                USUARIO usu = null;
+                if (item.USUARIO == null)
+                {
+                    usu = item.USUARIO;
+                }
+                else
+                {
+                    USUARIO usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().FirstOrDefault();
+                    if (usua == null)
+                    {
+                        usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID).ToList().FirstOrDefault();
+                    }
+                    usu = usua;
+                }
+
                 // Completa objeto
                 item.ENCO_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
@@ -197,7 +249,37 @@ namespace ApplicationServices.Services
                 };
 
                 // Persiste
-                return _baseService.Edit(item, log);
+                Int32 volta = _baseService.Edit(item, log);
+
+                // Gera Notificações
+                if (item.ENCO_IN_STATUS == 2 || item.ENCO_IN_STATUS == 3)
+                {
+                    NOTIFICACAO noti = new NOTIFICACAO();
+                    noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
+                    noti.CANO_CD_ID = 1;
+                    noti.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                    noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                    noti.NOTI_IN_ATIVO = 1;
+                    noti.NOTI_IN_NIVEL = 1;
+                    noti.NOTI_IN_ORIGEM = 1;
+                    noti.NOTI_IN_STATUS = 1;
+                    noti.NOTI_IN_VISTA = 0;
+                    if (item.ENCO_IN_STATUS == 2)
+                    {
+                        noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA - ENTREGA";
+                        noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". A encomenda recebida em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + " e com código: " + item.ENCO_CD_CODIGO + ", foi entregue em " + item.ENCO_DT_ENTREGA.Value.ToShortDateString();
+                    }
+                    else
+                    {
+                        noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA - RECUSA";
+                        noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". A encomenda recebida em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + " e com código: " + item.ENCO_CD_CODIGO + ", foi recusada em " + item.ENCO_DT_BAIXA.Value.ToShortDateString();
+                    }
+
+
+                    noti.USUA_CD_ID = usu.USUA_CD_ID;
+                    Int32 volta1 = GerarNotificacao(noti, usu, item, "NOTIENCO");
+                }
+                return volta;
             }
             catch (Exception ex)
             {
@@ -325,8 +407,8 @@ namespace ApplicationServices.Services
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
                     footer = footer.Replace("{Codigo}", entrada.ENCO_CD_CODIGO);
-                    footer = footer.Replace("{Unidade}", usuario.UNIDADE.UNID_NM_EXIBE);
-                    footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
+                    footer = footer.Replace("{Unidade}", entrada.UNIDADE.UNID_NM_EXIBE);
+                    footer = footer.Replace("{Data}", entrada.ENCO_DT_CHEGADA.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
 
@@ -354,7 +436,7 @@ namespace ApplicationServices.Services
                     Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
 
                     // Envia SMS
-                    String voltaSMS = ValidateCreateMensagem(usuario);
+                    String voltaSMS = ValidateCreateMensagem(usuario, entrada, item);
                     return volta;
                 }
                 return volta;
@@ -365,7 +447,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public String ValidateCreateMensagem(USUARIO usuario)
+        public String ValidateCreateMensagem(USUARIO usuario, ENCOMENDA enco, NOTIFICACAO noti)
         {
             try
             {
@@ -386,7 +468,17 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("ENCSMS").TEMP_TX_CORPO;
+                String msg = noti.NOTI_TX_TEXTO.Replace(System.Environment.NewLine, " ");
+                if (msg.Length > 750)
+                {
+                    msg = msg.Substring(0, 750);
+                }
+                String body = _temService.GetByCode("ENCOSMS").TEMP_TX_CORPO;
+                String header = _temService.GetByCode("ENCOSMS").TEMP_TX_CABECALHO;
+                header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
+                body = body.Replace("{Texto}", msg);
+                body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
+                String texto = header + body;
 
                 // inicia processo
                 List<String> resposta = new List<string>();

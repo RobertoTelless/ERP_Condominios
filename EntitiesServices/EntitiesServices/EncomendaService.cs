@@ -86,11 +86,6 @@ namespace ModelServices.EntitiesServices
             return _toRepository.GetAllItens(idAss);
         }
 
-        public List<USUARIO> GetAllUsuarios(Int32 idAss)
-        {
-            return _usuRepository.GetAllItens(idAss);
-        }
-
         public ENCOMENDA_ANEXO GetAnexoById(Int32 id)
         {
             return _anexoRepository.GetItemById(id);

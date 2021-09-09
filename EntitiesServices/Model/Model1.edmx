@@ -496,6 +496,7 @@
           <Property Name="ENCO_AQ_FOTO" Type="varchar" MaxLength="250" />
           <Property Name="ENCO_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
           <Property Name="ENCO_IN_STATUS" Type="int" />
+          <Property Name="ENCO_DT_DEVOLUCAO" Type="date" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -5723,6 +5724,7 @@
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENCOMENDA_UNIDADE" FromRole="ENCOMENDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENCOMENDA_USUARIO" FromRole="ENCOMENDA" ToRole="USUARIO" />
           <Property Name="ENCO_IN_STATUS" Type="Int32" />
+          <Property Name="ENCO_DT_DEVOLUCAO" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -11098,6 +11100,7 @@
           <EntitySetMapping Name="ENCOMENDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA">
               <MappingFragment StoreEntitySet="ENCOMENDA">
+                <ScalarProperty Name="ENCO_DT_DEVOLUCAO" ColumnName="ENCO_DT_DEVOLUCAO" />
                 <ScalarProperty Name="ENCO_IN_STATUS" ColumnName="ENCO_IN_STATUS" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />

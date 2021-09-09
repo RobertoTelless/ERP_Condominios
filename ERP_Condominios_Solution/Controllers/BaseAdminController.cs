@@ -106,6 +106,11 @@ namespace ERP_Condominios_Solution.Controllers
         {
             Int32 idAss = (Int32)Session["IdAssinante"];
             
+            // Flags de retorno
+
+
+
+
             // Visitantes
             List<ENTRADA_SAIDA> listaES = esApp.GetItemByData(DateTime.Today.Date, idAss);
             ViewBag.NumES = listaES.Count;

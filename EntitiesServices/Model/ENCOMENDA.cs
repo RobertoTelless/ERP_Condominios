@@ -41,6 +41,7 @@ namespace EntitiesServices.Model
         public string ENCO_AQ_FOTO { get; set; }
         public string ENCO_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> ENCO_IN_STATUS { get; set; }
+        public Nullable<System.DateTime> ENCO_DT_DEVOLUCAO { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
