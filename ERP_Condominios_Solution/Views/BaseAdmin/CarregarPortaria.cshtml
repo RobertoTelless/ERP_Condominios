@@ -27,11 +27,11 @@
                             <h5><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">32</h1>
+                            <h1 class="no-margins">@ViewBag.EncomendaHoje</h1>
                             <small>Recebidas Hoje</small>
                             <br />
                             <br />
-                            @Html.ButtonLinkIndex(text: "Ver", controller: "Encomenda", action: "VerEncomendaDia", buttonClass: "white")
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Encomenda", action: "MontarTelaEncomenda", buttonClass: "white")
                         </div>
                     </div>
                 </div>
@@ -42,11 +42,11 @@
                             <h5><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins" style="color:red">19</h1>
+                            <h1 class="no-margins" style="color:red">@ViewBag.EncomendaAtraso</h1>
                             <small>Não Entregues</small>
                             <br />
                             <br />
-                            @Html.ButtonLinkIndex(text: "Ver", controller: "Encomenda", action: "VerEncomendaNaoEntregue", buttonClass: "white")
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Encomenda", action: "MontarTelaEncomendaNaoEntregue", buttonClass: "white")
                         </div>
                     </div>
                 </div>

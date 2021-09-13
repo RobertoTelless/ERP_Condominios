@@ -202,6 +202,23 @@ namespace ApplicationServices.Services
         {
             try
             {
+                // Criticas
+                if (item.ENCO_IN_STATUS == 2 || item.ENCO_IN_STATUS == 3)
+                {
+                    if (item.ENCO_DT_ENTREGA == null || item.ENCO_NM_PESSOA == null)
+                    {
+                        return 1;
+                    }
+                }
+                if (item.ENCO_IN_STATUS == 4)
+                {
+                    if (item.ENCO_DT_DEVOLUCAO == null || item.ENCO_NM_PESSOA == null)
+                    {
+                        return 2;
+                    }
+                }
+
+                // Preparação
                 String unid = item.UNIDADE.UNID_NM_EXIBE;
                 USUARIO usu = null;
                 if (item.USUARIO == null)

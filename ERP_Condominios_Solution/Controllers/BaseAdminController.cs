@@ -32,6 +32,7 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IControleVeiculoAppService cvApp;
         private readonly IAutorizacaoAppService autApp;
         private readonly IListaConvidadoAppService lisApp;
+        private readonly IEncomendaAppService encApp;
 
         private String msg;
         private Exception exception;
@@ -39,7 +40,7 @@ namespace ERP_Condominios_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps, IEncomendaAppService encApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -54,6 +55,7 @@ namespace ERP_Condominios_Solution.Controllers
             cvApp = cvApps;
             autApp = autApps;
             lisApp = lisApps;
+            encApp = encApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -105,11 +107,16 @@ namespace ERP_Condominios_Solution.Controllers
         public ActionResult CarregarPortaria()
         {
             Int32 idAss = (Int32)Session["IdAssinante"];
-            
+
             // Flags de retorno
 
 
-
+            // Encomendas
+            List<ENCOMENDA> listaEnc = encApp.GetAllItens(idAss);
+            Int32 encHoje = listaEnc.Where(p => p.ENCO_DT_CHEGADA.Value.Date == DateTime.Today.Date).ToList().Count;
+            Int32 encNao = listaEnc.Where(p => p.ENCO_IN_STATUS == 1).ToList().Count;
+            ViewBag.EncomendaHoje = encHoje;
+            ViewBag.EncomendaAtraso = encNao;
 
             // Visitantes
             List<ENTRADA_SAIDA> listaES = esApp.GetItemByData(DateTime.Today.Date, idAss);
@@ -201,6 +208,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
+            Session["ExibeEncomenda"] = 1;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();

@@ -3179,6 +3179,7 @@
     <Content Include="Views\Encomenda\VerAnexoEncomenda.cshtml" />
     <Content Include="Views\Encomenda\GerarNotificacaoEncomenda.cshtml" />
     <Content Include="Views\Encomenda\IncluirComentarioEncomenda.cshtml" />
+    <Content Include="Views\Encomenda\MontarTelaEncomendaNaoEntregue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -646,6 +646,24 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Informações de entrega/recusa incompletas.
+        /// </summary>
+        internal static string M0076 {
+            get {
+                return ResourceManager.GetString("M0076", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Informações de devolução incompletas.
+        /// </summary>
+        internal static string M0077 {
+            get {
+                return ResourceManager.GetString("M0077", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Você tem notificações não lidas até esta data.
         /// </summary>
         internal static string M0093 {

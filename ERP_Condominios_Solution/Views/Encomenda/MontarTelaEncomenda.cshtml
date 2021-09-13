@@ -1,1 +1,380 @@
-﻿
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@model EntitiesServices.Model.ENCOMENDA
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title"> 
+        <h3 class="title">Encomendas</h3> 
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Encomendas</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>  
+                
+                @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
+                {
+                    using (Html.BeginForm("FiltrarEncomenda", "Encomenda", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="ibox-content">
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                        Unidade
+                                        @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unids, "Selecionar", new { @class = "form-control" })                            
+                                    </div>
+                                    <div class="col-lg-2 col-md-3 col-xs-5ths">
+                                        Forma de Entrega
+                                        @Html.DropDownListFor(m => m.FOEN_CD_ID, (SelectList)ViewBag.Formas, "Selecionar", new { @class = "form-control" })                            
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                        Tipo de Encomenda
+                                        @Html.DropDownListFor(m => m.TIEN_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control" })                            
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-5ths">
+                                        Data de Chegada
+                                        @Html.TextBoxFor(m => m.ENCO_DT_CHEGADA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data" })
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-xs-5ths">
+                                        Status
+                                        @Html.DropDownListFor(m => m.ENCO_IN_STATUS, (SelectList)ViewBag.Status, "Selecionar", new { @class = "form-control" })                            
+                                    </div>
+                                </div>
+                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        @Html.ButtonActionSubmit(text: "Filtrar")
+                                        @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Encomenda", action: "RetirarFiltroEncomenda")
+                                        @Html.ButtonLinkIndex(text: "Ver Todas Encomendas", controller: "Encomenda", action: "VerTodasEncomenda")
+                                        @Html.ButtonLinkIndex(text: "Nova Encomenda", controller: "Encomenda", action: "IncluirEncomenda")
+                                        @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                        {
+                                            @Html.ButtonLinkIndex(text: "Exibir Inativas", controller: "Encomenda", action: "MostrarTudoEncomenda")
+                                        }
+                                        @Html.ButtonLinkIndex(text: "Voltar", controller: "Encomenda", action: "Voltar")
+                                    </div>
+                                </div>
+                        </div>
+                    }
+                }
+                else if (ViewBag.Perfil == "MOR")
+                {
+                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                        <div class="col-lg-12 col-md-12 col-xs-12">
+                            @Html.ButtonLinkIndex(text: "Ver Hoje", controller: "Encomenda", action: "RetirarFiltroEncomenda")
+                            @Html.ButtonLinkIndex(text: "Ver Todas as Datas", controller: "Encomenda", action: "VerTodasEncomenda")
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Encomenda", action: "Voltar")
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Encomendas</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="row">
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.ENCOMENDA>).Count > 0)                                        {
+                                <table class="table table-striped table-bordered table-hover dataTables-example">
+                                    <thead style ="background-color:lightsteelblue">
+                                        <tr>
+                                            <th>Data Chegada</th>  
+                                            <th>Unidade</th>  
+                                            <th>Forma de Entrega</th>  
+                                            <th>Tipo</th>  
+                                            <th>Código</th>
+                                            <th>Data Entrega</th>
+                                            <th>Situação</th> 
+                                            <th>Data Devolução</th>
+                                            <th>Foto</th> 
+                                            <th class="td-one-action">Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.ENCOMENDA>).OrderByDescending(p => p.ENCO_DT_CHEGADA).ThenByDescending(p => p.UNID_CD_ID))
+                                        {
+                                            <tr>
+                                                <td>@cond.ENCO_DT_CHEGADA.Value.ToShortDateString() @cond.ENCO_DT_CHEGADA.Value.ToShortTimeString()</td>
+                                                <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
+                                                @if (cond.FORMA_ENTREGA !=  null)
+                                                {
+                                                    <td>@cond.FORMA_ENTREGA.FOEN_NM_NOME</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>-</td>
+                                                }
+                                                @if (cond.TIPO_ENCOMENDA !=  null)
+                                                {
+                                                    <td>@cond.TIPO_ENCOMENDA.TIEN_NM_NOME</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>-</td>
+                                                }
+                                                <td style="color: green; font-weight: bold">@cond.ENCO_CD_CODIGO</td>
+                                                @if (cond.ENCO_DT_ENTREGA !=  null)
+                                                {
+                                                    <td>@cond.ENCO_DT_ENTREGA.Value.ToShortDateString() @cond.ENCO_DT_ENTREGA.Value.ToShortTimeString()</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>-</td>
+                                                }
+                                                @if (cond.ENCO_IN_STATUS ==  1)
+                                                {
+                                                    <td><span class="badge badge-primary">Recebida</span></td>
+                                                }
+                                                else if (cond.ENCO_IN_STATUS ==  2)
+                                                {
+                                                    <td><span class="badge badge-success">Entregue</span></td>
+                                                }
+                                                else if (cond.ENCO_IN_STATUS ==  3)
+                                                {
+                                                    <td><span class="badge badge-danger">Recusada</span></td>
+                                                }
+                                                else if (cond.ENCO_IN_STATUS ==  4)
+                                                {
+                                                    <td><span class="badge badge-warning">Devolvida</span></td>
+                                                }
+                                                @if (cond.ENCO_DT_DEVOLUCAO !=  null)
+                                                {
+                                                    <td>@cond.ENCO_DT_DEVOLUCAO.Value.ToShortDateString() @cond.ENCO_DT_DEVOLUCAO.Value.ToShortTimeString()</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>-</td>
+                                                }
+                                                @if (!String.IsNullOrEmpty(cond.ENCO_AQ_FOTO))
+                                                {
+                                                    <td><img src="@Url.Content(cond.ENCO_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.ENCO_CD_CODIGO', '@Url.Content(cond.ENCO_AQ_FOTO)')"></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><img src="~/Images/icone_imagem.jpg" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.ENCO_CD_CODIGO', '/Images/icone_imagem.jpg')"></td>
+                                                }
+                                                <td class="td-one-action">
+                                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN"  || ViewBag.Perfil == "POR")
+	                                                {
+                                                        if (cond.ENCO_IN_STATUS == 1 || cond.ENCO_IN_STATUS == 3)
+                                                        {
+                                                           @Html.TableLinkDetails(cond.ENCO_CD_ID, "EditarEncomenda","fa-edit", "Entregar/Alterar")
+                                                            if (cond.ENCO_IN_STATUS == 1)
+                                                            {
+                                                                if (cond.ENCO_CD_ID == 1)
+                                                                {
+                                                                    @Html.TableLinkDetails(cond.ENCO_CD_ID, "ExcluirEncomenda", "fa-trash-o", "Desativar") 
+                                                                }
+                                                                else
+                                                                {   
+                                                                    @Html.TableLinkDetails(cond.ENCO_CD_ID, "ReativarEncomenda", "fa-refresh", "Reativar")
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.TableLinkDetails(cond.ENCO_CD_ID, "VerEncomenda","fa-search", "Ver")
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TableLinkDetails(cond.ENCO_CD_ID, "VerEncomenda","fa-search", "Ver Registro")
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/MonthPicker.css" rel="stylesheet" />
+}
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/touchSpin")
+    @Scripts.Render("~/plugins/iCheck")
+    <script src="~/Scripts/MonthPicker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    
+        <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de registro de entrada?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de registro de entrada?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+           
+
+        });
+
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+        });
+    </script>
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

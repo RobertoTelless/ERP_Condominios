@@ -1,1 +1,783 @@
-﻿
+﻿@using Presentation.Extensions
+@model ERP_Condominios_Solution.ViewModels.EncomendaViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="page-title">
+        <h3 class="title">Encomendas</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li>
+                <a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a>
+            </li>
+            <li class="active">
+                <strong>Encomendas - Entregar/Alterar</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Encomendas - Entregar/Alterar</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Configuração 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Configuração 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <br />
+                        @Html.ButtonLinkIndex(text: "Emitir Notificação", action: "GerarNotificacaoEncomenda", controller: "Encomenda")
+                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseEncomenda", controller: "Encomenda")
+                    </div>
+                    @Html.AntiForgeryToken()
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1">Dados da Encomenda</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-2">Movimentação</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">Acompanhamento</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-4">Foto & Anexos</a></li>
+                        </ul>
+                        <div class="tab-content">   
+
+                            @*Dados Gerais*@
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarEncomenda", "Encomenda", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_CHEGADA)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_CONFIRMADO)
+                                                    @Html.HiddenFor(m => m.ENCO_CD_ID)
+                                                    @Html.HiddenFor(m => m.ENCO_CD_CODIGO)
+                                                    @Html.HiddenFor(m => m.ENCO_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.ENCO_DS_JUSTIFICATIVA)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_BAIXA)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_DEVOLUCAO)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_ENTREGA)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ENCO_NM_PESSOA)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Unidade
+                                                    @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    Data de Chegada
+                                                    @Html.TextBoxFor(m => m.ENCO_DT_CHEGADA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-3 col-xs-12">
+                                                    Forma de Entrega
+                                                    @Html.TextBoxFor(m => m.FORMA_ENTREGA.FOEN_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-offset-3 col-xs-12">
+                                                    Tipo de Encomenda
+                                                    @Html.TextBoxFor(m => m.TIPO_ENCOMENDA.TIEN_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                                <div class="col-lg-2 col-md-offset-3 col-xs-12" style="color:green; font-weight: bold">
+                                                    Código
+                                                    @Html.TextBoxFor(m => m.ENCO_CD_CODIGO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                </div>
+                                            </div>
+                                            @if (Model.ENCO_IN_STATUS == 1)
+                                            {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12" style="color:green;font-weight:bold">
+                                                        Descrição
+                                                        @Html.TextBoxFor(m => m.ENCO_DS_ENCOMENDA, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_DS_ENCOMENDA, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
+                                                        Remetente
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_REMETENTE, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_REMETENTE, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
+                                                        Entregador
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_ENTREGADOR, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_ENTREGADOR, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Observações
+                                                        @Html.TextBoxFor(m => m.ENCO_TX_OBSERVACOES, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12" style="color:green;font-weight:bold">
+                                                        Descrição
+                                                        @Html.TextBoxFor(m => m.ENCO_DS_ENCOMENDA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
+                                                        Remetente
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_REMETENTE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
+                                                        Entregador
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_ENTREGADOR, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Observações
+                                                        @Html.TextBoxFor(m => m.ENCO_TX_OBSERVACOES, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Alteração da Encomenda", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            @*Entrega / Devolução*@
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                    @using (Html.BeginForm("EditarEncomenda", "Encomenda", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    {
+                                        if (Model.ENCO_IN_STATUS == 1 || Model.ENCO_IN_STATUS == 3)
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_CHEGADA)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_CONFIRMADO)
+                                                    @Html.HiddenFor(m => m.ENCO_CD_ID)
+                                                    @Html.HiddenFor(m => m.ENCO_CD_CODIGO)
+                                                    @Html.HiddenFor(m => m.ENCO_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.ENCO_DS_ENCOMENDA)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_CHEGADA)
+                                                    @Html.HiddenFor(m => m.ENCO_NM_ENTREGADOR)
+                                                    @Html.HiddenFor(m => m.ENCO_NM_REMETENTE)
+                                                    @Html.HiddenFor(m => m.ENCO_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.FOEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.UNID_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Operação*
+                                                    @Html.DropDownListFor(m => m.ENCO_IN_STATUS, (SelectList)ViewBag.Status, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
+                                                    @Html.ValidationMessageFor(m => m.ENCO_IN_STATUS, "", new { @style = "color:red" })
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="EN">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        Data/Hora Entrega*
+                                                        @Html.TextBoxFor(m => m.ENCO_DT_ENTREGA, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataEnt", @style = "color:green; font-weight:bold" })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_DT_ENTREGA, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        Recebida Por*
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @id = "pessoaEnt" })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_PESSOA, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="RE">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        Data/Hora Recusa*
+                                                        @Html.TextBoxFor(m => m.ENCO_DT_ENTREGA, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataRe", @style = "color:green; font-weight:bold" })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_DT_ENTREGA, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        Recusada Por*
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @id = "pessoaRe" })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_PESSOA, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="DE">
+                                                    <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        Data/Hora Devolução*
+                                                        @Html.TextBoxFor(m => m.ENCO_DT_DEVOLUCAO, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataDe", @style = "color:green; font-weight:bold" })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_DT_DEVOLUCAO, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        Devolvida Por*
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @id = "pessoaDe" })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_PESSOA, "", new { @style = "color:red" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma Movimentação da Encomenda", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_ATIVO)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_CHEGADA)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.ENCO_IN_CONFIRMADO)
+                                                    @Html.HiddenFor(m => m.ENCO_CD_ID)
+                                                    @Html.HiddenFor(m => m.ENCO_CD_CODIGO)
+                                                    @Html.HiddenFor(m => m.ENCO_AQ_FOTO)
+                                                    @Html.HiddenFor(m => m.ENCO_DS_ENCOMENDA)
+                                                    @Html.HiddenFor(m => m.ENCO_DT_CHEGADA)
+                                                    @Html.HiddenFor(m => m.ENCO_NM_ENTREGADOR)
+                                                    @Html.HiddenFor(m => m.ENCO_NM_REMETENTE)
+                                                    @Html.HiddenFor(m => m.ENCO_TX_OBSERVACOES)
+                                                    @Html.HiddenFor(m => m.FOEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.UNID_CD_ID)
+                                                    @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    Situação
+                                                    @if (Model.ENCO_IN_STATUS == 1)
+                                                    {
+                                                        @Html.TextBox("Recebida", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold", @readonly="readonly" })
+                                                    }
+                                                    @if (Model.ENCO_IN_STATUS == 2)
+                                                    {
+                                                        @Html.TextBox("Entregue", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold", @readonly="readonly" })
+                                                    }
+                                                    @if (Model.ENCO_IN_STATUS == 3)
+                                                    {
+                                                        @Html.TextBox("Recusada", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold", @readonly="readonly" })
+                                                    }
+                                                    @if (Model.ENCO_IN_STATUS == 4)
+                                                    {
+                                                        @Html.TextBox("Devolvida", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold", @readonly="readonly" })
+                                                    }
+                                                </div>
+                                                @if (Model.ENCO_IN_STATUS == 2)
+                                                {
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                            Data/Hora Entrega
+                                                            @Html.TextBoxFor(m => m.ENCO_DT_ENTREGA, new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold", @readonly="readonly" })
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                            Recebida Por
+                                                            @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (Model.ENCO_IN_STATUS == 4)
+                                                {
+                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="DE">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                            Data/Hora Devolução
+                                                            @Html.TextBoxFor(m => m.ENCO_DT_DEVOLUCAO, new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold" , @readonly="readonly"})
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                            Devolvida Por
+                                                            @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @readonly="readonly"})
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            @*Acompanhamentos*@
+                            <div id="tab-3" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h4>Acompanhamentos:</h4>
+                                            @if (Model.ENCOMENDA_COMENTARIO.Count > 0)
+                                            {
+                                                foreach (var item in (Model.ENCOMENDA_COMENTARIO).OrderByDescending(a => a.ECOM_DT_COMENTARIO))
+                                                {
+                                                    <div class="social-feed-box">
+                                                        <div class="social-avatar">
+                                                            <a href="" class="pull-left">
+                                                                <img src="@Url.Content(item.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                            </a>
+                                                            <div class="media-body">
+                                                                <a href="#">
+                                                                    @item.USUARIO.USUA_NM_NOME
+                                                                </a>
+                                                                <small class="text-muted">@item.ECOM_DT_COMENTARIO.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="social-body">
+                                                            <p>
+                                                                @item.ECOM_DS_COMENTARIO
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        @Html.ButtonLinkIndex(text: "Incluir Novo Acompanhamento", action: "IncluirComentarioEncomenda", controller: "Encomenda")
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Imagens - Foto e Anexos*@
+                            <div id="tab-4" class="tab-pane">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-10 col-md-10 col-xs-12">   
+                                            <div class="form-group">
+                                                <h4>Fotografia da Encomenda</h4>
+                                                @using (Html.BeginForm("UploadFotoEncomenda", "Encomenda", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container3" }))
+                                                {
+                                                    if (Model.ENCO_IN_STATUS == 1)
+                                                    {
+                                                        <div class="col-lg-12 col-md-12 col-xs-12">
+                                                            <input style="float: left; margin-right: 5px;" type="file" name="file" accept=".jpg, .png, .jpeg, .gif|images/*" id="file" class="btn btn-sm btn-warning" />
+                                                            <input style="float: left;" type="submit" value="Incluir Fotografia" class="btn btn-sm btn-success" />
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                            <div class="form-group">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    @if (!String.IsNullOrEmpty(Model.ENCO_AQ_FOTO))
+	                                                {
+                                                        <img src="@Url.Content(Model.ENCO_AQ_FOTO)" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.ENCO_CD_CODIGO', '@Url.Content(Model.ENCO_AQ_FOTO)')">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/Images/icone_imagem.jpg" style = "width: auto; height: auto; max-height: 110px; max-width: 90px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.ENCO_CD_CODIGO', '/Images/icone_imagem.jpg')">
+                                                    }
+                                                </div>                       
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <hr />
+                                        <div class="col-lg-12 col-md-12 col-xs-12"> 
+                                            <h4>Anexos</h4>
+                                            <br />
+                                            <div class="form-group">
+                                                @using (Html.BeginForm("UploadFileEncomenda", "Encomenda", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
+                                                {
+                                                    <div class="ibox-content">
+                                                        @if (Model.ENCOMENDA_ANEXO != null && Model.ENCOMENDA_ANEXO.Count > 0)
+                                                        {
+                                                            <table class="table table-striped table-bordered table-hover dataTables-example">
+                                                                <thead style ="background-color:lightsteelblue">
+                                                                    <tr>
+                                                                        <th>Título</th>
+                                                                        <th>Data</th>
+                                                                        <th>Tipo</th>
+                                                                        <th class="td-one-action">Ações</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var cond in (Model.ENCOMENDA_ANEXO))
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@cond.ENAN_NM_TITULO</td>
+                                                                            <td>@cond.ENAN_DT_ANEXO.ToShortDateString()</td>
+                                                                            @if (cond.ENAN_IN_TIPO == 1)
+	                                                                        {
+                                                                                <td>Imagem</td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>Arquivo</td>
+                                                                            }
+                                                                            <td class="td-one-action">
+                                                                                @if (cond.ENAN_IN_TIPO == 1 || cond.ENAN_IN_TIPO     == 2)
+                                                                                {
+                                                                                    @Html.TableLinkDetails(cond.ENAN_CD_ID, "VerAnexoEncomenda", "fa-camera", "Visualizar")
+                                                                                }
+                                                                                @if (cond.ENAN_IN_TIPO   == 3)
+                                                                                {
+                                                                                    <a title="Visualizar" class="fa fa-camera fa-lg" href="~/PdfViewer/web/viewer.html?file=@(cond.ENAN_AQ_ARQUIVO.Replace("~", ""))&ReturnUrl=@Request.Url.AbsolutePath" target="_blank" ></a>
+                                                                                }
+                                                                                @Html.TableLinkDetails(cond.ENAN_CD_ID, "DownloadEncomenda", "fa-download", "Download")
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        <br />
+                                                        @if (Model.ENCO_IN_STATUS == 1)
+                                                        {
+                                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                                <input style="float: left; margin-right: 5px;" type="file" name="file" id="file" class="btn btn-sm btn-warning" />
+                                                                <input style="float: left; margin-right: 5px;" type="submit" value="Incluir Anexo" class="btn btn-sm btn-success" />
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <br />
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseEncomenda", controller: "Encomenda")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @Styles.Render("~/Content/plugins/summernote/summernote.css")
+    @Styles.Render("~/plugins/touchSpinStyles")
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/plugins/touchSpin")
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+
+
+
+        });
+
+    </script>
+
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.datetime-picker').datetimepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    controlType: 'select',
+                    showSecond: "false",
+                    timeFormat: 'HH:mm',
+                    locale: 'pt-br',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo',
+                    currentText: 'Agora',
+                    closeText: 'Feito',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#cep").mask("99999-999");
+            $('#tel').mask("(99) 9999-9999");
+            $('#cel').mask("(99) 99999-9999");
+            $('#saida').mask("99/99/9999 99:99");
+            $('#dataEnt').mask("99/99/9999 99:99");
+            $('#dataRe').mask("99/99/9999 99:99");
+            $('#dataDe').mask("99/99/9999 99:99");
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Chama o evento após selecionar um valor
+            $('#pessoa').on('change', function () {
+                //Verifica se o valor é igual a 1 e mostra a divCnpj
+                if (this.value == '2') {
+                    $("#PF").hide();
+                    $("#PJ").show();
+                    $("#razao").show();
+                }
+                //Se o tempo for mé igual a 2 mostra a divCpf
+                else if (this.value == '1') {
+                    $("#PJ").hide();
+                    $("#PF").show();
+                    $("#razao").hide();
+                }
+                else if (this.value == '4') {
+                    $("#PF").show();
+                    $("#PJ").hide();
+                    $("#razao").hide();
+                }
+
+                //Se não for nem 1 nem 2 esconde as duas
+                else {
+                    $("#PJ").hide();
+                    $("#PF").hide();
+                    $("#razao").hide();
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function ValidaDiv(valPessoa) {
+            if (valPessoa == '2') {
+                $("#RE").hide();
+                $("#EN").show();
+                $("#DE").hide();
+                LimpaRE();
+                LimpaDE();
+            } else if (valPessoa == '1') { //Se o tempo for mé igual a 2 mostra a divCpf
+                $("#EN").hide();
+                $("#RE").hide();
+                $("#DE").hide();
+                LimpaEN();
+                LimpaRE();
+                LimpaDE();
+            } else if (valPessoa == '3') {
+                $("#RE").show();
+                $("#EN").hide();
+                $("#DE").hide();
+                LimpaEN();
+                LimpaDE();
+            } else if (valPessoa == '4') {
+                $("#DE").show();
+                $("#EN").hide();
+                $("#RE").hide();
+                LimpaEN();
+                LimpaRE();
+            }
+        }
+
+        $(document).ready(function () {
+            ValidaDiv($('#pessoa').val());
+        });
+
+        function LimpaEN() {
+            $('#dataEnt').val('');
+            $('#PessoaEnt').val('');
+        }
+
+        function LimpaRE() {
+            $('#dataRe').val('');
+            $('#PessoaRe').val('');
+        }
+
+        function LimpaDE() {
+            $('#dataDe').val('');
+            $('#PessoaDe').val('');
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var i = -1;
+            var toastCount = 0;
+            var $toastlast;
+            var getMessage = function () {
+                var msg = 'Hi, welcome to Inspinia. This is example of Toastr notification box.';
+                return msg;
+            };
+
+            $('#basictoast').click(function () {
+                // Display a success toast, with a title
+                toastr.success('Edição em andamento!')
+            });
+            $('#showtoast').click(function () {
+                var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();
+                var msg = $('#message').val();
+                var title = $('#title').val() || '';
+                var $showDuration = $('#showDuration');
+                var $hideDuration = $('#hideDuration');
+                var $timeOut = $('#timeOut');
+                var $extendedTimeOut = $('#extendedTimeOut');
+                var $showEasing = $('#showEasing');
+                var $hideEasing = $('#hideEasing');
+                var $showMethod = $('#showMethod');
+                var $hideMethod = $('#hideMethod');
+                var toastIndex = toastCount++;
+                toastr.options = {
+                    closeButton: $('#closeButton').prop('checked'),
+                    debug: $('#debugInfo').prop('checked'),
+                    progressBar: $('#progressBar').prop('checked'),
+                    positionClass: $('#positionGroup input:radio:checked').val() || 'toast-top-right',
+                    onclick: null
+                };
+                if ($('#addBehaviorOnToastClick').prop('checked')) {
+                    toastr.options.onclick = function () {
+                        alert('You can perform some custom action after a toast goes away');
+                    };
+                }
+                if ($showDuration.val().length) {
+                    toastr.options.showDuration = $showDuration.val();
+                }
+                if ($hideDuration.val().length) {
+                    toastr.options.hideDuration = $hideDuration.val();
+                }
+                if ($timeOut.val().length) {
+                    toastr.options.timeOut = $timeOut.val();
+                }
+                if ($extendedTimeOut.val().length) {
+                    toastr.options.extendedTimeOut = $extendedTimeOut.val();
+                }
+                if ($showEasing.val().length) {
+                    toastr.options.showEasing = $showEasing.val();
+                }
+                if ($hideEasing.val().length) {
+                    toastr.options.hideEasing = $hideEasing.val();
+                }
+                if ($showMethod.val().length) {
+                    toastr.options.showMethod = $showMethod.val();
+                }
+   VEIC_NM_PLACAVEIC_NM_PLACAEIC_NM_PLACAEIC_NM_PLACA            if ($hideMethod.val().length) {
+                    toastr.options.hideMethod = $hideMethod.val();
+                }
+                if (!msg) {
+                    msg = getMessage();
+                }
+                $("#toastrOptions").text("Command: toastr["
+                    + shortCutFunction
+                    + "](\""
+                    + msg
+                    + (title ? "\", \"" + title : '')
+                    + "\")\n\ntoastr.options = "
+                    + JSON.stringify(toastr.options, null, 2)
+                );
+                var $toast = toastr[shortCutFunction](msg, title); // Wire up an event handler to a button in the toast, if it exists
+                $toastlast = $toast;
+                if ($toast.find('#okBtn').length) {
+                    $toast.delegate('#okBtn', 'click', function () {
+                        alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+                        $toast.remove();
+                    });
+                }
+                if ($toast.find('#surpriseBtn').length) {
+                    $toast.delegate('#surpriseBtn', 'click', function () {
+                        alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+                    });
+                }
+            });
+            function getLastToast() {
+                return $toastlast;
+            }
+            $('#clearlasttoast').click(function () {VEIC_NM_PLACA
+                toastr.clear(getLastToast());
+            });
+            $('#cleartoasts').click(function () {
+                toastr.clear();
+            });
+
+        });
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}

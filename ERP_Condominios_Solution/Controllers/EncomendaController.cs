@@ -92,9 +92,10 @@ namespace ERP_Condominios_Solution.Controllers
             // Carrega listas
             if (Session["ListaEncomenda"] == null)
             {
-                listaMasterForn = fornApp.GetAllItens(idAss);
+                listaMasterForn = fornApp.GetItemByData(DateTime.Today.Date, idAss);
                 Session["ListaEncomenda"] = listaMasterForn;
             }
+
             ViewBag.Listas = (List<ENCOMENDA>)Session["ListaEncomenda"];
             ViewBag.Title = "Encomendas";
             ViewBag.Formas = new SelectList(fornApp.GetAllFormas(idAss).OrderBy(x => x.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
@@ -105,6 +106,7 @@ namespace ERP_Condominios_Solution.Controllers
             status.Add(new SelectListItem() { Text = "Recebida", Value = "1" });
             status.Add(new SelectListItem() { Text = "Entregue", Value = "2" });
             status.Add(new SelectListItem() { Text = "Recusada", Value = "3" });
+            status.Add(new SelectListItem() { Text = "Devolvida", Value = "4" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
             Session["IncluirEnc"] = 0;
 
@@ -134,6 +136,73 @@ namespace ERP_Condominios_Solution.Controllers
             return View(objetoForn);
         }
 
+        [HttpGet]
+        public ActionResult MontarTelaEncomendaNaoEntregue()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
+                {
+                    Session["MensEncomenda"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Carrega listas
+            if (Session["ListaEncomenda"] == null)
+            {
+                listaMasterForn = fornApp.GetAllItens(idAss).Where(p => p.ENCO_IN_STATUS == 1).ToList();
+                Session["ListaEncomenda"] = listaMasterForn;
+            }
+
+            ViewBag.Listas = (List<ENCOMENDA>)Session["ListaEncomenda"];
+            ViewBag.Title = "Encomendas";
+            ViewBag.Formas = new SelectList(fornApp.GetAllFormas(idAss).OrderBy(x => x.FOEN_NM_NOME), "FOEN_CD_ID", "FOEN_NM_NOME");
+            ViewBag.Tipos = new SelectList(fornApp.GetAllTipos(idAss).OrderBy(x => x.TIEN_NM_NOME), "TIEN_CD_ID", "TIEN_NM_NOME");
+            ViewBag.Unids = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Usus = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME), "USUA_CD_ID", "USUA_NM_NOME");
+            Session["IncluirEnc"] = 0;
+
+            // Indicadores
+            ViewBag.Encomendas = ((List<ENCOMENDA>)Session["ListaEncomenda"]).Count;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
+            if (Session["MensEncomenda"] != null)
+            {
+                // Mensagem
+                //if ((Int32)Session["MensOcorrencia"] == 1)
+                //{
+                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                //}
+                if ((Int32)Session["MensEncomenda"] == 2)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                }
+            }
+
+            // Abre view
+            objetoForn = new ENCOMENDA();
+            objetoForn.ENCO_IN_ATIVO = 1;
+            objetoForn.ENCO_DT_CHEGADA = DateTime.Today.Date;
+            Session["MensEncomenda"] = 0;
+            Session["VoltaEncomenda"] = 3;
+            return View(objetoForn);
+        }
+
         public ActionResult RetirarFiltroEncomenda()
         {
             if ((String)Session["Ativa"] == null)
@@ -141,6 +210,30 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Session["ListaEncomenda"] = null;
+            Session["FiltroEncomenda"] = null;
+            return RedirectToAction("MontarTelaEncomenda");
+        }
+
+        public ActionResult RetirarFiltroEncomendaNaoEntregue()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Session["ListaEncomenda"] = null;
+            Session["FiltroEncomenda"] = null;
+            return RedirectToAction("MontarTelaEncomendaNaoEntregue");
+        }
+
+        public ActionResult VerTodasEncomenda()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMasterForn = fornApp.GetAllItens(idAss);
+            Session["ListaEncomenda"] = listaMasterForn;
             Session["FiltroEncomenda"] = null;
             return RedirectToAction("MontarTelaEncomenda");
         }
@@ -191,6 +284,39 @@ namespace ERP_Condominios_Solution.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult FiltrarEncomendaNaoEntregue(ENCOMENDA item)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            try
+            {
+                // Executa a operação
+                Int32 idAss = (Int32)Session["IdAssinante"];
+                List<ENCOMENDA> listaObj = new List<ENCOMENDA>();
+                Session["FiltroEncomenda"] = item;
+                Int32 volta = fornApp.ExecuteFilter(item.UNID_CD_ID, item.FOEN_CD_ID, item.TIEN_CD_ID, item.ENCO_DT_CHEGADA, item.ENCO_IN_STATUS, idAss, out listaObj);
+
+                // Verifica retorno
+                if (volta == 1)
+                {
+                    Session["MensEncomenda"] = 1;
+                }
+
+                // Sucesso
+                listaMasterForn = listaObj.Where(p => p.ENCO_IN_STATUS == 1).ToList();
+                Session["ListaEncomenda"] = listaObj;
+                return RedirectToAction("MontarTelaEncomendaNaoEntregue");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("MontarTelaEncomendaNaoEntregue");
+            }
+        }
+
         public ActionResult VoltarBaseEncomenda()
         {
             if ((String)Session["Ativa"] == null)
@@ -200,6 +326,10 @@ namespace ERP_Condominios_Solution.Controllers
             if ((Int32)Session["VoltaEncomenda"] == 2)
             {
                 return RedirectToAction("MontarTelaMorador", "Morador");
+            }
+            if ((Int32)Session["VoltaEncomenda"] == 3)
+            {
+                return RedirectToAction("MontarTelaEncomendaNaoEntregue");
             }
             return RedirectToAction("MontarTelaEncomenda");
         }
@@ -363,10 +493,33 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
+            if ((Int32)Session["MensEncomenda"] == 7)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0076", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensEncomenda"] == 8)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0077", CultureInfo.CurrentCulture));
+            }
 
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+
             ENCOMENDA item = fornApp.GetItemById(id);
             objetoFornAntes = item;
+            List<SelectListItem> status = new List<SelectListItem>();
+            if (item.ENCO_IN_STATUS == 1)
+            {
+                status.Add(new SelectListItem() { Text = "Recebida", Value = "1" });
+                status.Add(new SelectListItem() { Text = "Entregar", Value = "2" });
+                status.Add(new SelectListItem() { Text = "Recusar", Value = "3" });
+            }
+            else if (item.ENCO_IN_STATUS == 3)
+            {
+                status.Add(new SelectListItem() { Text = "Recusada", Value = "3" });
+                status.Add(new SelectListItem() { Text = "Devolver", Value = "4" });
+            }
+            ViewBag.Status = new SelectList(status, "Value", "Text");
+
             Session["Encomenda"] = item;
             Session["IdVolta"] = id;
             Session["IdEncomenda"] = id;
@@ -383,6 +536,20 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+
+            List<SelectListItem> status = new List<SelectListItem>();
+            if (vm.ENCO_IN_STATUS == 1)
+            {
+                status.Add(new SelectListItem() { Text = "Recebida", Value = "1" });
+                status.Add(new SelectListItem() { Text = "Entregar", Value = "2" });
+                status.Add(new SelectListItem() { Text = "Recusar", Value = "3" });
+            }
+            else if (vm.ENCO_IN_STATUS == 3)
+            {
+                status.Add(new SelectListItem() { Text = "Recusada", Value = "3" });
+                status.Add(new SelectListItem() { Text = "Devolver", Value = "4" });
+            }
+            ViewBag.Status = new SelectList(status, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
@@ -400,8 +567,19 @@ namespace ERP_Condominios_Solution.Controllers
                     Int32 volta = fornApp.ValidateEdit(item, objetoFornAntes, usuarioLogado);
 
                     // Verifica retorno
+                    if (volta == 1)
+                    {
+                        Session["MensEncomenda"] = 7;
+                        return RedirectToAction("EditarEncomenda", "Encomenda");
+                    }
+                    if (volta == 2)
+                    {
+                        Session["MensEncomenda"] = 8;
+                        return RedirectToAction("EditarEncomenda", "Encomenda");
+                    }
 
                     // Sucesso
+                    Session["MensEncomenda"] = 0;
                     listaMasterForn = new List<ENCOMENDA>();
                     Session["ListaEncomenda"] = null;
                     Session["IncluirEnc"] = 0;
