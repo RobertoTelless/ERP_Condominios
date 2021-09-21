@@ -61,7 +61,7 @@
                                 <li class="@Html.IsSelected(action: "MontarTelaMudanca")"><a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Mudanças</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaOcorrencia")"><a href="@Url.Action("MontarTelaOcorrencia", "Ocorrencia")">Livro de Ocorrências</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Marcação Ponto</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Encomendas</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaEncomenda")"><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaEquipamento")"><a href="@Url.Action("MontarTelaEquipamento", "Equipamento")">Equipamentos</a></li>
                             </ul>                    
                         </li>
@@ -122,6 +122,7 @@
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Votação Avulsa</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaFornecedor")"><a href="@Url.Action("MontarTelaFornecedor", "FornecedorNovo")">Fornecedores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaMudanca")"><a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Mudanças</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaEncomenda")"><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></li>
                             </ul>                    
                         </li>
                     </ul>
@@ -141,9 +142,7 @@
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Contas a Pagar</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Contas a Receber</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Caixa</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Multas</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Taxas de Condomínio</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Controle Taxas</a></li>
                             </ul>                    
                         </li>
                     </ul>
@@ -170,11 +169,10 @@
                         </li>
                         <li class="@Html.IsSelected(action: "CarregarMorador")"><a href="@Url.Action("CarregarPortaria", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Operacional</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Encomendas</a></li>
+                                <li class="@Html.IsSelected(action: "MontarTelaEncomenda")"><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaLista")"><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Lista Convidados</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaAutorizacao")"><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorização/Restrição</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaES")"><a href="@Url.Action("MontarTelaES", "EntradaSaida")">Visitantes</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Dados Moradores</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaOcorrencia")"><a href="@Url.Action("MontarTelaOcorrencia", "Ocorrencia")">Livro Ocorrências</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Reservas</a></li>
                                 <li class="@Html.IsSelected(action: "MontarTelaMudanca")"><a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Mudanças</a></li>
@@ -190,9 +188,7 @@
                         <li class="@Html.IsSelected(action: "CarregarMorador")"><a href="@Url.Action("CarregarPortaria", "BaseAdmin")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Assembléias</span> <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level collapse @Html.IsSelected(controller: "BaseAdmin", cssClass: "in")">
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Ordinárias</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Extras</a></li>
                                 <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Virtuais</a></li>
-                                <li class="@Html.IsSelected(action: "CarregarDesenvolvimento")"><a href="@Url.Action("CarregarDesenvolvimento", "BaseAdmin")">Votação Avulsa</a></li>
                             </ul>                    
                         </li>
                     </ul>

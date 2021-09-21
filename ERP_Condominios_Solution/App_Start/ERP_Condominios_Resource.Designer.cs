@@ -664,6 +664,42 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reserva já cadastrada.
+        /// </summary>
+        internal static string M0078 {
+            get {
+                return ResourceManager.GetString("M0078", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa reserva. Ela não está mais Em Aprovação.
+        /// </summary>
+        internal static string M0079 {
+            get {
+                return ResourceManager.GetString("M0079", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Data do Evento não pode ser inferior a data corrente.
+        /// </summary>
+        internal static string M0080 {
+            get {
+                return ResourceManager.GetString("M0080", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Não é possível excluir essa solicitação de reserva. Ela não está mais Em Aprovação.
+        /// </summary>
+        internal static string M0081 {
+            get {
+                return ResourceManager.GetString("M0081", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Você tem notificações não lidas até esta data.
         /// </summary>
         internal static string M0093 {

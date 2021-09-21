@@ -385,6 +385,7 @@ namespace ApplicationServices.Services
                     footer = footer.Replace("{Data}", item.NOTI_DT_EMISSAO.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
+                    body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
 
                     // Concatena
                     String emailBody = header + body;

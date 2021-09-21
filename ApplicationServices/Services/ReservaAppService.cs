@@ -15,15 +15,15 @@ using System.IO;
 
 namespace ApplicationServices.Services
 {
-    public class EncomendaAppService : AppServiceBase<ENCOMENDA>, IEncomendaAppService
+    public class ReservaAppService : AppServiceBase<RESERVA>, IReservaAppService
     {
-        private readonly IEncomendaService _baseService;
+        private readonly IReservaService _baseService;
         private readonly INotificacaoService _notiService;
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
         private readonly IUsuarioAppService _usuService;
 
-        public EncomendaAppService(IEncomendaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService): base(baseService)
+        public ReservaAppService(IReservaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
@@ -32,43 +32,55 @@ namespace ApplicationServices.Services
             _usuService = usuService;
         }
 
-        public List<ENCOMENDA> GetAllItens(Int32 idAss)
+        public RESERVA CheckExist(RESERVA unid, Int32 idAss)
         {
-            List<ENCOMENDA> lista = _baseService.GetAllItens(idAss);
+            RESERVA item = _baseService.CheckExist(unid, idAss);
+            return item;
+        }
+
+        public List<RESERVA> GetAllItens(Int32 idAss)
+        {
+            List<RESERVA> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public List<ENCOMENDA> GetAllItensAdm(Int32 idAss)
+        public List<RESERVA> GetAllItensAdm(Int32 idAss)
         {
-            List<ENCOMENDA> lista = _baseService.GetAllItensAdm(idAss);
+            List<RESERVA> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
-        public List<ENCOMENDA> GetByUnidade(Int32 idUnid)
+        public List<CATEGORIA_NOTIFICACAO> GetAllCatNotificacao(Int32 idAss)
+        {
+            List<CATEGORIA_NOTIFICACAO> lista = _baseService.GetAllCatNotificacao(idAss);
+            return lista;
+        }
+
+        public List<RESERVA> GetByUnidade(Int32 idUnid)
         {
             return _baseService.GetByUnidade(idUnid);
         }
 
-        public List<ENCOMENDA> GetItemByData(DateTime data, Int32 idAss)
+        public List<RESERVA> GetItemByData(DateTime data, Int32 idAss)
         {
             return _baseService.GetByData(data, idAss);
         }
 
-        public ENCOMENDA GetItemById(Int32 id)
+        public RESERVA GetItemById(Int32 id)
         {
-            ENCOMENDA item = _baseService.GetItemById(id);
+            RESERVA item = _baseService.GetItemById(id);
             return item;
         }
 
-        public List<FORMA_ENTREGA> GetAllFormas(Int32 idAss)
+        public List<FINALIDADE_RESERVA> GetAllFinalidades(Int32 idAss)
         {
-            List<FORMA_ENTREGA> lista = _baseService.GetAllFormas(idAss);
+            List<FINALIDADE_RESERVA> lista = _baseService.GetAllFinalidades(idAss);
             return lista;
         }
 
-        public List<TIPO_ENCOMENDA> GetAllTipos(Int32 idAss)
+        public List<AMBIENTE> GetAllAmbientes(Int32 idAss)
         {
-            List<TIPO_ENCOMENDA> lista = _baseService.GetAllTipos(idAss);
+            List<AMBIENTE> lista = _baseService.GetAllAmbientes(idAss);
             return lista;
         }
 
@@ -84,27 +96,27 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public ENCOMENDA_ANEXO GetAnexoById(Int32 id)
+        public RESERVA_ANEXO GetAnexoById(Int32 id)
         {
-            ENCOMENDA_ANEXO lista = _baseService.GetAnexoById(id);
+            RESERVA_ANEXO lista = _baseService.GetAnexoById(id);
             return lista;
         }
 
-        public ENCOMENDA_COMENTARIO GetComentarioById(Int32 id)
+        public RESERVA_COMENTARIO GetComentarioById(Int32 id)
         {
-            ENCOMENDA_COMENTARIO lista = _baseService.GetComentarioById(id);
+            RESERVA_COMENTARIO lista = _baseService.GetComentarioById(id);
             return lista;
         }
 
-        public Int32 ExecuteFilter(Int32? unid, Int32? forma, Int32? tipo, DateTime? data, Int32? status, Int32 idAss, out List<ENCOMENDA> objeto)
+        public Int32 ExecuteFilter(String nome, DateTime? data, Int32? finalidade, Int32? ambiente, Int32? unidade, Int32? status, Int32 idAss, out List<RESERVA> objeto)
         {
             try
             {
-                objeto = new List<ENCOMENDA>();
+                objeto = new List<RESERVA>();
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(unid, forma, tipo, data, status, idAss);
+                objeto = _baseService.ExecuteFilter(nome, data, finalidade, ambiente, unidade, status, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -118,34 +130,26 @@ namespace ApplicationServices.Services
         }
 
 
-        public Int32 ValidateCreate(ENCOMENDA item, USUARIO usuario)
+        public Int32 ValidateCreate(RESERVA item, USUARIO usuario)
         {
             try
             {
-
                 // Verifica existencia prévia
-                String unid = item.UNIDADE.UNID_NM_EXIBE;
-                USUARIO usu = null;
-                if (item.USUARIO == null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
-                    usu = item.USUARIO;
-                }
-                else
-                {
-                    USUARIO usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().FirstOrDefault();
-                    if (usua == null)
-                    {
-                        usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID).ToList().FirstOrDefault();
-                    }
-                    usu = usua;       
+                    return 1;
                 }
 
                 // Completa objeto
-                item.ENCO_IN_ATIVO = 1;
+                item.RESE_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
-                item.ENCO_CD_CODIGO = Cryptography.GenerateRandomPassword(6);
-                item.ENCO_IN_CONFIRMADO = 0;
-                item.ENCO_IN_STATUS = 1;
+                item.RESE_DT_CADASTRO = DateTime.Today.Date;
+                item.RESE_IN_ACEITA = 0;
+                item.RESE_IN_STATUS = 1;
+                item.RESE_IN_BOLETO = 0;
+                item.RESE_IN_CONFIRMADA = 0;
+                item.RESE_IN_LEMBRAR = 0;
+                item.RESE_IN_PAGA = 0;
 
                 //Verifica Campos
                 if (item.USUARIO != null)
@@ -160,6 +164,10 @@ namespace ApplicationServices.Services
                 {
                     item.UNIDADE = null;
                 }
+                if (item.AMBIENTE != null)
+                {
+                    item.AMBIENTE = null;
+                }
 
                 // Monta Log
                 LOG log = new LOG
@@ -167,15 +175,20 @@ namespace ApplicationServices.Services
                     LOG_DT_DATA = DateTime.Now,
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "AddENCO",
+                    LOG_NM_OPERACAO = "AddRESE",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<RESERVA>(item)
                 };
 
                 // Persiste
                 Int32 volta = _baseService.Create(item, log);
 
                 // Gera Notificações
+                USUARIO usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.PERFIL.PERF_SG_SIGLA == "SIN").ToList().FirstOrDefault();
+                if (usua == null)
+                {
+                    usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.PERFIL.PERF_SG_SIGLA == "ADM").ToList().FirstOrDefault();
+                }
                 NOTIFICACAO noti = new NOTIFICACAO();
                 noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
                 noti.CANO_CD_ID = 1;
@@ -186,10 +199,10 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_ORIGEM = 1;
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_VISTA = 0;
-                noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA";
-                noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". Uma encomenda chegou para essa unidade em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + ". Está disponível para entrega na portaria. Código: " + item.ENCO_CD_CODIGO + ".";
-                noti.USUA_CD_ID = usu.USUA_CD_ID;
-                Int32 volta1 = GerarNotificacao(noti, usu, item, "NOTIENCO");
+                noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - RESERVA";
+                noti.NOTI_TX_TEXTO = "A Unidade: " + usuario.UNIDADE.UNID_NR_NUMERO.ToString() + " abriu uma solicitação de reserva para " + item.RESE_DT_EVENTO.ToShortDateString() + " no ambiente " + item.AMBIENTE.AMBI_NM_AMBIENTE + ".";
+                noti.USUA_CD_ID = usua.USUA_CD_ID;
+                Int32 volta1 = GerarNotificacao(noti, usua, item, "NOTIRESE");
                 return volta;
             }
             catch (Exception ex)
@@ -198,45 +211,61 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(ENCOMENDA item, ENCOMENDA itemAntes, USUARIO usuario)
+        public Int32 ValidateEdit(RESERVA item, RESERVA itemAntes, USUARIO usuario)
         {
             try
             {
                 // Criticas
-                if (item.ENCO_IN_STATUS == 2 || item.ENCO_IN_STATUS == 3)
+                if (item.RESE_IN_STATUS == 2)
                 {
-                    if (item.ENCO_DT_ENTREGA == null || item.ENCO_NM_PESSOA == null)
+                    if (item.RESE_DT_APROVACAO == null)
+                    {
+                        return 3;
+                    }
+                    if (item.RESE_DT_APROVACAO.Value.Date > DateTime.Today.Date)
                     {
                         return 1;
                     }
-                }
-                if (item.ENCO_IN_STATUS == 4)
-                {
-                    if (item.ENCO_DT_DEVOLUCAO == null || item.ENCO_NM_PESSOA == null)
+                    if (item.RESE_DT_APROVACAO.Value.Date > item.RESE_DT_EVENTO.Date)
                     {
                         return 2;
                     }
                 }
+                if (item.RESE_IN_STATUS == 3)
+                {
+                    if (item.RESE_DT_VETADA == null)
+                    {
+                        return 4;
+                    }
+                    if (item.RESE_DT_VETADA.Value.Date > DateTime.Today.Date)
+                    {
+                        return 5;
+                    }
+                    if (item.RESE_DT_VETADA.Value.Date > item.RESE_DT_EVENTO.Date)
+                    {
+                        return 6;
+                    }
+                }
+                if (item.RESE_IN_STATUS == 4)
+                {
+                    if (item.RESE_DT_CONFIRMACAO == null)
+                    {
+                        return 7;
+                    }
+                    if (item.RESE_DT_CONFIRMACAO.Value.Date > DateTime.Today.Date)
+                    {
+                        return 8;
+                    }
+                    if (item.RESE_DT_CONFIRMACAO.Value.Date > item.RESE_DT_EVENTO.Date)
+                    {
+                        return 9;
+                    }
+                }
 
                 // Preparação
-                String unid = item.UNIDADE.UNID_NM_EXIBE;
-                USUARIO usu = null;
-                if (item.USUARIO == null)
-                {
-                    usu = item.USUARIO;
-                }
-                else
-                {
-                    USUARIO usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().FirstOrDefault();
-                    if (usua == null)
-                    {
-                        usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == item.UNID_CD_ID).ToList().FirstOrDefault();
-                    }
-                    usu = usua;
-                }
 
                 // Completa objeto
-                item.ENCO_IN_ATIVO = 1;
+                item.RESE_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
 
                 //Verifica Campos
@@ -259,18 +288,24 @@ namespace ApplicationServices.Services
                     LOG_DT_DATA = DateTime.Now,
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
-                    LOG_NM_OPERACAO = "EditENCO",
+                    LOG_NM_OPERACAO = "EditRESE",
                     LOG_IN_ATIVO = 1,
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item),
-                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<ENCOMENDA>(itemAntes)
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<RESERVA>(item),
+                    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<RESERVA>(itemAntes)
                 };
 
                 // Persiste
                 Int32 volta = _baseService.Edit(item, log);
 
                 // Gera Notificações
-                if (item.ENCO_IN_STATUS == 2 || item.ENCO_IN_STATUS == 3)
+                if (item.RESE_IN_STATUS > 1 & item.RESE_IN_STATUS != itemAntes.RESE_IN_STATUS)
                 {
+                    USUARIO usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().FirstOrDefault();
+                    if (usua == null)
+                    {
+                        usua = _usuService.GetAllUsuarios(usuario.ASSI_CD_ID).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList().FirstOrDefault();
+                    }
+
                     NOTIFICACAO noti = new NOTIFICACAO();
                     noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
                     noti.CANO_CD_ID = 1;
@@ -281,20 +316,21 @@ namespace ApplicationServices.Services
                     noti.NOTI_IN_ORIGEM = 1;
                     noti.NOTI_IN_STATUS = 1;
                     noti.NOTI_IN_VISTA = 0;
-                    if (item.ENCO_IN_STATUS == 2)
+                    noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - RESERVA";
+                    if (item.RESE_IN_STATUS == 2)
                     {
-                        noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA - ENTREGA";
-                        noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". A encomenda recebida em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + " e com código: " + item.ENCO_CD_CODIGO + ", foi entregue em " + item.ENCO_DT_ENTREGA.Value.ToShortDateString();
+                        noti.NOTI_TX_TEXTO = "A reserva solicitada pela unidade " + item.UNIDADE.UNID_NR_NUMERO.ToString() + " para " + item.RESE_DT_EVENTO.ToShortDateString() + " no ambiente " + item.AMBIENTE.AMBI_NM_AMBIENTE + " foi APROVADA. O boleto para pagamento será enviado.";
                     }
-                    else
+                    else if (item.RESE_IN_STATUS == 3)
                     {
-                        noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA - RECUSA";
-                        noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". A encomenda recebida em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + " e com código: " + item.ENCO_CD_CODIGO + ", foi recusada em " + item.ENCO_DT_BAIXA.Value.ToShortDateString();
+                        noti.NOTI_TX_TEXTO = "A reserva solicitada pela unidade " + item.UNIDADE.UNID_NR_NUMERO.ToString() + " para " + item.RESE_DT_EVENTO.ToShortDateString() + " no ambiente " + item.AMBIENTE.AMBI_NM_AMBIENTE + " foi VETADA.";
                     }
-
-
-                    noti.USUA_CD_ID = usu.USUA_CD_ID;
-                    Int32 volta1 = GerarNotificacao(noti, usu, item, "NOTIENCO");
+                    else if (item.RESE_IN_STATUS == 4)
+                    {
+                        noti.NOTI_TX_TEXTO = "A reserva solicitada pela unidade " + item.UNIDADE.UNID_NR_NUMERO.ToString() + " para " + item.RESE_DT_EVENTO.ToShortDateString() + " no ambiente " + item.AMBIENTE.AMBI_NM_AMBIENTE + " foi CONFIRMADA.";
+                    }
+                    noti.USUA_CD_ID = usua.USUA_CD_ID;
+                    Int32 volta1 = GerarNotificacao(noti, usua, item, "NOTIRESE");
                 }
                 return volta;
             }
@@ -304,7 +340,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateEdit(ENCOMENDA item, ENCOMENDA itemAntes)
+        public Int32 ValidateEdit(RESERVA item, RESERVA itemAntes)
         {
             try
             {
@@ -317,14 +353,18 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateDelete(ENCOMENDA item, USUARIO usuario)
+        public Int32 ValidateDelete(RESERVA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
+                if (item.RESE_IN_STATUS != 1)
+                {
+                    return 1;
+                }
 
                 // Acerta campos
-                item.ENCO_IN_ATIVO = 0;
+                item.RESE_IN_ATIVO = 0;
                 if (item.USUARIO != null)
                 {
                     item.USUARIO = null;
@@ -345,8 +385,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "DeleENCO",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item),
+                    LOG_NM_OPERACAO = "DeleRESE",
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<RESERVA>(item),
                 };
 
                 // Persiste
@@ -358,14 +398,14 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 ValidateReativar(ENCOMENDA item, USUARIO usuario)
+        public Int32 ValidateReativar(RESERVA item, USUARIO usuario)
         {
             try
             {
                 // Verifica integridade referencial
 
                 // Acerta campos
-                item.ENCO_IN_ATIVO = 1;
+                item.RESE_IN_ATIVO = 1;
                 if (item.USUARIO != null)
                 {
                     item.USUARIO = null;
@@ -386,8 +426,8 @@ namespace ApplicationServices.Services
                     ASSI_CD_ID = usuario.ASSI_CD_ID,
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
-                    LOG_NM_OPERACAO = "ReatENCO",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<ENCOMENDA>(item),
+                    LOG_NM_OPERACAO = "ReatRESE",
+                    LOG_TX_REGISTRO = Serialization.SerializeJSON<RESERVA>(item),
                 };
 
                 // Persiste
@@ -399,7 +439,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENCOMENDA entrada, String template)
+        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, RESERVA entrada, String template)
         {
             try
             {
@@ -423,9 +463,9 @@ namespace ApplicationServices.Services
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
-                    footer = footer.Replace("{Codigo}", entrada.ENCO_CD_CODIGO);
+                    footer = footer.Replace("{Ambiente}", entrada.AMBIENTE.AMBI_NM_AMBIENTE);
                     footer = footer.Replace("{Unidade}", entrada.UNIDADE.UNID_NM_EXIBE);
-                    footer = footer.Replace("{Data}", entrada.ENCO_DT_CHEGADA.Value.ToShortDateString());
+                    footer = footer.Replace("{Data}", entrada.RESE_DT_EVENTO.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
                     body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
@@ -437,7 +477,7 @@ namespace ApplicationServices.Services
                     // Monta e-mail
                     NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
                     Email mensagem = new Email();
-                    mensagem.ASSUNTO = "NOTIFICAÇÃO - ENCOMENDA";
+                    mensagem.ASSUNTO = "NOTIFICAÇÃO - RESERVA";
                     mensagem.CORPO = emailBody;
                     mensagem.DEFAULT_CREDENTIALS = false;
                     mensagem.EMAIL_DESTINO = usuario.USUA_NM_EMAIL;
@@ -465,7 +505,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public String ValidateCreateMensagem(USUARIO usuario, ENCOMENDA enco, NOTIFICACAO noti)
+        public String ValidateCreateMensagem(USUARIO usuario, RESERVA enco, NOTIFICACAO noti)
         {
             try
             {
@@ -491,8 +531,8 @@ namespace ApplicationServices.Services
                 {
                     msg = msg.Substring(0, 750);
                 }
-                String body = _temService.GetByCode("ENCOSMS").TEMP_TX_CORPO;
-                String header = _temService.GetByCode("ENCOSMS").TEMP_TX_CABECALHO;
+                String body = _temService.GetByCode("RESESMS").TEMP_TX_CORPO;
+                String header = _temService.GetByCode("RESESMS").TEMP_TX_CABECALHO;
                 header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
                 body = body.Replace("{Texto}", msg);
                 body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);

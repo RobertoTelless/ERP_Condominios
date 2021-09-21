@@ -105,6 +105,7 @@ namespace Presentation.Start
             kernel.Bind<IMudancaAppService>().To<MudancaAppService>();
             kernel.Bind<IEntradaSaidaAppService>().To<EntradaSaidaAppService>();
             kernel.Bind<IEncomendaAppService>().To<EncomendaAppService>();
+            kernel.Bind<IReservaAppService>().To<ReservaAppService>();
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IUsuarioService>().To<UsuarioService>();
@@ -143,6 +144,7 @@ namespace Presentation.Start
             kernel.Bind<IMudancaService>().To<MudancaService>();
             kernel.Bind<IEntradaSaidaService>().To<EntradaSaidaService>();
             kernel.Bind<IEncomendaService>().To<EncomendaService>();
+            kernel.Bind<IReservaService>().To<ReservaService>();
 
             kernel.Bind(typeof(IRepositoryBase<>)).To(typeof(RepositoryBase<>));
             kernel.Bind<IConfiguracaoRepository>().To<ConfiguracaoRepository>();
@@ -237,6 +239,9 @@ namespace Presentation.Start
             kernel.Bind<IEncomendaComentarioRepository>().To<EncomendaComentarioRepository>();
             kernel.Bind<IFormaEntregaRepository>().To<FormaEntregaRepository>();
             kernel.Bind<ITipoEncomendaRepository>().To<TipoEncomendaRepository>();
+            kernel.Bind<IReservaRepository>().To<ReservaRepository>();
+            kernel.Bind<IReservaAnexoRepository>().To<ReservaAnexoRepository>();
+            kernel.Bind<IReservaComentarioRepository>().To<ReservaComentarioRepository>();
 
         }
     }

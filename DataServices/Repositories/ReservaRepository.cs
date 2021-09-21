@@ -18,7 +18,7 @@ namespace DataServices.Repositories
             IQueryable<RESERVA> query = Db.RESERVA;
             query = query.Where(p => p.RESE_DT_EVENTO == tarefa.RESE_DT_EVENTO);
             query = query.Where(p => p.UNID_CD_ID == tarefa.UNID_CD_ID);
-            query = query.Where(p => p.RESE_NM_NOME == tarefa.RESE_NM_NOME);
+            query = query.Where(p => p.AMBI_CD_ID == tarefa.AMBI_CD_ID);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }
@@ -28,7 +28,11 @@ namespace DataServices.Repositories
             IQueryable<RESERVA> query = Db.RESERVA;
             query = query.Where(p => p.RESE_CD_ID == id);
             query = query.Include(p => p.UNIDADE);
+            query = query.Include(p => p.AMBIENTE);
+            query = query.Include(p => p.FINALIDADE_RESERVA);
             query = query.Include(p => p.USUARIO);
+            query = query.Include(p => p.RESERVA_ANEXO);
+            query = query.Include(p => p.RESERVA_COMENTARIO);
             return query.FirstOrDefault();
         }
 
@@ -53,7 +57,15 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<RESERVA> ExecuteFilter(String nome, DateTime? data, Int32? finalidade, Int32? ambiente, Int32? unidade, Int32 idAss)
+        public List<RESERVA> GetByData(DateTime data, Int32 idAss)
+        {
+            IQueryable<RESERVA> query = Db.RESERVA.Where(p => p.RESE_IN_ATIVO == 1);
+            query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Where(p => p.RESE_DT_EVENTO == data);
+            return query.ToList();
+        }
+
+        public List<RESERVA> ExecuteFilter(String nome, DateTime? data, Int32? finalidade, Int32? ambiente, Int32? unidade, Int32? status, Int32 idAss)
         {
             List<RESERVA> lista = new List<RESERVA>();
             IQueryable<RESERVA> query = Db.RESERVA;
@@ -68,6 +80,10 @@ namespace DataServices.Repositories
             if (unidade != null)
             {
                 query = query.Where(p => p.UNID_CD_ID == unidade);
+            }
+            if (status != null)
+            {
+                query = query.Where(p => p.RESE_IN_STATUS == status);
             }
             if (finalidade != null)
             {

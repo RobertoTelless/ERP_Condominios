@@ -318,6 +318,18 @@
   <data name="M0077" xml:space="preserve">
     <value>Informações de devolução incompletas</value>
   </data>
+  <data name="M0078" xml:space="preserve">
+    <value>Reserva já cadastrada</value>
+  </data>
+  <data name="M0079" xml:space="preserve">
+    <value>Não é possível excluir essa reserva. Ela não está mais Em Aprovação</value>
+  </data>
+  <data name="M0080" xml:space="preserve">
+    <value>Data do Evento não pode ser inferior a data corrente</value>
+  </data>
+  <data name="M0081" xml:space="preserve">
+    <value>Não é possível excluir essa solicitação de reserva. Ela não está mais Em Aprovação</value>
+  </data>
   <data name="M0093" xml:space="preserve">
     <value>Você tem notificações não lidas até esta data</value>
   </data>

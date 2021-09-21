@@ -202,6 +202,7 @@
     <Compile Include="Interfaces\IConfiguracaoAppService.cs" />
     <Compile Include="Interfaces\IAmbienteAppService.cs" />
     <Compile Include="Interfaces\IContaBancariaAppService.cs" />
+    <Compile Include="Interfaces\IReservaAppService.cs" />
     <Compile Include="Interfaces\IEncomendaAppService.cs" />
     <Compile Include="Interfaces\IEntradaSaidaAppService.cs" />
     <Compile Include="Interfaces\IEquipamentoAppService.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Services\ConfiguracaoAppService.cs" />
     <Compile Include="Services\AmbienteAppService.cs" />
     <Compile Include="Services\ContaBancariaAppService.cs" />
+    <Compile Include="Services\ReservaAppService.cs" />
     <Compile Include="Services\EncomendaAppService.cs" />
     <Compile Include="Services\EntradaSaidaAppService.cs" />
     <Compile Include="Services\EquipamentoAppService.cs" />

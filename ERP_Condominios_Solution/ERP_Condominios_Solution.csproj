@@ -299,6 +299,7 @@
     <Compile Include="Controllers\NotificacaoController.cs" />
     <Compile Include="Controllers\OcorrenciaController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
+    <Compile Include="Controllers\ReservaController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
@@ -313,6 +314,8 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ReservaViewModel.cs" />
+    <Compile Include="ViewModels\ReservaComentarioViewModel.cs" />
     <Compile Include="ViewModels\EncomendaViewModel.cs" />
     <Compile Include="ViewModels\EntradaSaidaViewModel.cs" />
     <Compile Include="ViewModels\EntradaSaidaComentarioViewModel.cs" />
@@ -2133,6 +2136,7 @@
     <Content Include="Imagens\1\Veiculo\13\Anexos\NotificacaoLista_13082021 %282%29.pdf" />
     <Content Include="Imagens\1\Produtos\2\Anexos\CCLista_16082021.pdf" />
     <Content Include="Imagens\1\Produtos\5\Anexos\TarefaLista_13082021.pdf" />
+    <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\characterCount.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -3180,6 +3184,17 @@
     <Content Include="Views\Encomenda\GerarNotificacaoEncomenda.cshtml" />
     <Content Include="Views\Encomenda\IncluirComentarioEncomenda.cshtml" />
     <Content Include="Views\Encomenda\MontarTelaEncomendaNaoEntregue.cshtml" />
+    <Content Include="Views\Reserva\MontarTelaReserva.cshtml" />
+    <Content Include="Views\Reserva\IncluirReserva.cshtml" />
+    <Content Include="Views\Reserva\EditarReserva.cshtml" />
+    <Content Include="Views\Reserva\VerReserva.cshtml" />
+    <Content Include="Views\Reserva\AprovarReserva.cshtml" />
+    <Content Include="Views\Reserva\ReprovarReserva.cshtml" />
+    <Content Include="Views\Reserva\CancelarReserva.cshtml" />
+    <Content Include="Views\Reserva\ExecutarReserva.cshtml" />
+    <Content Include="Views\Reserva\IncluirComentarioReserva.cshtml" />
+    <Content Include="Views\Reserva\VerAnexoReserva.cshtml" />
+    <Content Include="Views\Mudanca\VerAnexoMudanca.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

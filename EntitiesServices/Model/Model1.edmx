@@ -1112,6 +1112,8 @@
           <Property Name="RESE_IN_STATUS" Type="int" Nullable="false" />
           <Property Name="RESE_IN_LEMBRAR" Type="int" Nullable="false" />
           <Property Name="RESE_IN_ATIVO" Type="int" Nullable="false" />
+          <Property Name="RESE_DT_VETADA" Type="date" />
+          <Property Name="RESE_DT_CONFIRMACAO" Type="date" />
         </EntityType>
         <EntityType Name="RESERVA_ANEXO">
           <Key>
@@ -6449,6 +6451,8 @@
           <NavigationProperty Name="RESERVA_COMENTARIO" Relationship="Self.FK_RESERVA_COMENTARIO_RESERVA" FromRole="RESERVA" ToRole="RESERVA_COMENTARIO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_RESERVA_UNIDADE" FromRole="RESERVA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_RESERVA_USUARIO" FromRole="RESERVA" ToRole="USUARIO" />
+          <Property Name="RESE_DT_VETADA" Type="DateTime" Precision="0" />
+          <Property Name="RESE_DT_CONFIRMACAO" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="RESERVA_ANEXO">
           <Key>
@@ -11740,6 +11744,8 @@
           <EntitySetMapping Name="RESERVA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.RESERVA">
               <MappingFragment StoreEntitySet="RESERVA">
+                <ScalarProperty Name="RESE_DT_CONFIRMACAO" ColumnName="RESE_DT_CONFIRMACAO" />
+                <ScalarProperty Name="RESE_DT_VETADA" ColumnName="RESE_DT_VETADA" />
                 <ScalarProperty Name="RESE_CD_ID" ColumnName="RESE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />

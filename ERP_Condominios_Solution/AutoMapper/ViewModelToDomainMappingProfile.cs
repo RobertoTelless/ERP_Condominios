@@ -64,6 +64,8 @@ namespace MvcMapping.Mappers
             CreateMap<EntradaSaidaViewModel, ENTRADA_SAIDA>();
             CreateMap<EncomendaViewModel, ENCOMENDA>();
             CreateMap<EncomendaComentarioViewModel, ENCOMENDA_COMENTARIO>();
+            CreateMap<ReservaViewModel, RESERVA>();
+            CreateMap<ReservaComentarioViewModel, RESERVA_COMENTARIO>();
 
         }
     }

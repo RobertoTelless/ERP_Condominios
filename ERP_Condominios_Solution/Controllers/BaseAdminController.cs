@@ -205,6 +205,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensMudanca"] = 0;
             Session["MensES"] = 0;
             Session["MensEncomenda"] = 0;
+            Session["MensReserva"] = 0;
 
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
@@ -376,6 +377,10 @@ namespace ERP_Condominios_Solution.Controllers
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensEncomenda"] == 2)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensReserva"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }

@@ -199,6 +199,7 @@
     <Compile Include="EntitiesServices\CentroCustoService.cs" />
     <Compile Include="EntitiesServices\ConfiguracaoService.cs" />
     <Compile Include="EntitiesServices\ContaBancariaService.cs" />
+    <Compile Include="EntitiesServices\ReservaService.cs" />
     <Compile Include="EntitiesServices\EncomendaService.cs" />
     <Compile Include="EntitiesServices\EntradaSaidaService.cs" />
     <Compile Include="EntitiesServices\EquipamentoService.cs" />
@@ -239,10 +240,13 @@
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IReservaComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IReservaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEntradaSaidaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEncomendaAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEntradaSaidaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IEncomendaComentarioRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IFinalidadeReservaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ITipoEncomendaRepository.cs" />
     <Compile Include="Interfaces\Repositories\IFormaEntregaRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaUsuarioRepository.cs" />
@@ -336,6 +340,7 @@
     <Compile Include="Interfaces\Services\ICentroCustoService.cs" />
     <Compile Include="Interfaces\Services\IConfiguracaoService.cs" />
     <Compile Include="Interfaces\Services\IContaBancariaService.cs" />
+    <Compile Include="Interfaces\Services\IReservaService.cs" />
     <Compile Include="Interfaces\Services\IEncomendaService.cs" />
     <Compile Include="Interfaces\Services\IEntradaSaidaService.cs" />
     <Compile Include="Interfaces\Services\IEquipamentoService.cs" />

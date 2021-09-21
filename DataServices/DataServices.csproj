@@ -196,11 +196,14 @@
     <Compile Include="Repositories\BancoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaUsuarioRepository.cs" />
+    <Compile Include="Repositories\ReservaComentarioRepository.cs" />
+    <Compile Include="Repositories\ReservaAnexoRepository.cs" />
     <Compile Include="Repositories\EncomendaComentarioRepository.cs" />
     <Compile Include="Repositories\EncomendaRepository.cs" />
     <Compile Include="Repositories\EntradaSaidaRepository.cs" />
     <Compile Include="Repositories\EntradaSaidaComentarioRepository.cs" />
     <Compile Include="Repositories\EncomendaAnexoRepository.cs" />
+    <Compile Include="Repositories\FinalidadeReservaRepository.cs" />
     <Compile Include="Repositories\MudancaAnexoRepository.cs" />
     <Compile Include="Repositories\FuncaoCorpoDiretivoRepository.cs" />
     <Compile Include="Repositories\CategoriaOcorrenciaRepository.cs" />

@@ -14,6 +14,7 @@ namespace ModelServices.Interfaces.Repositories
         List<RESERVA> GetAllItens(Int32 idAss);
         List<RESERVA> GetAllItensAdm(Int32 idAss);
         List<RESERVA> GetByUnidade(Int32 idUnid);
-        List<RESERVA> ExecuteFilter(String nome, DateTime? data, Int32? finalidade, Int32? ambiente, Int32? unidade, Int32 idAss);
+        List<RESERVA> GetByData(DateTime data, Int32 idAss);
+        List<RESERVA> ExecuteFilter(String nome, DateTime? data, Int32? finalidade, Int32? ambiente, Int32? unidade, Int32? status, Int32 idAss);
     }
 }

@@ -24,20 +24,20 @@ using Newtonsoft.Json.Linq;
 
 namespace ERP_Condominios_Solution.Controllers
 {
-    public class MudancaController : Controller
+    public class ReservaController : Controller
     {
-        private readonly IMudancaAppService baseApp;
+        private readonly IReservaAppService baseApp;
         private readonly INotificacaoAppService notiApp;
         private readonly ILogAppService logApp;
 
         private String msg;
         private Exception exception;
-        SOLICITACAO_MUDANCA objeto = new SOLICITACAO_MUDANCA();
-        SOLICITACAO_MUDANCA objetoAntes = new SOLICITACAO_MUDANCA();
-        List<SOLICITACAO_MUDANCA> listaMaster = new List<SOLICITACAO_MUDANCA>();
+        RESERVA objeto = new RESERVA();
+        RESERVA objetoAntes = new RESERVA();
+        List<RESERVA> listaMaster = new List<RESERVA>();
         String extensao;
 
-        public MudancaController(IMudancaAppService baseApps, ILogAppService logApps, INotificacaoAppService notiApps)
+        public ReservaController(IReservaAppService baseApps, ILogAppService logApps, INotificacaoAppService notiApps)
         {
             baseApp = baseApps; ;
             logApp = logApps;
@@ -65,7 +65,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult MontarTelaMudanca()
+        public ActionResult MontarTelaReserva()
         {
             // Verifica se tem usuario logado
             USUARIO usuario = new USUARIO();
@@ -80,7 +80,7 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
+                    Session["MensReserva"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
                 }
             }
@@ -91,7 +91,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Carrega listas
-            if ((List<SOLICITACAO_MUDANCA>)Session["ListaMudanca"] == null)
+            if ((List<RESERVA>)Session["ListaReserva"] == null)
             {
                 if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
                 {
@@ -103,70 +103,70 @@ namespace ERP_Condominios_Solution.Controllers
                 }
                 else if (usuario.PERFIL.PERF_SG_SIGLA == "POR")
                 {
-                    listaMaster = baseApp.GetAllItens(idAss).Where(p => p.SOMU_IN_STATUS == 2).ToList();
+                    listaMaster = baseApp.GetAllItens(idAss).Where(p => p.RESE_IN_STATUS == 4).ToList();
                 }
-                Session["ListaMudanca"] = listaMaster;
-                Session["FiltroMudanca"] = null;
+                Session["ListaReserva"] = listaMaster;
+                Session["FiltroReserva"] = null;
             }
 
-            ViewBag.Listas = (List<SOLICITACAO_MUDANCA>)Session["ListaMudanca"];
-            ViewBag.Title = "Mudancas";
+            ViewBag.Listas = (List<RESERVA>)Session["ListaReserva"];
+            ViewBag.Title = "Reservas";
+
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Finalidades = new SelectList(baseApp.GetAllFinalidades(idAss), "FIRE_CD_ID", "FIRE_NM_NOME");
+            ViewBag.Ambientes = new SelectList(baseApp.GetAllAmbientes(idAss), "AMBI_CD_ID", "AMBI_NM_AMBIENTE");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
             status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
             status.Add(new SelectListItem() { Text = "Não Aprovada", Value = "3" });
-            status.Add(new SelectListItem() { Text = "Executada", Value = "4" });
+            status.Add(new SelectListItem() { Text = "Confirmada", Value = "4" });
             status.Add(new SelectListItem() { Text = "Cancelada", Value = "5" });
+            status.Add(new SelectListItem() { Text = "Encerrada", Value = "6" });
             ViewBag.Status = new SelectList(status, "Value", "Text");
-            List<SelectListItem> ent = new List<SelectListItem>();
-            ent.Add(new SelectListItem() { Text = "Entrada", Value = "1" });
-            ent.Add(new SelectListItem() { Text = "Saída", Value = "2" });
-            ViewBag.Entrada = new SelectList(ent, "Value", "Text");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Indicadores
-            ViewBag.Mudancas = ((List<SOLICITACAO_MUDANCA>)Session["ListaMudanca"]).Count;
+            ViewBag.Reservas = ((List<RESERVA>)Session["ListaReserva"]).Count;
 
             // Mensagem
-            if ((Int32)Session["MensMudanca"] == 2)
+            if ((Int32)Session["MensReserva"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
-            if ((Int32)Session["MensMudanca"] == 3)
+            if ((Int32)Session["MensReserva"] == 3)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0060", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0078", CultureInfo.CurrentCulture));
             }
-            if ((Int32)Session["MensMudanca"] == 4)
+            if ((Int32)Session["MensReserva"] == 4)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0061", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0079", CultureInfo.CurrentCulture));
             }
-            if ((Int32)Session["MensMudanca"] == 5)
+            if ((Int32)Session["MensReserva"] == 5)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0062", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0080", CultureInfo.CurrentCulture));
             }
 
             // Abre view
-            Session["MensMudanca"] = 0;
-            Session["VoltaMudanca"] = 1;
-            objeto = new SOLICITACAO_MUDANCA();
+            Session["MensReserva"] = 0;
+            Session["VoltaReserva"] = 1;
+            objeto = new RESERVA();
             return View(objeto);
         }
 
-        public ActionResult RetirarFiltroMudanca()
+        public ActionResult RetirarFiltroReserva()
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            Session["ListaMudanca"] = null;
-            Session["FiltroMudanca"] = null;
-            listaMaster = new List<SOLICITACAO_MUDANCA>();
-            return RedirectToAction("MontarTelaMudanca");
+            Session["ListaReserva"] = null;
+            Session["FiltroReserva"] = null;
+            listaMaster = new List<RESERVA>();
+            return RedirectToAction("MontarTelaReserva");
         }
 
-        public ActionResult MostrarTudoMudanca()
+        public ActionResult MostrarTudoReserva()
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -174,12 +174,12 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             listaMaster = baseApp.GetAllItensAdm(idAss);
-            Session["ListaMudanca"] = listaMaster;
-            return RedirectToAction("MontarTelaMudanca");
+            Session["ListaReserva"] = listaMaster;
+            return RedirectToAction("MontarTelaReserva");
         }
 
         [HttpPost]
-        public ActionResult FiltrarMudanca(SOLICITACAO_MUDANCA item)
+        public ActionResult FiltrarReserva(RESERVA item)
         {
             try
             {
@@ -192,48 +192,48 @@ namespace ERP_Condominios_Solution.Controllers
                     }
                     Int32 idAss = (Int32)Session["IdAssinante"];
 
-                    List<SOLICITACAO_MUDANCA> listaObj = new List<SOLICITACAO_MUDANCA>();
-                    Int32 volta = baseApp.ExecuteFilter(item.SOMU_DT_MUDANCA, item.SOMU_IN_ENTRADA_SAIDA, item.SOMU_IN_STATUS, item.UNID_CD_ID, idAss, out listaObj);
-                    Session["FiltroMudanca"] = item;
+                    List<RESERVA> listaObj = new List<RESERVA>();
+                    Int32 volta = baseApp.ExecuteFilter(item.RESE_NM_NOME, item.RESE_DT_EVENTO, item.FIRE_CD_ID, item.AMBI_CD_ID, item.UNID_CD_ID, item.RESE_IN_STATUS, idAss, out listaObj);
+                    Session["FiltroReserva"] = item;
 
                     // Verifica retorno
                     if (volta == 1)
                     {
-                        Session["MensMudanca"] = 1;
+                        Session["MensReserva"] = 1;
                     }
 
                     // Sucesso
-                    Session["MensMudanca"] = 0;
+                    Session["MensReserva"] = 0;
                     listaMaster = listaObj;
-                    Session["ListaMudanca"] = listaObj;
-                    return RedirectToAction("MontarTelaMudanca");
+                    Session["ListaReserva"] = listaObj;
+                    return RedirectToAction("MontarTelaReserva");
                 }
                 catch (Exception ex)
                 {
                     ViewBag.Message = ex.Message;
-                    return RedirectToAction("MontarTelaMudanca");
+                    return RedirectToAction("MontarTelaReserva");
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.Message = ex.Message;
-                return RedirectToAction("MontarTelaMudanca");
+                return RedirectToAction("MontarTelaReserva");
             }
         }
 
-        public ActionResult VoltarBaseMudanca()
+        public ActionResult VoltarBaseReserva()
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            Session["ListaMudanca"] = null;
-            return RedirectToAction("MontarTelaMudanca");
+            Session["ListaReserva"] = null;
+            return RedirectToAction("MontarTelaReserva");
         }
 
         [HttpGet]
-        public ActionResult IncluirMudanca()
+        public ActionResult IncluirReserva()
         {
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
@@ -247,8 +247,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -259,20 +259,20 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara listas
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            List<SelectListItem> ent = new List<SelectListItem>();
-            ent.Add(new SelectListItem() { Text = "Entrada", Value = "1" });
-            ent.Add(new SelectListItem() { Text = "Saída", Value = "2" });
-            ViewBag.Entrada = new SelectList(ent, "Value", "Text");
+            ViewBag.Finalidades = new SelectList(baseApp.GetAllFinalidades(idAss), "FIRE_CD_ID", "FIRE_NM_NOME");
+            ViewBag.Ambientes = new SelectList(baseApp.GetAllAmbientes(idAss), "AMBI_CD_ID", "AMBI_NM_AMBIENTE");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
-            SOLICITACAO_MUDANCA item = new SOLICITACAO_MUDANCA();
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
-            vm.SOMU_IN_ATIVO = 1;
+            RESERVA item = new RESERVA();
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
+            vm.RESE_IN_ATIVO = 1;
             vm.ASSI_CD_ID = idAss;
-            vm.SOMU_DT_CADASTRO = DateTime.Today.Date;
-            vm.SOMU_DT_CRIACAO = DateTime.Today.Date;
-            vm.SOMU_IN_STATUS = 1;
+            vm.RESE_DT_CADASTRO = DateTime.Today.Date;
+            vm.RESE_DT_EVENTO = DateTime.Today.Date;
+            vm.RESE_IN_STATUS = 1;
+            vm.RESE_IN_BOLETO = 0;
+            vm.RESE_IN_CONFIRMADA = 0;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
             if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
@@ -283,7 +283,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        public ActionResult IncluirMudanca(MudancaViewModel vm)
+        public ActionResult IncluirReserva(ReservaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -291,57 +291,54 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            List<SelectListItem> ent = new List<SelectListItem>();
-            ent.Add(new SelectListItem() { Text = "Entrada", Value = "1" });
-            ent.Add(new SelectListItem() { Text = "Saída", Value = "2" });
-            ViewBag.Entrada = new SelectList(ent, "Value", "Text");
+            ViewBag.Finalidades = new SelectList(baseApp.GetAllFinalidades(idAss), "FIRE_CD_ID", "FIRE_NM_NOME");
+            ViewBag.Ambientes = new SelectList(baseApp.GetAllAmbientes(idAss), "AMBI_CD_ID", "AMBI_NM_AMBIENTE");
             if (ModelState.IsValid)
             {
                 try
                 {
                     // Executa a operação
-                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    RESERVA item = Mapper.Map<ReservaViewModel, RESERVA>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
                     // Verifica retorno
                     if (volta == 1)
                     {
-                        Session["MensMudanca"] = 3;
-                        return RedirectToAction("MontarTelaMudanca", "Mudanca");
-                    }
-                    if (volta == 2)
-                    {
-                        Session["MensMudanca"] = 5;
-                        return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                        Session["MensReserva"] = 3;
+                        return RedirectToAction("MontarTelaReserva", "Reserva");
                     }
 
-                    Session["IdVolta"] = item.SOMU_CD_ID;
-                    if (Session["FileQueueMudanca"] != null)
+                    // Cria pastas
+                    String caminho = "/Imagens/" + idAss.ToString() + "/Reserva/" + item.RESE_CD_ID.ToString() + "/Anexos/";
+                    Directory.CreateDirectory(Server.MapPath(caminho));
+
+                    Session["IdVolta"] = item.RESE_CD_ID;
+                    if (Session["FileQueueReserva"] != null)
                     {
-                        List<FileQueue> fq = (List<FileQueue>)Session["FileQueueMudanca"];
+                        List<FileQueue> fq = (List<FileQueue>)Session["FileQueueReserva"];
 
                         foreach (var file in fq)
                         {
                             if (file.Profile == null)
                             {
-                                UploadFileQueueMudanca(file);
+                                UploadFileQueueReserva(file);
                             }
                         }
-                        Session["FileQueueMudanca"] = null;
+                        Session["FileQueueReserva"] = null;
                     }
 
-                    vm.SOMU_CD_ID = item.SOMU_CD_ID;
-                    Session["IdMudanca"] = item.SOMU_CD_ID;
+                    vm.RESE_CD_ID = item.RESE_CD_ID;
+                    Session["IdReserva"] = item.RESE_CD_ID;
 
                     // Sucesso
-                    listaMaster = new List<SOLICITACAO_MUDANCA>();
-                    Session["ListaMudanca"] = null;
-                    Session["VoltaMudanca"] = 1;
-                    Session["IdMudancaVolta"] = item.SOMU_CD_ID;
-                    Session["Mudanca"] = item;
-                    Session["MensMudanca"] = 0;
-                    return RedirectToAction("MontarTelaMudanca");
+                    listaMaster = new List<RESERVA>();
+                    Session["ListaReserva"] = null;
+                    Session["VoltaReserva"] = 1;
+                    Session["IdReservaVolta"] = item.RESE_CD_ID;
+                    Session["Reserva"] = item;
+                    Session["MensReserva"] = 0;
+                    return RedirectToAction("MontarTelaReserva");
                 }
                 catch (Exception ex)
                 {
@@ -356,7 +353,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditarMudanca(Int32 id)
+        public ActionResult EditarReserva(Int32 id)
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -371,8 +368,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -382,29 +379,26 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara view
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            List<SelectListItem> ent = new List<SelectListItem>();
-            ent.Add(new SelectListItem() { Text = "Entrada", Value = "1" });
-            ent.Add(new SelectListItem() { Text = "Saída", Value = "2" });
-            ViewBag.Entrada = new SelectList(ent, "Value", "Text");
+            ViewBag.Finalidades = new SelectList(baseApp.GetAllFinalidades(idAss), "FIRE_CD_ID", "FIRE_NM_NOME");
 
             // Prepara status
-            SOLICITACAO_MUDANCA item = baseApp.GetItemById(id);
+            RESERVA item = baseApp.GetItemById(id);
             String perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Perfil = perfil;
             List<SelectListItem> status = new List<SelectListItem>();
             if (perfil == "ADM" || perfil == "SIN")
             {
-                if (item.SOMU_IN_STATUS == 1)
+                if (item.RESE_IN_STATUS == 1)
                 {
                     status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
                     status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
                     status.Add(new SelectListItem() { Text = "Não Aprovada", Value = "3" });
+                    status.Add(new SelectListItem() { Text = "Confirmada", Value = "4" });
                 }
             }
             else if (perfil == "MOR")
             {
-                if (item.SOMU_IN_STATUS == 1 || item.SOMU_IN_STATUS == 2)
+                if (item.RESE_IN_STATUS == 1 || item.RESE_IN_STATUS == 2)
                 {
                     status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
                     status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
@@ -413,47 +407,43 @@ namespace ERP_Condominios_Solution.Controllers
             }
             else if (perfil == "POR")
             {
-                if (item.SOMU_IN_STATUS == 2)
+                if (item.RESE_IN_STATUS == 4)
                 {
-                    status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
-                    status.Add(new SelectListItem() { Text = "Executada", Value = "4" });
+                    status.Add(new SelectListItem() { Text = "Confirmada", Value = "4" });
+                    status.Add(new SelectListItem() { Text = "Encerrada", Value = "6" });
                 }
             }
             ViewBag.Status = new SelectList(status, "Value", "Text");
-            if (item.SOMU_IN_STATUS == 1)
+            if (item.RESE_IN_STATUS == 1)
             {
                 ViewBag.NomeStatus = "Em Aprovação";
             }
-            else if (item.SOMU_IN_STATUS == 2)
+            else if (item.RESE_IN_STATUS == 2)
             {
                 ViewBag.NomeStatus = "Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 3)
+            else if (item.RESE_IN_STATUS == 3)
             {
                 ViewBag.NomeStatus = "Não Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 4)
+            else if (item.RESE_IN_STATUS == 4)
             {
-                ViewBag.NomeStatus = "Executada/Encerrada";
+                ViewBag.NomeStatus = "Confirmada";
             }
-            else if (item.SOMU_IN_STATUS == 5)
+            else if (item.RESE_IN_STATUS == 5)
             {
                 ViewBag.NomeStatus = "Cancelada";
+            }
+            else if (item.RESE_IN_STATUS == 6)
+            {
+                ViewBag.NomeStatus = "Encerrada";
             }
 
             // Monta view
             objetoAntes = item;
-            Session["Mudanca"] = item;
+            Session["Reserva"] = item;
             Session["IdVolta"] = id;
-            Session["IdMudanca"] = id;
-            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
-            {
-                ViewBag.ES = "Entrada";
-            }
-            else
-            {
-                ViewBag.ES = "Saída";
-            }
+            Session["IdReserva"] = id;
             if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 Session["IdUnidade"] = usuario.UNID_CD_ID;
@@ -462,12 +452,12 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 Session["IdUnidade"] = null;
             }
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult EditarMudanca(MudancaViewModel vm)
+        public ActionResult EditarReserva(ReservaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -476,24 +466,21 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
             String perfil = usuarioLogado.PERFIL.PERF_SG_SIGLA;
-            ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            List<SelectListItem> ent = new List<SelectListItem>();
-            ent.Add(new SelectListItem() { Text = "Entrada", Value = "1" });
-            ent.Add(new SelectListItem() { Text = "Saída", Value = "2" });
-            ViewBag.Entrada = new SelectList(ent, "Value", "Text");
+            ViewBag.Finalidades = new SelectList(baseApp.GetAllFinalidades(idAss), "FIRE_CD_ID", "FIRE_NM_NOME");
             List<SelectListItem> status = new List<SelectListItem>();
             if (perfil == "ADM" || perfil == "SIN")
             {
-                if (vm.SOMU_IN_STATUS == 1)
+                if (vm.RESE_IN_STATUS == 1)
                 {
                     status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
                     status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
                     status.Add(new SelectListItem() { Text = "Não Aprovada", Value = "3" });
+                    status.Add(new SelectListItem() { Text = "Confirmada", Value = "4" });
                 }
             }
             else if (perfil == "MOR")
             {
-                if (vm.SOMU_IN_STATUS == 1 || vm.SOMU_IN_STATUS == 2)
+                if (vm.RESE_IN_STATUS == 1 || vm.RESE_IN_STATUS == 2)
                 {
                     status.Add(new SelectListItem() { Text = "Em Aprovação", Value = "1" });
                     status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
@@ -502,10 +489,10 @@ namespace ERP_Condominios_Solution.Controllers
             }
             else if (perfil == "POR")
             {
-                if (vm.SOMU_IN_STATUS == 2)
+                if (vm.RESE_IN_STATUS == 4)
                 {
-                    status.Add(new SelectListItem() { Text = "Aprovada", Value = "2" });
-                    status.Add(new SelectListItem() { Text = "Executada", Value = "4" });
+                    status.Add(new SelectListItem() { Text = "Confirmada", Value = "4" });
+                    status.Add(new SelectListItem() { Text = "Encerrada", Value = "6" });
                 }
             }
             ViewBag.Status = new SelectList(status, "Value", "Text");
@@ -514,11 +501,11 @@ namespace ERP_Condominios_Solution.Controllers
                 try
                 {
                     // Executa a operação
-                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    RESERVA item = Mapper.Map<ReservaViewModel, RESERVA>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
-                    //if (item.SOMU_IN_STATUS == 2)
+                    //if (item.RESE_IN_STATUS == 2)
                     //{
                     //    NOTIFICACAO not = new NOTIFICACAO();
                     //    not.NOTI_DT_EMISSAO = DateTime.Today.Date;
@@ -529,9 +516,41 @@ namespace ERP_Condominios_Solution.Controllers
                     //    not.NOTI_IN_ORIGEM = 1;
                     //    not.NOTI_IN_STATUS = 1;
                     //    not.NOTI_IN_VISTA = 0;
-                    //    not.NOTI_NM_TITULO = "Notificação para Morador - Aprovação de Mudança";
-                    //    not.USUA_CD_ID = item.USUA_CD_ID;
-                    //    not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                    //    not.NOTI_NM_TITULO = "Notificação para Morador - Aprovação de Reserva";
+                    //    not.USUA_CD_ID = item.USUA_CD_ID.Value;
+                    //    not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.RESE_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                    //    Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
+                    //}
+                    //else if (item.RESE_IN_STATUS == 3)
+                    //{
+                    //    NOTIFICACAO not = new NOTIFICACAO();
+                    //    not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                    //    not.ASSI_CD_ID = idAss;
+                    //    not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                    //    not.NOTI_IN_ATIVO = 1;
+                    //    not.NOTI_IN_NIVEL = 1;
+                    //    not.NOTI_IN_ORIGEM = 1;
+                    //    not.NOTI_IN_STATUS = 1;
+                    //    not.NOTI_IN_VISTA = 0;
+                    //    not.NOTI_NM_TITULO = "Notificação para Morador - Reprovação de Reserva";
+                    //    not.USUA_CD_ID = item.USUA_CD_ID.Value;
+                    //    not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.RESE_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                    //    Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
+                    //}
+                    //else if (item.RESE_IN_STATUS == 4)
+                    //{
+                    //    NOTIFICACAO not = new NOTIFICACAO();
+                    //    not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                    //    not.ASSI_CD_ID = idAss;
+                    //    not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                    //    not.NOTI_IN_ATIVO = 1;
+                    //    not.NOTI_IN_NIVEL = 1;
+                    //    not.NOTI_IN_ORIGEM = 1;
+                    //    not.NOTI_IN_STATUS = 1;
+                    //    not.NOTI_IN_VISTA = 0;
+                    //    not.NOTI_NM_TITULO = "Notificação para Morador - Confirmação de Reserva";
+                    //    not.USUA_CD_ID = item.USUA_CD_ID.Value;
+                    //    not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi confirmada em " + item.RESE_DT_CONFIRMACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                     //    Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
 
                     //    List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
@@ -546,30 +565,13 @@ namespace ERP_Condominios_Solution.Controllers
                     //        not.NOTI_IN_ORIGEM = 1;
                     //        not.NOTI_IN_STATUS = 1;
                     //        not.NOTI_IN_VISTA = 0;
-                    //        not.NOTI_NM_TITULO = "Notificação para Portaria - Aprovação de Mudança";
+                    //        not.NOTI_NM_TITULO = "Notificação para Portaria - Confirmação de Reserva";
                     //        not.USUA_CD_ID = usu.USUA_CD_ID;
-                    //        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                    //        not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi confirmada em " + item.RESE_DT_CONFIRMACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                     //        Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
                     //    }
-
                     //}
-                    //else if (item.SOMU_IN_STATUS == 3)
-                    //{
-                    //    NOTIFICACAO not = new NOTIFICACAO();
-                    //    not.NOTI_DT_EMISSAO = DateTime.Today.Date;
-                    //    not.ASSI_CD_ID = idAss;
-                    //    not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
-                    //    not.NOTI_IN_ATIVO = 1;
-                    //    not.NOTI_IN_NIVEL = 1;
-                    //    not.NOTI_IN_ORIGEM = 1;
-                    //    not.NOTI_IN_STATUS = 1;
-                    //    not.NOTI_IN_VISTA = 0;
-                    //    not.NOTI_NM_TITULO = "Notificação para Morador - Reprovação de Mudança";
-                    //    not.USUA_CD_ID = item.USUA_CD_ID;
-                    //    not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.SOMU_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
-                    //    Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
-                    //}
-                    //else if (item.SOMU_IN_STATUS == 4)
+                    //else if (item.RESE_IN_STATUS == 5)
                     //{
                     //    USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
                     //    NOTIFICACAO not = new NOTIFICACAO();
@@ -581,52 +583,39 @@ namespace ERP_Condominios_Solution.Controllers
                     //    not.NOTI_IN_ORIGEM = 1;
                     //    not.NOTI_IN_STATUS = 1;
                     //    not.NOTI_IN_VISTA = 0;
-                    //    not.NOTI_NM_TITULO = "Notificação para Síndico - Execução/Encerramento de Mudança";
+                    //    not.NOTI_NM_TITULO = "Notificação para Síndico - Cancelamento de Reserva";
                     //    not.USUA_CD_ID = sind.USUA_CD_ID;
-                    //    not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi executada/encerrada em " + item.SOMU_DT_EXECUCAO_INICIO.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
-                    //    Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
-                    //}
-                    //else if (item.SOMU_IN_STATUS == 5)
-                    //{
-                    //    USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
-                    //    NOTIFICACAO not = new NOTIFICACAO();
-                    //    not.NOTI_DT_EMISSAO = DateTime.Today.Date;
-                    //    not.ASSI_CD_ID = idAss;
-                    //    not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
-                    //    not.NOTI_IN_ATIVO = 1;
-                    //    not.NOTI_IN_NIVEL = 1;
-                    //    not.NOTI_IN_ORIGEM = 1;
-                    //    not.NOTI_IN_STATUS = 1;
-                    //    not.NOTI_IN_VISTA = 0;
-                    //    not.NOTI_NM_TITULO = "Notificação para Síndico - Cancelamento de Mudança";
-                    //    not.USUA_CD_ID = sind.USUA_CD_ID;
-                    //    not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                    //    not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.RESE_DT_CADASTRO.ToShortDateString() + ". Por favor consulte a solicitação.";
                     //    Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
 
-                    //    List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
-                    //    foreach (USUARIO usu in port)
+                    //    RESERVA antes = (RESERVA)Session["Reserva"];
+                    //    if (antes.RESE_IN_STATUS == 4)
                     //    {
-                    //        not = new NOTIFICACAO();
-                    //        not.NOTI_DT_EMISSAO = DateTime.Today.Date;
-                    //        not.ASSI_CD_ID = idAss;
-                    //        not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
-                    //        not.NOTI_IN_ATIVO = 1;
-                    //        not.NOTI_IN_NIVEL = 1;
-                    //        not.NOTI_IN_ORIGEM = 1;
-                    //        not.NOTI_IN_STATUS = 1;
-                    //        not.NOTI_IN_VISTA = 0;
-                    //        not.NOTI_NM_TITULO = "Notificação para Portaria - Cancelamento de Mudança";
-                    //        not.USUA_CD_ID = usu.USUA_CD_ID;
-                    //        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
-                    //        Int32 volta3 = notiApp.ValidateCreate(not, usuarioLogado);
+                    //        List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
+                    //        foreach (USUARIO usu in port)
+                    //        {
+                    //            not = new NOTIFICACAO();
+                    //            not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                    //            not.ASSI_CD_ID = idAss;
+                    //            not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                    //            not.NOTI_IN_ATIVO = 1;
+                    //            not.NOTI_IN_NIVEL = 1;
+                    //            not.NOTI_IN_ORIGEM = 1;
+                    //            not.NOTI_IN_STATUS = 1;
+                    //            not.NOTI_IN_VISTA = 0;
+                    //            not.NOTI_NM_TITULO = "Notificação para Portaria - Cancelamento de Reserva";
+                    //            not.USUA_CD_ID = usu.USUA_CD_ID;
+                    //            not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.RESE_DT_CADASTRO.ToShortDateString() + ". Por favor consulte a solicitação.";
+                    //            Int32 volta3 = notiApp.ValidateCreate(not, usuarioLogado);
+                    //        }
                     //    }
                     //}
 
                     // Sucesso
-                    listaMaster = new List<SOLICITACAO_MUDANCA>();
-                    Session["ListaMudanca"] = null;
-                    Session["MensMudanca"] = 0;
-                    return RedirectToAction("MontarTelaMudanca");
+                    listaMaster = new List<RESERVA>();
+                    Session["ListaReserva"] = null;
+                    Session["MensReserva"] = 0;
+                    return RedirectToAction("MontarTelaReserva");
                 }
                 catch (Exception ex)
                 {
@@ -641,7 +630,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult VerMudanca(Int32 id)
+        public ActionResult VerReserva(Int32 id)
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -656,8 +645,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -669,17 +658,17 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Unidade = usuario.UNID_CD_ID;
 
             // Prepara view
-            SOLICITACAO_MUDANCA item = baseApp.GetItemById(id);
+            RESERVA item = baseApp.GetItemById(id);
             objetoAntes = item;
-            Session["Mudanca"] = item;
+            Session["Reserva"] = item;
             Session["IdVolta"] = id;
-            Session["IdMudanca"] = id;
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
+            Session["IdReserva"] = id;
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
             return View(vm);
         }
 
         [HttpGet]
-        public ActionResult AprovarMudanca()
+        public ActionResult AprovarReserva()
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -694,8 +683,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN"  || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -707,42 +696,38 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
 
             // Prepara status
-            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["Mudanca"];
+            RESERVA item = (RESERVA)Session["Reserva"];
             String perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Perfil = perfil;
 
-            if (item.SOMU_IN_STATUS == 1)
+            if (item.RESE_IN_STATUS == 1)
             {
                 ViewBag.NomeStatus = "Em Aprovação";
             }
-            else if (item.SOMU_IN_STATUS == 2)
+            else if (item.RESE_IN_STATUS == 2)
             {
                 ViewBag.NomeStatus = "Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 3)
+            else if (item.RESE_IN_STATUS == 3)
             {
                 ViewBag.NomeStatus = "Não Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 4)
+            else if (item.RESE_IN_STATUS == 4)
             {
-                ViewBag.NomeStatus = "Executada/Encerrada";
+                ViewBag.NomeStatus = "Confirmada";
             }
-            else if (item.SOMU_IN_STATUS == 5)
+            else if (item.RESE_IN_STATUS == 5)
             {
                 ViewBag.NomeStatus = "Cancelada";
+            }
+            else if (item.RESE_IN_STATUS == 6)
+            {
+                ViewBag.NomeStatus = "Encerrada";
             }
 
             // Monta view
             objetoAntes = item;
-            Session["Mudanca"] = item;
-            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
-            {
-                ViewBag.ES = "Entrada";
-            }
-            else
-            {
-                ViewBag.ES = "Saída";
-            }
+            Session["Reserva"] = item;
             if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 Session["IdUnidade"] = usuario.UNID_CD_ID;
@@ -752,14 +737,14 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["IdUnidade"] = null;
             }
             ViewBag.NovoStatus = "Aprovada";
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
-            vm.SOMU_DT_APROVACAO = DateTime.Now;
-            vm.SOMU_IN_STATUS = 2;
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
+            vm.RESE_DT_APROVACAO = DateTime.Now;
+            vm.RESE_IN_STATUS = 2;
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult AprovarMudanca(MudancaViewModel vm)
+        public ActionResult AprovarReserva(ReservaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -772,11 +757,11 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    RESERVA item = Mapper.Map<ReservaViewModel, RESERVA>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
-                    if (item.SOMU_IN_STATUS == 2)
+                    if (item.RESE_IN_STATUS == 2)
                     {
                         NOTIFICACAO not = new NOTIFICACAO();
                         not.NOTI_DT_EMISSAO = DateTime.Today.Date;
@@ -787,34 +772,15 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
-                        not.NOTI_NM_TITULO = "Notificação para Morador - Aprovação de Mudança";
-                        not.USUA_CD_ID = item.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                        not.NOTI_NM_TITULO = "Notificação para Morador - Aprovação de Reserva";
+                        not.USUA_CD_ID = item.USUA_CD_ID.Value;
+                        not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.RESE_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                         Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
-
-                        List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
-                        foreach (USUARIO usu in port)
-                        {
-                            not = new NOTIFICACAO();
-                            not.NOTI_DT_EMISSAO = DateTime.Today.Date;
-                            not.ASSI_CD_ID = idAss;
-                            not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
-                            not.NOTI_IN_ATIVO = 1;
-                            not.NOTI_IN_NIVEL = 1;
-                            not.NOTI_IN_ORIGEM = 1;
-                            not.NOTI_IN_STATUS = 1;
-                            not.NOTI_IN_VISTA = 0;
-                            not.NOTI_NM_TITULO = "Notificação para Portaria - Aprovação de Mudança";
-                            not.USUA_CD_ID = usu.USUA_CD_ID;
-                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
-                            Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
-                        }
-
                     }
 
                     // Sucesso
-                    Session["MensMudanca"] = 0;
-                    return RedirectToAction("VoltarAnexoMudanca");
+                    Session["MensReserva"] = 0;
+                    return RedirectToAction("VoltarAnexoReserva");
                 }
                 catch (Exception ex)
                 {
@@ -829,7 +795,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult ReprovarMudanca()
+        public ActionResult ReprovarReserva()
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -844,8 +810,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN"  || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -857,42 +823,38 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
 
             // Prepara status
-            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["Mudanca"];
+            RESERVA item = (RESERVA)Session["Reserva"];
             String perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Perfil = perfil;
 
-            if (item.SOMU_IN_STATUS == 1)
+            if (item.RESE_IN_STATUS == 1)
             {
                 ViewBag.NomeStatus = "Em Aprovação";
             }
-            else if (item.SOMU_IN_STATUS == 2)
+            else if (item.RESE_IN_STATUS == 2)
             {
                 ViewBag.NomeStatus = "Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 3)
+            else if (item.RESE_IN_STATUS == 3)
             {
                 ViewBag.NomeStatus = "Não Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 4)
+            else if (item.RESE_IN_STATUS == 4)
             {
-                ViewBag.NomeStatus = "Executada/Encerrada";
+                ViewBag.NomeStatus = "Confirmada";
             }
-            else if (item.SOMU_IN_STATUS == 5)
+            else if (item.RESE_IN_STATUS == 5)
             {
                 ViewBag.NomeStatus = "Cancelada";
+            }
+            else if (item.RESE_IN_STATUS == 6)
+            {
+                ViewBag.NomeStatus = "Encerrada";
             }
 
             // Monta view
             objetoAntes = item;
-            Session["Mudanca"] = item;
-            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
-            {
-                ViewBag.ES = "Entrada";
-            }
-            else
-            {
-                ViewBag.ES = "Saída";
-            }
+            Session["Reserva"] = item;
             if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 Session["IdUnidade"] = usuario.UNID_CD_ID;
@@ -902,14 +864,14 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["IdUnidade"] = null;
             }
             ViewBag.NovoStatus = "Não Aprovada";
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
-            vm.SOMU_DT_VETADA = DateTime.Now;
-            vm.SOMU_IN_STATUS = 3;
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
+            vm.RESE_DT_VETADA = DateTime.Now;
+            vm.RESE_IN_STATUS = 3;
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult ReprovarMudanca(MudancaViewModel vm)
+        public ActionResult ReprovarReserva(ReservaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -922,11 +884,11 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    RESERVA item = Mapper.Map<ReservaViewModel, RESERVA>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
-                    if (item.SOMU_IN_STATUS == 3)
+                    if (item.RESE_IN_STATUS == 3)
                     {
                         NOTIFICACAO not = new NOTIFICACAO();
                         not.NOTI_DT_EMISSAO = DateTime.Today.Date;
@@ -937,15 +899,15 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
-                        not.NOTI_NM_TITULO = "Notificação para Morador - Reprovação de Mudança";
-                        not.USUA_CD_ID = item.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.SOMU_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                        not.NOTI_NM_TITULO = "Notificação para Morador - Reprovação de Reserva";
+                        not.USUA_CD_ID = item.USUA_CD_ID.Value;
+                        not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.RESE_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                         Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
                     }
 
                     // Sucesso
-                    Session["MensMudanca"] = 0;
-                    return RedirectToAction("VoltarAnexoMudanca");
+                    Session["MensReserva"] = 0;
+                    return RedirectToAction("VoltarAnexoReserva");
                 }
                 catch (Exception ex)
                 {
@@ -960,7 +922,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult CancelarMudanca()
+        public ActionResult CancelarReserva()
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -975,8 +937,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -988,42 +950,38 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
 
             // Prepara status
-            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["Mudanca"];
+            RESERVA item = (RESERVA)Session["Reserva"];
             String perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Perfil = perfil;
 
-            if (item.SOMU_IN_STATUS == 1)
+            if (item.RESE_IN_STATUS == 1)
             {
                 ViewBag.NomeStatus = "Em Aprovação";
             }
-            else if (item.SOMU_IN_STATUS == 2)
+            else if (item.RESE_IN_STATUS == 2)
             {
                 ViewBag.NomeStatus = "Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 3)
+            else if (item.RESE_IN_STATUS == 3)
             {
                 ViewBag.NomeStatus = "Não Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 4)
+            else if (item.RESE_IN_STATUS == 4)
             {
-                ViewBag.NomeStatus = "Executada/Encerrada";
+                ViewBag.NomeStatus = "Confirmada";
             }
-            else if (item.SOMU_IN_STATUS == 5)
+            else if (item.RESE_IN_STATUS == 5)
             {
                 ViewBag.NomeStatus = "Cancelada";
+            }
+            else if (item.RESE_IN_STATUS == 6)
+            {
+                ViewBag.NomeStatus = "Encerrada";
             }
 
             // Monta view
             objetoAntes = item;
-            Session["Mudanca"] = item;
-            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
-            {
-                ViewBag.ES = "Entrada";
-            }
-            else
-            {
-                ViewBag.ES = "Saída";
-            }
+            Session["Reserva"] = item;
             if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 Session["IdUnidade"] = usuario.UNID_CD_ID;
@@ -1033,14 +991,14 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["IdUnidade"] = null;
             }
             ViewBag.NovoStatus = "Cancelada";
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
-            vm.SOMU_DT_SUSPENSA = DateTime.Now;
-            vm.SOMU_IN_STATUS = 5;
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
+            vm.RESE_DT_CADASTRO = DateTime.Now;
+            vm.RESE_IN_STATUS = 5;
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult CancelarMudanca(MudancaViewModel vm)
+        public ActionResult CancelarReserva(ReservaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -1053,11 +1011,11 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    RESERVA item = Mapper.Map<ReservaViewModel, RESERVA>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
-                    if (item.SOMU_IN_STATUS == 5)
+                    if (item.RESE_IN_STATUS == 5)
                     {
                         USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
                         NOTIFICACAO not = new NOTIFICACAO();
@@ -1069,33 +1027,36 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
-                        not.NOTI_NM_TITULO = "Notificação para Síndico - Cancelamento de Mudança";
+                        not.NOTI_NM_TITULO = "Notificação para Síndico - Cancelamento de Reserva";
                         not.USUA_CD_ID = sind.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                        not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.RESE_DT_CADASTRO.ToShortDateString() + ". Por favor consulte a solicitação.";
                         Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
 
-                        List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
-                        foreach (USUARIO usu in port)
+                        if (objetoAntes.RESE_IN_STATUS == 4)
                         {
-                            not = new NOTIFICACAO();
-                            not.NOTI_DT_EMISSAO = DateTime.Today.Date;
-                            not.ASSI_CD_ID = idAss;
-                            not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
-                            not.NOTI_IN_ATIVO = 1;
-                            not.NOTI_IN_NIVEL = 1;
-                            not.NOTI_IN_ORIGEM = 1;
-                            not.NOTI_IN_STATUS = 1;
-                            not.NOTI_IN_VISTA = 0;
-                            not.NOTI_NM_TITULO = "Notificação para Portaria - Cancelamento de Mudança";
-                            not.USUA_CD_ID = usu.USUA_CD_ID;
-                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
-                            Int32 volta3 = notiApp.ValidateCreate(not, usuarioLogado);
+                            List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
+                            foreach (USUARIO usu in port)
+                            {
+                                not = new NOTIFICACAO();
+                                not.NOTI_DT_EMISSAO = DateTime.Today.Date;
+                                not.ASSI_CD_ID = idAss;
+                                not.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
+                                not.NOTI_IN_ATIVO = 1;
+                                not.NOTI_IN_NIVEL = 1;
+                                not.NOTI_IN_ORIGEM = 1;
+                                not.NOTI_IN_STATUS = 1;
+                                not.NOTI_IN_VISTA = 0;
+                                not.NOTI_NM_TITULO = "Notificação para Portaria - Cancelamento de Reserva";
+                                not.USUA_CD_ID = usu.USUA_CD_ID;
+                                not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.RESE_DT_CADASTRO.ToShortDateString() + ". Por favor consulte a solicitação.";
+                                Int32 volta3 = notiApp.ValidateCreate(not, usuarioLogado);
+                            }
                         }
                     }
 
                     // Sucesso
-                    Session["MensMudanca"] = 0;
-                    return RedirectToAction("VoltarAnexoMudanca");
+                    Session["MensReserva"] = 0;
+                    return RedirectToAction("VoltarAnexoReserva");
                 }
                 catch (Exception ex)
                 {
@@ -1110,7 +1071,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult ExecutarMudanca()
+        public ActionResult ExecutarReserva()
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -1125,8 +1086,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -1138,42 +1099,38 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
 
             // Prepara status
-            SOLICITACAO_MUDANCA item = (SOLICITACAO_MUDANCA)Session["Mudanca"];
+            RESERVA item = (RESERVA)Session["Reserva"];
             String perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Perfil = perfil;
 
-            if (item.SOMU_IN_STATUS == 1)
+            if (item.RESE_IN_STATUS == 1)
             {
                 ViewBag.NomeStatus = "Em Aprovação";
             }
-            else if (item.SOMU_IN_STATUS == 2)
+            else if (item.RESE_IN_STATUS == 2)
             {
                 ViewBag.NomeStatus = "Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 3)
+            else if (item.RESE_IN_STATUS == 3)
             {
                 ViewBag.NomeStatus = "Não Aprovada";
             }
-            else if (item.SOMU_IN_STATUS == 4)
+            else if (item.RESE_IN_STATUS == 4)
             {
-                ViewBag.NomeStatus = "Executada/Encerrada";
+                ViewBag.NomeStatus = "Confirmada";
             }
-            else if (item.SOMU_IN_STATUS == 5)
+            else if (item.RESE_IN_STATUS == 5)
             {
                 ViewBag.NomeStatus = "Cancelada";
+            }
+            else if (item.RESE_IN_STATUS == 6)
+            {
+                ViewBag.NomeStatus = "Encerrada";
             }
 
             // Monta view
             objetoAntes = item;
-            Session["Mudanca"] = item;
-            if (item.SOMU_IN_ENTRADA_SAIDA == 1)
-            {
-                ViewBag.ES = "Entrada";
-            }
-            else
-            {
-                ViewBag.ES = "Saída";
-            }
+            Session["Reserva"] = item;
             if (usuario.PERFIL.PERF_SG_SIGLA == "ADM" || usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 Session["IdUnidade"] = usuario.UNID_CD_ID;
@@ -1183,15 +1140,14 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["IdUnidade"] = null;
             }
             ViewBag.NovoStatus = "Executada";
-            MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
-            vm.SOMU_DT_EXECUCAO_FINAL = DateTime.Now;
-            vm.SOMU_DT_EXECUCAO_INICIO = DateTime.Now;
-            vm.SOMU_IN_STATUS = 4;
+            ReservaViewModel vm = Mapper.Map<RESERVA, ReservaViewModel>(item);
+            vm.RESE_DT_FINAL = DateTime.Now;
+            vm.RESE_IN_STATUS = 6;
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult ExecutarMudanca(MudancaViewModel vm)
+        public ActionResult ExecutarReserva(ReservaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
@@ -1204,11 +1160,11 @@ namespace ERP_Condominios_Solution.Controllers
                 {
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                    SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    RESERVA item = Mapper.Map<ReservaViewModel, RESERVA>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
-                    if (item.SOMU_IN_STATUS == 4)
+                    if (item.RESE_IN_STATUS == 6)
                     {
                         USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
                         NOTIFICACAO not = new NOTIFICACAO();
@@ -1220,15 +1176,15 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
-                        not.NOTI_NM_TITULO = "Notificação para Síndico - Execução/Encerramento de Mudança";
+                        not.NOTI_NM_TITULO = "Notificação para Síndico - Execução/Encerramento de Reserva";
                         not.USUA_CD_ID = sind.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi executada/encerrada em " + item.SOMU_DT_EXECUCAO_INICIO.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                        not.NOTI_TX_TEXTO = "A solicitação de reserva " + item.RESE_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi executada/encerrada em " + item.RESE_DT_FINAL.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
                         Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
                     }
 
                     // Sucesso
-                    Session["MensMudanca"] = 0;
-                    return RedirectToAction("VoltarAnexoMudanca");
+                    Session["MensReserva"] = 0;
+                    return RedirectToAction("VoltarAnexoReserva");
                 }
                 catch (Exception ex)
                 {
@@ -1243,7 +1199,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult ExcluirMudanca(Int32 id)
+        public ActionResult ExcluirReserva(Int32 id)
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -1258,8 +1214,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -1269,24 +1225,24 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Executar
-            SOLICITACAO_MUDANCA item = baseApp.GetItemById(id);
-            objetoAntes = (SOLICITACAO_MUDANCA)Session["Mudanca"];
-            item.SOMU_IN_ATIVO = 0;
+            RESERVA item = baseApp.GetItemById(id);
+            objetoAntes = (RESERVA)Session["Reserva"];
+            item.RESE_IN_ATIVO = 0;
             Int32 volta = baseApp.ValidateDelete(item, usuario);
             if (volta == 1)
             {
-                Session["MensMudanca"] = 4;
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0061", CultureInfo.CurrentCulture));
-                return RedirectToAction("MontarTelaMudanca");
+                Session["MensReserva"] = 4;
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0079", CultureInfo.CurrentCulture));
+                return RedirectToAction("MontarTelaReserva");
             }
-            listaMaster = new List<SOLICITACAO_MUDANCA>();
-            Session["ListaMudanca"] = null;
-            Session["FiltroMudanca"] = null;
-            return RedirectToAction("MontarTelaMudanca");
+            listaMaster = new List<RESERVA>();
+            Session["ListaReserva"] = null;
+            Session["FiltroReserva"] = null;
+            return RedirectToAction("MontarTelaReserva");
         }
 
         [HttpGet]
-        public ActionResult ReativarMudanca(Int32 id)
+        public ActionResult ReativarReserva(Int32 id)
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -1301,8 +1257,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -1312,28 +1268,28 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Executar
-            SOLICITACAO_MUDANCA item = baseApp.GetItemById(id);
-            objetoAntes = (SOLICITACAO_MUDANCA)Session["Mudanca"];
-            item.SOMU_IN_ATIVO = 1;
+            RESERVA item = baseApp.GetItemById(id);
+            objetoAntes = (RESERVA)Session["Reserva"];
+            item.RESE_IN_ATIVO = 1;
             Int32 volta = baseApp.ValidateReativar(item, usuario);
-            listaMaster = new List<SOLICITACAO_MUDANCA>();
-            Session["ListaMudanca"] = null;
-            Session["FiltroMudanca"] = null;
-            return RedirectToAction("MontarTelaMudanca");
+            listaMaster = new List<RESERVA>();
+            Session["ListaReserva"] = null;
+            Session["FiltroReserva"] = null;
+            return RedirectToAction("MontarTelaReserva");
         }
 
-        public ActionResult VoltarAnexoMudanca()
+        public ActionResult VoltarAnexoReserva()
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idVeic = (Int32)Session["IdMudanca"];
-            return RedirectToAction("EditarMudanca", new { id = idVeic });
+            Int32 idVeic = (Int32)Session["IdReserva"];
+            return RedirectToAction("EditarReserva", new { id = idVeic });
         }
 
         [HttpGet]
-        public ActionResult GerarNotificacaoMudanca()
+        public ActionResult GerarNotificacaoReserva()
         {
             // Valida acesso
             USUARIO usuario = new USUARIO();
@@ -1348,8 +1304,8 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verfifica permissão
                 if (usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
-                    Session["MensMudanca"] = 2;
-                    return RedirectToAction("MontarTelaMudanca", "Mudanca");
+                    Session["MensReserva"] = 2;
+                    return RedirectToAction("MontarTelaReserva", "Reserva");
                 }
             }
             else
@@ -1357,7 +1313,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            SOLICITACAO_MUDANCA mudanca = (SOLICITACAO_MUDANCA)Session["Mudanca"];
+            RESERVA mudanca = (RESERVA)Session["Reserva"];
             List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == mudanca.UNID_CD_ID).ToList();
 
             // Prepara view
@@ -1374,19 +1330,19 @@ namespace ERP_Condominios_Solution.Controllers
             vm.NOTI_IN_ORIGEM = 1;
             vm.NOTI_IN_STATUS = 1;
             vm.NOTI_IN_VISTA = 0;
-            vm.NOTI_NM_TITULO = "Notificação para Morador - Mudança";
+            vm.NOTI_NM_TITULO = "Notificação para Morador - Reserva";
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult GerarNotificacaoMudanca(NotificacaoViewModel vm)
+        public ActionResult GerarNotificacaoReserva(NotificacaoViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            SOLICITACAO_MUDANCA mudanca = (SOLICITACAO_MUDANCA)Session["Mudanca"];
+            RESERVA mudanca = (RESERVA)Session["Reserva"];
             List<USUARIO> lista = baseApp.GetAllUsuarios(idAss);
             ViewBag.Cats = new SelectList(baseApp.GetAllCatNotificacao(idAss), "CANO_CD_ID", "CANO_NM_NOME");
             ViewBag.Usuarios = new SelectList(lista, "USUA_CD_ID", "USUA_NM_NOME");
@@ -1402,8 +1358,8 @@ namespace ERP_Condominios_Solution.Controllers
                     // Verifica retorno
 
                     // Sucesso
-                    listaMaster = new List<SOLICITACAO_MUDANCA>();
-                    return RedirectToAction("VoltarBaseMudanca");
+                    listaMaster = new List<RESERVA>();
+                    return RedirectToAction("VoltarBaseReserva");
                 }
                 catch (Exception ex)
                 {
@@ -1418,51 +1374,51 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpGet]
-        public ActionResult IncluirComentarioMudanca()
+        public ActionResult IncluirComentarioReserva()
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 id = (Int32)Session["IdVolta"];
-            SOLICITACAO_MUDANCA item = baseApp.GetItemById(id);
+            RESERVA item = baseApp.GetItemById(id);
             USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-            SOLICITACAO_MUDANCA_COMENTARIO coment = new SOLICITACAO_MUDANCA_COMENTARIO();
-            MudancaComentarioViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA_COMENTARIO, MudancaComentarioViewModel>(coment);
-            vm.SMCO_DT_COMENTARIO = DateTime.Now;
-            vm.SMCO_IN_ATIVO = 1;
-            vm.SOMU_CD_ID = item.SOMU_CD_ID;
+            RESERVA_COMENTARIO coment = new RESERVA_COMENTARIO();
+            ReservaComentarioViewModel vm = Mapper.Map<RESERVA_COMENTARIO, ReservaComentarioViewModel>(coment);
+            vm.RECO_DT_COMENTARIO = DateTime.Now;
+            vm.RECO_IN_ATIVO = 1;
+            vm.RESE_CD_ID = item.RESE_CD_ID;
             vm.USUARIO = usuarioLogado;
             vm.USUA_CD_ID = usuarioLogado.USUA_CD_ID;
             return View(vm);
         }
 
         [HttpPost]
-        public ActionResult IncluirComentarioMudanca(MudancaComentarioViewModel vm)
+        public ActionResult IncluirComentarioReserva(ReservaComentarioViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdMudanca"];
+            Int32 idNot = (Int32)Session["IdReserva"];
             if (ModelState.IsValid)
             {
                 try
                 {
                     // Executa a operação
-                    SOLICITACAO_MUDANCA_COMENTARIO item = Mapper.Map<MudancaComentarioViewModel, SOLICITACAO_MUDANCA_COMENTARIO>(vm);
+                    RESERVA_COMENTARIO item = Mapper.Map<ReservaComentarioViewModel, RESERVA_COMENTARIO>(vm);
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                    SOLICITACAO_MUDANCA not = baseApp.GetItemById(idNot);
+                    RESERVA not = baseApp.GetItemById(idNot);
 
                     item.USUARIO = null;
-                    not.SOLICITACAO_MUDANCA_COMENTARIO.Add(item);
+                    not.RESERVA_COMENTARIO.Add(item);
                     objetoAntes = not;
                     Int32 volta = baseApp.ValidateEdit(not, objetoAntes);
 
                     // Verifica retorno
 
                     // Sucesso
-                    return RedirectToAction("EditarMudanca", new { id = idNot });
+                    return RedirectToAction("EditarReserva", new { id = idNot });
                 }
                 catch (Exception ex)
                 {
@@ -1477,32 +1433,32 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFileMudanca(HttpPostedFileBase file)
+        public ActionResult UploadFileReserva(HttpPostedFileBase file)
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdMudanca"];
+            Int32 idNot = (Int32)Session["IdReserva"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (file == null)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
-                Session["MensMudanca"] = 5;
-                return RedirectToAction("VoltarAnexoMudanca");
+                Session["MensReserva"] = 5;
+                return RedirectToAction("VoltarAnexoReserva");
             }
 
-            SOLICITACAO_MUDANCA item = baseApp.GetById(idNot);
+            RESERVA item = baseApp.GetById(idNot);
             USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = Path.GetFileName(file.FileName);
             if (fileName.Length > 250)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
-                Session["MensMudanca"] = 6;
-                return RedirectToAction("VoltarAnexoMudanca");
+                Session["MensReserva"] = 6;
+                return RedirectToAction("VoltarAnexoReserva");
             }
-            String caminho = "/Imagens/" + idAss.ToString() + "/Mudanca/" + item.SOMU_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + idAss.ToString() + "/Reserva/" + item.RESE_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             file.SaveAs(path);
 
@@ -1511,10 +1467,10 @@ namespace ERP_Condominios_Solution.Controllers
             String a = extensao;
 
             // Gravar registro
-            SOLICITACAO_MUDANCA_ANEXO foto = new SOLICITACAO_MUDANCA_ANEXO();
-            foto.SOAN_AQ_ARQUIVO = "~" + caminho + fileName;
-            foto.SOAN_DT_ANEXO = DateTime.Today;
-            foto.SOAN_IN_ATIVO = 1;
+            RESERVA_ANEXO foto = new RESERVA_ANEXO();
+            foto.REAN_AQ_ARQUIVO = "~" + caminho + fileName;
+            foto.REAN_DT_ANEXO = DateTime.Today;
+            foto.REAN_IN_ATIVO = 1;
             Int32 tipo = 3;
             if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
             {
@@ -1524,20 +1480,20 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 tipo = 2;
             }
-            foto.SOAN_IN_TIPO = tipo;
-            foto.SOAN_NM_TITULO = fileName;
-            foto.SOMU_CD_ID = item.SOMU_CD_ID;
+            foto.REAN_IN_TIPO = tipo;
+            foto.REAN_NM_TITULO = fileName;
+            foto.RESE_CD_ID = item.RESE_CD_ID;
 
-            item.SOLICITACAO_MUDANCA_ANEXO.Add(foto);
+            item.RESERVA_ANEXO.Add(foto);
             objetoAntes = item;
             Int32 volta = baseApp.ValidateEdit(item, objetoAntes);
-            return RedirectToAction("VoltarAnexoMudanca");
+            return RedirectToAction("VoltarAnexoReserva");
         }
 
-        public FileResult DownloadMudanca(Int32 id)
+        public FileResult DownloadReserva(Int32 id)
         {
-            SOLICITACAO_MUDANCA_ANEXO item = baseApp.GetAnexoById(id);
-            String arquivo = item.SOAN_AQ_ARQUIVO;
+            RESERVA_ANEXO item = baseApp.GetAnexoById(id);
+            String arquivo = item.REAN_AQ_ARQUIVO;
             Int32 pos = arquivo.LastIndexOf("/") + 1;
             String nomeDownload = arquivo.Substring(pos);
             String contentType = string.Empty;
@@ -1584,36 +1540,36 @@ namespace ERP_Condominios_Solution.Controllers
 
                 queue.Add(f);
             }
-            Session["FileQueueMudanca"] = queue;
+            Session["FileQueueReserva"] = queue;
         }
 
         [HttpPost]
-        public ActionResult UploadFileQueueMudanca(FileQueue file)
+        public ActionResult UploadFileQueueReserva(FileQueue file)
         {
             if ((String)Session["Ativa"] == null)
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            Int32 idNot = (Int32)Session["IdMudanca"];
+            Int32 idNot = (Int32)Session["IdReserva"];
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             if (file == null)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
-                Session["MensMudanca"] = 5;
-                return RedirectToAction("VoltarAnexoMudanca");
+                Session["MensReserva"] = 5;
+                return RedirectToAction("VoltarAnexoReserva");
             }
 
-            SOLICITACAO_MUDANCA item = baseApp.GetItemById(idNot);
+            RESERVA item = baseApp.GetItemById(idNot);
             USUARIO usu = (USUARIO)Session["UserCredentials"];
             var fileName = file.Name;
             if (fileName.Length > 250)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
-                Session["MensMudanca"] = 6;
-                return RedirectToAction("VoltarAnexoMudanca");
+                Session["MensReserva"] = 6;
+                return RedirectToAction("VoltarAnexoReserva");
             }
-            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Mudanca/" + item.SOMU_CD_ID.ToString() + "/Anexos/";
+            String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Reserva/" + item.RESE_CD_ID.ToString() + "/Anexos/";
             String path = Path.Combine(Server.MapPath(caminho), fileName);
             System.IO.File.WriteAllBytes(path, file.Contents);
 
@@ -1622,10 +1578,10 @@ namespace ERP_Condominios_Solution.Controllers
             String a = extensao;
 
             // Gravar registro
-            SOLICITACAO_MUDANCA_ANEXO foto = new SOLICITACAO_MUDANCA_ANEXO();
-            foto.SOAN_AQ_ARQUIVO = "~" + caminho + fileName;
-            foto.SOAN_DT_ANEXO = DateTime.Today;
-            foto.SOAN_IN_ATIVO = 1;
+            RESERVA_ANEXO foto = new RESERVA_ANEXO();
+            foto.REAN_AQ_ARQUIVO = "~" + caminho + fileName;
+            foto.REAN_DT_ANEXO = DateTime.Today;
+            foto.REAN_IN_ATIVO = 1;
             Int32 tipo = 3;
             if (extensao.ToUpper() == ".JPG" || extensao.ToUpper() == ".GIF" || extensao.ToUpper() == ".PNG" || extensao.ToUpper() == ".JPEG")
             {
@@ -1635,18 +1591,18 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 tipo = 2;
             }
-            foto.SOAN_IN_TIPO = tipo;
-            foto.SOAN_NM_TITULO = fileName;
-            foto.SOMU_CD_ID = item.SOMU_CD_ID;
+            foto.REAN_IN_TIPO = tipo;
+            foto.REAN_NM_TITULO = fileName;
+            foto.RESE_CD_ID = item.RESE_CD_ID;
 
-            item.SOLICITACAO_MUDANCA_ANEXO.Add(foto);
+            item.RESERVA_ANEXO.Add(foto);
             objetoAntes = item;
             Int32 volta = baseApp.ValidateEdit(item, objetoAntes);
-            return RedirectToAction("VoltarAnexoMudanca");
+            return RedirectToAction("VoltarAnexoReserva");
         }
 
         [HttpGet]
-        public ActionResult VerAnexoMudanca(Int32 id)
+        public ActionResult VerAnexoReserva(Int32 id)
         {
             // Prepara view
             if ((String)Session["Ativa"] == null)
@@ -1654,12 +1610,8 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
-            SOLICITACAO_MUDANCA_ANEXO item = baseApp.GetAnexoById(id);
+            RESERVA_ANEXO item = baseApp.GetAnexoById(id);
             return View(item);
         }
-
-
-
-
     }
 }
