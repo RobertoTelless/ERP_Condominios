@@ -16,7 +16,7 @@ namespace EntitiesServices.Model
     public partial class ERP_CondominioEntities : DbContext
     {
         public ERP_CondominioEntities()
-            : base("name=ERP_CondominiosEntities")
+            : base("name=ERP_CondominioEntities")
         {
         }
     

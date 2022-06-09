@@ -77,8 +77,17 @@
                             @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                             {
                                 @Html.ButtonLinkIndex(text: "Exibir Corpo Atual", controller: "CorpoDiretivo", action: "RetirarFiltroCorpo")
+                            }
+                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                            {
                                 @Html.ButtonLinkIndex(text: "Exibir Antigos", controller: "CorpoDiretivo", action: "MostrarInativosCorpo")
+                            }
+                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                            {
                                 @Html.ButtonLinkIndex(text: "Exibir Excluídos", controller: "CorpoDiretivo", action: "MostrarTudoCorpo")
+                            }
+                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                            {
                                 @Html.ButtonLinkIndex(text: "Novo Membro do Corpo Diretivo", controller: "CorpoDiretivo", action: "IncluirCorpo")
                             }
                             @Html.ButtonLinkIndex(text: "Ver Organograma", controller: "CorpoDiretivo", action: "MontarTelaCorpoGrafica")

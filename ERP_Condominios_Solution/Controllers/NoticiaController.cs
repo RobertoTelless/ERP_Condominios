@@ -281,7 +281,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Mensagem
             if ((Int32)Session["MensPermissao"] == 2)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
 
             // Abre view
@@ -486,11 +486,11 @@ namespace ERP_Condominios_Solution.Controllers
             // Mensagens
             if ((Int32)Session["MensNoticia"] == 10)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensNoticia"] == 11)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
 
             NOTICIA item = baseApp.GetItemById(id);

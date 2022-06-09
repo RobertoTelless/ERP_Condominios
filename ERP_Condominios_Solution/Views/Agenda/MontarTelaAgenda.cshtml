@@ -116,7 +116,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.AGENDA>).OrderByDescending(p => p.AGEN_DT_DATA).ThenByDescending(p => p.AGEN_HR_HORA))
+                                    @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.AGENDA>).OrderByDescending(p => p.AGEN_DT_DATA))
                                     {
                                         <tr>
                                             <td>@cond.AGEN_DT_DATA.ToShortDateString()</td>

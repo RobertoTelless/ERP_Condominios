@@ -30,10 +30,10 @@
 
                         <div class="text-center">
                             @Html.ButtonLinkIndex(text: "Perfil", action: "MontarTelaPerfilUsuario", controller: "Usuario", buttonClass: "btn btn-xs btn-white")
-                            @if (Model.PERFIL.PERF_SG_SIGLA == "ADM")
+                            @*@if (Model.PERFIL.PERF_SG_SIGLA == "ADM")
                             {
                                 @Html.ButtonLinkIndex(text: "Dashboard Pessoal", action: "CarregarDashPessoal", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
-                            }
+                            }*@
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                     </div>
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuPortaria"] == 1)
                     {
-                        @Html.ButtonLinkIndex(text: "Portaria", action: "MontarTelaDashboardPortaria", controller: "BaseAdmin", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Portaria", action: "CarregarPortaria", controller: "BaseAdmin", buttonClass: "primary")
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuMorador"] == 1)
                     {

@@ -118,31 +118,31 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 if ((Int32)Session["MensUsuario"] == 2)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensUsuario"] == 3)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensUsuario"] == 4)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensUsuario"] == 5)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0110", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0110", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensUsuario"] == 6)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0111", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0111", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensUsuario"] == 9)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0045", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0045", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensUsuario"] == 50)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0051", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0051", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -500,11 +500,11 @@ namespace ERP_Condominios_Solution.Controllers
                     {
                         if ((Int32)Session["MensUsuario"] == 10)
                         {
-                            ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                            ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
                         }
                         if ((Int32)Session["MensUsuario"] == 11)
                         {
-                            ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                            ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
                         }
                     }
 

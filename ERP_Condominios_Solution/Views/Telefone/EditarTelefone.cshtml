@@ -150,8 +150,9 @@
                                 </div>
                                 <div class="form-group">
                                     <br />
-                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma edição de Telefone</button>
+                                    @Html.ButtonActionSubmit(text: "Confirma edição de Telefone", htmlAttributes: new { id = "basictoast" })
+                                    @*@Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma edição de Telefone</button>*@
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTelefone", controller: "Telefone")
                                 </div>
                             </div>

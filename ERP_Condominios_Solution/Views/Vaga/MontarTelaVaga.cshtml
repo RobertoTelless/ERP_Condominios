@@ -92,6 +92,9 @@
                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                     {
                                         @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Vaga", action: "MostrarTudoVaga")
+                                    }
+                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                    {
                                         @Html.ButtonLinkIndex(text: "Nova Vaga", controller: "Vaga", action: "IncluirVaga")
                                     }
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Vaga", action: "GerarRelatorioVaga")

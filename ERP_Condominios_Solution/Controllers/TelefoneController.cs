@@ -191,11 +191,11 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 if ((Int32)Session["MensTelefone"] == 2)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensTelefone"] == 3)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -415,7 +415,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult EditarTelefone(TelefoneViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -605,11 +605,11 @@ namespace ERP_Condominios_Solution.Controllers
                 // Mensagem
                 if ((Int32)Session["MensTelefone"] == 2)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensTelefone"] == 3)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
                 }
             }
 

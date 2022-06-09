@@ -58,52 +58,52 @@ namespace ERP_Condominios_Solution.Controllers
                 Int32 volta = baseApp.ValidateLogin(login.USUA_NM_LOGIN, login.USUA_NM_SENHA, out usuario);
                 if (volta == 1)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 2)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0002", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 3)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 5)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0005", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0005", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 4)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 6)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0006", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0006", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 7)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0007", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0007", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 9)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0073", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0073", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 10)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0109", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0109", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 11)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0012", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0012", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
 
@@ -223,25 +223,25 @@ namespace ERP_Condominios_Solution.Controllers
                 Int32 volta = baseApp.ValidateChangePassword(item);
                 if (volta == 1)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 2)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 3)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 4)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
-                ViewBag.Message = PlatMensagens_Resources.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
+                ViewBag.Message = ERP_Condominios_Resource.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
                 Session["UserCredentials"] = null;
                 return RedirectToAction("Login", "ControleAcesso");
             }
@@ -285,25 +285,25 @@ namespace ERP_Condominios_Solution.Controllers
                 Int32 volta = baseApp.ValidateChangePassword(item);
                 if (volta == 1)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0008", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 2)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 3)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0009", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
                 if (volta == 4)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0074", CultureInfo.CurrentCulture));
                     return View(vm);
                 }
-                ViewBag.Message = PlatMensagens_Resources.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
+                ViewBag.Message = ERP_Condominios_Resource.ResourceManager.GetString("M0075", CultureInfo.CurrentCulture);
                 Session["UserCredentials"] = null;
                 return RedirectToAction("Login", "ControleAcesso");
             }
@@ -334,19 +334,19 @@ namespace ERP_Condominios_Solution.Controllers
                 Int32 volta = baseApp.GenerateNewPassword(item.USUA_NM_EMAIL);
                 if (volta == 1)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0001", CultureInfo.CurrentCulture));
                 }
                 if (volta == 2)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0096", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0096", CultureInfo.CurrentCulture));
                 }
                 if (volta == 3)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0003", CultureInfo.CurrentCulture));
                 }
                 if (volta == 4)
                 {
-                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
+                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0004", CultureInfo.CurrentCulture));
                 }
                 return Json(1);
             }

@@ -1,0 +1,718 @@
+﻿@using Presentation.Extensions
+@using CrossCutting;
+@using EntitiesServices.Work_Classes;
+@model ERP_Condominios_Solution.ViewModels.MensagemWidgetViewModel
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="containerModalDesc">
+        <div class="modal fade" id="modalDesc" tabindex="-1" role="dialog" aria-labelledby="modalDesc" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalDesc">Descrição do Processo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="modalDescBody" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-title">
+        <h3 class="title">Central de Notificações</h3>
+        <br />
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("CarregarBase", "BaseAdmin")">Dashboard</a>
+            </li>
+            <li class="active">
+                <strong>Central de Notificações</strong>
+            </li>
+        </ol>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Filtros</h5>
+                </div>
+
+                @using (Html.BeginForm("FiltrarCentralMensagens", "BaseAdmin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="ibox-content">
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Tipo
+                                @Html.DropDownListFor(m => m.TipoMensagem, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-xs-12">
+                                Descrição
+                                @Html.TextBoxFor(m => m.Descrição, new { @class = "form-control", autofocus = true})
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Data
+                                @Html.TextBoxFor(m => m.DataMensagem, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data2" })
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-xs-12">
+                                Urgência
+                                @Html.DropDownListFor(m => m.FlagUrgencia, (SelectList)ViewBag.Urgencia, "Selecionar", new { @class = "form-control", autofocus = true })
+                            </div>
+                        </div>
+                        <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                            <div class="col-lg-12 col-md-12 col-xs-12">                                     
+                                @Html.ButtonActionSubmit(text: "Filtrar")
+                                @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "BaseAdmin", action: "RetirarFiltroCentralMensagens")
+                                @Html.ButtonLinkIndex(text: "Dashboard", controller: "BaseAdmin", action: "CarregarBase")
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12"  id="Lista">
+            <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Central de Notificações</h5>
+                </div>
+                <div class="ibox-content">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        </div>
+                    }
+                    <div class="row" id="sortable-view">
+                        @if (ViewBag.ListaMensagem != null && (ViewBag.ListaMensagem as List<ERP_Condominios_Solution.ViewModels.MensagemWidgetViewModel>).Count > 0)
+                        {
+                            foreach (var cond in (ViewBag.ListaMensagem as List<ERP_Condominios_Solution.ViewModels.MensagemWidgetViewModel>))
+                            {
+                                <div class="col-lg-2">
+                                    <div class="ibox float-e-margins">
+                                        @if (cond.TipoMensagem == 1)
+                                        {
+                                            <div class="ibox-title"  style="background-color:goldenrod; color:darkblue">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Notificação</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Status: @cond.NomeCliente</small><br/>
+                                                <small>Categoria: @cond.Categoria</small><br/>
+                                                <small>@cond.Descrição</small>  
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerNotificacaoBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 2)
+                                        {
+                                            <div class="ibox-title"  style="background-color:palevioletred; color:brown">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Agenda</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Status: @cond.NomeCliente</small><br/>
+                                                <small>Categoria: @cond.Categoria</small><br/>
+                                                <small>@cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerAgendaBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 3)
+                                        {
+                                            <div class="ibox-title"  style="background-color:darkseagreen; color:green">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Tarefa</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Status: @cond.NomeCliente</small><br/>
+                                                <small>Tipo: @cond.Categoria</small><br/>
+                                                <small>@cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerTarefaBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @*@if (cond.TipoMensagem == 4)
+                                        {
+                                            <div class="ibox-title"  style="background-color:lightsteelblue; color:darkblue">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Contas a Pagar</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Fornecedor: @cond.NomeCliente</small><br/>
+                                                <small>Atraso: @cond.Categoria dias</small><br/>
+                                                <small>Num.Doc: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerCPBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 5)
+                                        {
+                                            <div class="ibox-title"  style="background-color:burlywood; color:saddlebrown">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Contas a Receber</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Cliente: @cond.NomeCliente</small><br/>
+                                                <small>Atraso: @cond.Categoria dias</small><br/>
+                                                <small>Num.Doc: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerCRBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 6)
+                                        {
+                                            <div class="ibox-title"  style="background-color:blanchedalmond; color:saddlebrown">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Compras</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Num.Itens: @cond.NomeCliente</small><br/>
+                                                <small>Atraso: @cond.Categoria dias</small><br/>
+                                                <small>Nome: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerCompraBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 7)
+                                        {
+                                            <div class="ibox-title"  style="background-color:cadetblue; color:darkblue">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Processos CRM</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Cliente: @cond.NomeCliente</small><br/>
+                                                <small>Status: @cond.Status</small><br/>
+                                                <small>Duração: @cond.Categoria dias</small><br/>
+                                                <small>Nome: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerCRMBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 8)
+                                        {
+                                            <div class="ibox-title"  style="background-color:darkkhaki; color:brown">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Ações CRM</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Processo: @cond.NomeCliente</small><br/>
+                                                <small>Status: @cond.Status</small><br/>
+                                                <small>Atraso: @cond.Categoria dias</small><br/>
+                                                <small>Nome: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerAcaoBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }
+                                        @if (cond.TipoMensagem == 9)
+                                        {
+                                            <div class="ibox-title"  style="background-color:lightsalmon; color:indianred">
+                                                @if (cond.FlagUrgencia == 1)
+                                                {
+                                                    <span class="label label-danger pull-right">Urgente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-primary pull-right">Normal</span>
+                                                }
+                                                <h5>Propostas CRM</h5>
+                                            </div>
+                                            <div class="ibox-content">
+                                                <h4 class="no-margins" style="color:green; font-weight: bold">@cond.DataMensagem.Value.ToShortDateString()</h4>
+                                                <small style="color:brown; font-weight: bold">Processo: @cond.NomeCliente</small><br/>
+                                                <small>Status: @cond.Status</small><br/>
+                                                <small>Duração: @cond.Categoria dias</small><br/>
+                                                <small>Número: @cond.Descrição</small>
+                                                <br />
+                                                @Html.ButtonLinkIndex(text: "Ver", action: "VerPropostaBase", controller: "BaseAdmin", buttonClass: "white", routeValues: new { id = cond.IdMensagem })
+                                            </div>
+                                        }*@
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                </div>
+                                <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                    <h2 style="font-weight: bold">nenhuma notificação cadastrada para esse usuário</h2>
+                                    <p>Tente novamente mais tarde</p>
+
+                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "BaseAdmin", action: "CarregarAdmin")
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                </div>
+                            </div>
+                        }
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/plugins/toastrStyles")
+    @*@Styles.Render("~/Content/plugins/summernote/summernote.css")*@
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    @Styles.Render("~/plugins/summernoteStyles")
+}
+
+@section Scripts {
+
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    @*@Scripts.Render("~/Scripts/plugins/summernote/summernote.min.js")*@
+    <script src="~/Scripts/plugins/select2/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>    
+    <script src="~/Scripts/uploadAnexo.js"></script>
+    @Scripts.Render("~/plugins/summernote")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/plugins/touchPunch")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            WinMove();
+
+        });
+    </script>
+
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma arquivamento do Processo?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação do Processo?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalEstrelaSim(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma Favorito?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Favorito</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalEstrelaNao(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma Retirar Favorito?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Retirar Favorito</h5>');
+            $('#modal').modal('show');
+        }
+    </script>  
+    <script>
+        function mostrarDesc(desc) {
+            $('#modalDescBody').html(desc);
+            $('#modalDesc').modal('show');
+        }
+    </script>
+    
+    <script type="text/javascript">
+        function ValidaDiv(valPessoa) {
+            if (valPessoa == '2') {
+                $("#Lista").hide();
+                $("#Kanban").show();
+            } else if (valPessoa == '1') {
+                $("#Kanban").hide();
+                $("#Lista").show();
+        }
+
+        $(document).ready(function () {
+            ValidaDiv($('#visao').val());
+        });
+    </script>
+
+    <script>
+        $("#lstCliente").select2({
+            //data: filterSelect,
+            ajax: {
+                url: '../Cliente/BuscaNomeRazao',
+                type: 'POST',
+                data: function (params) {
+                    var query = {
+                        nome: params.term
+                    }
+                    return query
+                },
+                processResults: function (data) {
+                    console.log(data);
+                    return {
+                        results: data
+                    }
+                }
+            },
+            placeholder: 'Busque por NOME ou RAZÃO SOCIAL',
+            minimumInputLength: 1
+        });
+    </script>
+    <script type="text/javascript" language="javascript">
+        $(function () {
+            $('.date-picker').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });      
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#cpf").mask("999.999.999-99");
+            $("#cnpj").mask("99.999.999/9999-99");
+            $("#data1").mask("99/99/9999");
+            $("#data2").mask("99/99/9999");
+        });
+    </script>
+
+    <script>
+        function MudaIdCliente(id) {
+            $('#idClie').val(id);
+        }
+    </script>
+
+    <script>
+        function GetCurrentDate() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = dd + '/' + mm + '/' + yyyy;
+            return today;
+        }
+    </script>
+
+    <script>
+        $.ajax({
+            url: '../BaseAdmin/GetProcessosFR'
+            , type: 'POST'
+            , success: function (r) {
+                r.forEach(function (e) {
+                    var element = $('<li class="ui-sortable-handle" data-id="' + e.FORE_CD_ID + '">'
+                        + '<h5 style="color: green">' + e.FORE_NM_NOME + '</h5>'
+                        + '<h5 onclick="redirectEditar(' + e.FORE_CD_ID + ')">' + e.FORE_NM_NOME + '</h5>'
+                        + '<div class="agile-detail">'
+                        + '<i class="fa fa-clock-o"></i>'
+                        + ' Início: ' + e.FORE_DT_CADASTRO
+                        + '</li>');
+
+                    if (e.FORE_IN_STATUS == 1) { // prospecção
+                        element.addClass('warning-element');
+                        $('#prospeccao').append(element);
+                    }
+                    if (e.FORE_IN_STATUS == 2) { // contato
+                        element.addClass('warning-element');
+                        $('#contato').append(element);
+                    }
+                    if (e.FORE_IN_STATUS == 3) { // proposta
+                        element.addClass('primary-element');
+                        $('#proposta').append(element);
+                    }
+                    if (e.FORE_IN_STATUS == 4) { // negociacao
+                        element.addClass('primary-element');
+                        $('#negociacao').append(element);
+                    }
+                    if (e.FORE_IN_STATUS == 5) { // encerrado
+                        var element1 = $('<li class="ui-sortable-handle" data-id="' + e.FORE_CD_ID + '">'
+                            + '<h5 style="color: green">' + e.FORE_NM_NOME + '</h5>'
+                            + '<h5 onclick="redirectEditar(' + e.FORE_CD_ID + ')">' + e.FORE_NM_NOME + '</h5>'
+                            + '<div class="agile-detail">'
+                            + '<i class="fa fa-clock-o"></i>'
+                            + ' Início: ' + e.FORE_DT_CADASTRO
+                            + '<i class="fa fa-clock-o"></i>'
+                            + ' Final: ' + e.FORE_DT_ENCERRAMENTO
+                            + '</li>');
+                        element1.addClass('success-element');
+                        $('#encerrado').append(element1);
+                    }
+                });
+            }
+        });
+
+        $(function () {
+            $('.connectList').sortable({
+                connectWith: $('.connectList')
+                , start: function (event, ui) {
+                    ui.item.removeClass(ui.item.parent().attr('data-classe'));
+                }
+                , stop: function (event, ui) {
+                    //append modal
+
+                    if (ui.item.parent().attr('data-status') == "5") {
+                        $('#dtEnc' + ui.item.attr('data-id')).remove();
+
+                        ui.item.append('<div id="dtEnc' + ui.item.attr('data-id') + '">'
+                            + '<hr />'
+                            + '<div class="card" style="width: 18rem;">'
+                            + '<div class="card-body">'
+                            + '<h5 class="card-title">Data de Encerramento</h5>'
+                            + '<p class="card-text"><input id="dtEncTarefa' + ui.item.attr('data-id') + '" type="text" class="form-control dtEnc" value="' + GetCurrentDate() + '" /></p >'
+                            + '<span id="dtEncEnviar' + ui.item.attr('data-id')+'" class="btn btn-sm btn-success" onclick="EditarStatusDt(' + ui.item.attr('data-id') + ', ' + ui.item.parent().attr('data-status') + ')">Enviar</span>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>'
+                        );
+                        InstanceDatePickerEnc();
+                    }
+                    else {
+                        $('#dtEnc' + ui.item.attr('data-id')).remove();
+                    }
+                    ui.item.addClass(ui.item.parent().attr('data-classe'));
+                    EditarStatus(ui.item.attr('data-id'), ui.item.parent().attr('data-status'))                    
+                }
+            });
+        });
+
+        function redirectEditar(id) {
+            window.open("/BaseAdmin/EditarProcessoCRMFR/" + id, '_self');
+        }
+
+        function EditarStatus(id, status) {
+            var data = {
+                id: id
+                , status: status
+            }
+
+            $.ajax({
+                url: '../BaseAdmin/EditarStatusCRMFR'
+                , type: 'POST'
+                , data: data
+                , success: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+        function EditarStatusDt(id, status) {
+            var data = {
+                id: id
+                , status: status
+                , dtEnc: $('#dtEncTarefa' + id).val() == undefined ? null : $('#dtEncTarefa' + id).val()
+            }
+
+            $.ajax({
+                url: '../BaseAdmin/EditarStatusCRMFR'
+                , type: 'POST'
+                , data: data
+                , success: function (e) {
+                    if (e == 'SUCCESS') {
+                        var p = $('#dtEncTarefa' + id).parent();
+
+                        $('#dtEncTarefa' + id).remove();
+                        $('#dtEncEnviar' + id).remove();
+
+                        p.html(data.dtEnc);
+                    }
+                    else {
+                        $('#dtEncTarefa' + id).parent().append('<span class="field-validation-error" data-valmsg-replace="true" style="color:red">' + e + '</span>');
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function InstanceDatePickerEnc() {
+            $('.dtEnc').datepicker(
+                {
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Proximo',
+                    prevText: 'Anterior',
+                    showOn: "focus"
+                }
+            )
+                .css("display", "normal")
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Selecione uma data",
+                    text: false
+                });
+        }
+    </script>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

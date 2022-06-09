@@ -291,14 +291,14 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
-            if ((Int32)Session["VoltaAgendaCRMCalend"] == 10)
-            {
-                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
-            }
-            if ((Int32)Session["VoltaAgendaCRM"] == 11)
-            {
-                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
-            }
+            //if ((Int32)Session["VoltaAgendaCRMCalend"] == 10)
+            //{
+            //    return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            //}
+            //if ((Int32)Session["VoltaAgendaCRM"] == 11)
+            //{
+            //    return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            //}
             if ((Int32)Session["VoltaAgenda"] == 10)
             {
                 return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
@@ -315,10 +315,10 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("MontarTelaAgendaCalendario");
             }
-            else if ((Int32)Session["VoltaAgenda"] == 11)
-            {
-                return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
-            }
+            //else if ((Int32)Session["VoltaAgenda"] == 11)
+            //{
+            //    return RedirectToAction("VoltarAcompanhamentoCRM", "CRM");
+            //}
             return RedirectToAction("MontarTelaAgenda");
         }
 
@@ -477,11 +477,11 @@ namespace ERP_Condominios_Solution.Controllers
             // Mensagens
             if ((Int32)Session["MensAgenda"] == 10)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
             }
             if ((Int32)Session["MensAgenda"] == 11)
             {
-                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
 
             AGENDA item = baseApp.GetItemById(id);
@@ -820,7 +820,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 if ((Int32)Session["MensAgendaTimeline"] == 1)
                 {
-                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                     Session["MensAgendaTimeline"] = 0;
                 }
             }

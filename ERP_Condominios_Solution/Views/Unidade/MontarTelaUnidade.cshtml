@@ -117,6 +117,9 @@
                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                     {
                                         @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Unidade", action: "MostrarTudoUnidade") 
+                                    }
+                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                    {
                                         @Html.ButtonLinkIndex(text: "Nova Unidade", controller: "Unidade", action: "IncluirUnidade")
                                     }
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Unidade", action: "GerarRelatorioUnidade")

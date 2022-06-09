@@ -503,20 +503,30 @@
     <Compile Include="Model\EQUIPAMENTO_MANUTENCAO.cs">
       <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ERP_Condominios_Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ERP_Condominios_Model.Context.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\ERP_Condominios_Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Model\ERP_Condominios_Model.Designer.cs">
+      <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Model\ERP_Condominio_Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ERP_Condominio_Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ERP_Condominio_Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ERP_Condominio_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\FINALIDADE_RESERVA.cs">
       <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
@@ -767,24 +777,34 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ERP_Condominios_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\ERP_Condominios_Model.edmx.diagram">
-      <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
+    <EntityDeploy Include="Model\ERP_Condominio_Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ERP_Condominio_Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\ERP_Condominio_Model.edmx.diagram">
+      <DependentUpon>ERP_Condominio_Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="Model\ERP_Condominios_Model.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
-      <LastGenOutput>ERP_Condominios_Model.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Model\ERP_Condominios_Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ERP_Condominios_Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\ERP_Condominio_Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERP_Condominio_Model.edmx</DependentUpon>
+      <LastGenOutput>ERP_Condominio_Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\ERP_Condominio_Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ERP_Condominio_Model.edmx</DependentUpon>
+      <LastGenOutput>ERP_Condominio_Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

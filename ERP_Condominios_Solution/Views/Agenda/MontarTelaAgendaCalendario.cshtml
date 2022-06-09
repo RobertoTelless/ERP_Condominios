@@ -52,7 +52,6 @@
                                         @Html.HiddenFor(m => m.AGEN_IN_ATIVO, new { id = "ativo" })
                                         @Html.HiddenFor(m => m.USUA_CD_ID, new { id = "cdUsua" })
                                         @Html.HiddenFor(m => m.AGEN_IN_STATUS, new { id = "status" })
-                                        @Html.HiddenFor(m => m.AGEN_IN_CORPORATIVA, new { id = "corp" })
                                         Data*
                                         @Html.TextBoxFor(m => m.AGEN_DT_DATA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, id = "data", @readonly = "readonly" })
                                         @Html.ValidationMessageFor(m => m.AGEN_DT_DATA, "", new { @style = "color:red" })
