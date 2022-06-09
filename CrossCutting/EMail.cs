@@ -23,5 +23,6 @@ namespace CrossCutting
         public Boolean DEFAULT_CREDENTIALS { get; set; }
         public NetworkCredential NETWORK_CREDENTIAL { get; set; }
         public List<Attachment> ATTACHMENT { get; set; }
+        public Boolean IS_HTML { get; set; }
     }
 }

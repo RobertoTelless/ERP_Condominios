@@ -21,6 +21,7 @@ namespace ApplicationServices.Interfaces
         List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss);
         List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss);
         Int32 ExecuteFilter(String titulo, DateTime? data, String texto, Int32 idAss, out List<NOTIFICACAO> objeto);
+
         NOTIFICACAO_ANEXO GetAnexoById(Int32 id);
         List<CATEGORIA_NOTIFICACAO> GetAllCategorias(Int32 idAss);
     }

@@ -23,10 +23,12 @@ namespace EntitiesServices.Model
             this.AMBIENTE_CHAVE = new HashSet<AMBIENTE_CHAVE>();
             this.AUTORIZACAO_ACESSO = new HashSet<AUTORIZACAO_ACESSO>();
             this.CONTROLE_VEICULO = new HashSet<CONTROLE_VEICULO>();
+            this.CONTROLE_VEICULO_ACOMPANHAMENTO = new HashSet<CONTROLE_VEICULO_ACOMPANHAMENTO>();
             this.CORPO_DIRETIVO = new HashSet<CORPO_DIRETIVO>();
             this.ENCOMENDA = new HashSet<ENCOMENDA>();
             this.ENCOMENDA_COMENTARIO = new HashSet<ENCOMENDA_COMENTARIO>();
             this.ENTRADA_SAIDA = new HashSet<ENTRADA_SAIDA>();
+            this.ENTRADA_SAIDA_COMENTARIO = new HashSet<ENTRADA_SAIDA_COMENTARIO>();
             this.FORNECEDOR_COMENTARIO = new HashSet<FORNECEDOR_COMENTARIO>();
             this.FORNECEDOR_MENSAGEM = new HashSet<FORNECEDOR_MENSAGEM>();
             this.LISTA_CONVIDADO = new HashSet<LISTA_CONVIDADO>();
@@ -52,8 +54,6 @@ namespace EntitiesServices.Model
             this.USUARIO_ESCALA_TRABALHO = new HashSet<USUARIO_ESCALA_TRABALHO>();
             this.USUARIO_FUNCIONARIO = new HashSet<USUARIO_FUNCIONARIO>();
             this.VEICULO = new HashSet<VEICULO>();
-            this.CONTROLE_VEICULO_ACOMPANHAMENTO = new HashSet<CONTROLE_VEICULO_ACOMPANHAMENTO>();
-            this.ENTRADA_SAIDA_COMENTARIO = new HashSet<ENTRADA_SAIDA_COMENTARIO>();
         }
     
         public int USUA_CD_ID { get; set; }
@@ -117,6 +117,8 @@ namespace EntitiesServices.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTROLE_VEICULO> CONTROLE_VEICULO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CORPO_DIRETIVO> CORPO_DIRETIVO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ENCOMENDA> ENCOMENDA { get; set; }
@@ -124,6 +126,8 @@ namespace EntitiesServices.Model
         public virtual ICollection<ENCOMENDA_COMENTARIO> ENCOMENDA_COMENTARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ENTRADA_SAIDA> ENTRADA_SAIDA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ENTRADA_SAIDA_COMENTARIO> ENTRADA_SAIDA_COMENTARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FORNECEDOR_COMENTARIO> FORNECEDOR_COMENTARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -176,9 +180,5 @@ namespace EntitiesServices.Model
         public virtual ICollection<USUARIO_FUNCIONARIO> USUARIO_FUNCIONARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VEICULO> VEICULO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ENTRADA_SAIDA_COMENTARIO> ENTRADA_SAIDA_COMENTARIO { get; set; }
     }
 }

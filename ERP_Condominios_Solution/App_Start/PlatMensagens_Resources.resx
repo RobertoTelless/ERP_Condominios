@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="M0001" xml:space="preserve">
+    <value>E-mail invalido</value>
+  </data>
+  <data name="M0002" xml:space="preserve">
+    <value>Login não cadastrado</value>
+  </data>
+  <data name="M0003" xml:space="preserve">
+    <value>O usuario esta inativo</value>
+  </data>
+  <data name="M0004" xml:space="preserve">
+    <value>O usuario esta bloqueado. Entre em contato com o administrador do sistema para executar o desbloqueio</value>
+  </data>
+  <data name="M0005" xml:space="preserve">
+    <value>O usuario ja efetuou um login com a senha provisoria. Favor gerar outra senha</value>
+  </data>
+  <data name="M0006" xml:space="preserve">
+    <value>Numero de falhas de login superior ao limite diario de falhas</value>
+  </data>
+  <data name="M0007" xml:space="preserve">
+    <value>Credenciais invalidas</value>
+  </data>
+  <data name="M0008" xml:space="preserve">
+    <value>A nova senha nao pode ser igual a anterior</value>
+  </data>
+  <data name="M0009" xml:space="preserve">
+    <value>A nova senha nao foi confirmada corretamente</value>
+  </data>
+  <data name="M0011" xml:space="preserve">
+    <value>Você não tem acesso a essa funcionalidade</value>
+  </data>
+  <data name="M0012" xml:space="preserve">
+    <value>Usuário cadastrado mas sem acesso ao sistema. Consulte a administração.</value>
+  </data>
+  <data name="M0016" xml:space="preserve">
+    <value>Nenhum registro atendeu ao filtro especificado</value>
+  </data>
+  <data name="M0019" xml:space="preserve">
+    <value>Nenhum arquivo selecionado</value>
+  </data>
+  <data name="M0020" xml:space="preserve">
+    <value>Extensão de arquivo não suportada</value>
+  </data>
+  <data name="M0021" xml:space="preserve">
+    <value>Contato já cadastrado</value>
+  </data>
+  <data name="M0024" xml:space="preserve">
+    <value>Nome do arquivo muito longo</value>
+  </data>
+  <data name="M0025" xml:space="preserve">
+    <value>Grupo já cadastrado</value>
+  </data>
+  <data name="M0026" xml:space="preserve">
+    <value>O texto da mensagem deve ser preenchido</value>
+  </data>
+  <data name="M0027" xml:space="preserve">
+    <value>Contato já incluído neste grupo</value>
+  </data>
+  <data name="M0028" xml:space="preserve">
+    <value>Categoria de Contato já cadastrada</value>
+  </data>
+  <data name="M0029" xml:space="preserve">
+    <value>Não é possível excluir essa categoria. Existem informações vinculadas a ela</value>
+  </data>
+  <data name="M0030" xml:space="preserve">
+    <value>Status de Contato já cadastrado</value>
+  </data>
+  <data name="M0031" xml:space="preserve">
+    <value>Não é possível excluir esse status de contato. Existem informações vinculadas a ele</value>
+  </data>
+  <data name="M0032" xml:space="preserve">
+    <value>Padrão de Mensagem já cadastrado</value>
+  </data>
+  <data name="M0033" xml:space="preserve">
+    <value>Não é possível excluir esse status de contato. Existem informações vinculadas a ele</value>
+  </data>
+  <data name="M0034" xml:space="preserve">
+    <value>Entrada de CRM criada a partir de mensagem</value>
+  </data>
+  <data name="M0035" xml:space="preserve">
+    <value>Já existe um processo com o mesmo nome para este usuário</value>
+  </data>
+  <data name="M0036" xml:space="preserve">
+    <value>Impossível excluir esse processo. Existem ações ainda pendentes.</value>
+  </data>
+  <data name="M0037" xml:space="preserve">
+    <value>A data de cancelamento não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0038" xml:space="preserve">
+    <value>A data de cancelamento não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0039" xml:space="preserve">
+    <value>Já existe um contato marcado como PRINCIPAL</value>
+  </data>
+  <data name="M0040" xml:space="preserve">
+    <value>Impossível incluir nova ação. Já existe uma ação ativa neste momento.</value>
+  </data>
+  <data name="M0041" xml:space="preserve">
+    <value>Impossível editar esta ação. Ela está encerrada ou excluída.</value>
+  </data>
+  <data name="M0042" xml:space="preserve">
+    <value>Impossível criar/reativar esta ação. Já existe uma ação ativa neste momento.</value>
+  </data>
+  <data name="M0043" xml:space="preserve">
+    <value>A data de encerramento não pode ser inferior a data de criação</value>
+  </data>
+  <data name="M0044" xml:space="preserve">
+    <value>Usuário já cadastrado</value>
+  </data>
+  <data name="M0045" xml:space="preserve">
+    <value>Não é possível excluir esse usuário. Existem informações vinculadas a ele</value>
+  </data>
+  <data name="M0046" xml:space="preserve">
+    <value>A data de encerramento não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0047" xml:space="preserve">
+    <value>A data de cancelamento não pode ser inferior a data de criação</value>
+  </data>
+  <data name="M0048" xml:space="preserve">
+    <value>A data de cancelamento não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0049" xml:space="preserve">
+    <value>Plano já cadastrado</value>
+  </data>
+  <data name="M0050" xml:space="preserve">
+    <value>Impossível excluir esse Plano. Existem assinantes vinculados a ele</value>
+  </data>
+  <data name="M0051" xml:space="preserve">
+    <value>Impossível incluir/reativar usuário. Número de usuários ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0052" xml:space="preserve">
+    <value>Impossível incluir/reativar contato. Número de contatos ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0053" xml:space="preserve">
+    <value>Impossível enviar este e-mail. O número de e-mails enviados no mês corrente ultrapassa o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0054" xml:space="preserve">
+    <value>Impossível enviar este SMS. O número de SMSs enviados no mês corrente ultrapassa o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0055" xml:space="preserve">
+    <value>Impossível incluir/reativar processos. Número de processos ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0056" xml:space="preserve">
+    <value>Impossível incluir/reativar ações nos processos. Número de ações ativas excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0057" xml:space="preserve">
+    <value>Assinante já cadastrado</value>
+  </data>
+  <data name="M0058" xml:space="preserve">
+    <value>Filial já cadastrada</value>
+  </data>
+  <data name="M0059" xml:space="preserve">
+    <value>Não é possível excluir essa Filial. Existem informações vinculadas a ela</value>
+  </data>
+  <data name="M0060" xml:space="preserve">
+    <value>Deve ser especificado um arquivo template HTML ou o corpo da mensagem</value>
+  </data>
+  <data name="M0061" xml:space="preserve">
+    <value>Corpo de mansagem especificado sem cabeçalho e área de dados (rodapé)</value>
+  </data>
+  <data name="M0062" xml:space="preserve">
+    <value>Nenhum filtro foi definido para montagem do grupo.</value>
+  </data>
+  <data name="M0063" xml:space="preserve">
+    <value>Nenhum contato obedeceu ao filtro especificado</value>
+  </data>
+  <data name="M0064" xml:space="preserve">
+    <value>Este plano de assinatura não tem acesso às funcionalidades de CRM</value>
+  </data>
+  <data name="M0065" xml:space="preserve">
+    <value>Essa mensagem já foi convertida em processo CRM</value>
+  </data>
+  <data name="M0066" xml:space="preserve">
+    <value>Categoria já cadastrada</value>
+  </data>
+  <data name="M0067" xml:space="preserve">
+    <value>Cargo já cadastrado</value>
+  </data>
+  <data name="M0068" xml:space="preserve">
+    <value>Impossível excluir este cargo. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0069" xml:space="preserve">
+    <value>Impossível excluir esta categoria. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0070" xml:space="preserve">
+    <value>Origem do processo CRM já cadastrada</value>
+  </data>
+  <data name="M0071" xml:space="preserve">
+    <value>Impossível excluir esta origem. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0072" xml:space="preserve">
+    <value>Motivo de Cancelameneto já cadastrado</value>
+  </data>
+  <data name="M0073" xml:space="preserve">
+    <value>A Senha não pode ficar em branco</value>
+  </data>
+  <data name="M0074" xml:space="preserve">
+    <value>Nova senha não pode ser em branco</value>
+  </data>
+  <data name="M0075" xml:space="preserve">
+    <value>Confirmação da senha não pode ser em branco</value>
+  </data>
+  <data name="M0076" xml:space="preserve">
+    <value>Impossível excluir este motivo. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0077" xml:space="preserve">
+    <value>Motivo de Encerramento já cadastrado</value>
+  </data>
+  <data name="M0078" xml:space="preserve">
+    <value>Tipo de Ação já cadastrado</value>
+  </data>
+  <data name="M0079" xml:space="preserve">
+    <value>Impossível excluir este tipo. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0080" xml:space="preserve">
+    <value>Impossível incluir/reativar cliente. Número de clientes ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0081" xml:space="preserve">
+    <value>Impossível incluir/reativar fornecedor. Número de fornecedores ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0082" xml:space="preserve">
+    <value>Categoria de Equipamento já cadastrada</value>
+  </data>
+  <data name="M0083" xml:space="preserve">
+    <value>Categoria de Fornecedor já cadastrada</value>
+  </data>
+  <data name="M0084" xml:space="preserve">
+    <value>O valor residual não pode ser maior que o valor de compra</value>
+  </data>
+  <data name="M0085" xml:space="preserve">
+    <value>Impossível incluir/reativar produto. Número de produtos ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0086" xml:space="preserve">
+    <value>Impossível excluir este produto. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0087" xml:space="preserve">
+    <value>Impossível excluir este produto. Ele está vinculado a um ou mais pedidos de venda</value>
+  </data>
+  <data name="M0088" xml:space="preserve">
+    <value>Categoria de Produto já cadastrada</value>
+  </data>
+  <data name="M0089" xml:space="preserve">
+    <value>Subcategoria de Produto já cadastrada</value>
+  </data>
+  <data name="M0090" xml:space="preserve">
+    <value>Impossível excluir esta subcategoria. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0091" xml:space="preserve">
+    <value>Tamanho já cadastrado</value>
+  </data>
+  <data name="M0092" xml:space="preserve">
+    <value>Impossível excluir este tamanho. Ele está vinculado a outras informações</value>
+  </data>
+  <data name="M0093" xml:space="preserve">
+    <value>Unidade já cadastrada</value>
+  </data>
+  <data name="M0094" xml:space="preserve">
+    <value>Impossível excluir esta unidade. Ela está vinculada a outras informações</value>
+  </data>
+  <data name="M0096" xml:space="preserve">
+    <value>E-Mail não cadastrado.</value>
+  </data>
+  <data name="M0109" xml:space="preserve">
+    <value>O login não pode ficar em branco</value>
+  </data>
+  <data name="M0110" xml:space="preserve">
+    <value>E-Mail já existente</value>
+  </data>
+  <data name="M0111" xml:space="preserve">
+    <value>Login já existente</value>
+  </data>
+  <data name="M0112" xml:space="preserve">
+    <value>Impossível incluir/reativar atendimentos. Número de atendimentos ativos excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0113" xml:space="preserve">
+    <value>Definição de automação de mensagens já cadastrada</value>
+  </data>
+  <data name="M0114" xml:space="preserve">
+    <value>Impossível excluir este grupo. Ele está vinculaoa a outras informações</value>
+  </data>
+  <data name="M0115" xml:space="preserve">
+    <value>Grupo já cadastrado</value>
+  </data>
+  <data name="M0116" xml:space="preserve">
+    <value>Impossível excluir este subgrupo. Ele está vinculaoa a outras informações</value>
+  </data>
+  <data name="M0117" xml:space="preserve">
+    <value>Subgrupo já cadastrado</value>
+  </data>
+  <data name="M0118" xml:space="preserve">
+    <value>Impossível incluir/reativar ordens de serviço. Número de ordens de serviço ativas excede o contratado no Plano de Assinatura</value>
+  </data>
+  <data name="M0119" xml:space="preserve">
+    <value>Justificativa de cancelamento não preenchida</value>
+  </data>
+  <data name="M0120" xml:space="preserve">
+    <value>Departamento já cadastrado</value>
+  </data>
+  <data name="M0121" xml:space="preserve">
+    <value>Impossível excluir este departamento. Ele está vinculada a outras informações</value>
+  </data>
+  <data name="M0122" xml:space="preserve">
+    <value>Impossível criar/reativar esta proposta. Já existe uma proposta sendo processada neste momento.</value>
+  </data>
+  <data name="M0123" xml:space="preserve">
+    <value>Impossível editar esta proposta. Ela está encerrada, cancelada ou reprovada</value>
+  </data>
+  <data name="M0124" xml:space="preserve">
+    <value>A justificativa do cancelamento é obrigatória</value>
+  </data>
+  <data name="M0125" xml:space="preserve">
+    <value>Data de cancelamento não informada</value>
+  </data>
+  <data name="M0126" xml:space="preserve">
+    <value>A data de reprovação não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0127" xml:space="preserve">
+    <value>A data de reprovação não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0128" xml:space="preserve">
+    <value>A justificativa da reprovação é obrigatória</value>
+  </data>
+  <data name="M0129" xml:space="preserve">
+    <value>Data de reprovação não informada</value>
+  </data>
+  <data name="M0130" xml:space="preserve">
+    <value>A data de aprovação não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0131" xml:space="preserve">
+    <value>A data de aprovação não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0132" xml:space="preserve">
+    <value>A justificativa da aprovação é obrigatória</value>
+  </data>
+  <data name="M0133" xml:space="preserve">
+    <value>Data de aprovação não informada</value>
+  </data>
+  <data name="M0134" xml:space="preserve">
+    <value>Data de envio não informada</value>
+  </data>
+  <data name="M0135" xml:space="preserve">
+    <value>A data de envio não pode ser inferior a data de criação do processo</value>
+  </data>
+  <data name="M0136" xml:space="preserve">
+    <value>A data de envio não pode ser superior a data corrente</value>
+  </data>
+  <data name="M0137" xml:space="preserve">
+    <value>Ocorreu erro no envio da proposta por e-mail</value>
+  </data>
+  <data name="M0138" xml:space="preserve">
+    <value>Impossível enviar. Nenhum arquivo anexado a essa proposta</value>
+  </data>
+  <data name="M0139" xml:space="preserve">
+    <value>Nenhum template de mensagem selecionado</value>
+  </data>
+  <data name="M0140" xml:space="preserve">
+    <value>Impossível criar/reativar este pedido. Já existe um pedido sendo processado neste momento.</value>
+  </data>
+  <data name="M0141" xml:space="preserve">
+    <value>Cliente não especificado</value>
+  </data>
+  <data name="M0142" xml:space="preserve">
+    <value>Tipo de ação não especificado</value>
+  </data>
+  <data name="M0143" xml:space="preserve">
+    <value>Responsável pela ação não especificado</value>
+  </data>
+  <data name="M0144" xml:space="preserve">
+    <value>Template de proposta não especificado</value>
+  </data>
+  <data name="M0145" xml:space="preserve">
+    <value>Motivo de cancelamento não especificado</value>
+  </data>
+  <data name="M0146" xml:space="preserve">
+    <value>Transportadora não especificada</value>
+  </data>
+  <data name="M0147" xml:space="preserve">
+    <value>Data prevista para entrega não especificada</value>
+  </data>
+  <data name="M0148" xml:space="preserve">
+    <value>Data de saida para entrega não especificada</value>
+  </data>
+  <data name="M0149" xml:space="preserve">
+    <value>Descrição do Motivo de cancelamento não especificada</value>
+  </data>
+</root>

@@ -33,6 +33,8 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IAutorizacaoAppService autApp;
         private readonly IListaConvidadoAppService lisApp;
         private readonly IEncomendaAppService encApp;
+        private readonly ITelefoneAppService telApp;
+        private readonly IUnidadeAppService uniApp;
 
         private String msg;
         private Exception exception;
@@ -40,7 +42,7 @@ namespace ERP_Condominios_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps, IEncomendaAppService encApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps, IEncomendaAppService encApps, ITelefoneAppService telApps, IUnidadeAppService uniApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -56,6 +58,8 @@ namespace ERP_Condominios_Solution.Controllers
             autApp = autApps;
             lisApp = lisApps;
             encApp = encApps;
+            telApp = telApps;
+            uniApp = uniApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -66,6 +70,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.UsuariosLista = baseApp.GetAllUsuarios(idAss.Value);
             ViewBag.LogsLista = logApp.GetAllItens(idAss.Value);
             return View();
+
         }
 
         public ActionResult CarregarLandingPage()
@@ -232,11 +237,11 @@ namespace ERP_Condominios_Solution.Controllers
             usu = cache.Get("usuario" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as USUARIO;
             vm = cache.Get("vm" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as UsuarioViewModel;
             noti = cache.Get("noti" + ((USUARIO)Session["UserCredentials"]).USUA_CD_ID) as List<NOTIFICACAO>;
+            ViewBag.Perfil = usu.PERFIL.PERF_SG_SIGLA;
 
-            //noti = notfApp.GetAllItens(idAss).Where(p => p.USUA_CD_ID == usu.USUA_CD_ID).ToList();
             noti = notfApp.GetAllItensUser(usu.USUA_CD_ID, usu.ASSI_CD_ID);
-            Session["Notificacoes"] = noti; //usu.NOTIFICACAO.ToList();
-            Session["ListaNovas"] = noti.Where(p => p.NOTI_IN_VISTA == 0).ToList();
+            Session["Notificacoes"] = noti;
+            Session["ListaNovas"] = noti.Where(p => p.NOTI_IN_VISTA == 0).ToList().Take(5).OrderByDescending(p => p.NOTI_DT_EMISSAO).ToList();
             Session["NovasNotificacoes"] = noti.Where(p => p.NOTI_IN_VISTA == 0).Count();
             Session["Nome"] = usu.USUA_NM_NOME;
 
@@ -248,14 +253,14 @@ namespace ERP_Condominios_Solution.Controllers
             Session["TarefasLista"] = tarApp.GetByUser(usu.USUA_CD_ID);
             Session["Tarefas"] = ((List<TAREFA>)Session["TarefasLista"]).Count;
 
-            //Session["Agendas"] = usu.AGENDA.ToList();
             Session["Agendas"] = ageApp.GetByUser(usu.USUA_CD_ID, usu.ASSI_CD_ID);
             Session["NumAgendas"] = ((List<AGENDA>)Session["Agendas"]).Count;
             Session["AgendasHoje"] = ((List<AGENDA>)Session["Agendas"]).Where(p => p.AGEN_DT_DATA == DateTime.Today.Date).ToList();
             Session["NumAgendasHoje"] = ((List<AGENDA>)Session["AgendasHoje"]).Count;
 
+            Session["Telefones"] = telApp.GetAllItens(usu.ASSI_CD_ID);
+            Session["NumTelefones"] = ((List<TELEFONE>)Session["Telefones"]).Count;
             Session["Logs"] = usu.LOG.Count;
-            Session["Autorizacoes"] = usu.AUTORIZACAO_ACESSO.Count;
 
             String frase = String.Empty;
             String nome = usu.USUA_NM_NOME.Substring(0, usu.USUA_NM_NOME.IndexOf(" "));
@@ -276,114 +281,11 @@ namespace ERP_Condominios_Solution.Controllers
             Session["Foto"] = usu.USUA_AQ_FOTO;
 
             // Mensagens
-            if ((Int32)Session["MensNotificacao"] == 2)
+            if ((Int32)Session["MensPermissao"] == 2)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
-            if ((Int32)Session["MensNoticia"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensUsuario"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensLog"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensUsuarioAdm"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensTemplate"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensConfiguracao"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensCondominio"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensUnidade"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensVaga"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensVeiculo"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensFornecedor"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensTelefone"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensAmbiente"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensAutorizacao"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensOcorrencia"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensCC"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensBanco"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensEquipamento"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensProduto"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensLista"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensControleVeiculo"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensMorador"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensMudanca"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensES"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensEncomenda"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensReserva"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
-            }
+            Session["MensPermissao"] = 0;
             return View(vm);
         }
 
@@ -400,6 +302,115 @@ namespace ERP_Condominios_Solution.Controllers
         public ActionResult MontarFaleConosco()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult MontarTelaDashboardAdministracao()
+        {
+            // Verifica se tem usuario logado
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((USUARIO)Session["UserCredentials"] != null)
+            {
+                usuario = (USUARIO)Session["UserCredentials"];
+
+                // Verfifica permissão
+                if (usuario.PERFIL.PERF_SG_SIGLA == "VIS")
+                {
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            UsuarioViewModel vm = Mapper.Map<USUARIO, UsuarioViewModel>(usuario);
+
+            // Recupera listas usuarios
+            List<USUARIO> listaTotal = baseApp.GetAllItens(idAss);
+            List<USUARIO> bloqueados = listaTotal.Where(p => p.USUA_IN_BLOQUEADO == 1).ToList();
+
+            Int32 numUsuarios = listaTotal.Count;
+            Int32 numBloqueados = bloqueados.Count;
+            Int32 numAcessos = listaTotal.Sum(p => p.USUA_NR_ACESSOS).Value;
+            Int32 numFalhas = listaTotal.Sum(p => p.USUA_NR_FALHAS).Value;
+
+            ViewBag.NumUsuarios = numUsuarios;
+            ViewBag.NumBloqueados = numBloqueados;
+            ViewBag.NumAcessos = numAcessos;
+            ViewBag.NumFalhas = numFalhas;
+
+            Session["TotalUsuarios"] = listaTotal.Count;
+            Session["Bloqueados"] = numBloqueados;
+
+            // Recupera listas log
+            List<LOG> listaLog = logApp.GetAllItens(idAss);
+            Int32 log = listaLog.Count;
+            Int32 logDia = listaLog.Where(p => p.LOG_DT_DATA.Value.Date == DateTime.Today.Date).ToList().Count;
+            Int32 logMes = listaLog.Where(p => p.LOG_DT_DATA.Value.Month == DateTime.Today.Month & p.LOG_DT_DATA.Value.Year == DateTime.Today.Year).ToList().Count;
+
+            ViewBag.Log = log;
+            ViewBag.LogDia = logDia;
+            ViewBag.LogMes = logMes;
+
+            Session["TotalLog"] = log;
+            Session["LogDia"] = logDia;
+            Session["LogMes"] = logMes;
+
+            // Resumo Log Diario
+            List<DateTime> datasCR = listaLog.Where(m => m.LOG_DT_DATA != null).Select(p => p.LOG_DT_DATA.Value.Date).Distinct().ToList();
+            List<ModeloViewModel> listaLogDia = new List<ModeloViewModel>();
+            foreach (DateTime item in datasCR)
+            {
+                Int32 conta = listaLog.Where(p => p.LOG_DT_DATA.Value.Date == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.DataEmissao = item;
+                mod1.Valor = conta;
+                listaLogDia.Add(mod1);
+            }
+            ViewBag.ListaLogDia = listaLogDia;
+            ViewBag.ContaLogDia = listaLogDia.Count;
+            Session["ListaDatasLog"] = datasCR;
+            Session["ListaLogResumo"] = listaLogDia;
+
+            // Resumo Log Situacao  
+            List<String> opLog = listaLog.Select(p => p.LOG_NM_OPERACAO).Distinct().ToList();
+            List<ModeloViewModel> lista2 = new List<ModeloViewModel>();
+            foreach (String item in opLog)
+            {
+                Int32 conta1 = listaLog.Where(p => p.LOG_NM_OPERACAO == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = item;
+                mod1.Valor = conta1;
+                lista2.Add(mod1);
+            }
+            ViewBag.ListaLogOp = lista2;
+            ViewBag.ContaLogOp = lista2.Count;
+            Session["ListaOpLog"] = opLog;
+            Session["ListaLogOp"] = lista2;
+
+            // Resumo Usuário Unidade
+            List<Int32?> unidades = listaTotal.Select(p => p.UNID_CD_ID).Distinct().ToList();
+            List<ModeloViewModel> lista3 = new List<ModeloViewModel>();
+            foreach (Int32 item in unidades)
+            {
+                Int32 conta2 = listaTotal.Where(p => p.UNID_CD_ID == item).ToList().Count;
+                ModeloViewModel mod1 = new ModeloViewModel();
+                mod1.Nome = uniApp.GetItemById(item).UNID_NM_EXIBE;
+                mod1.Valor = conta2;
+                lista3.Add(mod1);
+            }
+            ViewBag.ListaUsuUnidade = lista3;
+            ViewBag.ContaUsuUnidade = lista3.Count;
+            Session["ListaUnidadesUsu"] = unidades;
+            Session["ListaUsuUnidade"] = lista3;
+            Session["VoltaDash"] = 3;
+            return View(vm);
         }
 
     }

@@ -96,6 +96,9 @@
     <Reference Include="EPPlus, Version=5.5.5.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.5.5.5\lib\net45\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.14.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.14\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Itenso.TimePeriod, Version=2.1.1.0, Culture=neutral, PublicKeyToken=8cb6db75b4e81486, processorArchitecture=MSIL">
       <HintPath>..\packages\TimePeriodLibrary.NET.2.1.1\lib\net46\Itenso.TimePeriod.dll</HintPath>
     </Reference>
@@ -272,6 +275,7 @@
     </Compile>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
+    <Compile Include="App_Start\PlatMensagens_Resources.Designer.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="AutoMapper\AutoMapperConfig.cs" />
     <Compile Include="AutoMapper\DomainToViewModelMappingProfile.cs" />
@@ -314,6 +318,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ModeloViewModel.cs" />
     <Compile Include="ViewModels\ReservaViewModel.cs" />
     <Compile Include="ViewModels\ReservaComentarioViewModel.cs" />
     <Compile Include="ViewModels\EncomendaViewModel.cs" />
@@ -3195,6 +3200,8 @@
     <Content Include="Views\Reserva\IncluirComentarioReserva.cshtml" />
     <Content Include="Views\Reserva\VerAnexoReserva.cshtml" />
     <Content Include="Views\Mudanca\VerAnexoMudanca.cshtml" />
+    <Content Include="Views\Reserva\GerarNotificacaoReserva.cshtml" />
+    <Content Include="Views\BaseAdmin\MontarTelaDashboardAdministracao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3301,6 +3308,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ERP_Condominios_Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="App_Start\PlatMensagens_Resources.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationServices\ApplicationServices.csproj">

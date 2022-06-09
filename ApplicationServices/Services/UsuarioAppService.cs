@@ -9,8 +9,6 @@ using ApplicationServices.Interfaces;
 using ModelServices.Interfaces.EntitiesServices;
 using CrossCutting;
 using System.Text.RegularExpressions;
-//using SendGrid;
-//using SendGrid.Helpers.Mail;
 using System.Web;
 
 namespace ApplicationServices.Services
@@ -714,8 +712,7 @@ namespace ApplicationServices.Services
 
             // Envia e-mail
             Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
-            //Task<Response> task = Execute(conf, emailBody, usuario);
-            
+
             // Atualiza usuario
             Int32 volta = _usuarioService.EditUser(usuario);
 

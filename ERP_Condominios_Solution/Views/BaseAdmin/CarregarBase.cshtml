@@ -1,5 +1,4 @@
-﻿@using EntitiesServices.Work_Classes;
-@using Presentation.Extensions
+﻿@using Presentation.Extensions
 @using CrossCutting
 @model ERP_Condominios_Solution.ViewModels.UsuarioViewModel
 @{
@@ -31,17 +30,9 @@
 
                         <div class="text-center">
                             @Html.ButtonLinkIndex(text: "Perfil", action: "MontarTelaPerfilUsuario", controller: "Usuario", buttonClass: "btn btn-xs btn-white")
-                            @if (Model.PERFIL.PERF_SG_SIGLA == "ADM" || Model.PERFIL.PERF_SG_SIGLA == "SIN")
+                            @if (Model.PERFIL.PERF_SG_SIGLA == "ADM")
                             {
-                                @Html.ButtonLinkIndex(text: "Dashboard", action: "CarregarPortaria", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
-                            }
-                            else if (Model.PERFIL.PERF_SG_SIGLA == "POR")
-                            {
-                                @Html.ButtonLinkIndex(text: "Dashboard Portaria", action: "CarregarDashboardPortaria", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
-                            }
-                            else if (Model.PERFIL.PERF_SG_SIGLA == "MOR")
-                            {
-                                @Html.ButtonLinkIndex(text: "Dashboard Morador", action: "CarregarDashboardMorador", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
+                                @Html.ButtonLinkIndex(text: "Dashboard Pessoal", action: "CarregarDashPessoal", controller: "BaseAdmin", buttonClass: "btn btn-xs btn-primary")
                             }
                         </div>
                     </div>
@@ -50,7 +41,7 @@
                 <div class="col-lg-5 col-md-5 col-sm-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-warning pull-right">Hoje</span>
+                            <span class="label label-primary pull-right">Hoje</span>
                             <h5>Atividade do usuário</h5>
                         </div>
                         <div class="ibox-content">
@@ -100,12 +91,32 @@
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuPortaria"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Portaria", action: "MontarTelaDashboardPortaria", controller: "BaseAdmin", buttonClass: "primary")
+                    }
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuMorador"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Morador", action: "MontarTelaDashboardMorador", controller: "BaseAdmin", buttonClass: "primary")
+                    }
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuSindico"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Síndico", action: "MontarTelaDashboardSíndico", controller: "BaseAdmin", buttonClass: "primary")
+                    }
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuProprietario"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Proprietário", action: "MontarTelaDashboardProprietario", controller: "BaseAdmin", buttonClass: "primary")
+                    }
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuFuncionario"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Funcionário", action: "MontarTelaDashboardFuncionario", controller: "BaseAdmin", buttonClass: "primary")
+                    }
                 </div>
 
                 <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-warning pull-right">Hoje</span>
+                            <span class="label label-primary pull-right">Hoje</span>
                             <h5>Painel de Tarefas e Compromissos</h5>
                         </div>
                         <div class="ibox-content">
@@ -133,11 +144,19 @@
                                     <h4>@((Int32)Session["NumAgendas"])</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    @Html.ButtonLinkIndex(text: "Agenda", action: "MontarTelaAgenda", controller: "Agenda")
+                                    @Html.ButtonLinkIndex(text: "Agenda", action: "MontarTelaAgendaCalendario", controller: "Agenda")
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuSindico"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Financeiro", action: "MontarTelaDashboardFinanceiro", controller: "BaseAdmin", buttonClass: "success")
+                    }
+                    @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuSindico"] == 1)
+                    {
+                        @Html.ButtonLinkIndex(text: "Administração", action: "MontarTelaDashboardAdministracao", controller: "BaseAdmin", buttonClass: "success")
+                    }
                 </div>
             </div>
 
@@ -147,14 +166,6 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5>Notificações</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
                         </div>
                         <div class="ibox-content ibox-heading">
                             <h3><i class="fa fa-envelope-o"></i> Novas Notificações</h3>
@@ -233,69 +244,62 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5>Notícias</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
                         </div>
                         <div class="ibox-content ibox-heading">
                             <h3><i class="fa fa-newspaper-o"></i> Novas Notícias</h3>
                             <small><i class="fa fa-tim"></i> Você tem @((Int32)Session["NoticiasNumero"]) novas notícias </small>
                         </div>
-                        @using (Html.BeginForm("CarregarBase", "BaseAdmnin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
-                        {
-                            if ((Session["Noticias"] as List<EntitiesServices.Model.NOTICIA>).Count > 0)
+                        <div class="ibox-content">
+                            @using (Html.BeginForm("CarregarBase", "BaseAdmnin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
                             {
-                                foreach (var cond in (Session["Noticias"] as List<EntitiesServices.Model.NOTICIA>))
+                                if ((Session["Noticias"] as List<EntitiesServices.Model.NOTICIA>).Count > 0)
                                 {
-                                    if (cond.NOTC_DT_VALIDADE >= DateTime.Today)
+                                    foreach (var cond in (Session["Noticias"] as List<EntitiesServices.Model.NOTICIA>))
                                     {
-                                        <div class="ibox">
-                                            <div class="ibox-content">
-                                                <a href="@Url.Action("VerNoticia", "Noticia", new { id = cond.NOTC_CD_ID })" class="btn-link">
-                                                    <h2>
-                                                        @cond.NOTC_NM_TITULO
-                                                    </h2>
-                                                </a>
-                                                <div class="small m-b-xs">
-                                                    <strong>@cond.NOTC_NM_AUTOR    </strong> <span class="text-muted"><i class="fa fa-clock-o"></i>    @cond.NOTC_DT_DATA_AUTOR.Value.ToLongDateString()</span>
-                                                </div>
-                                                <img src="@Url.Content(cond.NOTC_AQ_FOTO)" style="width: auto; height: auto; max-height: 190px; max-width: 120px;">
-                                                <p>
-                                                    @if (cond.NOTC_TX_TEXTO.Length > 1000)
-                                                    {
-                                                        @cond.NOTC_TX_TEXTO.Substring(0, 1000)
-                                                    }
-                                                    else
-                                                    {
-                                                        @cond.NOTC_TX_TEXTO
-                                                    }
-                                                </p>
-                                                <a href=@cond.NOTC_LK_LINK>@cond.NOTC_LK_LINK</a>
+                                        if (cond.NOTC_DT_VALIDADE >= DateTime.Today)
+                                        {
+                                            <div class="ibox">
+                                                <div class="ibox-content">
+                                                    <a href="@Url.Action("VerNoticia", "Noticia", new { id = cond.NOTC_CD_ID })" class="btn-link">
+                                                        <h2>
+                                                            @cond.NOTC_NM_TITULO
+                                                        </h2>
+                                                    </a>
+                                                    <div class="small m-b-xs">
+                                                        <strong>@cond.NOTC_NM_AUTOR    </strong> <span class="text-muted"><i class="fa fa-clock-o"></i>    @cond.NOTC_DT_DATA_AUTOR.Value.ToLongDateString()</span>
+                                                    </div>
+                                                    <img src="@Url.Content(cond.NOTC_AQ_FOTO)" style="width: auto; height: auto; max-height: 190px; max-width: 120px;">
+                                                    <p>
+                                                        @if (cond.NOTC_TX_TEXTO.Length > 1000)
+                                                        {
+                                                            @cond.NOTC_TX_TEXTO.Substring(0, 1000)
+                                                        }
+                                                        else
+                                                        {
+                                                            @cond.NOTC_TX_TEXTO
+                                                        }
+                                                    </p>
+                                                    <a href=@cond.NOTC_LK_LINK>@cond.NOTC_LK_LINK</a>
 
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="small text-right">
-                                                            <h5>Stats:</h5>
-                                                            <div> <i class="fa fa-comments-o"> </i> @cond.NOTICIA_COMENTARIO.Count comentários </div>
-                                                            <i class="fa fa-eye"> </i> @cond.NOTC_NR_ACESSO visualizações
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="small text-right">
+                                                                <h5>Stats:</h5>
+                                                                <div> <i class="fa fa-comments-o"> </i> @cond.NOTICIA_COMENTARIO.Count comentários </div>
+                                                                <i class="fa fa-eye"> </i> @cond.NOTC_NR_ACESSO visualizações
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        }
                                     }
                                 }
+                                <div class="form-group">
+                                    @Html.ButtonLinkIndex(text: "Ir Para Notícias", action: "MontarTelaUsuario", controller: "Noticia")
+                                </div>
                             }
-                            <div class="form-group">
-                                @Html.ButtonLinkIndex(text: "Ir Para Notícias", action: "MontarTelaUsuario", controller: "Noticia")
-                            </div>
-                        }
-
+                        </div>
                     </div>
                 </div>
             </div>
@@ -329,8 +333,6 @@
                 pageLength: 25,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
                     { extend: 'excel', title: 'Excel' },
                     { extend: 'pdf', title: 'PDF' },
 

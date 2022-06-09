@@ -30,7 +30,6 @@ namespace DataServices.Repositories
         {
             IQueryable<USUARIO> query = Db.USUARIO.Where(p => p.USUA_IN_ATIVO == 1);
             query = query.Where(p => p.USUA_NM_LOGIN == login);
-            //query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.FirstOrDefault();
         }
 
@@ -114,10 +113,6 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.PERFIL.PERF_CD_ID == perfilId);
             }
-            //if (cargoId != 0)
-            //{
-            //    query = query.Where(p => p.CARGO.CARG_CD_ID == cargoId);
-            //}
             if (query != null)
             {
                 query = query.Where(p => p.ASSI_CD_ID == idAss);

@@ -21,5 +21,6 @@ namespace ModelServices.Interfaces.Repositories
         USUARIO GetAdministrador(Int32 idAss);
         USUARIO GetByEmailOnly(String email);
         List<USUARIO> ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss);
+
     }
 }

@@ -16,7 +16,7 @@ namespace EntitiesServices.Model
     public partial class ERP_CondominioEntities : DbContext
     {
         public ERP_CondominioEntities()
-            : base("name=ERP_CondominioEntities")
+            : base("name=ERP_CondominiosEntities")
         {
         }
     
@@ -57,12 +57,14 @@ namespace EntitiesServices.Model
         public virtual DbSet<CONTA_BANCO_LANCAMENTO> CONTA_BANCO_LANCAMENTO { get; set; }
         public virtual DbSet<CONTA_RECEBER> CONTA_RECEBER { get; set; }
         public virtual DbSet<CONTROLE_VEICULO> CONTROLE_VEICULO { get; set; }
+        public virtual DbSet<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
         public virtual DbSet<CONVIDADO> CONVIDADO { get; set; }
         public virtual DbSet<CORPO_DIRETIVO> CORPO_DIRETIVO { get; set; }
         public virtual DbSet<ENCOMENDA> ENCOMENDA { get; set; }
         public virtual DbSet<ENCOMENDA_ANEXO> ENCOMENDA_ANEXO { get; set; }
         public virtual DbSet<ENCOMENDA_COMENTARIO> ENCOMENDA_COMENTARIO { get; set; }
         public virtual DbSet<ENTRADA_SAIDA> ENTRADA_SAIDA { get; set; }
+        public virtual DbSet<ENTRADA_SAIDA_COMENTARIO> ENTRADA_SAIDA_COMENTARIO { get; set; }
         public virtual DbSet<EQUIPAMENTO> EQUIPAMENTO { get; set; }
         public virtual DbSet<EQUIPAMENTO_ANEXO> EQUIPAMENTO_ANEXO { get; set; }
         public virtual DbSet<EQUIPAMENTO_MANUTENCAO> EQUIPAMENTO_MANUTENCAO { get; set; }
@@ -142,7 +144,5 @@ namespace EntitiesServices.Model
         public virtual DbSet<VAGA> VAGA { get; set; }
         public virtual DbSet<VEICULO> VEICULO { get; set; }
         public virtual DbSet<VEICULO_ANEXO> VEICULO_ANEXO { get; set; }
-        public virtual DbSet<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
-        public virtual DbSet<ENTRADA_SAIDA_COMENTARIO> ENTRADA_SAIDA_COMENTARIO { get; set; }
     }
 }

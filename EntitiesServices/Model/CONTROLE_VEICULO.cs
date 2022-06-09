@@ -25,6 +25,7 @@ namespace EntitiesServices.Model
         public Nullable<int> UNID_CD_ID { get; set; }
         public Nullable<int> ASSI_CD_ID { get; set; }
         public Nullable<int> USUA_CD_ID { get; set; }
+        public Nullable<int> FORN_CD_ID { get; set; }
         public Nullable<System.DateTime> COVE_DT_ENTRADA { get; set; }
         public Nullable<System.DateTime> COVE_DT_SAIDA { get; set; }
         public string COVE_NM_PLACA { get; set; }
@@ -35,15 +36,14 @@ namespace EntitiesServices.Model
         public string COVE_NM_COR { get; set; }
         public Nullable<System.DateTime> COVE_DT_PREVISAO_SAIDA { get; set; }
         public string COVE_DS_JUSTIFICATIVA { get; set; }
-        public Nullable<int> FORN_CD_ID { get; set; }
         public string COVE_NM_PESSOA { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
-        public virtual TIPO_VEICULO TIPO_VEICULO { get; set; }
-        public virtual UNIDADE UNIDADE { get; set; }
-        public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONTROLE_VEICULO_ACOMPANHAMENTO> CONTROLE_VEICULO_ACOMPANHAMENTO { get; set; }
         public virtual FORNECEDOR FORNECEDOR { get; set; }
+        public virtual TIPO_VEICULO TIPO_VEICULO { get; set; }
+        public virtual UNIDADE UNIDADE { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ERP_CondominiosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -4152,7 +4152,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ERP_CondominioModelStoreContainer">
+        <EntityContainer Name="ERP_CondominiosModelStoreContainer">
           <EntitySet Name="AGENDA" EntityType="Self.AGENDA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGENDA_ANEXO" EntityType="Self.AGENDA_ANEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AGENDA_CONDOMINIO" EntityType="Self.AGENDA_CONDOMINIO" Schema="dbo" store:Type="Tables" />
@@ -5097,10 +5097,11 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ERP_CondominioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ERP_CondominiosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -5549,9 +5550,9 @@
           <Property Name="CONF_NR_CORPO_DIRETIVO_PERIODO" Type="Int32" />
           <Property Name="CONF_SG_LOGIN_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CONF_SG_SENHA_SMS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONF_IN_LIMITE_HORA_VEICULO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CONFIGURACAO_ASSOCIACAO" Relationship="Self.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" FromRole="CONFIGURACAO" ToRole="CONFIGURACAO_ASSOCIACAO" />
-          <Property Name="CONF_IN_LIMITE_HORA_VEICULO" Type="Int32" />
         </EntityType>
         <EntityType Name="CONFIGURACAO_ASSOCIACAO">
           <Key>
@@ -5584,7 +5585,7 @@
           <Property Name="COBA_NR_TELEFONE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="COBA_DT_ABERTURA" Type="DateTime" Precision="0" />
           <Property Name="COBA_VL_SALDO_ATUAL" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="COBA_NM_NOME_EXIBE" Type="String" MaxLength="400" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COBA_NM_NOME_EXIBE_OLD" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <Property Name="COBA_IN_CONTA_PADRAO" Type="Int32" />
           <Property Name="COBA_IN_CONTA_SELECAO" Type="Int32" />
           <Property Name="COBA_IN_DIAS" Type="Int32" />
@@ -5592,12 +5593,12 @@
           <Property Name="COBA_IN_TIPO_FILTRO" Type="Int32" />
           <Property Name="COBA_IN_MES" Type="Int32" />
           <Property Name="COBA_DT_SELECAO_FINAL" Type="DateTime" Precision="0" />
+          <Property Name="COBA_NM_NOME_EXIBE" Type="String" MaxLength="400" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONTA_BANCO_ASSINANTE" FromRole="CONTA_BANCO" ToRole="ASSINANTE" />
           <NavigationProperty Name="BANCO" Relationship="Self.FK_CONTA_BANCO_BANCO" FromRole="CONTA_BANCO" ToRole="BANCO" />
           <NavigationProperty Name="CONTA_BANCO_CONTATO" Relationship="Self.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_CONTATO" />
           <NavigationProperty Name="CONTA_BANCO_LANCAMENTO" Relationship="Self.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" FromRole="CONTA_BANCO" ToRole="CONTA_BANCO_LANCAMENTO" />
           <NavigationProperty Name="TIPO_CONTA" Relationship="Self.FK_CONTA_BANCO_TIPO_CONTA" FromRole="CONTA_BANCO" ToRole="TIPO_CONTA" />
-          <Property Name="COBA_NM_NOME_EXIBE_OLD" Type="String" MaxLength="63" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="CONTA_BANCO_CONTATO">
           <Key>
@@ -5645,6 +5646,7 @@
           <Property Name="UNID_CD_ID" Type="Int32" />
           <Property Name="ASSI_CD_ID" Type="Int32" />
           <Property Name="USUA_CD_ID" Type="Int32" />
+          <Property Name="FORN_CD_ID" Type="Int32" />
           <Property Name="COVE_DT_ENTRADA" Type="DateTime" Precision="3" />
           <Property Name="COVE_DT_SAIDA" Type="DateTime" Precision="3" />
           <Property Name="COVE_NM_PLACA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
@@ -5655,14 +5657,26 @@
           <Property Name="COVE_NM_COR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="COVE_DT_PREVISAO_SAIDA" Type="DateTime" Precision="3" />
           <Property Name="COVE_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="COVE_NM_PESSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONTROLE_VEICULO_ASSINANTE" FromRole="CONTROLE_VEICULO" ToRole="ASSINANTE" />
+          <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          <NavigationProperty Name="FORNECEDOR" Relationship="Self.FK_CONTROLE_VEICULO_FORNECEDOR" FromRole="CONTROLE_VEICULO" ToRole="FORNECEDOR" />
           <NavigationProperty Name="TIPO_VEICULO" Relationship="Self.FK_CONTROLE_VEICULO_TIPO_VEICULO" FromRole="CONTROLE_VEICULO" ToRole="TIPO_VEICULO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_CONTROLE_VEICULO_UNIDADE" FromRole="CONTROLE_VEICULO" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTROLE_VEICULO_USUARIO" FromRole="CONTROLE_VEICULO" ToRole="USUARIO" />
-          <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
-          <Property Name="FORN_CD_ID" Type="Int32" />
-          <Property Name="COVE_NM_PESSOA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="FORNECEDOR" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_FORNECEDOR" FromRole="CONTROLE_VEICULO" ToRole="FORNECEDOR" />
+        </EntityType>
+        <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
+          <Key>
+            <PropertyRef Name="CVAC_CD_ID" />
+          </Key>
+          <Property Name="CVAC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COVE_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="CVAC_DT_ACOMPANHAMENTO" Type="DateTime" Precision="3" />
+          <Property Name="CVAC_DS_TEXTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="CVAC_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="CONTROLE_VEICULO" Relationship="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO_ACOMPANHAMENTO" ToRole="CONTROLE_VEICULO" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="CONTROLE_VEICULO_ACOMPANHAMENTO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="CONVIDADO">
           <Key>
@@ -5718,6 +5732,8 @@
           <Property Name="ENCO_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ENCO_AQ_FOTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ENCO_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ENCO_IN_STATUS" Type="Int32" />
+          <Property Name="ENCO_DT_DEVOLUCAO" Type="DateTime" Precision="0" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_ENCOMENDA_ASSINANTE" FromRole="ENCOMENDA" ToRole="ASSINANTE" />
           <NavigationProperty Name="ENCOMENDA_ANEXO" Relationship="Self.FK_ENCOMENDA_ANEXO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="ENCOMENDA_ANEXO" />
           <NavigationProperty Name="ENCOMENDA_COMENTARIO" Relationship="Self.FK_ENCOMENDA_COMENTARIO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="ENCOMENDA_COMENTARIO" />
@@ -5725,8 +5741,6 @@
           <NavigationProperty Name="TIPO_ENCOMENDA" Relationship="Self.FK_ENCOMENDA_TIPO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="TIPO_ENCOMENDA" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENCOMENDA_UNIDADE" FromRole="ENCOMENDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENCOMENDA_USUARIO" FromRole="ENCOMENDA" ToRole="USUARIO" />
-          <Property Name="ENCO_IN_STATUS" Type="Int32" />
-          <Property Name="ENCO_DT_DEVOLUCAO" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -5763,6 +5777,7 @@
           <Property Name="UNID_CD_ID" Type="Int32" />
           <Property Name="AUAC_CD_ID" Type="Int32" />
           <Property Name="USUA_CD_ID" Type="Int32" />
+          <Property Name="GRPA_CD_ID" Type="Int32" />
           <Property Name="ENSA_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ENSA_NR_DOCUMENTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ENSA_NM_EMPRESA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -5775,14 +5790,26 @@
           <Property Name="ENSA_IN_LISTA_NEGRA" Type="Int32" Nullable="false" />
           <Property Name="ENSA_IN_STATUS" Type="Int32" Nullable="false" />
           <Property Name="ENSA_DS_JUSTIFICATIVA" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ENSA_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_ENTRADA_SAIDA_ASSINANTE" FromRole="ENTRADA_SAIDA" ToRole="ASSINANTE" />
           <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="Self.FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO" FromRole="ENTRADA_SAIDA" ToRole="AUTORIZACAO_ACESSO" />
+          <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="Self.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA" ToRole="ENTRADA_SAIDA_COMENTARIO" />
+          <NavigationProperty Name="GRAU_PARENTESCO" Relationship="Self.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="ENTRADA_SAIDA" ToRole="GRAU_PARENTESCO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENTRADA_SAIDA_UNIDADE" FromRole="ENTRADA_SAIDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENTRADA_SAIDA_USUARIO" FromRole="ENTRADA_SAIDA" ToRole="USUARIO" />
-          <Property Name="GRPA_CD_ID" Type="Int32" />
-          <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA" ToRole="ENTRADA_SAIDA_COMENTARIO" />
-          <NavigationProperty Name="GRAU_PARENTESCO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="ENTRADA_SAIDA" ToRole="GRAU_PARENTESCO" />
-          <Property Name="ENSA_IN_ATIVO" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ENTRADA_SAIDA_COMENTARIO">
+          <Key>
+            <PropertyRef Name="ESCO_CD_ID" />
+          </Key>
+          <Property Name="ESCO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ENSA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
+          <Property Name="ESCO_DT_COMENTARIO" Type="DateTime" Precision="3" />
+          <Property Name="ESCO_DS_COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="ESCO_IN_ATIVO" Type="Int32" />
+          <NavigationProperty Name="ENTRADA_SAIDA" Relationship="Self.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA_COMENTARIO" ToRole="ENTRADA_SAIDA" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" FromRole="ENTRADA_SAIDA_COMENTARIO" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO">
           <Key>
@@ -5809,12 +5836,12 @@
           <Property Name="EQUI_IN_DEPRECIADOS" Type="Int32" />
           <Property Name="EQUI_IN_MANUTENCAO" Type="Int32" />
           <Property Name="EQUI_IN_BAIXADOS" Type="Int32" />
+          <Property Name="EQUI_IN_AVISA_DEPRECIACAO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_EQUIPAMENTO_ASSINANTE" FromRole="EQUIPAMENTO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CATEGORIA_EQUIPAMENTO" Relationship="Self.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="CATEGORIA_EQUIPAMENTO" />
           <NavigationProperty Name="EQUIPAMENTO_ANEXO" Relationship="Self.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_ANEXO" />
           <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" FromRole="EQUIPAMENTO" ToRole="EQUIPAMENTO_MANUTENCAO" />
           <NavigationProperty Name="PERIODICIDADE" Relationship="Self.FK_EQUIPAMENTO_PERIODICIDADE" FromRole="EQUIPAMENTO" ToRole="PERIODICIDADE" />
-          <Property Name="EQUI_IN_AVISA_DEPRECIACAO" Type="Int32" />
         </EntityType>
         <EntityType Name="EQUIPAMENTO_ANEXO">
           <Key>
@@ -5898,6 +5925,7 @@
           <Property Name="FORN_TX_OBSERVACOES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_FORNECEDOR_ASSINANTE" FromRole="FORNECEDOR" ToRole="ASSINANTE" />
           <NavigationProperty Name="CATEGORIA_FORNECEDOR" Relationship="Self.FK_FORNECEDOR_CATEGORIA_FORNECEDOR" FromRole="FORNECEDOR" ToRole="CATEGORIA_FORNECEDOR" />
+          <NavigationProperty Name="CONTROLE_VEICULO" Relationship="Self.FK_CONTROLE_VEICULO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="CONTROLE_VEICULO" />
           <NavigationProperty Name="EQUIPAMENTO_MANUTENCAO" Relationship="Self.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="EQUIPAMENTO_MANUTENCAO" />
           <NavigationProperty Name="FORNECEDOR_ANEXO" Relationship="Self.FK_FORNECEDOR_ANEXO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="FORNECEDOR_ANEXO" />
           <NavigationProperty Name="FORNECEDOR_COMENTARIO" Relationship="Self.FK_FORNECEDOR_COMENTARIO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="FORNECEDOR_COMENTARIO" />
@@ -5908,7 +5936,6 @@
           <NavigationProperty Name="UF" Relationship="Self.FK_FORNECEDOR_UF" FromRole="FORNECEDOR" ToRole="UF" />
           <NavigationProperty Name="MATERIAL_FORNECEDOR" Relationship="Self.FK_MATERIAL_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="MATERIAL_FORNECEDOR" />
           <NavigationProperty Name="PRODUTO_FORNECEDOR" Relationship="Self.FK_PRODUTO_FORNECEDOR_FORNECEDOR" FromRole="FORNECEDOR" ToRole="PRODUTO_FORNECEDOR" />
-          <NavigationProperty Name="CONTROLE_VEICULO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_FORNECEDOR" FromRole="FORNECEDOR" ToRole="CONTROLE_VEICULO" />
         </EntityType>
         <EntityType Name="FORNECEDOR_ANEXO">
           <Key>
@@ -5998,7 +6025,7 @@
           <Property Name="GRPA_NM_NOME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GRPA_IN_ATIVO" Type="Int32" />
           <NavigationProperty Name="AUTORIZACAO_ACESSO" Relationship="Self.FK_AUTORIZACAO_ACESSO_GRAU_PARENTESCO" FromRole="GRAU_PARENTESCO" ToRole="AUTORIZACAO_ACESSO" />
-          <NavigationProperty Name="ENTRADA_SAIDA" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="GRAU_PARENTESCO" ToRole="ENTRADA_SAIDA" />
+          <NavigationProperty Name="ENTRADA_SAIDA" Relationship="Self.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" FromRole="GRAU_PARENTESCO" ToRole="ENTRADA_SAIDA" />
         </EntityType>
         <EntityType Name="GRUPO">
           <Key>
@@ -6273,13 +6300,13 @@
           <Property Name="OCOR_TX_ENCERRAMENTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="OCOR_DT_CADASTRO" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="OCOR_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="OCOR_TX_TEXTO_PLANO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_OCORRENCIA_ASSINANTE" FromRole="OCORRENCIA" ToRole="ASSINANTE" />
           <NavigationProperty Name="CATEGORIA_OCORRENCIA" Relationship="Self.FK_OCORRENCIA_CATEGORIA_OCORRENCIA" FromRole="OCORRENCIA" ToRole="CATEGORIA_OCORRENCIA" />
           <NavigationProperty Name="OCORRENCIA_ANEXO" Relationship="Self.FK_OCORRENCIA_ANEXO_OCORRENCIA" FromRole="OCORRENCIA" ToRole="OCORRENCIA_ANEXO" />
           <NavigationProperty Name="OCORRENCIA_COMENTARIO" Relationship="Self.FK_OCORRENCIA_COMENTARIO_OCORRENCIA" FromRole="OCORRENCIA" ToRole="OCORRENCIA_COMENTARIO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_OCORRENCIA_UNIDADE" FromRole="OCORRENCIA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_OCORRENCIA_USUARIO" FromRole="OCORRENCIA" ToRole="USUARIO" />
-          <Property Name="OCOR_TX_TEXTO_PLANO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OCORRENCIA_ANEXO">
           <Key>
@@ -6441,6 +6468,8 @@
           <Property Name="RESE_IN_STATUS" Type="Int32" Nullable="false" />
           <Property Name="RESE_IN_LEMBRAR" Type="Int32" Nullable="false" />
           <Property Name="RESE_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="RESE_DT_VETADA" Type="DateTime" Precision="0" />
+          <Property Name="RESE_DT_CONFIRMACAO" Type="DateTime" Precision="0" />
           <NavigationProperty Name="AGENDA_CONDOMINIO" Relationship="Self.FK_AGENDA_CONDOMINIO_RESERVA" FromRole="RESERVA" ToRole="AGENDA_CONDOMINIO" />
           <NavigationProperty Name="AMBIENTE" Relationship="Self.FK_RESERVA_AMBIENTE" FromRole="RESERVA" ToRole="AMBIENTE" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_RESERVA_ASSINANTE" FromRole="RESERVA" ToRole="ASSINANTE" />
@@ -6451,8 +6480,6 @@
           <NavigationProperty Name="RESERVA_COMENTARIO" Relationship="Self.FK_RESERVA_COMENTARIO_RESERVA" FromRole="RESERVA" ToRole="RESERVA_COMENTARIO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_RESERVA_UNIDADE" FromRole="RESERVA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_RESERVA_USUARIO" FromRole="RESERVA" ToRole="USUARIO" />
-          <Property Name="RESE_DT_VETADA" Type="DateTime" Precision="0" />
-          <Property Name="RESE_DT_CONFIRMACAO" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="RESERVA_ANEXO">
           <Key>
@@ -6508,6 +6535,7 @@
           <Property Name="SOMU_IN_SUSENSA" Type="Int32" Nullable="false" />
           <Property Name="SOMU_IN_STATUS" Type="Int32" />
           <Property Name="SOMU_IN_ATIVO" Type="Int32" Nullable="false" />
+          <Property Name="SOMU_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AGENDA_CONDOMINIO" Relationship="Self.FK_AGENDA_CONDOMINIO_SOLICITACAO_MUDANCA" FromRole="SOLICITACAO_MUDANCA" ToRole="AGENDA_CONDOMINIO" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_SOLICITACAO_MUDANCA_ASSINANTE" FromRole="SOLICITACAO_MUDANCA" ToRole="ASSINANTE" />
           <NavigationProperty Name="SOLICITACAO_MUDANCA_ANEXO" Relationship="Self.FK_SOLICITACAO_MUDANCA_ANEXO_SOLICITACAO_MUDANCA" FromRole="SOLICITACAO_MUDANCA" ToRole="SOLICITACAO_MUDANCA_ANEXO" />
@@ -6515,7 +6543,6 @@
           <NavigationProperty Name="SOLICITACAO_MUDANCA_MOVIMENTO" Relationship="Self.FK_SOLICITACAO_MUDANCA_MOVIMENTO_SOLICITACAO_MUDANCA" FromRole="SOLICITACAO_MUDANCA" ToRole="SOLICITACAO_MUDANCA_MOVIMENTO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_SOLICITACAO_MUDANCA_UNIDADE" FromRole="SOLICITACAO_MUDANCA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_SOLICITACAO_MUDANCA_USUARIO" FromRole="SOLICITACAO_MUDANCA" ToRole="USUARIO" />
-          <Property Name="SOMU_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SOLICITACAO_MUDANCA_ANEXO">
           <Key>
@@ -6979,10 +7006,12 @@
           <NavigationProperty Name="CARGO" Relationship="Self.FK_USUARIO_CARGO" FromRole="USUARIO" ToRole="CARGO" />
           <NavigationProperty Name="CATEGORIA_USUARIO" Relationship="Self.FK_USUARIO_CATEGORIA_USUARIO" FromRole="USUARIO" ToRole="CATEGORIA_USUARIO" />
           <NavigationProperty Name="CONTROLE_VEICULO" Relationship="Self.FK_CONTROLE_VEICULO_USUARIO" FromRole="USUARIO" ToRole="CONTROLE_VEICULO" />
+          <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
           <NavigationProperty Name="CORPO_DIRETIVO" Relationship="Self.FK_CORPO_DIRETIVO_USUARIO" FromRole="USUARIO" ToRole="CORPO_DIRETIVO" />
           <NavigationProperty Name="ENCOMENDA" Relationship="Self.FK_ENCOMENDA_USUARIO" FromRole="USUARIO" ToRole="ENCOMENDA" />
           <NavigationProperty Name="ENCOMENDA_COMENTARIO" Relationship="Self.FK_ENCOMENDA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="ENCOMENDA_COMENTARIO" />
           <NavigationProperty Name="ENTRADA_SAIDA" Relationship="Self.FK_ENTRADA_SAIDA_USUARIO" FromRole="USUARIO" ToRole="ENTRADA_SAIDA" />
+          <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="Self.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="ENTRADA_SAIDA_COMENTARIO" />
           <NavigationProperty Name="FORNECEDOR_COMENTARIO" Relationship="Self.FK_FORNECEDOR_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="FORNECEDOR_COMENTARIO" />
           <NavigationProperty Name="FORNECEDOR_MENSAGEM" Relationship="Self.FK_FORNECEDOR_MENSAGEM_USUARIO" FromRole="USUARIO" ToRole="FORNECEDOR_MENSAGEM" />
           <NavigationProperty Name="LISTA_CONVIDADO" Relationship="Self.FK_LISTA_CONVIDADO_USUARIO" FromRole="USUARIO" ToRole="LISTA_CONVIDADO" />
@@ -7010,8 +7039,6 @@
           <NavigationProperty Name="USUARIO_ESCALA_TRABALHO" Relationship="Self.FK_USUARIO_ESCALA_TRABALHO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ESCALA_TRABALHO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
-          <NavigationProperty Name="CONTROLE_VEICULO_ACOMPANHAMENTO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="USUARIO" ToRole="CONTROLE_VEICULO_ACOMPANHAMENTO" />
-          <NavigationProperty Name="ENTRADA_SAIDA_COMENTARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" FromRole="USUARIO" ToRole="ENTRADA_SAIDA_COMENTARIO" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -7035,13 +7062,13 @@
           <Property Name="USCE_DT_MARCACAO" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="USCE_IN_DIRECAO" Type="Int32" Nullable="false" />
           <Property Name="USCE_IN_ATIVO" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_CONTROLE_ENTRADA_USUARIO" FromRole="USUARIO_CONTROLE_ENTRADA" ToRole="USUARIO" />
           <Property Name="USCE_HR_ENTRADA" Type="DateTime" Precision="3" />
           <Property Name="USCE_HR_SAIDA_ALMOCO" Type="DateTime" Precision="3" />
           <Property Name="USCE_HR_VOLTA_ALMOCO" Type="DateTime" Precision="3" />
           <Property Name="USCE_HR_SAIDA" Type="DateTime" Precision="3" />
           <Property Name="USCE_IN_VALIDADO" Type="Int32" />
           <Property Name="USCE_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_USUARIO_CONTROLE_ENTRADA_USUARIO" FromRole="USUARIO_CONTROLE_ENTRADA" ToRole="USUARIO" />
         </EntityType>
         <EntityType Name="USUARIO_ESCALA_TRABALHO">
           <Key>
@@ -8338,6 +8365,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
+          <End Role="CONTROLE_VEICULO" Type="Self.CONTROLE_VEICULO" Multiplicity="1" />
+          <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Type="Self.CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTROLE_VEICULO">
+              <PropertyRef Name="COVE_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <PropertyRef Name="COVE_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_FORNECEDOR">
+          <End Role="FORNECEDOR" Type="Self.FORNECEDOR" Multiplicity="0..1" />
+          <End Role="CONTROLE_VEICULO" Type="Self.CONTROLE_VEICULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FORNECEDOR">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO">
+              <PropertyRef Name="FORN_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CONTROLE_VEICULO_TIPO_VEICULO">
           <End Role="TIPO_VEICULO" Type="Self.TIPO_VEICULO" Multiplicity="0..1" />
           <End Role="CONTROLE_VEICULO" Type="Self.CONTROLE_VEICULO" Multiplicity="*" />
@@ -8370,6 +8421,18 @@
               <PropertyRef Name="USUA_CD_ID" />
             </Principal>
             <Dependent Role="CONTROLE_VEICULO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Type="Self.CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
               <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8494,6 +8557,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
+          <End Role="ENTRADA_SAIDA" Type="Self.ENTRADA_SAIDA" Multiplicity="1" />
+          <End Role="ENTRADA_SAIDA_COMENTARIO" Type="Self.ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ENTRADA_SAIDA">
+              <PropertyRef Name="ENSA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
+              <PropertyRef Name="ENSA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
+          <End Role="GRAU_PARENTESCO" Type="Self.GRAU_PARENTESCO" Multiplicity="0..1" />
+          <End Role="ENTRADA_SAIDA" Type="Self.ENTRADA_SAIDA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRAU_PARENTESCO">
+              <PropertyRef Name="GRPA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA">
+              <PropertyRef Name="GRPA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ENTRADA_SAIDA_UNIDADE">
           <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="0..1" />
           <End Role="ENTRADA_SAIDA" Type="Self.ENTRADA_SAIDA" Multiplicity="*" />
@@ -8514,6 +8601,18 @@
               <PropertyRef Name="USUA_CD_ID" />
             </Principal>
             <Dependent Role="ENTRADA_SAIDA">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="ENTRADA_SAIDA_COMENTARIO" Type="Self.ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="USUA_CD_ID" />
+            </Principal>
+            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
               <PropertyRef Name="USUA_CD_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -9562,7 +9661,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ERP_CondominioEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ERP_CondominiosEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AGENDA" EntityType="Self.AGENDA" />
           <EntitySet Name="AGENDA_ANEXO" EntityType="Self.AGENDA_ANEXO" />
           <EntitySet Name="AGENDA_CONDOMINIO" EntityType="Self.AGENDA_CONDOMINIO" />
@@ -9595,12 +9694,14 @@
           <EntitySet Name="CONTA_BANCO_LANCAMENTO" EntityType="Self.CONTA_BANCO_LANCAMENTO" />
           <EntitySet Name="CONTA_RECEBER" EntityType="Self.CONTA_RECEBER" />
           <EntitySet Name="CONTROLE_VEICULO" EntityType="Self.CONTROLE_VEICULO" />
+          <EntitySet Name="CONTROLE_VEICULO_ACOMPANHAMENTO" EntityType="Self.CONTROLE_VEICULO_ACOMPANHAMENTO" />
           <EntitySet Name="CONVIDADO" EntityType="Self.CONVIDADO" />
           <EntitySet Name="CORPO_DIRETIVO" EntityType="Self.CORPO_DIRETIVO" />
           <EntitySet Name="ENCOMENDA" EntityType="Self.ENCOMENDA" />
           <EntitySet Name="ENCOMENDA_ANEXO" EntityType="Self.ENCOMENDA_ANEXO" />
           <EntitySet Name="ENCOMENDA_COMENTARIO" EntityType="Self.ENCOMENDA_COMENTARIO" />
           <EntitySet Name="ENTRADA_SAIDA" EntityType="Self.ENTRADA_SAIDA" />
+          <EntitySet Name="ENTRADA_SAIDA_COMENTARIO" EntityType="Self.ENTRADA_SAIDA_COMENTARIO" />
           <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" />
           <EntitySet Name="EQUIPAMENTO_ANEXO" EntityType="Self.EQUIPAMENTO_ANEXO" />
           <EntitySet Name="EQUIPAMENTO_MANUTENCAO" EntityType="Self.EQUIPAMENTO_MANUTENCAO" />
@@ -10072,6 +10173,14 @@
             <End Role="CONTA_RECEBER" EntitySet="CONTA_RECEBER" />
             <End Role="RESERVA" EntitySet="RESERVA" />
           </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" Association="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
+            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_FORNECEDOR" Association="Self.FK_CONTROLE_VEICULO_FORNECEDOR">
+            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
+            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+          </AssociationSet>
           <AssociationSet Name="FK_CONTROLE_VEICULO_TIPO_VEICULO" Association="Self.FK_CONTROLE_VEICULO_TIPO_VEICULO">
             <End Role="TIPO_VEICULO" EntitySet="TIPO_VEICULO" />
             <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
@@ -10083,6 +10192,10 @@
           <AssociationSet Name="FK_CONTROLE_VEICULO_USUARIO" Association="Self.FK_CONTROLE_VEICULO_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" Association="Self.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
           </AssociationSet>
           <AssociationSet Name="FK_CONVIDADO_LISTA_CONVIDADO" Association="Self.FK_CONVIDADO_LISTA_CONVIDADO">
             <End Role="LISTA_CONVIDADO" EntitySet="LISTA_CONVIDADO" />
@@ -10124,6 +10237,14 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="ENCOMENDA_COMENTARIO" EntitySet="ENCOMENDA_COMENTARIO" />
           </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" Association="Self.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
+            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO" Association="Self.FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
+            <End Role="GRAU_PARENTESCO" EntitySet="GRAU_PARENTESCO" />
+            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+          </AssociationSet>
           <AssociationSet Name="FK_ENTRADA_SAIDA_UNIDADE" Association="Self.FK_ENTRADA_SAIDA_UNIDADE">
             <End Role="UNIDADE" EntitySet="UNIDADE" />
             <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
@@ -10131,6 +10252,10 @@
           <AssociationSet Name="FK_ENTRADA_SAIDA_USUARIO" Association="Self.FK_ENTRADA_SAIDA_USUARIO">
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" Association="Self.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
           </AssociationSet>
           <AssociationSet Name="FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" Association="Self.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO">
             <End Role="EQUIPAMENTO" EntitySet="EQUIPAMENTO" />
@@ -10480,139 +10605,15 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
             <End Role="VEICULO_ANEXO" EntitySet="VEICULO_ANEXO" />
           </AssociationSet>
-          <EntitySet Name="CONTROLE_VEICULO_ACOMPANHAMENTO" EntityType="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" />
-          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
-            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
-            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
-            <End Role="USUARIO" EntitySet="USUARIO" />
-            <End Role="CONTROLE_VEICULO_ACOMPANHAMENTO" EntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CONTROLE_VEICULO_FORNECEDOR" Association="ERP_CondominioModel.FK_CONTROLE_VEICULO_FORNECEDOR">
-            <End Role="FORNECEDOR" EntitySet="FORNECEDOR" />
-            <End Role="CONTROLE_VEICULO" EntitySet="CONTROLE_VEICULO" />
-          </AssociationSet>
-          <EntitySet Name="ENTRADA_SAIDA_COMENTARIO" EntityType="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO" />
-          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" Association="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
-            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
-            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO" Association="ERP_CondominioModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
-            <End Role="GRAU_PARENTESCO" EntitySet="GRAU_PARENTESCO" />
-            <End Role="ENTRADA_SAIDA" EntitySet="ENTRADA_SAIDA" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" Association="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
-            <End Role="USUARIO" EntitySet="USUARIO" />
-            <End Role="ENTRADA_SAIDA_COMENTARIO" EntitySet="ENTRADA_SAIDA_COMENTARIO" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
-          <Key>
-            <PropertyRef Name="CVAC_CD_ID" />
-          </Key>
-          <Property Name="CVAC_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COVE_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="CVAC_DT_ACOMPANHAMENTO" Type="DateTime" Precision="3" />
-          <Property Name="CVAC_DS_TEXTO" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-          <Property Name="CVAC_IN_ATIVO" Type="Int32" />
-          <NavigationProperty Name="CONTROLE_VEICULO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" FromRole="CONTROLE_VEICULO_ACOMPANHAMENTO" ToRole="CONTROLE_VEICULO" />
-          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" FromRole="CONTROLE_VEICULO_ACOMPANHAMENTO" ToRole="USUARIO" />
-        </EntityType>
-        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO">
-          <End Type="ERP_CondominioModel.CONTROLE_VEICULO" Role="CONTROLE_VEICULO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CONTROLE_VEICULO">
-              <PropertyRef Name="COVE_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
-              <PropertyRef Name="COVE_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO">
-          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO" Role="CONTROLE_VEICULO_ACOMPANHAMENTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USUARIO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTROLE_VEICULO_ACOMPANHAMENTO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CONTROLE_VEICULO_FORNECEDOR">
-          <End Type="ERP_CondominioModel.FORNECEDOR" Role="FORNECEDOR" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.CONTROLE_VEICULO" Role="CONTROLE_VEICULO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FORNECEDOR">
-              <PropertyRef Name="FORN_CD_ID" />
-            </Principal>
-            <Dependent Role="CONTROLE_VEICULO">
-              <PropertyRef Name="FORN_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ENTRADA_SAIDA_COMENTARIO">
-          <Key>
-            <PropertyRef Name="ESCO_CD_ID" />
-          </Key>
-          <Property Name="ESCO_CD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ENSA_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="USUA_CD_ID" Type="Int32" Nullable="false" />
-          <Property Name="ESCO_DT_COMENTARIO" Type="DateTime" Precision="3" />
-          <Property Name="ESCO_DS_COMENTARIO" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="ESCO_IN_ATIVO" Type="Int32" />
-          <NavigationProperty Name="ENTRADA_SAIDA" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" FromRole="ENTRADA_SAIDA_COMENTARIO" ToRole="ENTRADA_SAIDA" />
-          <NavigationProperty Name="USUARIO" Relationship="ERP_CondominioModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" FromRole="ENTRADA_SAIDA_COMENTARIO" ToRole="USUARIO" />
-        </EntityType>
-        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA">
-          <End Type="ERP_CondominioModel.ENTRADA_SAIDA" Role="ENTRADA_SAIDA" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO" Role="ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ENTRADA_SAIDA">
-              <PropertyRef Name="ENSA_CD_ID" />
-            </Principal>
-            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
-              <PropertyRef Name="ENSA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ENTRADA_SAIDA_GRAU_PARENTESCO">
-          <End Type="ERP_CondominioModel.GRAU_PARENTESCO" Role="GRAU_PARENTESCO" Multiplicity="0..1" />
-          <End Type="ERP_CondominioModel.ENTRADA_SAIDA" Role="ENTRADA_SAIDA" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GRAU_PARENTESCO">
-              <PropertyRef Name="GRPA_CD_ID" />
-            </Principal>
-            <Dependent Role="ENTRADA_SAIDA">
-              <PropertyRef Name="GRPA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ENTRADA_SAIDA_COMENTARIO_USUARIO">
-          <End Type="ERP_CondominioModel.USUARIO" Role="USUARIO" Multiplicity="1" />
-          <End Type="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO" Role="ENTRADA_SAIDA_COMENTARIO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USUARIO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Principal>
-            <Dependent Role="ENTRADA_SAIDA_COMENTARIO">
-              <PropertyRef Name="USUA_CD_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ERP_CondominioModelStoreContainer" CdmEntityContainer="ERP_CondominioEntities">
+        <EntityContainerMapping StorageEntityContainer="ERP_CondominiosModelStoreContainer" CdmEntityContainer="ERP_CondominiosEntities">
           <EntitySetMapping Name="AGENDA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AGENDA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AGENDA">
               <MappingFragment StoreEntitySet="AGENDA">
                 <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
@@ -10630,7 +10631,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AGENDA_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AGENDA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AGENDA_ANEXO">
               <MappingFragment StoreEntitySet="AGENDA_ANEXO">
                 <ScalarProperty Name="AGAN_CD_ID" ColumnName="AGAN_CD_ID" />
                 <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
@@ -10643,7 +10644,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AGENDA_CONDOMINIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AGENDA_CONDOMINIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AGENDA_CONDOMINIO">
               <MappingFragment StoreEntitySet="AGENDA_CONDOMINIO">
                 <ScalarProperty Name="AGCO_CD_ID" ColumnName="AGCO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10661,7 +10662,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AGENDA_CONDOMINIO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AGENDA_CONDOMINIO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AGENDA_CONDOMINIO_ANEXO">
               <MappingFragment StoreEntitySet="AGENDA_CONDOMINIO_ANEXO">
                 <ScalarProperty Name="ACAN_CD_ID" ColumnName="ACAN_CD_ID" />
                 <ScalarProperty Name="AGCO_CD_ID" ColumnName="AGCO_CD_ID" />
@@ -10674,7 +10675,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AGENDA_VINCULO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AGENDA_VINCULO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AGENDA_VINCULO">
               <MappingFragment StoreEntitySet="AGENDA_VINCULO">
                 <ScalarProperty Name="AGVI_CD_ID" ColumnName="AGVI_CD_ID" />
                 <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
@@ -10684,7 +10685,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AMBIENTE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AMBIENTE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AMBIENTE">
               <MappingFragment StoreEntitySet="AMBIENTE">
                 <ScalarProperty Name="AMBI_CD_ID" ColumnName="AMBI_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10706,7 +10707,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AMBIENTE_CHAVE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AMBIENTE_CHAVE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AMBIENTE_CHAVE">
               <MappingFragment StoreEntitySet="AMBIENTE_CHAVE">
                 <ScalarProperty Name="AMCH_CD_ID" ColumnName="AMCH_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10723,7 +10724,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AMBIENTE_CUSTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AMBIENTE_CUSTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AMBIENTE_CUSTO">
               <MappingFragment StoreEntitySet="AMBIENTE_CUSTO">
                 <ScalarProperty Name="AMCU_CD_ID" ColumnName="AMCU_CD_ID" />
                 <ScalarProperty Name="AMBI_CD_ID" ColumnName="AMBI_CD_ID" />
@@ -10736,7 +10737,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AMBIENTE_FINALIDADE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AMBIENTE_FINALIDADE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AMBIENTE_FINALIDADE">
               <MappingFragment StoreEntitySet="AMBIENTE_FINALIDADE">
                 <ScalarProperty Name="AMFI_CD_ID" ColumnName="AMFI_CD_ID" />
                 <ScalarProperty Name="AMBI_CD_ID" ColumnName="AMBI_CD_ID" />
@@ -10746,7 +10747,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AMBIENTE_IMAGEM">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AMBIENTE_IMAGEM">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AMBIENTE_IMAGEM">
               <MappingFragment StoreEntitySet="AMBIENTE_IMAGEM">
                 <ScalarProperty Name="AMIM_CD_ID" ColumnName="AMIM_CD_ID" />
                 <ScalarProperty Name="AMBI_CD_ID" ColumnName="AMBI_CD_ID" />
@@ -10759,7 +10760,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ASSINANTE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ASSINANTE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ASSINANTE">
               <MappingFragment StoreEntitySet="ASSINANTE">
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
@@ -10785,7 +10786,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ASSINANTE_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ASSINANTE_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ASSINANTE_ANEXO">
               <MappingFragment StoreEntitySet="ASSINANTE_ANEXO">
                 <ScalarProperty Name="ASAN_CD_ID" ColumnName="ASAN_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10798,7 +10799,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AUTORIZACAO_ACESSO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AUTORIZACAO_ACESSO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AUTORIZACAO_ACESSO">
               <MappingFragment StoreEntitySet="AUTORIZACAO_ACESSO">
                 <ScalarProperty Name="AUAC_CD_ID" ColumnName="AUAC_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10821,7 +10822,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AUTORIZACAO_ACESSO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.AUTORIZACAO_ACESSO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.AUTORIZACAO_ACESSO_ANEXO">
               <MappingFragment StoreEntitySet="AUTORIZACAO_ACESSO_ANEXO">
                 <ScalarProperty Name="AAAN_CD_ID" ColumnName="AAAN_CD_ID" />
                 <ScalarProperty Name="AUAC_CD_ID" ColumnName="AUAC_CD_ID" />
@@ -10834,7 +10835,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BANCO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.BANCO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.BANCO">
               <MappingFragment StoreEntitySet="BANCO">
                 <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10845,7 +10846,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CARGO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CARGO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CARGO">
               <MappingFragment StoreEntitySet="CARGO">
                 <ScalarProperty Name="CARG_CD_ID" ColumnName="CARG_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10856,7 +10857,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_AGENDA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_AGENDA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_AGENDA">
               <MappingFragment StoreEntitySet="CATEGORIA_AGENDA">
                 <ScalarProperty Name="CAAG_CD_ID" ColumnName="CAAG_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10866,7 +10867,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_EQUIPAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_EQUIPAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_EQUIPAMENTO">
               <MappingFragment StoreEntitySet="CATEGORIA_EQUIPAMENTO">
                 <ScalarProperty Name="CAEQ_CD_ID" ColumnName="CAEQ_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10876,7 +10877,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_FORNECEDOR">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_FORNECEDOR">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_FORNECEDOR">
               <MappingFragment StoreEntitySet="CATEGORIA_FORNECEDOR">
                 <ScalarProperty Name="CAFO_CD_ID" ColumnName="CAFO_CD_ID" />
                 <ScalarProperty Name="CAFO_NM_NOME" ColumnName="CAFO_NM_NOME" />
@@ -10885,7 +10886,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_NOTIFICACAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_NOTIFICACAO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_NOTIFICACAO">
               <MappingFragment StoreEntitySet="CATEGORIA_NOTIFICACAO">
                 <ScalarProperty Name="CANO_CD_ID" ColumnName="CANO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10895,7 +10896,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_OCORRENCIA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_OCORRENCIA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_OCORRENCIA">
               <MappingFragment StoreEntitySet="CATEGORIA_OCORRENCIA">
                 <ScalarProperty Name="CAOC_CD_ID" ColumnName="CAOC_CD_ID" />
                 <ScalarProperty Name="CAOC_NM_NOME" ColumnName="CAOC_NM_NOME" />
@@ -10904,7 +10905,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_PRODUTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_PRODUTO">
               <MappingFragment StoreEntitySet="CATEGORIA_PRODUTO">
                 <ScalarProperty Name="CAPR_CD_ID" ColumnName="CAPR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10914,7 +10915,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_TELEFONE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_TELEFONE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_TELEFONE">
               <MappingFragment StoreEntitySet="CATEGORIA_TELEFONE">
                 <ScalarProperty Name="CATE_CD_ID" ColumnName="CATE_CD_ID" />
                 <ScalarProperty Name="CATE_NM_NOME" ColumnName="CATE_NM_NOME" />
@@ -10924,7 +10925,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CATEGORIA_USUARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CATEGORIA_USUARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CATEGORIA_USUARIO">
               <MappingFragment StoreEntitySet="CATEGORIA_USUARIO">
                 <ScalarProperty Name="CAUS_CD_ID" ColumnName="CAUS_CD_ID" />
                 <ScalarProperty Name="CAUS_NM_NOME" ColumnName="CAUS_NM_NOME" />
@@ -10934,7 +10935,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CENTRO_CUSTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CENTRO_CUSTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CENTRO_CUSTO">
               <MappingFragment StoreEntitySet="CENTRO_CUSTO">
                 <ScalarProperty Name="CECU_CD_ID" ColumnName="CECU_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10950,9 +10951,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONFIGURACAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONFIGURACAO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
-                <ScalarProperty Name="CONF_IN_LIMITE_HORA_VEICULO" ColumnName="CONF_IN_LIMITE_HORA_VEICULO" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CONF_NR_FALHAS_DIA" ColumnName="CONF_NR_FALHAS_DIA" />
@@ -10967,11 +10967,12 @@
                 <ScalarProperty Name="CONF_NR_CORPO_DIRETIVO_PERIODO" ColumnName="CONF_NR_CORPO_DIRETIVO_PERIODO" />
                 <ScalarProperty Name="CONF_SG_LOGIN_SMS" ColumnName="CONF_SG_LOGIN_SMS" />
                 <ScalarProperty Name="CONF_SG_SENHA_SMS" ColumnName="CONF_SG_SENHA_SMS" />
+                <ScalarProperty Name="CONF_IN_LIMITE_HORA_VEICULO" ColumnName="CONF_IN_LIMITE_HORA_VEICULO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONFIGURACAO_ASSOCIACAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONFIGURACAO_ASSOCIACAO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONFIGURACAO_ASSOCIACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO_ASSOCIACAO">
                 <ScalarProperty Name="COAS_CD_ID" ColumnName="COAS_CD_ID" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
@@ -10982,9 +10983,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTA_BANCO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONTA_BANCO">
               <MappingFragment StoreEntitySet="CONTA_BANCO">
-                <ScalarProperty Name="COBA_NM_NOME_EXIBE_OLD" ColumnName="COBA_NM_NOME_EXIBE_OLD" />
                 <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="BANC_CD_ID" ColumnName="BANC_CD_ID" />
@@ -11001,7 +11001,7 @@
                 <ScalarProperty Name="COBA_NR_TELEFONE" ColumnName="COBA_NR_TELEFONE" />
                 <ScalarProperty Name="COBA_DT_ABERTURA" ColumnName="COBA_DT_ABERTURA" />
                 <ScalarProperty Name="COBA_VL_SALDO_ATUAL" ColumnName="COBA_VL_SALDO_ATUAL" />
-                <ScalarProperty Name="COBA_NM_NOME_EXIBE" ColumnName="COBA_NM_NOME_EXIBE" />
+                <ScalarProperty Name="COBA_NM_NOME_EXIBE_OLD" ColumnName="COBA_NM_NOME_EXIBE_OLD" />
                 <ScalarProperty Name="COBA_IN_CONTA_PADRAO" ColumnName="COBA_IN_CONTA_PADRAO" />
                 <ScalarProperty Name="COBA_IN_CONTA_SELECAO" ColumnName="COBA_IN_CONTA_SELECAO" />
                 <ScalarProperty Name="COBA_IN_DIAS" ColumnName="COBA_IN_DIAS" />
@@ -11009,11 +11009,12 @@
                 <ScalarProperty Name="COBA_IN_TIPO_FILTRO" ColumnName="COBA_IN_TIPO_FILTRO" />
                 <ScalarProperty Name="COBA_IN_MES" ColumnName="COBA_IN_MES" />
                 <ScalarProperty Name="COBA_DT_SELECAO_FINAL" ColumnName="COBA_DT_SELECAO_FINAL" />
+                <ScalarProperty Name="COBA_NM_NOME_EXIBE" ColumnName="COBA_NM_NOME_EXIBE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTA_BANCO_CONTATO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO_CONTATO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONTA_BANCO_CONTATO">
               <MappingFragment StoreEntitySet="CONTA_BANCO_CONTATO">
                 <ScalarProperty Name="CBCT_CD_ID" ColumnName="CBCT_CD_ID" />
                 <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
@@ -11026,7 +11027,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTA_BANCO_LANCAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_BANCO_LANCAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONTA_BANCO_LANCAMENTO">
               <MappingFragment StoreEntitySet="CONTA_BANCO_LANCAMENTO">
                 <ScalarProperty Name="CBLA_CD_ID" ColumnName="CBLA_CD_ID" />
                 <ScalarProperty Name="COBA_CD_ID" ColumnName="COBA_CD_ID" />
@@ -11041,7 +11042,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTA_RECEBER">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTA_RECEBER">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONTA_RECEBER">
               <MappingFragment StoreEntitySet="CONTA_RECEBER">
                 <ScalarProperty Name="RECE_CD_ID" ColumnName="RECE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11050,15 +11051,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONTROLE_VEICULO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTROLE_VEICULO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONTROLE_VEICULO">
               <MappingFragment StoreEntitySet="CONTROLE_VEICULO">
-                <ScalarProperty Name="COVE_NM_PESSOA" ColumnName="COVE_NM_PESSOA" />
-                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
                 <ScalarProperty Name="COVE_CD_ID" ColumnName="COVE_CD_ID" />
                 <ScalarProperty Name="TIVE_CD_ID" ColumnName="TIVE_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
                 <ScalarProperty Name="COVE_DT_ENTRADA" ColumnName="COVE_DT_ENTRADA" />
                 <ScalarProperty Name="COVE_DT_SAIDA" ColumnName="COVE_DT_SAIDA" />
                 <ScalarProperty Name="COVE_NM_PLACA" ColumnName="COVE_NM_PLACA" />
@@ -11069,11 +11069,24 @@
                 <ScalarProperty Name="COVE_NM_COR" ColumnName="COVE_NM_COR" />
                 <ScalarProperty Name="COVE_DT_PREVISAO_SAIDA" ColumnName="COVE_DT_PREVISAO_SAIDA" />
                 <ScalarProperty Name="COVE_DS_JUSTIFICATIVA" ColumnName="COVE_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="COVE_NM_PESSOA" ColumnName="COVE_NM_PESSOA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONTROLE_VEICULO_ACOMPANHAMENTO">
+              <MappingFragment StoreEntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO">
+                <ScalarProperty Name="CVAC_CD_ID" ColumnName="CVAC_CD_ID" />
+                <ScalarProperty Name="COVE_CD_ID" ColumnName="COVE_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="CVAC_DT_ACOMPANHAMENTO" ColumnName="CVAC_DT_ACOMPANHAMENTO" />
+                <ScalarProperty Name="CVAC_DS_TEXTO" ColumnName="CVAC_DS_TEXTO" />
+                <ScalarProperty Name="CVAC_IN_ATIVO" ColumnName="CVAC_IN_ATIVO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CONVIDADO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONVIDADO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CONVIDADO">
               <MappingFragment StoreEntitySet="CONVIDADO">
                 <ScalarProperty Name="CONV_CD_ID" ColumnName="CONV_CD_ID" />
                 <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
@@ -11086,7 +11099,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CORPO_DIRETIVO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CORPO_DIRETIVO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.CORPO_DIRETIVO">
               <MappingFragment StoreEntitySet="CORPO_DIRETIVO">
                 <ScalarProperty Name="CODI_CD_ID" ColumnName="CODI_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11102,10 +11115,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ENCOMENDA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ENCOMENDA">
               <MappingFragment StoreEntitySet="ENCOMENDA">
-                <ScalarProperty Name="ENCO_DT_DEVOLUCAO" ColumnName="ENCO_DT_DEVOLUCAO" />
-                <ScalarProperty Name="ENCO_IN_STATUS" ColumnName="ENCO_IN_STATUS" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -11125,11 +11136,13 @@
                 <ScalarProperty Name="ENCO_TX_OBSERVACOES" ColumnName="ENCO_TX_OBSERVACOES" />
                 <ScalarProperty Name="ENCO_AQ_FOTO" ColumnName="ENCO_AQ_FOTO" />
                 <ScalarProperty Name="ENCO_DS_JUSTIFICATIVA" ColumnName="ENCO_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="ENCO_IN_STATUS" ColumnName="ENCO_IN_STATUS" />
+                <ScalarProperty Name="ENCO_DT_DEVOLUCAO" ColumnName="ENCO_DT_DEVOLUCAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ENCOMENDA_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ENCOMENDA_ANEXO">
               <MappingFragment StoreEntitySet="ENCOMENDA_ANEXO">
                 <ScalarProperty Name="ENAN_CD_ID" ColumnName="ENAN_CD_ID" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
@@ -11142,7 +11155,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ENCOMENDA_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ENCOMENDA_COMENTARIO">
               <MappingFragment StoreEntitySet="ENCOMENDA_COMENTARIO">
                 <ScalarProperty Name="ECOM_CD_ID" ColumnName="ECOM_CD_ID" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
@@ -11154,15 +11167,14 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ENTRADA_SAIDA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ENTRADA_SAIDA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ENTRADA_SAIDA">
               <MappingFragment StoreEntitySet="ENTRADA_SAIDA">
-                <ScalarProperty Name="ENSA_IN_ATIVO" ColumnName="ENSA_IN_ATIVO" />
-                <ScalarProperty Name="GRPA_CD_ID" ColumnName="GRPA_CD_ID" />
                 <ScalarProperty Name="ENSA_CD_ID" ColumnName="ENSA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
                 <ScalarProperty Name="AUAC_CD_ID" ColumnName="AUAC_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="GRPA_CD_ID" ColumnName="GRPA_CD_ID" />
                 <ScalarProperty Name="ENSA_NM_NOME" ColumnName="ENSA_NM_NOME" />
                 <ScalarProperty Name="ENSA_NR_DOCUMENTO" ColumnName="ENSA_NR_DOCUMENTO" />
                 <ScalarProperty Name="ENSA_NM_EMPRESA" ColumnName="ENSA_NM_EMPRESA" />
@@ -11175,13 +11187,25 @@
                 <ScalarProperty Name="ENSA_IN_LISTA_NEGRA" ColumnName="ENSA_IN_LISTA_NEGRA" />
                 <ScalarProperty Name="ENSA_IN_STATUS" ColumnName="ENSA_IN_STATUS" />
                 <ScalarProperty Name="ENSA_DS_JUSTIFICATIVA" ColumnName="ENSA_DS_JUSTIFICATIVA" />
+                <ScalarProperty Name="ENSA_IN_ATIVO" ColumnName="ENSA_IN_ATIVO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ENTRADA_SAIDA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.ENTRADA_SAIDA_COMENTARIO">
+              <MappingFragment StoreEntitySet="ENTRADA_SAIDA_COMENTARIO">
+                <ScalarProperty Name="ESCO_CD_ID" ColumnName="ESCO_CD_ID" />
+                <ScalarProperty Name="ENSA_CD_ID" ColumnName="ENSA_CD_ID" />
+                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
+                <ScalarProperty Name="ESCO_DT_COMENTARIO" ColumnName="ESCO_DT_COMENTARIO" />
+                <ScalarProperty Name="ESCO_DS_COMENTARIO" ColumnName="ESCO_DS_COMENTARIO" />
+                <ScalarProperty Name="ESCO_IN_ATIVO" ColumnName="ESCO_IN_ATIVO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EQUIPAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.EQUIPAMENTO">
               <MappingFragment StoreEntitySet="EQUIPAMENTO">
-                <ScalarProperty Name="EQUI_IN_AVISA_DEPRECIACAO" ColumnName="EQUI_IN_AVISA_DEPRECIACAO" />
                 <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
@@ -11203,11 +11227,12 @@
                 <ScalarProperty Name="EQUI_IN_DEPRECIADOS" ColumnName="EQUI_IN_DEPRECIADOS" />
                 <ScalarProperty Name="EQUI_IN_MANUTENCAO" ColumnName="EQUI_IN_MANUTENCAO" />
                 <ScalarProperty Name="EQUI_IN_BAIXADOS" ColumnName="EQUI_IN_BAIXADOS" />
+                <ScalarProperty Name="EQUI_IN_AVISA_DEPRECIACAO" ColumnName="EQUI_IN_AVISA_DEPRECIACAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EQUIPAMENTO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.EQUIPAMENTO_ANEXO">
               <MappingFragment StoreEntitySet="EQUIPAMENTO_ANEXO">
                 <ScalarProperty Name="EQAN_CD_ID" ColumnName="EQAN_CD_ID" />
                 <ScalarProperty Name="EQUI_CD_ID" ColumnName="EQUI_CD_ID" />
@@ -11220,7 +11245,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EQUIPAMENTO_MANUTENCAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.EQUIPAMENTO_MANUTENCAO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.EQUIPAMENTO_MANUTENCAO">
               <MappingFragment StoreEntitySet="EQUIPAMENTO_MANUTENCAO">
                 <ScalarProperty Name="EQMA_CD_ID" ColumnName="EQMA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11233,7 +11258,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FINALIDADE_RESERVA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FINALIDADE_RESERVA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FINALIDADE_RESERVA">
               <MappingFragment StoreEntitySet="FINALIDADE_RESERVA">
                 <ScalarProperty Name="FIRE_CD_ID" ColumnName="FIRE_CD_ID" />
                 <ScalarProperty Name="FIRE_NM_NOME" ColumnName="FIRE_NM_NOME" />
@@ -11242,7 +11267,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORMA_ENTREGA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORMA_ENTREGA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORMA_ENTREGA">
               <MappingFragment StoreEntitySet="FORMA_ENTREGA">
                 <ScalarProperty Name="FOEN_CD_ID" ColumnName="FOEN_CD_ID" />
                 <ScalarProperty Name="FOEN_NM_NOME" ColumnName="FOEN_NM_NOME" />
@@ -11251,7 +11276,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORNECEDOR">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORNECEDOR">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORNECEDOR">
               <MappingFragment StoreEntitySet="FORNECEDOR">
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11286,7 +11311,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORNECEDOR_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORNECEDOR_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORNECEDOR_ANEXO">
               <MappingFragment StoreEntitySet="FORNECEDOR_ANEXO">
                 <ScalarProperty Name="FOAN_CD_ID" ColumnName="FOAN_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
@@ -11299,7 +11324,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORNECEDOR_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORNECEDOR_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORNECEDOR_COMENTARIO">
               <MappingFragment StoreEntitySet="FORNECEDOR_COMENTARIO">
                 <ScalarProperty Name="FOCM_CD_ID" ColumnName="FOCM_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
@@ -11311,7 +11336,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORNECEDOR_CONTATO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORNECEDOR_CONTATO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORNECEDOR_CONTATO">
               <MappingFragment StoreEntitySet="FORNECEDOR_CONTATO">
                 <ScalarProperty Name="FOCO_CD_ID" ColumnName="FOCO_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
@@ -11324,7 +11349,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORNECEDOR_MENSAGEM">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORNECEDOR_MENSAGEM">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORNECEDOR_MENSAGEM">
               <MappingFragment StoreEntitySet="FORNECEDOR_MENSAGEM">
                 <ScalarProperty Name="FOME_CD_ID" ColumnName="FOME_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
@@ -11338,7 +11363,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FORNECEDOR_QUADRO_SOCIETARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FORNECEDOR_QUADRO_SOCIETARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FORNECEDOR_QUADRO_SOCIETARIO">
               <MappingFragment StoreEntitySet="FORNECEDOR_QUADRO_SOCIETARIO">
                 <ScalarProperty Name="FOQS_CD_ID" ColumnName="FOQS_CD_ID" />
                 <ScalarProperty Name="FORN_CD_ID" ColumnName="FORN_CD_ID" />
@@ -11352,7 +11377,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FUNCAO_CORPO_DIRETIVO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.FUNCAO_CORPO_DIRETIVO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.FUNCAO_CORPO_DIRETIVO">
               <MappingFragment StoreEntitySet="FUNCAO_CORPO_DIRETIVO">
                 <ScalarProperty Name="FUCO_CD_ID" ColumnName="FUCO_CD_ID" />
                 <ScalarProperty Name="FUCO_NM_NOME" ColumnName="FUCO_NM_NOME" />
@@ -11362,7 +11387,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GRAU_PARENTESCO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.GRAU_PARENTESCO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.GRAU_PARENTESCO">
               <MappingFragment StoreEntitySet="GRAU_PARENTESCO">
                 <ScalarProperty Name="GRPA_CD_ID" ColumnName="GRPA_CD_ID" />
                 <ScalarProperty Name="GRPA_NM_NOME" ColumnName="GRPA_NM_NOME" />
@@ -11371,7 +11396,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GRUPO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.GRUPO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.GRUPO">
               <MappingFragment StoreEntitySet="GRUPO">
                 <ScalarProperty Name="GRUP_CD_ID" ColumnName="GRUP_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11385,7 +11410,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LISTA_CONVIDADO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.LISTA_CONVIDADO">
               <MappingFragment StoreEntitySet="LISTA_CONVIDADO">
                 <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11402,7 +11427,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LISTA_CONVIDADO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.LISTA_CONVIDADO_ANEXO">
               <MappingFragment StoreEntitySet="LISTA_CONVIDADO_ANEXO">
                 <ScalarProperty Name="LCAN_CD_ID" ColumnName="LCAN_CD_ID" />
                 <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
@@ -11415,7 +11440,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LISTA_CONVIDADO_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.LISTA_CONVIDADO_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.LISTA_CONVIDADO_COMENTARIO">
               <MappingFragment StoreEntitySet="LISTA_CONVIDADO_COMENTARIO">
                 <ScalarProperty Name="LCCM_CD_ID" ColumnName="LCCM_CD_ID" />
                 <ScalarProperty Name="LICO_CD_ID" ColumnName="LICO_CD_ID" />
@@ -11427,7 +11452,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOG">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.LOG">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.LOG">
               <MappingFragment StoreEntitySet="LOG">
                 <ScalarProperty Name="LOG_CD_ID" ColumnName="LOG_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11441,7 +11466,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATERIAL">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.MATERIAL">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.MATERIAL">
               <MappingFragment StoreEntitySet="MATERIAL">
                 <ScalarProperty Name="MATE_CD_ID" ColumnName="MATE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11472,7 +11497,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATERIAL_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.MATERIAL_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.MATERIAL_ANEXO">
               <MappingFragment StoreEntitySet="MATERIAL_ANEXO">
                 <ScalarProperty Name="MAAN_CD_ID" ColumnName="MAAN_CD_ID" />
                 <ScalarProperty Name="MATE_CD_ID" ColumnName="MATE_CD_ID" />
@@ -11485,7 +11510,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATERIAL_FORNECEDOR">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.MATERIAL_FORNECEDOR">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.MATERIAL_FORNECEDOR">
               <MappingFragment StoreEntitySet="MATERIAL_FORNECEDOR">
                 <ScalarProperty Name="MAFO_CD_ID" ColumnName="MAFO_CD_ID" />
                 <ScalarProperty Name="MATE_CD_ID" ColumnName="MATE_CD_ID" />
@@ -11495,7 +11520,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MATERIAL_MOVIMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.MATERIAL_MOVIMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.MATERIAL_MOVIMENTO">
               <MappingFragment StoreEntitySet="MATERIAL_MOVIMENTO">
                 <ScalarProperty Name="MAMO_CD_ID" ColumnName="MAMO_CD_ID" />
                 <ScalarProperty Name="MATE_CD_ID" ColumnName="MATE_CD_ID" />
@@ -11514,7 +11539,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MOVIMENTO_ESTOQUE_PRODUTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.MOVIMENTO_ESTOQUE_PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.MOVIMENTO_ESTOQUE_PRODUTO">
               <MappingFragment StoreEntitySet="MOVIMENTO_ESTOQUE_PRODUTO">
                 <ScalarProperty Name="MOEP_CD_ID" ColumnName="MOEP_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11535,7 +11560,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NOTICIA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.NOTICIA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.NOTICIA">
               <MappingFragment StoreEntitySet="NOTICIA">
                 <ScalarProperty Name="NOTC_CD_ID" ColumnName="NOTC_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11555,7 +11580,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NOTICIA_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.NOTICIA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.NOTICIA_COMENTARIO">
               <MappingFragment StoreEntitySet="NOTICIA_COMENTARIO">
                 <ScalarProperty Name="NOCO_CD_ID" ColumnName="NOCO_CD_ID" />
                 <ScalarProperty Name="NOTC_CD_ID" ColumnName="NOTC_CD_ID" />
@@ -11567,7 +11592,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NOTIFICACAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.NOTIFICACAO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.NOTIFICACAO">
               <MappingFragment StoreEntitySet="NOTIFICACAO">
                 <ScalarProperty Name="NOTI_CD_ID" ColumnName="NOTI_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11587,7 +11612,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NOTIFICACAO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.NOTIFICACAO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.NOTIFICACAO_ANEXO">
               <MappingFragment StoreEntitySet="NOTIFICACAO_ANEXO">
                 <ScalarProperty Name="NOAN_CD_ID" ColumnName="NOAN_CD_ID" />
                 <ScalarProperty Name="NOTI_CD_ID" ColumnName="NOTI_CD_ID" />
@@ -11600,9 +11625,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OCORRENCIA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.OCORRENCIA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.OCORRENCIA">
               <MappingFragment StoreEntitySet="OCORRENCIA">
-                <ScalarProperty Name="OCOR_TX_TEXTO_PLANO" ColumnName="OCOR_TX_TEXTO_PLANO" />
                 <ScalarProperty Name="OCOR_CD_ID" ColumnName="OCOR_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11617,11 +11641,12 @@
                 <ScalarProperty Name="OCOR_TX_ENCERRAMENTO" ColumnName="OCOR_TX_ENCERRAMENTO" />
                 <ScalarProperty Name="OCOR_DT_CADASTRO" ColumnName="OCOR_DT_CADASTRO" />
                 <ScalarProperty Name="OCOR_IN_ATIVO" ColumnName="OCOR_IN_ATIVO" />
+                <ScalarProperty Name="OCOR_TX_TEXTO_PLANO" ColumnName="OCOR_TX_TEXTO_PLANO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OCORRENCIA_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.OCORRENCIA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.OCORRENCIA_ANEXO">
               <MappingFragment StoreEntitySet="OCORRENCIA_ANEXO">
                 <ScalarProperty Name="OCAN_CD_ID" ColumnName="OCAN_CD_ID" />
                 <ScalarProperty Name="OCOR_CD_ID" ColumnName="OCOR_CD_ID" />
@@ -11636,7 +11661,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OCORRENCIA_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.OCORRENCIA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.OCORRENCIA_COMENTARIO">
               <MappingFragment StoreEntitySet="OCORRENCIA_COMENTARIO">
                 <ScalarProperty Name="OCCO_CD_ID" ColumnName="OCCO_CD_ID" />
                 <ScalarProperty Name="OCOR_CD_ID" ColumnName="OCOR_CD_ID" />
@@ -11650,7 +11675,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PERFIL">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PERFIL">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.PERFIL">
               <MappingFragment StoreEntitySet="PERFIL">
                 <ScalarProperty Name="PERF_CD_ID" ColumnName="PERF_CD_ID" />
                 <ScalarProperty Name="PERF_SG_SIGLA" ColumnName="PERF_SG_SIGLA" />
@@ -11659,7 +11684,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PERIODICIDADE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PERIODICIDADE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.PERIODICIDADE">
               <MappingFragment StoreEntitySet="PERIODICIDADE">
                 <ScalarProperty Name="PERI_CD_ID" ColumnName="PERI_CD_ID" />
                 <ScalarProperty Name="PERI_NM_NOME" ColumnName="PERI_NM_NOME" />
@@ -11669,7 +11694,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PERIODICIDADE_TAREFA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PERIODICIDADE_TAREFA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.PERIODICIDADE_TAREFA">
               <MappingFragment StoreEntitySet="PERIODICIDADE_TAREFA">
                 <ScalarProperty Name="PETA_CD_ID" ColumnName="PETA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11680,7 +11705,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PRODUTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.PRODUTO">
               <MappingFragment StoreEntitySet="PRODUTO">
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11719,7 +11744,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PRODUTO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.PRODUTO_ANEXO">
               <MappingFragment StoreEntitySet="PRODUTO_ANEXO">
                 <ScalarProperty Name="PRAN_CD_ID" ColumnName="PRAN_CD_ID" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
@@ -11732,7 +11757,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PRODUTO_FORNECEDOR">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.PRODUTO_FORNECEDOR">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.PRODUTO_FORNECEDOR">
               <MappingFragment StoreEntitySet="PRODUTO_FORNECEDOR">
                 <ScalarProperty Name="PRFO_CD_ID" ColumnName="PRFO_CD_ID" />
                 <ScalarProperty Name="PROD_CD_ID" ColumnName="PROD_CD_ID" />
@@ -11742,10 +11767,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RESERVA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.RESERVA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.RESERVA">
               <MappingFragment StoreEntitySet="RESERVA">
-                <ScalarProperty Name="RESE_DT_CONFIRMACAO" ColumnName="RESE_DT_CONFIRMACAO" />
-                <ScalarProperty Name="RESE_DT_VETADA" ColumnName="RESE_DT_VETADA" />
                 <ScalarProperty Name="RESE_CD_ID" ColumnName="RESE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -11771,11 +11794,13 @@
                 <ScalarProperty Name="RESE_IN_STATUS" ColumnName="RESE_IN_STATUS" />
                 <ScalarProperty Name="RESE_IN_LEMBRAR" ColumnName="RESE_IN_LEMBRAR" />
                 <ScalarProperty Name="RESE_IN_ATIVO" ColumnName="RESE_IN_ATIVO" />
+                <ScalarProperty Name="RESE_DT_VETADA" ColumnName="RESE_DT_VETADA" />
+                <ScalarProperty Name="RESE_DT_CONFIRMACAO" ColumnName="RESE_DT_CONFIRMACAO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RESERVA_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.RESERVA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.RESERVA_ANEXO">
               <MappingFragment StoreEntitySet="RESERVA_ANEXO">
                 <ScalarProperty Name="REAN_CD_ID" ColumnName="REAN_CD_ID" />
                 <ScalarProperty Name="RESE_CD_ID" ColumnName="RESE_CD_ID" />
@@ -11788,7 +11813,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RESERVA_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.RESERVA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.RESERVA_COMENTARIO">
               <MappingFragment StoreEntitySet="RESERVA_COMENTARIO">
                 <ScalarProperty Name="RECO_CD_ID" ColumnName="RECO_CD_ID" />
                 <ScalarProperty Name="RESE_CD_ID" ColumnName="RESE_CD_ID" />
@@ -11800,9 +11825,8 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SOLICITACAO_MUDANCA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.SOLICITACAO_MUDANCA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.SOLICITACAO_MUDANCA">
               <MappingFragment StoreEntitySet="SOLICITACAO_MUDANCA">
-                <ScalarProperty Name="SOMU_DS_JUSTIFICATIVA" ColumnName="SOMU_DS_JUSTIFICATIVA" />
                 <ScalarProperty Name="SOMU_CD_ID" ColumnName="SOMU_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -11827,11 +11851,12 @@
                 <ScalarProperty Name="SOMU_IN_SUSENSA" ColumnName="SOMU_IN_SUSENSA" />
                 <ScalarProperty Name="SOMU_IN_STATUS" ColumnName="SOMU_IN_STATUS" />
                 <ScalarProperty Name="SOMU_IN_ATIVO" ColumnName="SOMU_IN_ATIVO" />
+                <ScalarProperty Name="SOMU_DS_JUSTIFICATIVA" ColumnName="SOMU_DS_JUSTIFICATIVA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SOLICITACAO_MUDANCA_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.SOLICITACAO_MUDANCA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.SOLICITACAO_MUDANCA_ANEXO">
               <MappingFragment StoreEntitySet="SOLICITACAO_MUDANCA_ANEXO">
                 <ScalarProperty Name="SOAN_CD_ID" ColumnName="SOAN_CD_ID" />
                 <ScalarProperty Name="SOMU_CD_ID" ColumnName="SOMU_CD_ID" />
@@ -11844,7 +11869,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SOLICITACAO_MUDANCA_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.SOLICITACAO_MUDANCA_COMENTARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.SOLICITACAO_MUDANCA_COMENTARIO">
               <MappingFragment StoreEntitySet="SOLICITACAO_MUDANCA_COMENTARIO">
                 <ScalarProperty Name="SMCO_CD_ID" ColumnName="SMCO_CD_ID" />
                 <ScalarProperty Name="SOMU_CD_ID" ColumnName="SOMU_CD_ID" />
@@ -11856,7 +11881,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SOLICITACAO_MUDANCA_MOVIMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.SOLICITACAO_MUDANCA_MOVIMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.SOLICITACAO_MUDANCA_MOVIMENTO">
               <MappingFragment StoreEntitySet="SOLICITACAO_MUDANCA_MOVIMENTO">
                 <ScalarProperty Name="SOMV_CD_ID" ColumnName="SOMV_CD_ID" />
                 <ScalarProperty Name="SOMU_CD_ID" ColumnName="SOMU_CD_ID" />
@@ -11869,7 +11894,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SUBCATEGORIA_PRODUTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.SUBCATEGORIA_PRODUTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.SUBCATEGORIA_PRODUTO">
               <MappingFragment StoreEntitySet="SUBCATEGORIA_PRODUTO">
                 <ScalarProperty Name="SCPR_CD_ID" ColumnName="SCPR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11880,7 +11905,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SUBGRUPO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.SUBGRUPO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.SUBGRUPO">
               <MappingFragment StoreEntitySet="SUBGRUPO">
                 <ScalarProperty Name="SUBG_CD_ID" ColumnName="SUBG_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11893,7 +11918,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAREFA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TAREFA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TAREFA">
               <MappingFragment StoreEntitySet="TAREFA">
                 <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11916,7 +11941,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAREFA_ACOMPANHAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TAREFA_ACOMPANHAMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TAREFA_ACOMPANHAMENTO">
               <MappingFragment StoreEntitySet="TAREFA_ACOMPANHAMENTO">
                 <ScalarProperty Name="TAAC_CD_ID" ColumnName="TAAC_CD_ID" />
                 <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
@@ -11928,7 +11953,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAREFA_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TAREFA_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TAREFA_ANEXO">
               <MappingFragment StoreEntitySet="TAREFA_ANEXO">
                 <ScalarProperty Name="TAAN_CD_ID" ColumnName="TAAN_CD_ID" />
                 <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
@@ -11941,7 +11966,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAREFA_NOTIFICACAO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TAREFA_NOTIFICACAO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TAREFA_NOTIFICACAO">
               <MappingFragment StoreEntitySet="TAREFA_NOTIFICACAO">
                 <ScalarProperty Name="TANO_CD_ID" ColumnName="TANO_CD_ID" />
                 <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
@@ -11951,7 +11976,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAREFA_VINCULO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TAREFA_VINCULO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TAREFA_VINCULO">
               <MappingFragment StoreEntitySet="TAREFA_VINCULO">
                 <ScalarProperty Name="TAVI_CD_ID" ColumnName="TAVI_CD_ID" />
                 <ScalarProperty Name="TARE_CD_ID" ColumnName="TARE_CD_ID" />
@@ -11961,7 +11986,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TELEFONE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TELEFONE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TELEFONE">
               <MappingFragment StoreEntitySet="TELEFONE">
                 <ScalarProperty Name="TELE_CD_ID" ColumnName="TELE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -11982,7 +12007,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TEMPLATE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TEMPLATE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TEMPLATE">
               <MappingFragment StoreEntitySet="TEMPLATE">
                 <ScalarProperty Name="TEMP_CD_ID" ColumnName="TEMP_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12000,7 +12025,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_AGENDA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_AGENDA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_AGENDA">
               <MappingFragment StoreEntitySet="TIPO_AGENDA">
                 <ScalarProperty Name="TIAG_CD_ID" ColumnName="TIAG_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12010,7 +12035,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_AMBIENTE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_AMBIENTE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_AMBIENTE">
               <MappingFragment StoreEntitySet="TIPO_AMBIENTE">
                 <ScalarProperty Name="TIAM_CD_ID" ColumnName="TIAM_CD_ID" />
                 <ScalarProperty Name="TIAM_NM_NOME" ColumnName="TIAM_NM_NOME" />
@@ -12019,7 +12044,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_CONDOMINIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_CONDOMINIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_CONDOMINIO">
               <MappingFragment StoreEntitySet="TIPO_CONDOMINIO">
                 <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
                 <ScalarProperty Name="TICO_NM_NOME" ColumnName="TICO_NM_NOME" />
@@ -12028,7 +12053,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_CONTA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_CONTA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_CONTA">
               <MappingFragment StoreEntitySet="TIPO_CONTA">
                 <ScalarProperty Name="TICO_CD_ID" ColumnName="TICO_CD_ID" />
                 <ScalarProperty Name="TICO_NM_NOME" ColumnName="TICO_NM_NOME" />
@@ -12036,7 +12061,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_DOCUMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_DOCUMENTO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_DOCUMENTO">
               <MappingFragment StoreEntitySet="TIPO_DOCUMENTO">
                 <ScalarProperty Name="TIDO_CD_ID" ColumnName="TIDO_CD_ID" />
                 <ScalarProperty Name="TIDO_NM_NOME" ColumnName="TIDO_NM_NOME" />
@@ -12045,7 +12070,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_ENCOMENDA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_ENCOMENDA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_ENCOMENDA">
               <MappingFragment StoreEntitySet="TIPO_ENCOMENDA">
                 <ScalarProperty Name="TIEN_CD_ID" ColumnName="TIEN_CD_ID" />
                 <ScalarProperty Name="TIEN_NM_NOME" ColumnName="TIEN_NM_NOME" />
@@ -12054,7 +12079,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_GRUPO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_GRUPO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_GRUPO">
               <MappingFragment StoreEntitySet="TIPO_GRUPO">
                 <ScalarProperty Name="TIGR_CD_ID" ColumnName="TIGR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12064,7 +12089,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_MATERIAL">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_MATERIAL">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_MATERIAL">
               <MappingFragment StoreEntitySet="TIPO_MATERIAL">
                 <ScalarProperty Name="TIMA_CD_ID" ColumnName="TIMA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12074,7 +12099,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_MENSAGEM">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_MENSAGEM">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_MENSAGEM">
               <MappingFragment StoreEntitySet="TIPO_MENSAGEM">
                 <ScalarProperty Name="TIME_CD_ID" ColumnName="TIME_CD_ID" />
                 <ScalarProperty Name="TIME_NM_NOME" ColumnName="TIME_NM_NOME" />
@@ -12083,7 +12108,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_PESSOA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_PESSOA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_PESSOA">
               <MappingFragment StoreEntitySet="TIPO_PESSOA">
                 <ScalarProperty Name="TIPE_CD_ID" ColumnName="TIPE_CD_ID" />
                 <ScalarProperty Name="TIPE_NM_NOME" ColumnName="TIPE_NM_NOME" />
@@ -12092,7 +12117,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_TAREFA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_TAREFA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_TAREFA">
               <MappingFragment StoreEntitySet="TIPO_TAREFA">
                 <ScalarProperty Name="TITR_CD_ID" ColumnName="TITR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12102,7 +12127,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_UNIDADE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_UNIDADE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_UNIDADE">
               <MappingFragment StoreEntitySet="TIPO_UNIDADE">
                 <ScalarProperty Name="TIUN_CD_ID" ColumnName="TIUN_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12113,7 +12138,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_VAGA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_VAGA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_VAGA">
               <MappingFragment StoreEntitySet="TIPO_VAGA">
                 <ScalarProperty Name="TIVA_CD_ID" ColumnName="TIVA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12123,7 +12148,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TIPO_VEICULO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TIPO_VEICULO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TIPO_VEICULO">
               <MappingFragment StoreEntitySet="TIPO_VEICULO">
                 <ScalarProperty Name="TIVE_CD_ID" ColumnName="TIVE_CD_ID" />
                 <ScalarProperty Name="TIVE_NM_NOME" ColumnName="TIVE_NM_NOME" />
@@ -12132,7 +12157,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TORRE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.TORRE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.TORRE">
               <MappingFragment StoreEntitySet="TORRE">
                 <ScalarProperty Name="TORR_CD_ID" ColumnName="TORR_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12143,7 +12168,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UF">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.UF">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.UF">
               <MappingFragment StoreEntitySet="UF">
                 <ScalarProperty Name="UF_CD_ID" ColumnName="UF_CD_ID" />
                 <ScalarProperty Name="UF_SG_SIGLA" ColumnName="UF_SG_SIGLA" />
@@ -12153,7 +12178,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UNIDADE">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.UNIDADE">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.UNIDADE">
               <MappingFragment StoreEntitySet="UNIDADE">
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
                 <ScalarProperty Name="TORR_CD_ID" ColumnName="TORR_CD_ID" />
@@ -12168,7 +12193,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UNIDADE_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.UNIDADE_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.UNIDADE_ANEXO">
               <MappingFragment StoreEntitySet="UNIDADE_ANEXO">
                 <ScalarProperty Name="UNAN_CD_ID" ColumnName="UNAN_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -12181,7 +12206,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UNIDADE_MATERIAL">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.UNIDADE_MATERIAL">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.UNIDADE_MATERIAL">
               <MappingFragment StoreEntitySet="UNIDADE_MATERIAL">
                 <ScalarProperty Name="UNMA_CD_ID" ColumnName="UNMA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12191,7 +12216,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USUARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12241,7 +12266,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USUARIO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.USUARIO_ANEXO">
               <MappingFragment StoreEntitySet="USUARIO_ANEXO">
                 <ScalarProperty Name="USAN_CD_ID" ColumnName="USAN_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
@@ -12254,24 +12279,24 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USUARIO_CONTROLE_ENTRADA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO_CONTROLE_ENTRADA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.USUARIO_CONTROLE_ENTRADA">
               <MappingFragment StoreEntitySet="USUARIO_CONTROLE_ENTRADA">
-                <ScalarProperty Name="USCE_DS_JUSTIFICATIVA" ColumnName="USCE_DS_JUSTIFICATIVA" />
-                <ScalarProperty Name="USCE_IN_VALIDADO" ColumnName="USCE_IN_VALIDADO" />
-                <ScalarProperty Name="USCE_HR_SAIDA" ColumnName="USCE_HR_SAIDA" />
-                <ScalarProperty Name="USCE_HR_VOLTA_ALMOCO" ColumnName="USCE_HR_VOLTA_ALMOCO" />
-                <ScalarProperty Name="USCE_HR_SAIDA_ALMOCO" ColumnName="USCE_HR_SAIDA_ALMOCO" />
-                <ScalarProperty Name="USCE_HR_ENTRADA" ColumnName="USCE_HR_ENTRADA" />
                 <ScalarProperty Name="USCE_CD_ID" ColumnName="USCE_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="USCE_DT_MARCACAO" ColumnName="USCE_DT_MARCACAO" />
                 <ScalarProperty Name="USCE_IN_DIRECAO" ColumnName="USCE_IN_DIRECAO" />
                 <ScalarProperty Name="USCE_IN_ATIVO" ColumnName="USCE_IN_ATIVO" />
+                <ScalarProperty Name="USCE_HR_ENTRADA" ColumnName="USCE_HR_ENTRADA" />
+                <ScalarProperty Name="USCE_HR_SAIDA_ALMOCO" ColumnName="USCE_HR_SAIDA_ALMOCO" />
+                <ScalarProperty Name="USCE_HR_VOLTA_ALMOCO" ColumnName="USCE_HR_VOLTA_ALMOCO" />
+                <ScalarProperty Name="USCE_HR_SAIDA" ColumnName="USCE_HR_SAIDA" />
+                <ScalarProperty Name="USCE_IN_VALIDADO" ColumnName="USCE_IN_VALIDADO" />
+                <ScalarProperty Name="USCE_DS_JUSTIFICATIVA" ColumnName="USCE_DS_JUSTIFICATIVA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USUARIO_ESCALA_TRABALHO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO_ESCALA_TRABALHO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.USUARIO_ESCALA_TRABALHO">
               <MappingFragment StoreEntitySet="USUARIO_ESCALA_TRABALHO">
                 <ScalarProperty Name="USET_CD_ID" ColumnName="USET_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
@@ -12286,7 +12311,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USUARIO_FUNCIONARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO_FUNCIONARIO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.USUARIO_FUNCIONARIO">
               <MappingFragment StoreEntitySet="USUARIO_FUNCIONARIO">
                 <ScalarProperty Name="USFU_CD_ID" ColumnName="USFU_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
@@ -12328,7 +12353,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VAGA">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.VAGA">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.VAGA">
               <MappingFragment StoreEntitySet="VAGA">
                 <ScalarProperty Name="VAGA_CD_ID" ColumnName="VAGA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12344,7 +12369,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VEICULO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.VEICULO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.VEICULO">
               <MappingFragment StoreEntitySet="VEICULO">
                 <ScalarProperty Name="VEIC_CD_ID" ColumnName="VEIC_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -12369,7 +12394,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VEICULO_ANEXO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.VEICULO_ANEXO">
+            <EntityTypeMapping TypeName="ERP_CondominiosModel.VEICULO_ANEXO">
               <MappingFragment StoreEntitySet="VEICULO_ANEXO">
                 <ScalarProperty Name="VEAN_CD_ID" ColumnName="VEAN_CD_ID" />
                 <ScalarProperty Name="VEIC_CD_ID" ColumnName="VEIC_CD_ID" />
@@ -12378,30 +12403,6 @@
                 <ScalarProperty Name="VEAN_DT_ANEXO" ColumnName="VEAN_DT_ANEXO" />
                 <ScalarProperty Name="VEAN_AQ_ARQUIVO" ColumnName="VEAN_AQ_ARQUIVO" />
                 <ScalarProperty Name="VEAN_IN_ATIVO" ColumnName="VEAN_IN_ATIVO" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CONTROLE_VEICULO_ACOMPANHAMENTO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.CONTROLE_VEICULO_ACOMPANHAMENTO">
-              <MappingFragment StoreEntitySet="CONTROLE_VEICULO_ACOMPANHAMENTO">
-                <ScalarProperty Name="CVAC_IN_ATIVO" ColumnName="CVAC_IN_ATIVO" />
-                <ScalarProperty Name="CVAC_DS_TEXTO" ColumnName="CVAC_DS_TEXTO" />
-                <ScalarProperty Name="CVAC_DT_ACOMPANHAMENTO" ColumnName="CVAC_DT_ACOMPANHAMENTO" />
-                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
-                <ScalarProperty Name="COVE_CD_ID" ColumnName="COVE_CD_ID" />
-                <ScalarProperty Name="CVAC_CD_ID" ColumnName="CVAC_CD_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ENTRADA_SAIDA_COMENTARIO">
-            <EntityTypeMapping TypeName="ERP_CondominioModel.ENTRADA_SAIDA_COMENTARIO">
-              <MappingFragment StoreEntitySet="ENTRADA_SAIDA_COMENTARIO">
-                <ScalarProperty Name="ESCO_IN_ATIVO" ColumnName="ESCO_IN_ATIVO" />
-                <ScalarProperty Name="ESCO_DS_COMENTARIO" ColumnName="ESCO_DS_COMENTARIO" />
-                <ScalarProperty Name="ESCO_DT_COMENTARIO" ColumnName="ESCO_DT_COMENTARIO" />
-                <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
-                <ScalarProperty Name="ENSA_CD_ID" ColumnName="ENSA_CD_ID" />
-                <ScalarProperty Name="ESCO_CD_ID" ColumnName="ESCO_CD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -10,25 +10,6 @@
             <div class="col-lg-5 col-md-5 col-xs-5 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Geração de Senha Provisória</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -40,25 +21,20 @@
                         </div>
                     }
                     <div class="form-group">
-                        <label>Informe o e-mail cadastrado na System BR</label>
+                        <label>Informe o e-mail cadastrado no ERPSys</label>
                         <label>Uma senha provisória será enviada para este e-mail</label>
                     </div>
                     <div class="form-group">
                         @Html.HiddenFor(m => m.ASSI_CD_ID)
                         @Html.HiddenFor(m => m.CARG_CD_ID)
                         @Html.HiddenFor(m => m.CAUS_CD_ID)
-                        @Html.HiddenFor(m => m.COLA_CD_ID)
                         @Html.HiddenFor(m => m.PERF_CD_ID)
                         @Html.HiddenFor(m => m.USUA_CD_ID)
                         @Html.HiddenFor(m => m.USUA_AQ_FOTO)
-                        @Html.HiddenFor(m => m.UNID_CD_ID)
-                        @Html.HiddenFor(m => m.USUA_DS_MOTIVO_SAIDA)
                         @Html.HiddenFor(m => m.USUA_DT_ACESSO)
                         @Html.HiddenFor(m => m.USUA_DT_ALTERACAO)
                         @Html.HiddenFor(m => m.USUA_DT_BLOQUEADO)
                         @Html.HiddenFor(m => m.USUA_DT_CADASTRO)
-                        @Html.HiddenFor(m => m.USUA_DT_ENTRADA)
-                        @Html.HiddenFor(m => m.USUA_DT_SAIDA)
                         @Html.HiddenFor(m => m.USUA_DT_TROCA_SENHA)
                         @Html.HiddenFor(m => m.USUA_DT_ULTIMA_FALHA)
                         @Html.HiddenFor(m => m.USUA_IN_ATIVO)
@@ -66,7 +42,6 @@
                         @Html.HiddenFor(m => m.USUA_IN_LOGADO)
                         @Html.HiddenFor(m => m.USUA_IN_LOGIN_PROVISORIO)
                         @Html.HiddenFor(m => m.USUA_IN_PROVISORIO)
-                        @Html.HiddenFor(m => m.USUA_IN_RESPONSAVEL)
                         @Html.HiddenFor(m => m.USUA_NM_EMAIL)
                         @Html.HiddenFor(m => m.USUA_NM_LOGIN)
                         @Html.HiddenFor(m => m.USUA_NM_NOME)

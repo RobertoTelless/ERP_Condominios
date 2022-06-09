@@ -37,7 +37,7 @@ namespace EntitiesServices.Model
         public string COBA_NR_TELEFONE { get; set; }
         public Nullable<System.DateTime> COBA_DT_ABERTURA { get; set; }
         public Nullable<decimal> COBA_VL_SALDO_ATUAL { get; set; }
-        public string COBA_NM_NOME_EXIBE { get; set; }
+        public string COBA_NM_NOME_EXIBE_OLD { get; set; }
         public Nullable<int> COBA_IN_CONTA_PADRAO { get; set; }
         public Nullable<int> COBA_IN_CONTA_SELECAO { get; set; }
         public Nullable<int> COBA_IN_DIAS { get; set; }
@@ -45,7 +45,7 @@ namespace EntitiesServices.Model
         public Nullable<int> COBA_IN_TIPO_FILTRO { get; set; }
         public Nullable<int> COBA_IN_MES { get; set; }
         public Nullable<System.DateTime> COBA_DT_SELECAO_FINAL { get; set; }
-        public string COBA_NM_NOME_EXIBE_OLD { get; set; }
+        public string COBA_NM_NOME_EXIBE { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         public virtual BANCO BANCO { get; set; }

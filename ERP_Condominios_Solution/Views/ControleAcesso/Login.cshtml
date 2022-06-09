@@ -18,56 +18,67 @@
 <div id="login" class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12">
-            <div class="col-lg-5 col-md-5 col-xs-5 ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Login no ERP Condomínios</h5>
-                    <div class="ibox-tools">
-                        <a class="collaqpse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+                <div style="text-align: center; margin-top: 1px; line-height: 10px;">
+                    <img src="~/Images/teste_1.jpg" style="width: 800px; height: 800px; max-height: 1400px; max-width: 1400px;">
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-xs-4">
+                <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Login no ERPSys</h5>
+                    </div>
+                    @using (Html.BeginForm("Login", "ControleAcesso", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="ibox-content">
+                            @Html.AntiForgeryToken()
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">Fechar</button>
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                </div>
+                            }
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.USUA_NM_LOGIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Login", autofocus = true } })
+                                @Html.ValidationMessageFor(model => model.USUA_NM_LOGIN, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.USUA_NM_SENHA, new { htmlAttributes = new { @class = "form-control", placeholder = "Senha", @type = "password" } })
+                                @Html.ValidationMessageFor(model => model.USUA_NM_SENHA, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <button id="login" type="submit" class="btn btn-primary block full-width m-b" onclick="Fade()">Entrar</button>
+                            </div>
+                            <div class="form-group">
+                                @Html.ActionLink("Esqueceu sua senha?", "GerarSenha", "ControleAcesso")
+                            </div>
+                        </div>
+                    }
+                </div>
+            
+                <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Contatos e Suporte</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <small class="stats-label">Suporte</small>
+                                <h4>(xx)xxxx-xxxx</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">Contato</small>
+                                <h4>wwww@wwww.com.br</h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <small class="stats-label">WhatsApp</small>
+                                <h4>(ZZ)ZZZZZ-ZZZZ</h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @using (Html.BeginForm("Login", "ControleAcesso", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
-                {
-                    <div class="ibox-content">
-                        @Html.AntiForgeryToken()
-                        @if (!ViewData.ModelState.IsValid)
-                        {
-                            <div class="alert alert-danger">
-                                <button type="button" class="close" data-dismiss="alert">Fechar</button>
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                            </div>
-                        }
-                        <div class="form-group">
-                            @Html.EditorFor(model => model.USUA_NM_LOGIN, new { htmlAttributes = new { @class = "form-control", placeholder = "Login", autofocus = true } })
-                            @Html.ValidationMessageFor(model => model.USUA_NM_LOGIN, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group">
-                            @Html.EditorFor(model => model.USUA_NM_SENHA, new { htmlAttributes = new { @class = "form-control", placeholder = "Senha", @type = "password" } })
-                            @Html.ValidationMessageFor(model => model.USUA_NM_SENHA, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group">
-                            <button id="login" type="submit" class="btn btn-primary block full-width m-b" onclick="Fade()">Entrar</button>
-                        </div>
-                        <div class="form-group">
-                            @Html.ActionLink("Esqueceu sua senha?", "GerarSenha", "ControleAcesso")
-                        </div>
-                    </div>
-                }
+            
             </div>
         </div>
     </div>

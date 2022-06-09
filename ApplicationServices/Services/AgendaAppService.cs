@@ -63,7 +63,7 @@ namespace ApplicationServices.Services
             return lista;
         }
 
-        public Int32 ExecuteFilter(DateTime? data, Int32 ? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, out List<AGENDA> objeto)
+        public Int32 ExecuteFilter(DateTime? data, Int32 ? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, Int32 corp, out List<AGENDA> objeto)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser);
+                objeto = _baseService.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser, corp);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -117,18 +117,6 @@ namespace ApplicationServices.Services
         {
             try
             {
-                // Monta Log
-                //LOG log = new LOG
-                //{
-                //    LOG_DT_DATA = DateTime.Now,
-                //    ASSI_CD_ID = SessionMocks.IdAssinante,
-                //    USUA_CD_ID = usuario.USUA_CD_ID,
-                //    LOG_NM_OPERACAO = "EditAGEN",
-                //    LOG_IN_ATIVO = 1,
-                //    LOG_TX_REGISTRO = Serialization.SerializeJSON<AGENDA>(item),
-                //    LOG_TX_REGISTRO_ANTES = Serialization.SerializeJSON<AGENDA>(itemAntes)
-                //};
-
                 // Persiste
                 return _baseService.Edit(item);
             }

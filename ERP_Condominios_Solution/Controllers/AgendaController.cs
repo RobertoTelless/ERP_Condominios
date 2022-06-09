@@ -261,7 +261,7 @@ namespace ERP_Condominios_Solution.Controllers
                 USUARIO usuario = (USUARIO)Session["UserCredentials"];
                 List<AGENDA> listaObj = new List<AGENDA>();
                 Session["FiltroAgenda"] = item;
-                Int32 volta = baseApp.ExecuteFilter(item.AGEN_DT_DATA, item.CAAG_CD_ID, item.AGEN_NM_TITULO, item.AGEN_DS_DESCRICAO, idAss, usuario.USUA_CD_ID, out listaObj);
+                Int32 volta = baseApp.ExecuteFilter(item.AGEN_DT_DATA, item.CAAG_CD_ID, item.AGEN_NM_TITULO, item.AGEN_DS_DESCRICAO, idAss, usuario.USUA_CD_ID, 1, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)
@@ -808,7 +808,7 @@ namespace ERP_Condominios_Solution.Controllers
                 USUARIO usuario = (USUARIO)Session["UserCredentials"];
                 Int32 idAss = (Int32)Session["IdAssinante"];
                 Session["FiltroAgenda"] = item;
-                Int32 volta = baseApp.ExecuteFilter(item.AGEN_DT_DATA, item.CAAG_CD_ID, item.AGEN_NM_TITULO, item.AGEN_DS_DESCRICAO, idAss, usuario.USUA_CD_ID, out listaObj);
+                Int32 volta = baseApp.ExecuteFilter(item.AGEN_DT_DATA, item.CAAG_CD_ID, item.AGEN_NM_TITULO, item.AGEN_DS_DESCRICAO, idAss, usuario.USUA_CD_ID, 1, out listaObj);
 
                 // Verifica retorno
                 if (volta == 1)

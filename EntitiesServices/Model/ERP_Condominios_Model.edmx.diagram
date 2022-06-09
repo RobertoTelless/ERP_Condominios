@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8a71f14f7fa141208c2e11a10fcd3a9a" Name="Diagram1">
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AGENDA" Width="1.5" PointX="7.5" PointY="148" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AGENDA_ANEXO" Width="1.5" PointX="9.75" PointY="129.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AGENDA_CONDOMINIO" Width="1.5" PointX="10.25" PointY="148" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AGENDA_CONDOMINIO_ANEXO" Width="1.5" PointX="12.5" PointY="129.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AGENDA_VINCULO" Width="1.5" PointX="23.75" PointY="151.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AMBIENTE" Width="1.5" PointX="8.25" PointY="141.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AMBIENTE_CHAVE" Width="1.5" PointX="17.75" PointY="166.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AMBIENTE_CUSTO" Width="1.5" PointX="10.5" PointY="137.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AMBIENTE_FINALIDADE" Width="1.5" PointX="18.5" PointY="145.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AMBIENTE_IMAGEM" Width="1.5" PointX="10.5" PointY="134.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ASSINANTE" Width="1.5" PointX="3" PointY="142.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ASSINANTE_ANEXO" Width="1.5" PointX="5.25" PointY="134.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AUTORIZACAO_ACESSO" Width="1.5" PointX="8.25" PointY="153.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.AUTORIZACAO_ACESSO_ANEXO" Width="1.5" PointX="10.5" PointY="172.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.BANCO" Width="1.5" PointX="5.25" PointY="144.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CARGO" Width="1.5" PointX="5.25" PointY="147.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_AGENDA" Width="1.5" PointX="5.25" PointY="150.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_EQUIPAMENTO" Width="1.5" PointX="5.25" PointY="153.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_FORNECEDOR" Width="1.5" PointX="12" PointY="127.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_NOTIFICACAO" Width="1.5" PointX="5.25" PointY="156.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_OCORRENCIA" Width="1.5" PointX="19.5" PointY="195.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_PRODUTO" Width="1.5" PointX="5.25" PointY="159.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_TELEFONE" Width="1.5" PointX="5.25" PointY="162.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CATEGORIA_USUARIO" Width="1.5" PointX="5.25" PointY="165.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CENTRO_CUSTO" Width="1.5" PointX="11.25" PointY="141.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONFIGURACAO" Width="1.5" PointX="5.25" PointY="172.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONFIGURACAO_ASSOCIACAO" Width="1.5" PointX="7.5" PointY="173.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONTA_BANCO" Width="1.5" PointX="12.5" PointY="145.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONTA_BANCO_CONTATO" Width="1.5" PointX="14.75" PointY="161.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONTA_BANCO_LANCAMENTO" Width="1.5" PointX="14.75" PointY="164.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONTA_RECEBER" Width="1.5" PointX="16.5" PointY="128.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONTROLE_VEICULO" Width="1.5" PointX="21.5" PointY="157.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONTROLE_VEICULO_ACOMPANHAMENTO" Width="1.5" PointX="29.75" PointY="167.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CONVIDADO" Width="1.5" PointX="31.25" PointY="154.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.CORPO_DIRETIVO" Width="1.5" PointX="12.75" PointY="168.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ENCOMENDA" Width="1.5" PointX="20.75" PointY="163.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ENCOMENDA_ANEXO" Width="1.5" PointX="23" PointY="181.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ENCOMENDA_COMENTARIO" Width="1.5" PointX="29" PointY="154.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ENTRADA_SAIDA" Width="1.5" PointX="26.75" PointY="161.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.ENTRADA_SAIDA_COMENTARIO" Width="1.5" PointX="32" PointY="157.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.EQUIPAMENTO" Width="1.5" PointX="13.5" PointY="154.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.EQUIPAMENTO_ANEXO" Width="1.5" PointX="15.75" PointY="155.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.EQUIPAMENTO_MANUTENCAO" Width="1.5" PointX="19.5" PointY="141" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FINALIDADE_RESERVA" Width="1.5" PointX="16.25" PointY="131.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORMA_ENTREGA" Width="1.5" PointX="18.5" PointY="189.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORNECEDOR" Width="1.5" PointX="14.25" PointY="134.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORNECEDOR_ANEXO" Width="1.5" PointX="16.5" PointY="134.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORNECEDOR_COMENTARIO" Width="1.5" PointX="18.5" PointY="149.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORNECEDOR_CONTATO" Width="1.5" PointX="16.5" PointY="137.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORNECEDOR_MENSAGEM" Width="1.5" PointX="21.5" PointY="150.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FORNECEDOR_QUADRO_SOCIETARIO" Width="1.5" PointX="16.5" PointY="141.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.FUNCAO_CORPO_DIRETIVO" Width="1.5" PointX="5.25" PointY="187.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.GRAU_PARENTESCO" Width="1.5" PointX="6" PointY="169" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.GRUPO" Width="1.5" PointX="5.25" PointY="139.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.LISTA_CONVIDADO" Width="1.5" PointX="29" PointY="161.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.LISTA_CONVIDADO_ANEXO" Width="1.5" PointX="31.25" PointY="176.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.LISTA_CONVIDADO_COMENTARIO" Width="1.5" PointX="34.25" PointY="161.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.LOG" Width="1.5" PointX="20.75" PointY="146.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.MATERIAL" Width="1.5" PointX="10.5" PointY="186.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.MATERIAL_ANEXO" Width="1.5" PointX="12.75" PointY="189" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.MATERIAL_FORNECEDOR" Width="1.5" PointX="17.5" PointY="163.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.MATERIAL_MOVIMENTO" Width="1.5" PointX="15.75" PointY="172" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.MOVIMENTO_ESTOQUE_PRODUTO" Width="1.5" PointX="18.75" PointY="171.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.NOTICIA" Width="1.5" PointX="5.25" PointY="202.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.NOTICIA_COMENTARIO" Width="1.5" PointX="12.75" PointY="178.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.NOTIFICACAO" Width="1.5" PointX="23.75" PointY="154.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.NOTIFICACAO_ANEXO" Width="1.5" PointX="26" PointY="153.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.OCORRENCIA" Width="1.5" PointX="21.75" PointY="171.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.OCORRENCIA_ANEXO" Width="1.5" PointX="24" PointY="185.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.OCORRENCIA_COMENTARIO" Width="1.5" PointX="30" PointY="171.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.PERFIL" Width="1.5" PointX="8.25" PointY="162.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.PERIODICIDADE" Width="1.5" PointX="11.25" PointY="121.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.PERIODICIDADE_TAREFA" Width="1.5" PointX="5.25" PointY="207.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.PRODUTO" Width="1.5" PointX="7.5" PointY="182.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.PRODUTO_ANEXO" Width="1.5" PointX="9.75" PointY="195" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.PRODUTO_FORNECEDOR" Width="1.5" PointX="26.5" PointY="158.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.RESERVA" Width="1.5" PointX="18.75" PointY="153.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.RESERVA_ANEXO" Width="1.5" PointX="21" PointY="177.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.RESERVA_COMENTARIO" Width="1.5" PointX="29" PointY="158.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.SOLICITACAO_MUDANCA" Width="1.5" PointX="23.75" PointY="160.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.SOLICITACAO_MUDANCA_ANEXO" Width="1.5" PointX="26" PointY="175.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.SOLICITACAO_MUDANCA_COMENTARIO" Width="1.5" PointX="32" PointY="161.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.SOLICITACAO_MUDANCA_MOVIMENTO" Width="1.5" PointX="32" PointY="165.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.SUBCATEGORIA_PRODUTO" Width="1.5" PointX="15.5" PointY="150.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.SUBGRUPO" Width="1.5" PointX="7.5" PointY="137.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TAREFA" Width="1.5" PointX="15.75" PointY="181.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TAREFA_ACOMPANHAMENTO" Width="1.5" PointX="18" PointY="177.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TAREFA_ANEXO" Width="1.5" PointX="18" PointY="186.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TAREFA_NOTIFICACAO" Width="1.5" PointX="26" PointY="179.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TAREFA_VINCULO" Width="1.5" PointX="29" PointY="176.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TELEFONE" Width="1.5" PointX="15.5" PointY="145.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TEMPLATE" Width="1.5" PointX="5.25" PointY="210.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_AGENDA" Width="1.5" PointX="8" PointY="134.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_AMBIENTE" Width="1.5" PointX="6" PointY="131.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_CONDOMINIO" Width="1.5" PointX="0.75" PointY="146" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_CONTA" Width="1.5" PointX="10.25" PointY="124.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_DOCUMENTO" Width="1.5" PointX="6" PointY="177.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_ENCOMENDA" Width="1.5" PointX="18.5" PointY="192.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_GRUPO" Width="1.5" PointX="3" PointY="139.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_MATERIAL" Width="1.5" PointX="5.25" PointY="214.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_MENSAGEM" Width="1.5" PointX="19.25" PointY="138.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_PESSOA" Width="1.5" PointX="0.75" PointY="152.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_TAREFA" Width="1.5" PointX="5.25" PointY="217.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_UNIDADE" Width="1.5" PointX="5.25" PointY="220.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_VAGA" Width="1.5" PointX="5.25" PointY="223.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TIPO_VEICULO" Width="1.5" PointX="19.25" PointY="182.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.TORRE" Width="1.5" PointX="5.25" PointY="226.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.UF" Width="1.5" PointX="0.75" PointY="149" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.UNIDADE" Width="1.5" PointX="10.5" PointY="179.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.UNIDADE_ANEXO" Width="1.5" PointX="12.75" PointY="181.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.UNIDADE_MATERIAL" Width="1.5" PointX="5.25" PointY="229.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.USUARIO" Width="1.5" PointX="10.5" PointY="154.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.USUARIO_ANEXO" Width="1.5" PointX="12.75" PointY="220.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.USUARIO_CONTROLE_ENTRADA" Width="1.5" PointX="12.75" PointY="224.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.USUARIO_ESCALA_TRABALHO" Width="1.5" PointX="12.75" PointY="228.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.USUARIO_FUNCIONARIO" Width="1.5" PointX="12.75" PointY="231.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.VAGA" Width="1.5" PointX="15.75" PointY="188.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.VEICULO" Width="1.5" PointX="24.75" PointY="169.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERP_CondominiosModel.VEICULO_ANEXO" Width="1.5" PointX="27" PointY="170.75" IsExpanded="true" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_ANEXO_AGENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_CATEGORIA_AGENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_USUARIO1" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_VINCULO_AGENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_CONDOMINIO_ANEXO_AGENDA_CONDOMINIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_CONDOMINIO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_CONDOMINIO_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_CONDOMINIO_SOLICITACAO_MUDANCA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_CONDOMINIO_TIPO_AGENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AGENDA_VINCULO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_CHAVE_AMBIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_CUSTO_AMBIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_FINALIDADE_AMBIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_IMAGEM_AMBIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_TIPO_AMBIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_AMBIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_CHAVE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_CHAVE_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_CHAVE_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AMBIENTE_FINALIDADE_FINALIDADE_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ASSINANTE_ANEXO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ASSINANTE_TIPO_CONDOMINIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ASSINANTE_TIPO_PESSOA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ASSINANTE_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AUTORIZACAO_ACESSO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_BANCO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CARGO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CATEGORIA_AGENDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CATEGORIA_EQUIPAMENTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CATEGORIA_NOTIFICACAO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CATEGORIA_PRODUTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CATEGORIA_TELEFONE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CATEGORIA_USUARIO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CENTRO_CUSTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONFIGURACAO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTA_BANCO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CORPO_DIRETIVO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_MANUTENCAO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FUNCAO_CORPO_DIRETIVO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_GRUPO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LOG_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_MOVIMENTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTICIA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTIFICACAO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PERIODICIDADE_TAREFA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SUBCATEGORIA_PRODUTO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SUBGRUPO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TELEFONE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TEMPLATE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TIPO_MATERIAL_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TIPO_TAREFA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TIPO_UNIDADE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TIPO_VAGA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TORRE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_UNIDADE_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_UNIDADE_MATERIAL_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VAGA_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VEICULO_ASSINANTE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AUTORIZACAO_ACESSO_ANEXO_AUTORIZACAO_ACESSO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AUTORIZACAO_ACESSO_GRAU_PARENTESCO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AUTORIZACAO_ACESSO_TIPO_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AUTORIZACAO_ACESSO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_AUTORIZACAO_ACESSO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_AUTORIZACAO_ACESSO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTA_BANCO_BANCO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_CARGO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_CATEGORIA_EQUIPAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_CATEGORIA_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTIFICACAO_CATEGORIA_NOTIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_CATEGORIA_OCORRENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_CATEGORIA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SUBCATEGORIA_PRODUTO_CATEGORIA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TELEFONE_CATEGORIA_TELEFONE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_CATEGORIA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CENTRO_CUSTO_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CENTRO_CUSTO_SUBGRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTA_BANCO_CONTATO_CONTA_BANCO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTA_BANCO_LANCAMENTO_CONTA_BANCO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTA_BANCO_TIPO_CONTA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_CONTA_RECEBER" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_CONTROLE_VEICULO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_TIPO_VEICULO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONTROLE_VEICULO_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CONVIDADO_LISTA_CONVIDADO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CORPO_DIRETIVO_FUNCAO_CORPO_DIRETIVO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_CORPO_DIRETIVO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_ANEXO_ENCOMENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_COMENTARIO_ENCOMENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_FORMA_ENTREGA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_TIPO_ENCOMENDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENCOMENDA_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_COMENTARIO_ENTRADA_SAIDA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_GRAU_PARENTESCO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_ENTRADA_SAIDA_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_ANEXO_EQUIPAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_MANUTENCAO_EQUIPAMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_PERIODICIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_EQUIPAMENTO_MANUTENCAO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_FINALIDADE_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_ANEXO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_COMENTARIO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_CONTATO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_MENSAGEM_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_QUADRO_SOCIETARIO_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_TIPO_PESSOA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_FORNECEDOR_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_FORNECEDOR_FORNECEDOR" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_MENSAGEM_TIPO_MENSAGEM" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_FORNECEDOR_MENSAGEM_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_GRUPO_TIPO_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SUBGRUPO_GRUPO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_ANEXO_LISTA_CONVIDADO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_COMENTARIO_LISTA_CONVIDADO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LISTA_CONVIDADO_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_LOG_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_ANEXO_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_FORNECEDOR_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_MOVIMENTO_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_TIPO_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_UNIDADE_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MATERIAL_MOVIMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_MOVIMENTO_ESTOQUE_PRODUTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTICIA_COMENTARIO_NOTICIA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTICIA_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTIFICACAO_ANEXO_NOTIFICACAO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_NOTIFICACAO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_ANEXO_OCORRENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_COMENTARIO_OCORRENCIA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_OCORRENCIA_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_PERFIL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_PERIODICIDADE_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_ANEXO_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_FORNECEDOR_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_SUBCATEGORIA_PRODUTO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_PRODUTO_UNIDADE_MATERIAL" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_ANEXO_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_COMENTARIO_RESERVA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_RESERVA_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_ANEXO_SOLICITACAO_MUDANCA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_COMENTARIO_SOLICITACAO_MUDANCA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_MOVIMENTO_SOLICITACAO_MUDANCA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_COMENTARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_SOLICITACAO_MUDANCA_MOVIMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_ACOMPANHAMENTO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_ANEXO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_NOTIFICACAO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_TIPO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_VINCULO_TAREFA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_ACOMPANHAMENTO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_NOTIFICACAO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TAREFA_VINCULO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_TELEFONE_UF" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_UNIDADE_TIPO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VAGA_TIPO_VAGA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VEICULO_TIPO_VEICULO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_UNIDADE_TORRE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_UNIDADE_ANEXO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VAGA_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VEICULO_UNIDADE" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_ANEXO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_CONTROLE_ENTRADA_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_ESCALA_TRABALHO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_USUARIO_FUNCIONARIO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VEICULO_USUARIO" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VEICULO_VAGA" ManuallyRouted="false" />
+        <AssociationConnector Association="ERP_CondominiosModel.FK_VEICULO_ANEXO_VEICULO" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

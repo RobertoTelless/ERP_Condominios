@@ -52,7 +52,7 @@ namespace DataServices.Repositories
             return query.ToList();
         }
 
-        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser)
+        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, Int32 corp)
         {
             List<AGENDA> lista = new List<AGENDA>();
             IQueryable<AGENDA> query = Db.AGENDA.Where(x => x.USUA_CD_ID == idUser);
@@ -68,7 +68,6 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.CAAG_CD_ID == cat);
             }
-
             if (query != null)
             {
                 query = query.Where(p => p.ASSI_CD_ID == idAss);

@@ -62,9 +62,9 @@ namespace ModelServices.EntitiesServices
             return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser)
+        public List<AGENDA> ExecuteFilter(DateTime? data, Int32? cat, String titulo, String descricao, Int32 idAss, Int32 idUser, Int32 corp)
         {
-            List<AGENDA> lista = _baseRepository.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser);
+            List<AGENDA> lista = _baseRepository.ExecuteFilter(data, cat, titulo, descricao, idAss, idUser, corp);
             return lista;
         }
 

@@ -239,7 +239,6 @@ namespace Presentation.Start
             kernel.Bind<IEncomendaComentarioRepository>().To<EncomendaComentarioRepository>();
             kernel.Bind<IFormaEntregaRepository>().To<FormaEntregaRepository>();
             kernel.Bind<ITipoEncomendaRepository>().To<TipoEncomendaRepository>();
-            kernel.Bind<IReservaRepository>().To<ReservaRepository>();
             kernel.Bind<IReservaAnexoRepository>().To<ReservaAnexoRepository>();
             kernel.Bind<IReservaComentarioRepository>().To<ReservaComentarioRepository>();
 
