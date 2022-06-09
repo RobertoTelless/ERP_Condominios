@@ -16,7 +16,6 @@
             <li>
                 <span class="m-r-sm text-muted welcome-message" data-i18n="topnav.welcometext">@((String)Session["Greeting"])</span>
             </li>
-
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                     <i class="fa fa-envelope"></i>  <span class="label label-warning">@((Int32)Session["NovasNotificacoes"])</span>
@@ -176,13 +175,47 @@
                     }
                     <li>
                         <div class="text-center link-block">
-                            <a href="@Url.Action("VerTimelineAgenda", "Agenda")" class="pull-left btn-link">
+                            <a href="@Url.Action("MontarTelaAgendaCalendario", "Agenda")" class="pull-left btn-link">
                                 <i class="fa fa-calendar-o"></i> <strong>Veja a Agenda...</strong>
                             </a>
                         </div>
                     </li>
                 </ul>
             </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                    <i class="fa fa-phone"></i>  <span class="label label-warning">@((Int32)Session["NumTelefones"])</span>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    @foreach (var cond in (((List<TELEFONE>)Session["Telefones"]) as List<EntitiesServices.Model.TELEFONE>).Take(3))
+                    {
+                        <li>
+                            <div class="dropdown-messages-box">
+                                <a href="@Url.Action("VerTelefone", "Telefone", new { id = cond.TELE_CD_ID })" class="pull-left btn-link">
+                                    @if (cond.TELE_NM_NOME.Length > 30)
+                                    {
+                                        @cond.TELE_NM_NOME.Substring(0, 29)
+                                    }
+                                    else
+                                    {
+                                        @cond.TELE_NM_NOME
+                                    }
+
+                                </a>
+                            </div>
+                        </li>
+                    }
+                    <li>
+                        <div class="text-center link-block">
+                            <a href="@Url.Action("VerCardsTelefone", "Telefone")" class="pull-left btn-link">
+                                <i class="fa fa-phone"></i> <strong>Lista Telefonica...</strong>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
             <li>
                 @if ((USUARIO)Session["UserCredentials"] != null)
 	            {
@@ -197,6 +230,11 @@
                     </a>
                 }
 
+            </li>
+            <li>
+                <a href="@Url.Action("MontarCentralMensagens", "BaseAdmin")">
+                    <i class="fa fa-stack-exchange"></i> Central de Notificações
+                </a>
             </li>
         </ul>
     </nav>

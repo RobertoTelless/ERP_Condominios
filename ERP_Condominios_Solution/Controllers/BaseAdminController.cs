@@ -413,5 +413,93 @@ namespace ERP_Condominios_Solution.Controllers
             return View(vm);
         }
 
+        public JsonResult GetDadosGraficoDia()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaLogResumo"];
+            List<String> dias = new List<String>();
+            List<Int32> valor = new List<Int32>();
+            dias.Add(" ");
+            valor.Add(0);
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                dias.Add(item.DataEmissao.ToShortDateString());
+                valor.Add(item.Valor);
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("dias", dias);
+            result.Add("valores", valor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoCRSituacao()
+        {
+            List<ModeloViewModel> listaCP1 = (List<ModeloViewModel>)Session["ListaLogOp"];
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+            cor.Add("#359E18");
+            cor.Add("#FFAE00");
+            cor.Add("#FF7F00");
+            Int32 i = 1;
+
+            foreach (ModeloViewModel item in listaCP1)
+            {
+                desc.Add(item.Nome);
+                quant.Add(item.Valor);
+                if (i == 1)
+                {
+                    cor.Add("#359E18");
+                }
+                else if (i == 2)
+                {
+                    cor.Add("#FFAE00");
+                }
+                else if (i == 3)
+                {
+                    cor.Add("#FF7F00");
+                }
+                i++;
+                if (i > 3)
+                {
+                    i = 1;
+                }
+            }
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
+        public JsonResult GetDadosGraficoLogOper()
+        {
+            List<String> desc = new List<String>();
+            List<Int32> quant = new List<Int32>();
+            List<String> cor = new List<String>();
+
+            Int32 q1 = (Int32)Session["Recebido"];
+            Int32 q2 = (Int32)Session["AtrasoCR"];
+            Int32 q3 = (Int32)Session["AReceber"];
+
+            desc.Add("Recebido (Mês)");
+            quant.Add(q1);
+            cor.Add("#359E18");
+            desc.Add("Em Atraso");
+            quant.Add(q2);
+            cor.Add("#FFAE00");
+            desc.Add("A Receber (Mês)");
+            quant.Add(q3);
+            cor.Add("#FF7F00");
+
+            Hashtable result = new Hashtable();
+            result.Add("labels", desc);
+            result.Add("valores", quant);
+            result.Add("cores", cor);
+            return Json(result);
+        }
+
     }
 }

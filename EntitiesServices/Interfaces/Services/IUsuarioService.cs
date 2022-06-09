@@ -25,6 +25,7 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<USUARIO> GetAllUsuariosAdm(Int32 idAss);
         USUARIO GetItemById(Int32 id);
         List<USUARIO> GetAllUsuarios(Int32 idAss);
+        List<CARGO> GetAllCargos(Int32 idAss);
         List<PERFIL> GetAllPerfis();
         List<USUARIO> GetAllItens(Int32 idAss);
         List<USUARIO> GetAllItensBloqueados(Int32 idAss);

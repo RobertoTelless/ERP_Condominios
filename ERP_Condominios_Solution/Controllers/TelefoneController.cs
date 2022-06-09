@@ -22,6 +22,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Canducci.Zip;
+using CrossCutting;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -108,47 +109,33 @@ namespace ERP_Condominios_Solution.Controllers
 
                 // Monta texto
                 String texto = mensagem;
-                //texto = texto.Replace("{Cliente}", clie.CLIE_NM_NOME);
+                String resposta = String.Empty;
 
                 // inicia processo
-                List<String> resposta = new List<string>();
-                WebRequest request = WebRequest.Create("https://api.smsfire.com.br/v1/sms/send");
-                request.Headers["Authorization"] = auth;
-                request.Method = "POST";
-                request.ContentType = "application/json";
-
-                // Monta destinatarios
                 String listaDest = "55" + Regex.Replace(forn.TELE_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                httpWebRequest.Headers["Authorization"] = auth;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                String customId = Cryptography.GenerateRandomPassword(8);
+                String data = String.Empty;
+                String json = String.Empty;
 
-                // Processa lista
-                String responseFromServer = null;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    String campanha = "ERP";
-
-                    String json = null;
-                    json = "{\"to\":[\"" + listaDest + "\"]," +
-                            "\"from\":\"SMSFire\", " +
-                            "\"campaignName\":\"" + campanha + "\", " +
-                            "\"text\":\"" + texto + "\"} ";
-
+                    json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPSys\"}]}");
                     streamWriter.Write(json);
-                    streamWriter.Close();
-                    streamWriter.Dispose();
                 }
 
-                WebResponse response = request.GetResponse();
-                resposta.Add(response.ToString());
-
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseFromServer = reader.ReadToEnd();
-                resposta.Add(responseFromServer);
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    resposta = result;
+                }
 
                 // Saída
-                reader.Close();
-                response.Close();
-                Session["MensSMSForn"] = 200;
+                    Session["MensSMSForn"] = 200;
                 return RedirectToAction("MontarTelaTelefone");
             }
             catch (Exception ex)
@@ -202,18 +189,13 @@ namespace ERP_Condominios_Solution.Controllers
 
             if (Session["MensTelefone"] != null)
             {
-                // Mensagem
-                //if ((Int32)Session["MensTelefone"] == 1)
-                //{
-                //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                //}
                 if ((Int32)Session["MensTelefone"] == 2)
                 {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensTelefone"] == 3)
                 {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -321,11 +303,6 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
-                {
-                    Session["MensTelefone"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
-                }
             }
             else
             {
@@ -410,7 +387,7 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN")
                 {
                     Session["MensTelefone"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
@@ -425,7 +402,6 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             ViewBag.Cats = new SelectList(cfApp.GetAllItens(idAss).OrderBy(x => x.CATE_NM_NOME), "CATE_CD_ID", "CATE_NM_NOME");
             ViewBag.UF = new SelectList(fornApp.GetAllUF(), "UF_CD_ID", "UF_NM_NOME");
-            //ViewBag.Incluir = (Int32)Session["IncluirTele"];
 
             TELEFONE item = fornApp.GetItemById(id);
             objetoFornAntes = item;
@@ -529,12 +505,6 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
-                {
-                    Session["MensTelefone"] = 2;
-                    return RedirectToAction("MontarTelaTelefone", "Telefone");
-                }
             }
             else
             {
@@ -566,12 +536,6 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
-                {
-                    Session["MensTelefone"] = 2;
-                    return RedirectToAction("MontarTelaTelefone", "Telefone");
-                }
             }
             else
             {
@@ -639,17 +603,13 @@ namespace ERP_Condominios_Solution.Controllers
             if (Session["MensTelefone"] != null)
             {
                 // Mensagem
-                if ((Int32)Session["MensTelefone"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                }
                 if ((Int32)Session["MensTelefone"] == 2)
                 {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
                 }
                 if ((Int32)Session["MensTelefone"] == 3)
                 {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
+                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0028", CultureInfo.CurrentCulture));
                 }
             }
 
@@ -665,10 +625,6 @@ namespace ERP_Condominios_Solution.Controllers
         public JsonResult PesquisaCEP_Javascript(String cep, int tipoEnd)
         {
             // Chama servico ECT
-            //Address end = ExternalServices.ECT_Services.GetAdressCEP(item.CLIE_NR_CEP_BUSCA);
-            //Endereco end = ExternalServices.ECT_Services.GetAdressCEPService(item.CLIE_NR_CEP_BUSCA);
-            //TELEFONE cli = fornApp.GetItemById((Int32)Session["IdVolta"]);
-
             ZipCodeLoad zipLoad = new ZipCodeLoad();
             ZipCodeInfo end = new ZipCodeInfo();
             ZipCode zipCode = null;
@@ -733,7 +689,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);

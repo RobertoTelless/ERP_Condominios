@@ -38,6 +38,7 @@ namespace ApplicationServices.Interfaces
         List<NOTICIA> GetAllNoticias(Int32 idAss);
         USUARIO GetAdministrador(Int32 idAss);
         List<UNIDADE> GetAllUnidades(Int32 idAss);
+        List<CARGO> GetAllCargos(Int32 idAss);
         Int32 ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss, out List<USUARIO> objeto);
     }
 }

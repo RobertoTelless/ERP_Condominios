@@ -100,6 +100,7 @@ namespace EntitiesServices.Model
         public string USUA_DS_MOTIVO_SAIDA { get; set; }
         public string USUA_DS_JUSTIFICATIVA { get; set; }
         public string USUA_TX_OBSERVACOES { get; set; }
+        public Nullable<int> USUA_IN_SINDICO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA> AGENDA { get; set; }

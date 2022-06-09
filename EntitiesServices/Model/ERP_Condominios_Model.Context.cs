@@ -13,9 +13,9 @@ namespace EntitiesServices.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ERP_CondominioEntities : DbContext
+    public partial class ERP_CondominiosEntities : DbContext
     {
-        public ERP_CondominioEntities()
+        public ERP_CondominiosEntities()
             : base("name=ERP_CondominiosEntities")
         {
         }

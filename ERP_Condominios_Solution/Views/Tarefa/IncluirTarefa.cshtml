@@ -23,25 +23,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Tarefas - Inclusão</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -94,7 +75,7 @@
                                                                     @Html.DropDownListFor(m => m.TARE_IN_PRIORIDADE, (SelectList)ViewBag.Prioridade, "Selecionar", new { @class = "form-control", autofocus = true })
                                                                     @Html.ValidationMessageFor(m => m.TARE_IN_PRIORIDADE, "", new { @style = "color:red" })
                                                                 </div>
-                                                                @if (ViewBag.Perfil == 1)
+                                                                @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER") 
                                                                 {
                                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                                         Atribuído a
@@ -142,7 +123,7 @@
                                                         <div class="row">
                                                             <hr />
                                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                                <h4>Anexos da Tarefa</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                                                <h4>Anexos</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
                                                                 <br />
                                                                 <div class="form-group">
                                                                     <div class="ibox-content">

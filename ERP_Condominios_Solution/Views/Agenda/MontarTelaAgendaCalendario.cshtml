@@ -27,13 +27,11 @@
                 <div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Nova Agenda", controller: "Agenda", action: "IncluirAgenda")
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAgenda", controller: "Agenda")
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseAgenda", controller: "Agenda")
+                    @Html.ButtonLinkIndex(text: "Ver Lista de Agendamentos", action: "MontarTelaAgenda", controller: "Agenda")
+                    @Html.ButtonLinkIndex(text: "Dashboard", action: "CarregarBase", controller: "BaseAdmin")
                 </div>
                 <div id="calendario"></div>
-                <div class="form-group">
-                    <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "MontarTelaAgenda", controller: "Agenda")
-                </div>
             </div>
         </div>
     </div>
@@ -54,6 +52,7 @@
                                         @Html.HiddenFor(m => m.AGEN_IN_ATIVO, new { id = "ativo" })
                                         @Html.HiddenFor(m => m.USUA_CD_ID, new { id = "cdUsua" })
                                         @Html.HiddenFor(m => m.AGEN_IN_STATUS, new { id = "status" })
+                                        @Html.HiddenFor(m => m.AGEN_IN_CORPORATIVA, new { id = "corp" })
                                         Data*
                                         @Html.TextBoxFor(m => m.AGEN_DT_DATA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, id = "data", @readonly = "readonly" })
                                         @Html.ValidationMessageFor(m => m.AGEN_DT_DATA, "", new { @style = "color:red" })
@@ -107,7 +106,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
-                                    <h4>Anexos da Agenda</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                    <h4>Anexos</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
                                     <br />
                                     <div class="form-group">
                                         <div class="ibox-content">

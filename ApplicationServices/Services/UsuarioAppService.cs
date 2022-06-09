@@ -59,6 +59,10 @@ namespace ApplicationServices.Services
             return _usuarioService.GetAllUnidades(idAss);
         }
 
+        public List<CARGO> GetAllCargos(Int32 idAss)
+        {
+            return _usuarioService.GetAllCargos(idAss);
+        }
 
         public USUARIO GetAdministrador(Int32 idAss)
         {

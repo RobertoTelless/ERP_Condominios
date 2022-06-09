@@ -24,7 +24,7 @@
             <div class="widget style1 blue-bg">
                 <div class="row vertical-align">
                     <div class="col-xs-3">
-                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                        <i class="fa fa-calendar fa-3x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <h3 class="font-normal">Prevista: @Model.TARE_DT_ESTIMADA.Value.ToShortDateString()</h3>
@@ -36,7 +36,7 @@
             <div class="widget style1 @ViewBag.StatusCor">
                 <div class="row vertical-align">
                     <div class="col-xs-3">
-                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                        <i class="fa fa-check-square-o fa-3x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <h3 class="font-normal">@ViewBag.Status</h3>
@@ -48,7 +48,7 @@
             <div class="widget style1 @ViewBag.PriorCor">
                 <div class="row vertical-align">
                     <div class="col-xs-3">
-                        <i class="fa fa-thumbs-o-up fa-3x"></i>
+                        <i class="fa fa-tachometer fa-3x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <h3 class="font-normal">@ViewBag.Prior</h3>
@@ -63,25 +63,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Tarefas - Edição</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -252,7 +233,7 @@
                                     <div class="row">
                                         <hr />
                                         <div class="col-lg-12 col-md-12 col-xs-12">
-                                            <h4>Anexos da Tarefa</h4>
+                                            <h4>Anexos</h4>
                                             <br />
                                             <div class="form-group">
                                                 @if (Model.TARE_IN_STATUS != 3 && Model.TARE_IN_STATUS != 5)

@@ -1,6 +1,5 @@
 ﻿@using Presentation.Extensions
 @using CrossCutting;
-@using EntitiesServices.Work_Classes;
 @model EntitiesServices.Model.TAREFA
 @{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
@@ -87,25 +86,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 @using (Html.BeginForm("FiltrarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -128,7 +108,7 @@
                                 Status
                                 @Html.DropDownListFor(m => m.TARE_IN_STATUS, (SelectList)ViewBag.Status, "Selecionar", new { @class = "form-control" })
                             </div>
-                            @if (ViewBag.Perfil == 1)
+                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER") 
                             {
                                 <div class="col-lg-5ths col-md-5ths col-xs-5ths">
                                     Usuario
@@ -158,25 +138,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Tarefas</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -220,23 +181,23 @@
                                             <td>@cond.TARE_DT_ESTIMADA.Value.ToShortDateString()</td>
                                             @if (cond.TARE_IN_STATUS == 1)
                                             {
-                                                <td>Pendente</td>
+                                                <td><span class="badge badge-warning">Pendente</span></td>
                                             }
                                             else if (cond.TARE_IN_STATUS == 2)
                                             {
-                                                <td>Em Andamento</td>
+                                                <td><span class="badge badge-primary">Em Andamento</span></td>
                                             }
                                             else if (cond.TARE_IN_STATUS == 3)
                                             {
-                                                <td>Suspensa</td>
+                                                <td><span class="badge badge-warning">Suspensa</span></td>
                                             }
                                             else if (cond.TARE_IN_STATUS == 4)
                                             {
-                                                <td>Cancelada</td>
+                                                <td><span class="badge badge-danger">Cancelada</span></td>
                                             }
                                             else if (cond.TARE_IN_STATUS == 5)
                                             {
-                                                <td>Encerrada</td>
+                                                <td><span class="badge badge-success">Encerrada</span></td>
                                             }
                                             @if (cond.TARE_DT_REALIZADA != null)
                                             {

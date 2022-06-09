@@ -242,6 +242,7 @@
     <Compile Include="Interfaces\Repositories\IAssinanteRepository.cs" />
     <Compile Include="Interfaces\Repositories\IAutorizacaoAnexoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IBancoRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ICargoRepository.cs" />
     <Compile Include="Interfaces\Repositories\ICategoriaEquipamentoRepository.cs" />
     <Compile Include="Interfaces\Repositories\IReservaComentarioRepository.cs" />
     <Compile Include="Interfaces\Repositories\IReservaAnexoRepository.cs" />

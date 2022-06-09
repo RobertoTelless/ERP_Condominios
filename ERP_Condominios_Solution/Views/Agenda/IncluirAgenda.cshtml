@@ -25,25 +25,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Agenda - Inclusão</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @Html.AntiForgeryToken()
@@ -79,6 +60,7 @@
                                                     @Html.HiddenFor(m => m.AGEN_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.USUA_CD_ID)
                                                     @Html.HiddenFor(m => m.AGEN_IN_STATUS)
+                                                    @Html.HiddenFor(m => m.AGEN_IN_CORPORATIVA)
                                                     Categoria*
                                                     @Html.DropDownListFor(m => m.CAAG_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, id = "categoria" })
                                                     @Html.ValidationMessageFor(m => m.CAAG_CD_ID, "", new { @style = "color:red" })
@@ -134,7 +116,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-xs-12">
-                                                <h4>Anexos da Agenda</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
+                                                <h4>Anexos</h4><input class="btn btn-sm btn-warning" id="inputFile" type="file" multiple />
                                                 <br />
                                                 <div class="form-group">
                                                     <div class="ibox-content">
@@ -399,4 +381,5 @@
         </script>
     }
 }
+
 

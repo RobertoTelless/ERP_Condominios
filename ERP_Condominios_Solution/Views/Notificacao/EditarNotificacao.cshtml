@@ -25,30 +25,12 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Notificações - Edição</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
                         @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Notificacao")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseNotificacao", controller: "Notificacao")
+                        @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Notificacao")
                     </div>
                     @Html.AntiForgeryToken()
                     @if (!ViewData.ModelState.IsValid)
@@ -76,15 +58,15 @@
                                                 @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseNotificacao", controller: "Notificacao")
                                             </div>
                                             <div class="row" style="width: 100%;">
-                                                <div class="col-lg-1 col-md-1 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     <div style="text-align: center; margin-top: 25px; line-height: 10px;">
                                                         @if (!String.IsNullOrEmpty(Model.USUARIO.USUA_AQ_FOTO))
                                                         {
-                                                            <img src="@Url.Content(Model.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                            <img src="@Url.Content(Model.USUARIO.USUA_AQ_FOTO)" style="width: auto; height: auto; max-height: 160px; max-width: 130px;">
                                                         }
                                                         else
                                                         {
-                                                            <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
+                                                            <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 160px; max-width: 130px;">
                                                         }
                                                         <br />
                                                         <br />
@@ -93,26 +75,24 @@
                                                         <br />
                                                     </div>
                                                 </div>
-                                                <div class="col-md-11">
+                                                <div class="col-md-10">
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                        <div class="col-lg-8 col-md-8 col-xs-12">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
                                                             @Html.HiddenFor(m => m.NOTI_CD_ID)
                                                             @Html.HiddenFor(m => m.NOTI_IN_ATIVO)
                                                             @Html.HiddenFor(m => m.NOTI_IN_NIVEL)
                                                             @Html.HiddenFor(m => m.NOTI_IN_VISTA)
                                                             @Html.HiddenFor(m => m.USUA_CD_ID)
                                                             @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                            Destino
+                                                            Usuário Destino
                                                             @Html.TextBoxFor(m => m.USUARIO.USUA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                         </div>
-                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
                                                             Categoria*
                                                             @Html.DropDownListFor(m => m.CANO_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })                            
                                                             @Html.ValidationMessageFor(m => m.CANO_CD_ID, "",new { @style="color:red" })
                                                         </div>
-                                                    </div>
-                                                    <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                        <div class="col-lg-8 col-md-8 col-xs-12">
+                                                        <div class="col-lg-6 col-md-6 col-xs-12">
                                                             Título*
                                                             @Html.TextBoxFor(m => m.NOTI_NM_TITULO, new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.NOTI_NM_TITULO, "",new { @style="color:red" })
@@ -120,25 +100,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
-                                                        Data Emissão*
-                                                        @Html.TextBoxFor(m => m.NOTI_DT_EMISSAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
-                                                        @Html.ValidationMessageFor(m => m.NOTI_DT_EMISSAO, "",new { @style="color:red" })
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                        Data Emissão
+                                                        @Html.TextBoxFor(m => m.NOTI_DT_EMISSAO, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly", @style = "color:green; font-weight:bold" })
                                                     </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data Validade*
-                                                        @Html.TextBoxFor(m => m.NOTI_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
+                                                        @Html.TextBoxFor(m => m.NOTI_DT_VALIDADE, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data" })
                                                         @Html.ValidationMessageFor(m => m.NOTI_DT_VALIDADE, "",new { @style="color:red" })
                                                     </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data Vista
-                                                        @Html.TextBoxFor(m => m.NOTI_DT_VISTA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                        @Html.TextBoxFor(m => m.NOTI_DT_VISTA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @readonly="readonly", @style = "color:green; font-weight:bold" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
                                                     <div class="col-lg-12 col-md-12 col-xs-12">
                                                         Conteúdo da Notificação
-                                                        @Html.TextAreaFor(m => m.NOTI_TX_TEXTO, new { @class = "form-control", style = "width: 1040px; height: 500px;", autofocus = true})
+                                                        @Html.TextAreaFor(m => m.NOTI_TX_TEXTO, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true})
                                                         @Html.ValidationMessageFor(m => m.NOTI_TX_TEXTO, "",new { @style="color:red" })
                                                     </div>
                                                 </div>
@@ -158,7 +137,7 @@
                                     <div class="row">
                                         <hr />
                                         <div class="col-lg-12 col-md-12 col-xs-12"> 
-                                            <h4>Anexos da Notificação</h4>
+                                            <h4>Anexos</h4>
                                             <br />
                                             <div class="form-group">
                                                 @using (Html.BeginForm("UploadFileNotificacaoGeral", "Notificacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data", @id="pwd-container2" }))
@@ -183,11 +162,11 @@
                                                                             <td>@cond.NOAN_DT_ANEXO.Value.ToShortDateString()</td>
                                                                             @if (cond.NOAN_IN_TIPO == 1)
 	                                                                        {
-                                                                                <td>Imagem/Video</td>
+                                                                                <td><span class="badge badge-success">Imagem/Vídeo</span></td>
                                                                             }
                                                                             else
                                                                             {
-                                                                                <td>Arquivo</td>
+                                                                                <td><span class="badge badge-primary">Arquivo</span></td>
                                                                             }
                                                                             <td class="td-one-action">
                                                                                 @if (cond.NOAN_IN_TIPO == 1 || cond.NOAN_IN_TIPO == 2)
@@ -220,10 +199,6 @@
                         </div>
                     </div>
                 </div>
-                @*<div class="form-group">
-                    <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseNotificacao", controller: "Notificacao")
-                </div>*@
             </div>
          </div>
     </div>
@@ -287,6 +262,7 @@
             $("#cpf").mask("999.999.999-99");
             $("#cnpj").mask("99.999.999/9999-99");
             $("#cep").mask("99999-999");
+            $("#data").mask("99/99/9999");
         });
     </script>
     <script type="text/javascript">
@@ -305,47 +281,6 @@
         });
     </script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            //Chama o evento após selecionar um valor
-            $('#pessoa').on('change', function() {
-                //Verifica se o valor é igual a 1 e mostra a divCnpj
-              if ( this.value == '2')
-              {
-                    $("#PF").hide();
-                    $("#PJ").show();
-              }
-                //Se o tempo for mé igual a 2 mostra a divCpf
-              else if( this.value == '1')
-              {
-                  $("#PJ").hide();
-                  $("#PF").show();
-              }
-              else if( this.value == '3')
-              {
-                    $("#PF").hide();
-                    $("#PJ").show();
-              }
-
-                //Se não for nem 1 nem 2 esconde as duas
-                else{
-                     $("#PJ").hide();
-                     $("#PF").hide();
-                }
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-
-        });
-    </script>
-    <script type="text/javascript">
         $(document).ready(function () {
 
             var i = -1;
@@ -358,7 +293,7 @@
 
             $('#basictoast').click(function () {
                 // Display a success toast, with a title
-                toastr.success('Desativação/Reativação com sucesso!')
+                toastr.success('Edição em andamento')
             });
             $('#showtoast').click(function () {
                 var shortCutFunction = $("#toastTypeGroup input:radio:checked").val();

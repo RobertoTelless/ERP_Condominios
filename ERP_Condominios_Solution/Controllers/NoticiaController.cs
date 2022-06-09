@@ -149,10 +149,6 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Noticias = ((List<NOTICIA>)Session["ListaNoticia"]).Count;
 
             // Mensagem
-            if ((Int32)Session["MensNoticia"] == 1)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-            }
 
             // Abre view
             Session["MensNoticia"] = 0;
@@ -206,7 +202,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensNoticia"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                 }
 
                 // Sucesso
@@ -258,9 +253,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNoticia"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
                 }
             }
@@ -284,13 +279,9 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Mensagem
-            if ((Int32)Session["MensNoticia"] == 1)
+            if ((Int32)Session["MensPermissao"] == 2)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-            }
-            if ((Int32)Session["MensNoticia"] == 2)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0010", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
 
             // Abre view
@@ -348,7 +339,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensNoticia"] = 1;
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                 }
 
                 // Sucesso
@@ -394,10 +384,10 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNoticia"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("MontarTelaNoticia", "Noticia");
                 }
             }
             else
@@ -482,15 +472,25 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensAcesso"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
+                    Session["MensPermissao"] = 2;
+                    return RedirectToAction("MontarTelaNoticia", "Noticia");
                 }
             }
             else
             {
                 return RedirectToAction("Login", "ControleAcesso");
+            }
+
+            // Mensagens
+            if ((Int32)Session["MensNoticia"] == 10)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensNoticia"] == 11)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
             }
 
             NOTICIA item = baseApp.GetItemById(id);
@@ -554,9 +554,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNoticia"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNoticia", "Noticia");
                 }
             }
@@ -613,9 +613,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNoticia"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNoticia", "Noticia");
                 }
             }
@@ -664,7 +664,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             if (file == null)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensNoticia"] = 10;
                 return RedirectToAction("VoltarAnexoNoticia");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
@@ -675,7 +675,7 @@ namespace ERP_Condominios_Solution.Controllers
             var fileName = Path.GetFileName(file.FileName);
             if (fileName.Length > 250)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensNoticia"] = 11;
                 return RedirectToAction("VoltarAnexoNoticia");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/Noticias/" + item.NOTC_CD_ID.ToString() + "/Fotos/";

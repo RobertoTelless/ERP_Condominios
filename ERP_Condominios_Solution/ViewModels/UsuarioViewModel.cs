@@ -76,12 +76,14 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<System.DateTime> USUA_DT_SAIDA { get; set; }
         [StringLength(200, ErrorMessage = "O MOTIVO DA SAÌDA deve ter no máximo 200 caracteres.")]
         public string USUA_DS_MOTIVO_SAIDA { get; set; }
-        public Nullable<int> USUA_IN_PROPRIETARIO { get; set; }
         [StringLength(200, ErrorMessage = "A JUSTIFICATIVA deve ter no máximo 200 caracteres.")]
         public string USUA_DS_JUSTIFICATIVA { get; set; }
         public Nullable<int> USUA_IN_SISTEMA { get; set; }
         public Nullable<int> USUA_IN_MORADOR { get; set; }
         public Nullable<int> USUA_IN_FUNCIONARIO { get; set; }
+        public Nullable<int> USUA_IN_SINDICO { get; set; }
+        public Nullable<int> USUA_IN_PROPRIETARIO { get; set; }
+        public Nullable<int> USUA_IN_PORTARIA { get; set; }
 
 
         public bool Bloqueio
@@ -206,6 +208,38 @@ namespace ERP_Condominios_Solution.ViewModels
             set
             {
                 USUA_IN_SISTEMA = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Portaria
+        {
+            get
+            {
+                if (USUA_IN_PORTARIA == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_PORTARIA = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool Sindico
+        {
+            get
+            {
+                if (USUA_IN_SINDICO == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_SINDICO = (value == true) ? 1 : 0;
             }
         }
 

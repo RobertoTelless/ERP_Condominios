@@ -197,6 +197,7 @@
     <Compile Include="Repositories\AssinanteRepository.cs" />
     <Compile Include="Repositories\AutorizacaoAnexoRepository.cs" />
     <Compile Include="Repositories\BancoRepository.cs" />
+    <Compile Include="Repositories\CargoRepository.cs" />
     <Compile Include="Repositories\CategoriaEquipamentoRepository.cs" />
     <Compile Include="Repositories\CategoriaUsuarioRepository.cs" />
     <Compile Include="Repositories\ReservaComentarioRepository.cs" />

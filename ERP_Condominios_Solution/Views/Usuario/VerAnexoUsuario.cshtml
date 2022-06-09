@@ -1,24 +1,24 @@
 ﻿@using Presentation.Extensions
-@model EntitiesServices.Model.NOTIFICACAO_ANEXO
+@model EntitiesServices.Model.USUARIO_ANEXO
 @{
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="page-title"> 
-        <h3 class="title">Notificações</h3> 
+        <h3 class="title">Usuários</h3> 
         <br />
         <ol class="breadcrumb">
             <li>
                 <a href="@Url.Action("CarregarAdmin", "BaseAdmin")">Dashboard</a>
             </li>
             <li>
-                <a href="@Url.Action("MontarTelaNotificacaoGeral", "Notificacao")">Notificações</a>
+                <a href="@Url.Action("MontarTelaUsuario", "Usuario")">Usuários</a>
             </li>
             <li>
-                <a href="@Url.Action("EditarNotificacao", "Notificacao")">Notificação - Edição</a>
+                <a href="@Url.Action("EditarUsuario", "Usuario")">Usuários - Edição</a>
             </li>
             <li class="active">
-                <strong>Notificação - Ver Anexo</strong>
+                <strong>Usuários - Ver Anexo</strong>
             </li>
         </ol>
         <br />
@@ -27,9 +27,9 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Notificação - Ver Anexo</h5>
+                    <h5>Usuários - Ver Anexo</h5>
                 </div>
-                @using (Html.BeginForm("VerAnexoNotificacaoGeral", "Notificacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
+                @using (Html.BeginForm("VerAnexoUsuario", "Usuario", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id="pwd-container1" }))
                 {
                     <div class="ibox-content">
                         @Html.AntiForgeryToken()
@@ -37,32 +37,32 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">                
                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                     Titulo
-                                    @Html.TextBoxFor(m => m.NOAN_NM_TITULO, new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                    @Html.TextBoxFor(m => m.USAN_NM_TITULO, new { @class = "form-control", @readonly="readonly", autofocus = true })
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     Data
-                                    @Html.TextBoxFor(m => m.NOAN_DT_ANEXO, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
+                                    @Html.TextBoxFor(m => m.USAN_DT_ANEXO, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly="readonly", autofocus = true })
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoNotificacao", controller: "Notificacao")
-                            @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Notificacao")
+                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarAnexoUsuario", controller: "Usuario")
+                            @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Usuario")
                         </div>
                         <div class="form-group">
-                            @if (Model.NOAN_IN_TIPO == 1)
+                            @if (Model.USAN_IN_TIPO == 1)
 	                        {
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <img src="@Url.Content(Model.NOAN_AQ_ARQUIVO)" style = "width: auto; height: auto; max-height: 600px; max-width: 900px;">
+                                        <img src="@Url.Content(Model.USAN_AQ_ARQUIVO)" style = "width: auto; height: auto; max-height: 600px; max-width: 900px;">
                                     </div>
                                 </div>
 	                        }   
-                            @if (Model.NOAN_IN_TIPO == 2)
+                            @if (Model.USAN_IN_TIPO == 2)
 	                        {
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <figure>
-                                        <iframe width="900" height="600" src="@Url.Content(Model.NOAN_AQ_ARQUIVO)" frameborder="0" allowfullscreen></iframe>
+                                        <iframe width="900" height="600" src="@Url.Content(Model.USAN_AQ_ARQUIVO)" frameborder="0" allowfullscreen></iframe>
                                     </figure>
                                 </div>
 	                        }
@@ -111,4 +111,5 @@
         </script>
     }
 }
+
 

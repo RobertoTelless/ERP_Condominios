@@ -24,40 +24,21 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarNotificacao", "Notificacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
                 {
                     <div class="ibox-content">
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                <div class="col-lg-4 col-md-4 col-xs-12">
                                     Título
                                     @Html.TextBoxFor(m => m.NOTI_NM_TITULO, new { @class = "form-control", autofocus = true })
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-xs-12">
                                     Data
                                     @Html.TextBoxFor(m => m.NOTI_DT_EMISSAO,  "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true })
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12">
                                     Texto da Notificação
                                     @Html.TextBoxFor(m => m.NOTI_TX_TEXTO, new { @class = "form-control", autofocus = true })
                                 </div>
@@ -67,7 +48,7 @@
                                     @Html.ButtonActionSubmit(text: "Filtrar")
                                     @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Notificacao", action: "RetirarFiltroNotificacao")
                                     @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Notificacao", action: "MostrarTudoNotificacao")
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Notificacao", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Notificacao", action: "Voltar")
                                 </div>
                             </div>
                     </div>
@@ -81,25 +62,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Notificações</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
@@ -111,7 +73,7 @@
                                             <th>Categoria</th>   
                                             <th>Título</th>   
                                             <th>Validade</th>   
-                                            <th>Vista</th>
+                                            <th>Lida?</th>
                                             <th class="td-one-action">Ações</th>
                                         </tr>
                                     </thead>
@@ -132,11 +94,11 @@
                                                 }
                                                 @if (cond.NOTI_IN_VISTA == 1)
                                                 {
-                                                    <td>Sim</td>
+                                                    <td><span class="badge badge-success">Sim</span></td>
                                                 }
                                                 else
                                                 {
-                                                    <td>Não</td>
+                                                    <td><span class="badge badge-warning">Não</span></td>
                                                 }
                                                 <td class="td-one-action">
                                                     @Html.TableLinkDetails(cond.NOTI_CD_ID, "VerNotificacao","fa-search", "Visualizar")
@@ -191,8 +153,6 @@
                 pageLength: 25,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
                     { extend: 'excel', title: 'ExampleFile' },
                     { extend: 'pdf', title: 'ExampleFile' },
 

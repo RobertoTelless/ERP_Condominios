@@ -20,17 +20,15 @@ namespace DataServices.Repositories
             return query.FirstOrDefault();
         }
 
-        public List<CARGO> GetAllItensAdm()
+        public List<CARGO> GetAllItensAdm(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<CARGO> query = Db.CARGO;
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();
         }
 
-        public List<CARGO> GetAllItens()
+        public List<CARGO> GetAllItens(Int32 idAss)
         {
-            Int32? idAss = SessionMocks.IdAssinante;
             IQueryable<CARGO> query = Db.CARGO.Where(p => p.CARG_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();

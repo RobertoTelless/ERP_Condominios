@@ -128,8 +128,6 @@ namespace ERP_Condominios_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
             }
             else
             {
@@ -170,7 +168,6 @@ namespace ERP_Condominios_Solution.Controllers
             // Mensagem
             if ((Int32)Session["MensTarefa"] == 1)
             {
-                ViewBag.Message = ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture);
             }
 
             // Abre view
@@ -217,8 +214,6 @@ namespace ERP_Condominios_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
             }
             else
             {
@@ -232,11 +227,6 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID);
                 Session["ListaTarefa"] = listaMaster;
             }
-            //if (((List<TAREFA>)Session["ListaTarefa"]).Count == 0)
-            //{
-            //    listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID);
-            //    Session["ListaTarefa"] = listaMaster;
-            //}
 
             if (id == null)
             {
@@ -256,7 +246,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.TarefasEncerradas = baseApp.GetTarefaStatus(usuario.USUA_CD_ID, 2).Count;
 
             ViewBag.Usuarios = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
-            ViewBag.Perfil = usuario.PERF_CD_ID;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Pendente", Value = "1" });
@@ -269,11 +259,6 @@ namespace ERP_Condominios_Solution.Controllers
             // Mensagem
             if (Session["MensTarefa"] != null)
             {
-                if ((Int32)Session["MensTarefa"] == 1)
-                {
-                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    Session["MensTarefa"] = 0;
-                }
             }
 
             // Abre view
@@ -329,8 +314,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensTarefa"] = 1;
-                    //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-                    //return RedirectToAction("MontarTelaTarefa");
                 }
 
                 // Sucesso
@@ -353,6 +336,10 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            if ((Int32)Session["VoltaTarefa"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
+            }
             if ((Int32)Session["VoltaKanban"] == 1)
             {
                 Session["VoltaKanban"] = 0;
@@ -373,8 +360,6 @@ namespace ERP_Condominios_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
             }
             else
             {
@@ -401,7 +386,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Prioridade = new SelectList(prior, "Value", "Text");
 
             // Prepara view
-            ViewBag.Perfil = usuario.PERF_CD_ID;
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             TAREFA item = new TAREFA();
             TarefaViewModel vm = Mapper.Map<TAREFA, TarefaViewModel>(item);
@@ -415,7 +400,6 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public ActionResult IncluirTarefa(TarefaViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -477,12 +461,12 @@ namespace ERP_Condominios_Solution.Controllers
                                 // Verifica retorno
                                 if (volta == 1)
                                 {
-                                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
+                                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
                                     return View(vm);
                                 }
                                 if (volta == 2)
                                 {
-                                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
+                                    ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0094", CultureInfo.CurrentCulture));
                                     return View(vm);
                                 }
                             }
@@ -516,7 +500,7 @@ namespace ERP_Condominios_Solution.Controllers
                             Directory.CreateDirectory(Server.MapPath(caminho));
 
                             // Cria pastas Agenda
-                            String agCaminho = "/Imagens/Agenda/" + usuarioLogado.ASSI_CD_ID.ToString() + "/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
+                            String agCaminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Agenda/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
                             Directory.CreateDirectory(Server.MapPath(agCaminho));
 
                             if (((PERIODICIDADE_TAREFA)Session["PeriTarefa"]).PETA_CD_ID == 4) //Mensal
@@ -560,7 +544,7 @@ namespace ERP_Condominios_Solution.Controllers
                         // Verifica retorno
                         if (volta == 1)
                         {
-                            ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
+                            ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0058", CultureInfo.CurrentCulture));
                             return View(vm);
                         }
 
@@ -571,7 +555,7 @@ namespace ERP_Condominios_Solution.Controllers
                         Directory.CreateDirectory(Server.MapPath(caminho));
 
                         // Cria pastas Agenda
-                        String agCaminho = "/Imagens/Agenda/" + usuarioLogado.ASSI_CD_ID.ToString() + "/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
+                        String agCaminho = "/Imagens/" + usuarioLogado.ASSI_CD_ID.ToString() + "/Agenda/" + ag.AGEN_CD_ID.ToString() + "/Anexos/";
                         Directory.CreateDirectory(Server.MapPath(agCaminho));
                     }
 
@@ -624,8 +608,6 @@ namespace ERP_Condominios_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
             }
             else
             {
@@ -649,6 +631,16 @@ namespace ERP_Condominios_Solution.Controllers
             prior.Add(new SelectListItem() { Text = "Alta", Value = "3" });
             prior.Add(new SelectListItem() { Text = "Urgente", Value = "4" });
             ViewBag.Prioridade = new SelectList(prior, "Value", "Text");
+
+            // Mensagens
+            if ((Int32)Session["MensTarefa"] == 10)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensTarefa"] == 11)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+            }
 
             TAREFA item = baseApp.GetItemById(id);
             objetoAntes = item;
@@ -697,12 +689,12 @@ namespace ERP_Condominios_Solution.Controllers
                     // Verifica retorno
                     if (volta == 1)
                     {
-                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
+                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
                     if (volta == 2)
                     {
-                        ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
+                        ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
                         return View(vm);
                     }
 
@@ -758,11 +750,11 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verifica retorno
                 if (volta == 1)
                 {
-                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
+                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0013", CultureInfo.CurrentCulture));
                 }
                 if (volta == 2)
                 {
-                    return Json(ERP_Condominios_Resource.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
+                    return Json(PlatMensagens_Resources.ResourceManager.GetString("M0014", CultureInfo.CurrentCulture));
                 }
 
                 Session["ListaTarefa"] = null;
@@ -787,8 +779,6 @@ namespace ERP_Condominios_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
             }
             else
             {
@@ -832,8 +822,6 @@ namespace ERP_Condominios_Solution.Controllers
             if ((USUARIO)Session["UserCredentials"] != null)
             {
                 usuario = (USUARIO)Session["UserCredentials"];
-
-                // Verfifica permissão
             }
             else
             {
@@ -895,7 +883,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             if (file == null)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensTarefa"] = 10;
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
@@ -905,7 +893,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             if (fileName.Length > 250)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensTarefa"] = 11;
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
@@ -954,7 +942,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             if (file == null)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+                Session["MensTarefa"] = 10;
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
@@ -964,7 +952,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             if (fileName.Length > 100)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensTarefa"] = 11;
                 return RedirectToAction("VoltarAnexoTarefa");
             }
 
@@ -1075,7 +1063,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/5.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);

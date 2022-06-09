@@ -59,7 +59,8 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpPost]
         public JsonResult GetNotificacaoRefreshTime()
         {
-            var refresh = confApp.GetById(1).CONF_NR_REFRESH_NOTIFICACAO;
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            var refresh = confApp.GetItemById(idAss).CONF_NR_REFRESH_NOTIFICACAO;
 
             if (refresh == null)
             {
@@ -79,9 +80,6 @@ namespace ERP_Condominios_Solution.Controllers
 
             if (listaMaster.Count == 1)
             {
-                // Ver Notificacao
-                //return RedirectToAction("VerNotificacao", new { id = listaMaster.FirstOrDefault().NOTI_CD_ID });
-
                 var hash = new Hashtable();
                 hash.Add("msg", "Você possui 1 notificação não lida");
 
@@ -89,9 +87,6 @@ namespace ERP_Condominios_Solution.Controllers
             }
             else if (listaMaster.Count > 1)
             {
-                // Você possui x notificações não lidas
-                //return RedirectToAction("MontarTelaNotificacao", new { lista = listaMaster });
-
                 var hash = new Hashtable();
                 hash.Add("msg", "Você possui " + listaMaster.Count + " notificações não lidas");
 
@@ -110,7 +105,6 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             listaMaster = baseApp.GetNotificacaoNovas(usu.USUA_CD_ID, idAss).Where(x => x.NOTI_DT_VISTA == null).ToList();
-
             if (listaMaster.Count == 1)
             {
                 return Json(listaMaster.FirstOrDefault().NOTI_CD_ID);
@@ -226,16 +220,11 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Notificacoes = baseApp.GetNotificacaoNovas(usuario.USUA_CD_ID, idAss).Count;
 
             // Mensagem
-            if ((Int32)Session["MensNotificacao"] == 1)
-            {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-            }
 
             // Abre view
             Session["MensNotificacao"] = 0;
             Session["VoltaNotificacao"] = 1;
             objeto = new NOTIFICACAO();
-            objeto.NOTI_DT_EMISSAO = DateTime.Today.Date;
             return View(objeto);
         }
 
@@ -258,7 +247,6 @@ namespace ERP_Condominios_Solution.Controllers
                 if (volta == 1)
                 {
                     Session["MensNotificacao"] = 1;
-                    //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                 }
 
                 // Sucesso
@@ -362,9 +350,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN" )
+                if (usuario.PERFIL.PERF_SG_SIGLA == "OPR" || usuario.PERFIL.PERF_SG_SIGLA == "VIS")
                 {
-                    Session["MensNotificacao"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
                 }
             }
@@ -387,11 +375,11 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Indicadores
             ViewBag.Nots = ((List<NOTIFICACAO>)Session["ListaNotificacao"]).Count;
-            
+
             // Mensagem
-            if ((Int32)Session["MensNotificacao"] == 1)
+            if ((Int32)Session["MensNotificacao"] == 2)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
 
             // Abre view
@@ -447,7 +435,6 @@ namespace ERP_Condominios_Solution.Controllers
                     if (volta == 1)
                     {
                         Session["MensNotificacao"] = 1;
-                        //ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
                     }
 
                     // Sucesso
@@ -469,6 +456,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
         }
 
+
         public ActionResult VoltarBaseNotificacao()
         {
             if ((String)Session["Ativa"] == null)
@@ -483,6 +471,10 @@ namespace ERP_Condominios_Solution.Controllers
             if ((Int32)Session["VoltaNotificacao"] == 3)
             {
                 return RedirectToAction("CarregarBase", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaNotificacao"] == 10)
+            {
+                return RedirectToAction("MontarCentralMensagens", "BaseAdmin");
             }
             return RedirectToAction("MontarTelaNotificacaoGeral");
         }
@@ -500,9 +492,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNotificacao"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
                 }
             }
@@ -519,7 +511,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             NOTIFICACAO item = new NOTIFICACAO();
             NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
-            vm.NOTI_DT_EMISSAO = DateTime.Today.Date;
+            vm.NOTI_DT_EMISSAO = DateTime.Now;
             vm.NOTI_IN_ATIVO = 1;
             vm.ASSI_CD_ID = idAss;
             vm.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
@@ -588,7 +580,7 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensNotificacao"] = 2;
                     return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
@@ -603,6 +595,16 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             ViewBag.Cats = new SelectList(baseApp.GetAllCategorias(idAss), "CANO_CD_ID", "CANO_NM_NOME");
             ViewBag.Usus = new SelectList(usuApp.GetAllItens(idAss), "USUA_CD_ID", "USUA_NM_NOME");
+
+            // Mensagens
+            if ((Int32)Session["MensNotificacao"] == 10)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensNotificacao"] == 11)
+            {
+                ModelState.AddModelError("", PlatMensagens_Resources.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+            }
 
             NOTIFICACAO item = baseApp.GetItemById(id);
             objetoAntes = item;
@@ -664,9 +666,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNotificacao"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
                 }
             }
@@ -679,6 +681,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             NOTIFICACAO item = baseApp.GetItemById(id);
             NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
+            vm.NOTI_IN_ATIVO = 0;
             return View(vm);
         }
 
@@ -726,9 +729,9 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "MOR" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "FUN")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
-                    Session["MensNotificacao"] = 2;
+                    Session["MensPermissao"] = 2;
                     return RedirectToAction("MontarTelaNotificacaoGeral", "Notificacao");
                 }
             }
@@ -741,6 +744,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara view
             NOTIFICACAO item = baseApp.GetItemById(id);
             NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
+            vm.NOTI_IN_ATIVO = 1;
             return View(vm);
         }
 
@@ -810,8 +814,8 @@ namespace ERP_Condominios_Solution.Controllers
 
             if (file == null)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0019", CultureInfo.CurrentCulture));
-                return RedirectToAction("VoltarAnexoNoticia");
+                Session["MensNotificacao"] = 10;
+                return RedirectToAction("VoltarAnexoNotificacaoGeral");
             }
 
             NOTIFICACAO item = baseApp.GetById(idNot);
@@ -819,7 +823,7 @@ namespace ERP_Condominios_Solution.Controllers
             var fileName = Path.GetFileName(file.FileName);
             if (fileName.Length > 250)
             {
-                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0024", CultureInfo.CurrentCulture));
+                Session["MensNotificacao"] = 11;
                 return RedirectToAction("VoltarAnexoNotificacaoGeral");
             }
             String caminho = "/Imagens/" + idAss.ToString() + "/Notificacao/" + item.NOTI_CD_ID.ToString() + "/Anexos/";
@@ -852,23 +856,6 @@ namespace ERP_Condominios_Solution.Controllers
             objetoAntes = item;
             Int32 volta = baseApp.ValidateEdit(item, objetoAntes);
             return RedirectToAction("VoltarAnexoNotificacaoGeral");
-        }
-
-        [HttpGet]
-        public ActionResult SlideShowNotificacao()
-        {
-            // Prepara view
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            Int32 idNot = (Int32)Session["IdVolta"];
-            Int32 idAss = (Int32)Session["IdAssinante"];
-
-            NOTIFICACAO item = baseApp.GetItemById(idNot);
-            objetoAntes = item;
-            NotificacaoViewModel vm = Mapper.Map<NOTIFICACAO, NotificacaoViewModel>(item);
-            return View(vm);
         }
 
         public ActionResult GerarRelatorioLista()
@@ -907,7 +894,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -1180,7 +1167,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);

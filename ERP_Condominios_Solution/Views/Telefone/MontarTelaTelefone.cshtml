@@ -5,7 +5,26 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
-
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*Titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="limpaModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @using (Html.BeginForm("EnviarSmsTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
     { 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,25 +69,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarTelefone", "Telefone", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -111,7 +111,7 @@
                                     @Html.ButtonActionSubmit(text: "Filtrar")
                                     @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Telefone", action: "RetirarFiltroTelefone")
                                     @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Telefone", action: "MostrarTudoTelefone")
-                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                     {
                                         @Html.ButtonLinkIndex(text: "Novo Telefone", controller: "Telefone", action: "IncluirTelefone")
                                     }
@@ -131,25 +131,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Telefones</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -188,7 +169,7 @@
                                                 <td>@cond.TELE_NM_CIDADE</td>
                                                 <td>@cond.UF.UF_SG_SIGLA</td>
                                                 <td class="td-one-action">
-                                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                                     {
                                                         @Html.TableLinkDetails(cond.TELE_CD_ID, "EditarTelefone","fa-edit", "Editar")
                                                         <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.TELE_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>

@@ -3017,7 +3017,6 @@
     <Content Include="Views\Notificacao\ExcluirNotificacao.cshtml" />
     <Content Include="Views\Notificacao\ReativarNotificacao.cshtml" />
     <Content Include="Views\Notificacao\VerAnexoNotificacaoGeral.cshtml" />
-    <Content Include="Views\Notificacao\SlideShowNotificacao.cshtml" />
     <Content Include="Views\Agenda\MontarTelaAgendaCalendario.cshtml" />
     <Content Include="Views\Agenda\MontarTelaAgenda.cshtml" />
     <Content Include="Views\Agenda\IncluirAgenda.cshtml" />
@@ -3202,6 +3201,11 @@
     <Content Include="Views\Mudanca\VerAnexoMudanca.cshtml" />
     <Content Include="Views\Reserva\GerarNotificacaoReserva.cshtml" />
     <Content Include="Views\BaseAdmin\MontarTelaDashboardAdministracao.cshtml" />
+    <Content Include="Views\Usuario\MontarTelaUsuario.cshtml" />
+    <Content Include="Views\Usuario\VerAnexoUsuario.cshtml" />
+    <Content Include="Views\Usuario\VerUsuario.cshtml" />
+    <Content Include="Views\Usuario\IncluirUsuario.cshtml" />
+    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3288,7 +3292,6 @@
     <Folder Include="Imagens\Agenda\1\20\Anexos\" />
     <Folder Include="Imagens\Agenda\1\21\Anexos\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Usuario\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
