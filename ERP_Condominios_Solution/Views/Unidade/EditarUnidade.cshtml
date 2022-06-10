@@ -194,7 +194,14 @@
                                             <div class="ibox float-e-margins">
                                                 <div class="ibox-title">
                                                     <span class="label label-primary pull-right">Hoje</span>
-                                                    <h5><a href="@Url.Action("MontarTelaUsuario", "Usuario")" class="pull-left btn-link"><u>Moradores</u></a></h5>
+                                                    @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER" || ViewBag.Perfil == "SIN"  || ViewBag.Perfil == "POR")
+                                                    {
+                                                        <h5><a href="@Url.Action("MontarTelaMoradores", "Morador")" class="pull-left btn-link"><u>Moradores</u></a></h5>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h5><a href="@Url.Action("MontarTelaMorador", "Morador")" class="pull-left btn-link"><u>Morador</u></a></h5>
+                                                    }
                                                 </div>
                                                 <div class="ibox-content">
                                                     @if (Model.USUARIO.Count > 0)
@@ -266,6 +273,49 @@
                                                                         @if (cond.VAGA != null)
                                                                         {
                                                                             <td>@cond.VAGA.VAGA_NR_NUMERO</td>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <td>-</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaVaga", "Vaga")" class="pull-left btn-link"><u>Vagas</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.VAGA.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Tipo</th>
+                                                                    <th>Andar</th>
+                                                                    <th>Número</th>
+                                                                    <th>Atribuída em</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.VAGA.OrderByDescending(a => a.VAGA_NR_NUMERO)))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.TIPO_VAGA.TIVA_NM_NOME</td>
+                                                                        <td>@cond.VAGA_NR_ANDAR</td>
+                                                                        <td>@cond.VAGA_NR_NUMERO</td>
+                                                                        @if (cond.VAGA_DT_ATRIBUICAO != null)
+                                                                        {
+                                                                            <td>@cond.VAGA_DT_ATRIBUICAO.Value.ToShortDateString()</td>
                                                                         }
                                                                         else
                                                                         {

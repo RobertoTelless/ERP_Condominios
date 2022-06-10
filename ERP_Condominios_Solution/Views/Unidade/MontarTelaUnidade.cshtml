@@ -123,7 +123,7 @@
                                         @Html.ButtonLinkIndex(text: "Nova Unidade", controller: "Unidade", action: "IncluirUnidade")
                                     }
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Unidade", action: "GerarRelatorioUnidade")
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "Unidade", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Unidade", action: "VoltarDash")
                                 </div>
                             </div>
                     </div>
@@ -201,7 +201,10 @@
                                                     <td>Não</td>
                                                 }
                                                 <td class="td-one-action">
-                                                    <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.UNID_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
+                                                    @if (cond.USUARIO.Where(p => p.USUA_IN_RESPONSAVEL == 1).FirstOrDefault() != null)
+                                                    {
+                                                        <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.UNID_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
+                                                    }
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
 	                                                {
                                                         @Html.TableLinkDetails(cond.UNID_CD_ID, "EditarUnidade","fa-edit", "Editar Unidade")

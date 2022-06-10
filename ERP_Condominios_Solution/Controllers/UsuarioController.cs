@@ -337,6 +337,7 @@ namespace ERP_Condominios_Solution.Controllers
             vm.USUA_IN_SISTEMA = 0;
             vm.USUA_NR_ACESSOS = 0;
             vm.USUA_NR_FALHAS = 0;
+            vm.CAUS_CD_ID = 1;
             return View(vm);
         }
 

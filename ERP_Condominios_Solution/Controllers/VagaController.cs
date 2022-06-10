@@ -214,6 +214,27 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("MontarTelaVaga");
         }
 
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
         [HttpGet]
         public ActionResult IncluirVaga()
         {

@@ -60,6 +60,7 @@
                                                     @Html.HiddenFor(m => m.USUA_IN_PROVISORIO)
                                                     @Html.HiddenFor(m => m.USUA_NR_ACESSOS)
                                                     @Html.HiddenFor(m => m.USUA_NR_FALHAS)
+                                                    @Html.HiddenFor(m => m.CAUS_CD_ID)
                                                     Perfil de Acesso*
                                                     @Html.DropDownListFor(m => m.PERF_CD_ID, (SelectList)ViewBag.Perfis, "Selecionar", new { @class = "form-control", autofocus = true, @style = "color:green; font-weight:bold"  })
                                                     @Html.ValidationMessageFor(m => m.PERF_CD_ID, "", new { @style = "color:red" })
@@ -144,6 +145,11 @@
                                                     Proprietário?
                                                     <br />
                                                     @Html.CheckBoxFor(m => m.Proprietario, new { @class = "checkbox i-checks", autofocus = true})
+                                                </div> 
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    Responsável?
+                                                    <br />
+                                                    @Html.CheckBoxFor(m => m.Responsavel, new { @class = "checkbox i-checks", autofocus = true})
                                                 </div> 
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -246,6 +252,7 @@
     @Scripts.Render("~/plugins/touchSpin")
     @Scripts.Render("~/plugins/iCheck")
     @Scripts.Render("~/plugins/sweetAlert")
+    @Scripts.Render("~/plugins/passwordMeter")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/uploadAnexo.js"></script>
 
@@ -392,7 +399,7 @@
     </script>
 
     <script>
-        SendFilesV2('imgUsuario', 'Administracao', 'UploadFileToSession');
+        SendFilesV2('imgUsuario', 'Usuario', 'UploadFileToSession');
     </script>
 
 

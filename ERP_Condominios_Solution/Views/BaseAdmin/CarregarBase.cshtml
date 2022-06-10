@@ -97,11 +97,11 @@
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuMorador"] == 1)
                     {
-                        @Html.ButtonLinkIndex(text: "Morador", action: "MontarTelaDashboardMorador", controller: "BaseAdmin", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Morador", action: "CarregarMorador", controller: "BaseAdmin", buttonClass: "primary")
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuSindico"] == 1)
                     {
-                        @Html.ButtonLinkIndex(text: "Síndico", action: "MontarTelaDashboardSíndico", controller: "BaseAdmin", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Síndico", action: "CarregarSíndico", controller: "BaseAdmin", buttonClass: "primary")
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuProprietario"] == 1)
                     {

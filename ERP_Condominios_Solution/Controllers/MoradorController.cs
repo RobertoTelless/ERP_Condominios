@@ -60,6 +60,7 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             return RedirectToAction("CarregarBase", "BaseAdmin");
+
         }
 
         [HttpGet]

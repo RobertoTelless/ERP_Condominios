@@ -187,6 +187,15 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("VerNotificacao", new { id = (Int32)Session["IdVolta"] });
         }
 
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+        }
+
         public ActionResult MontarTelaNotificacao()
         {
             // Carrega listas

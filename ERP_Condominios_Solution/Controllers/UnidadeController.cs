@@ -151,7 +151,6 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Abre view
             Session["MensUnidade"] = 0;
-            Session["VoltaUnidade"] = 1;
             objeto = new UNIDADE();
             return View(objeto);
         }
@@ -232,6 +231,27 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             return RedirectToAction("MontarTelaUnidade");
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
         [HttpGet]
@@ -628,7 +648,7 @@ namespace ERP_Condominios_Solution.Controllers
                 tipo = 2;
             }
             foto.UNAN_IN_TIPO = tipo;
-            foto.UNAN_NM_TITULO = fileName.Substring(0, 50);
+            foto.UNAN_NM_TITULO = fileName;
             foto.UNID_CD_ID = item.UNID_CD_ID;
 
             item.UNIDADE_ANEXO.Add(foto);

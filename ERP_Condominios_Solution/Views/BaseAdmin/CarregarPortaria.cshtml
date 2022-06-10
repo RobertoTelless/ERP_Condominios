@@ -59,7 +59,7 @@
                             <h5><a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Mudanças</a></h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">32</h1>
+                            <h1 class="no-margins">@ViewBag.Mudanca</h1>
                             <small>Mudanças Confirmadas</small>
                             <br />
                             <br />
@@ -74,7 +74,7 @@
                             <h5><a href="@Url.Action("MontarTelaReserva", "Reserva")">Reservas</a></h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">3</h1>
+                            <h1 class="no-margins">@ViewBag.Reserva</h1>
                             <small>Reservas Confirmadas</small>
                             <br />
                             <br />
@@ -365,6 +365,60 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Materiais", controller: "Produto", action: "MontarTelaProduto", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Autorizações", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Controle Veículo", controller: "ControleVeiculo", action: "MontarTelaControleVeiculo", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Encomendas", controller: "Encomenda", action: "MontarTelaEncomenda", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Entradas & Saídas", controller: "EntradaSaida", action: "MontarTelaEntradaSaida", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Reservas", controller: "Reserva", action: "MontarTelaReserva", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Mudanças", controller: "Mudanca", action: "MontarTelaMudanca", buttonClass: "primary")
                 </div>
             </div>
             <br />

@@ -3210,6 +3210,8 @@
     <Content Include="Views\BaseAdmin\MontarCentralMensagens.cshtml" />
     <Content Include="Views\Auditoria\MontarTelaLog.cshtml" />
     <Content Include="Views\Auditoria\VerLog.cshtml" />
+    <Content Include="Views\BaseAdmin\CarregarMorador.cshtml" />
+    <Content Include="Views\BaseAdmin\CarregarSindico.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

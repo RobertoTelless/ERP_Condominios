@@ -184,6 +184,15 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("VerNoticia", new { id = idNot });
         }
 
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+        }
+
         [HttpPost]
         public ActionResult FiltrarNoticia(NOTICIA item)
         {

@@ -35,6 +35,9 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IEncomendaAppService encApp;
         private readonly ITelefoneAppService telApp;
         private readonly IUnidadeAppService uniApp;
+        private readonly IReservaAppService resApp;
+        private readonly IMudancaAppService mudApp;
+
 
         private String msg;
         private Exception exception;
@@ -42,7 +45,7 @@ namespace ERP_Condominios_Solution.Controllers
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps, IEncomendaAppService encApps, ITelefoneAppService telApps, IUnidadeAppService uniApps)
+        public BaseAdminController(IUsuarioAppService baseApps, ILogAppService logApps, INoticiaAppService notApps, ITarefaAppService tarApps, INotificacaoAppService notfApps, IUsuarioAppService usuApps, IAgendaAppService ageApps, IConfiguracaoAppService confApps, ITipoPessoaAppService tpApps, IEntradaSaidaAppService esApps, IControleVeiculoAppService cvApps, IAutorizacaoAppService autApps, IListaConvidadoAppService lisApps, IEncomendaAppService encApps, ITelefoneAppService telApps, IUnidadeAppService uniApps, IReservaAppService resApps, IMudancaAppService mudApps)
         {
             baseApp = baseApps;
             logApp = logApps;
@@ -60,6 +63,8 @@ namespace ERP_Condominios_Solution.Controllers
             encApp = encApps;
             telApp = telApps;
             uniApp = uniApps;
+            resApp = resApps;
+            mudApp = mudApps;
         }
 
         public ActionResult CarregarAdmin()
@@ -153,9 +158,123 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 lis = listaCon.Where(p => p.LICO_DT_EVENTO >= DateTime.Today.Date).ToList().Count;
             ViewBag.Convidado = lis;
 
+            // Reservas
+            List<RESERVA> listaReserva = resApp.GetAllItens(idAss);
+            Int32 contaReserva = listaReserva.Where(p => p.RESE_DT_EVENTO >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Reserva = contaReserva;
 
+            // Mudanca
+            List<SOLICITACAO_MUDANCA> listaMudanca = mudApp.GetAllItens(idAss);
+            Int32 contaMudanca = listaMudanca.Where(p => p.SOMU_DT_MUDANCA >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Mudanca = contaMudanca;
+            Session["VoltaUnidade"] = 2;
             return View();
         }
+
+        public ActionResult CarregarMorador()
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuario = (USUARIO)Session["UserCredentials"];
+
+            // Flags de retorno
+
+
+            // Encomendas
+            List<ENCOMENDA> listaEnc = encApp.GetAllItens(idAss);
+            Int32 encHoje = listaEnc.Where(p => p.ENCO_DT_CHEGADA.Value.Date == DateTime.Today.Date & p.UNID_CD_ID == usuario.UNID_CD_ID).ToList().Count;
+            Int32 encNao = listaEnc.Where(p => p.ENCO_IN_STATUS == 1).ToList().Count;
+            ViewBag.EncomendaHoje = encHoje;
+            ViewBag.EncomendaAtraso = encNao;
+
+            // Visitantes
+            List<ENTRADA_SAIDA> listaES = esApp.GetItemByData(DateTime.Today.Date, idAss);
+            listaES = listaES.Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+            ViewBag.NumES = listaES.Count;
+            if (listaES.Count == 0)
+            {
+                listaES = esApp.GetAllItens(idAss);
+            }
+            ViewBag.ListaES = listaES.Take(5).ToList();
+
+            // Veiculos
+            List<CONTROLE_VEICULO> listaCV = cvApp.GetItemByData(DateTime.Today.Date, idAss);
+            listaCV = listaCV.Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+            ViewBag.NumCV = listaCV.Count;
+            if (listaCV.Count == 0)
+            {
+                listaCV = cvApp.GetAllItens(idAss);
+            }
+            ViewBag.ListaCV = listaCV.Take(5).ToList();
+
+            // Reservas
+            List<RESERVA> listaReserva = resApp.GetAllItens(idAss).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+            Int32 contaReserva = listaReserva.Where(p => p.RESE_DT_EVENTO >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Reserva = contaReserva;
+
+            // Mudanca
+            List<SOLICITACAO_MUDANCA> listaMudanca = mudApp.GetAllItens(idAss).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+            Int32 contaMudanca = listaMudanca.Where(p => p.SOMU_DT_MUDANCA >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Mudanca = contaMudanca;
+            return View();
+        }
+
+        public ActionResult CarregarSindico()
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+
+            // Flags de retorno
+
+
+            // Encomendas
+            List<ENCOMENDA> listaEnc = encApp.GetAllItens(idAss);
+            Int32 encHoje = listaEnc.Where(p => p.ENCO_DT_CHEGADA.Value.Date == DateTime.Today.Date).ToList().Count;
+            Int32 encNao = listaEnc.Where(p => p.ENCO_IN_STATUS == 1).ToList().Count;
+            ViewBag.EncomendaHoje = encHoje;
+            ViewBag.EncomendaAtraso = encNao;
+
+            // Visitantes
+            List<ENTRADA_SAIDA> listaES = esApp.GetItemByData(DateTime.Today.Date, idAss);
+            ViewBag.NumES = listaES.Count;
+            if (listaES.Count == 0)
+            {
+                listaES = esApp.GetAllItens(idAss);
+            }
+            ViewBag.ListaES = listaES.Take(5).ToList();
+
+            // Veiculos
+            List<CONTROLE_VEICULO> listaCV = cvApp.GetItemByData(DateTime.Today.Date, idAss);
+            ViewBag.NumCV = listaCV.Count;
+            if (listaCV.Count == 0)
+            {
+                listaCV = cvApp.GetAllItens(idAss);
+            }
+            ViewBag.ListaCV = listaCV.Take(5).ToList();
+
+            // Autorizacao/Restricao
+            List<AUTORIZACAO_ACESSO> listaBase = autApp.GetAllItens(idAss);
+            Int32 aut = listaBase.Where(p => p.AUAC_IN_TIPO == 1).ToList().Count;
+            Int32 res = listaBase.Where(p => p.AUAC_IN_TIPO == 2).ToList().Count;
+            ViewBag.Autorizacao = aut;
+            ViewBag.Restricao = res;
+
+            // Listas de Convidados
+            List<LISTA_CONVIDADO> listaCon = lisApp.GetAllItens(idAss);
+            Int32 lis = listaCon.Where(p => p.LICO_DT_EVENTO >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Convidado = lis;
+
+            // Reservas
+            List<RESERVA> listaReserva = resApp.GetAllItens(idAss);
+            Int32 contaReserva = listaReserva.Where(p => p.RESE_DT_EVENTO >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Reserva = contaReserva;
+
+            // Mudanca
+            List<SOLICITACAO_MUDANCA> listaMudanca = mudApp.GetAllItens(idAss);
+            Int32 contaMudanca = listaMudanca.Where(p => p.SOMU_DT_MUDANCA >= DateTime.Today.Date).ToList().Count;
+            ViewBag.Mudanca = contaMudanca;
+            Session["VoltaUnidade"] = 3;
+            return View();
+        }
+
 
         public ActionResult CarregarBase()
         {
@@ -216,6 +335,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["VoltaNotificacao"] = 3;
             Session["VoltaNoticia"] = 1;
             Session["ExibeEncomenda"] = 1;
+            Session["VoltaUnidade"] = 0;
 
             USUARIO usu = new USUARIO();
             UsuarioViewModel vm = new UsuarioViewModel();
@@ -411,6 +531,7 @@ namespace ERP_Condominios_Solution.Controllers
             //Session["ListaUnidadesUsu"] = unidades;
             //Session["ListaUsuUnidade"] = lista3;
             Session["VoltaDash"] = 3;
+            Session["VoltaUnidade"] = 1;
             return View(vm);
         }
 

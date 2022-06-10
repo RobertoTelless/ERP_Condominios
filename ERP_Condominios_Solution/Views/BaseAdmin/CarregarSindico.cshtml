@@ -1,0 +1,467 @@
+﻿@using EntitiesServices.Work_Classes;
+@using Presentation.Extensions
+@using CrossCutting
+@model EntitiesServices.Model.ENTRADA_SAIDA
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<div id="content" class="wraper container-fluid">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-11 col-md-11 col-sm-12">
+            <h3 style="color:green; font-weight:bold">Dashboard Síndico</h3>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-12">
+            @Html.ButtonLinkIndex(text: "Dashboard Principal", controller: "BaseAdmin", action: "VoltarDashboard")
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12" style="border-top:solid; border-top-width:1px; border-top-color:gainsboro">
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <br />
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.EncomendaHoje</h1>
+                            <small>Recebidas Hoje</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Encomenda", action: "MontarTelaEncomenda", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaEncomenda", "Encomenda")">Encomendas</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins" style="color:red">@ViewBag.EncomendaAtraso</h1>
+                            <small>Não Entregues</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Encomenda", action: "MontarTelaEncomendaNaoEntregue", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaMudanca", "Mudanca")">Mudanças</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Mudanca</h1>
+                            <small>Mudanças Confirmadas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Mudanca", action: "VerMudancasConfirmadas", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaReserva", "Reserva")">Reservas</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Reserva</h1>
+                            <small>Reservas Confirmadas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Reserva", action: "VerReservasConfirmadas", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Autorizações</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Autorizacao</h1>
+                            <small>Autorizações Ativas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaAutorizacao", "Autorizacao")">Restrições</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Restricao</h1>
+                            <small>Restrições Ativas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaLista", "ListaConvidado")">Convidados</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">@ViewBag.Convidado</h1>
+                            <small>Listas Ativas</small>
+                            <br />
+                            <br />
+                            @Html.ButtonLinkIndex(text: "Ver", controller: "ListaConvidado", action: "MontarTelaLista", buttonClass: "white")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-12">
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaES", "EntradaSaida")">Entradas/Saídas de Visitantes</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <small>Entradas/Saídas Hoje</small>
+                            <h1 class="no-margins">@ViewBag.NumES</h1>
+                            <hr />
+                            <small>Últimas Entradas/Saídas</small>
+                            <br />
+                            <br />
+                            <div class="row">
+                                @if ((ViewBag.ListaES as List<EntitiesServices.Model.ENTRADA_SAIDA>).Count > 0)
+                                {
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead style="background-color:lightsteelblue">
+                                            <tr>
+                                                <th>Unidade</th>
+                                                <th>Entrada</th>
+                                                <th>Saída</th>
+                                                <th>Nome</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var cond in (ViewBag.ListaES as List<EntitiesServices.Model.ENTRADA_SAIDA>).OrderByDescending(p => p.ENSA_DT_ENTRADA).Take(3))
+                                            {
+                                                <tr>
+                                                    <td>@cond.UNIDADE.UNID_NR_NUMERO</td>
+                                                    <td>@cond.ENSA_DT_ENTRADA.Value.ToShortDateString() @cond.ENSA_DT_ENTRADA.Value.ToShortTimeString()</td>
+                                                    @if (cond.ENSA_DT_SAIDA !=  null)
+                                                    {
+                                                        <td>@cond.ENSA_DT_SAIDA.Value.ToShortDateString() @cond.ENSA_DT_SAIDA.Value.ToShortTimeString()</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    @if (cond.ENSA_NM_NOME != null)
+                                                    {
+                                                        <td>@cond.ENSA_NM_NOME.Substring(0, cond.ENSA_NM_NOME.IndexOf(" "))</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Sem Identificação</td>
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                <div class="form-group">
+                                    @Html.ButtonLinkIndex(text: "Ver Todos", action: "MontarTelaES", controller: "EntradaSaida", buttonClass: "white")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Hoje</span>
+                            <h5><a href="@Url.Action("MontarTelaControleVeiculo", "ControleVeiculo")">Entradas/Saídas de Veículos</a></h5>
+                        </div>
+                        <div class="ibox-content">
+                            <small>Entradas/Saídas Hoje</small>
+                            <h1 class="no-margins">@ViewBag.NumCV</h1>
+                            <hr />
+                            <small>Últimas Entradas/Saídas</small>
+                            <br />
+                            <br />
+                            <div class="row">
+                                @if ((ViewBag.ListaCV as List<EntitiesServices.Model.CONTROLE_VEICULO>).Count > 0)
+                                {
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead style="background-color:lightsteelblue">
+                                            <tr>
+                                                <th>Unidade</th>
+                                                <th>Entrada</th>
+                                                <th>Saída</th>
+                                                <th>Placa</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var cond in (ViewBag.ListaCV as List<EntitiesServices.Model.CONTROLE_VEICULO>))
+                                            {
+                                                <tr>
+                                                    @if (cond.UNIDADE != null)
+	                                                {
+                                                        <td>@cond.UNIDADE.UNID_NR_NUMERO</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@cond.COVE_DT_ENTRADA.Value.ToShortDateString() @cond.COVE_DT_ENTRADA.Value.ToShortTimeString()</td>
+                                                    @if (cond.COVE_DT_SAIDA !=  null)
+                                                    {
+                                                        <td>@cond.COVE_DT_SAIDA.Value.ToShortDateString() @cond.COVE_DT_SAIDA.Value.ToShortTimeString()</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    <td>@cond.COVE_NM_PLACA</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                <div class="form-group">
+                                    @Html.ButtonLinkIndex(text: "Ver Todos", action: "MontarTelaControleVeiculo", controller: "ControleVeiculo", buttonClass: "white")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-12" style="border-left: solid;border-left-color: gainsboro; border-left-width: 1px; border-bottom: solid; border-bottom-color: gainsboro; border-bottom-width: 1px">
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_unidade.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Unidades", controller: "Unidade", action: "MontarTelaUnidade", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_vaga.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Vagas", controller: "Vaga", action: "MontarTelaVaga", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_telefone.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Telefones", controller: "Telefone", action: "MontarTelaTelefone", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_ambiente.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Ambientes", controller: "Ambiente", action: "MontarTelaAmbiente", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_board.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Quadro Diretor", controller: "CorpoDiretivo", action: "MontarTelaCorpo", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_morador.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Moradores", controller: "Morador", action: "MontarTelaMoradores", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_car.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Veículos", controller: "Veiculo", action: "MontarTelaVeiculo", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_log.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Ocorrências", controller: "Ocorrencia", action: "MontarTelaOcorrencia", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_ponto_1.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Marcação Ponto", controller: "Ponto", action: "MontarTelaPonto", buttonClass: "primary" )
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_ponto.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Escala Trabalho", controller: "Escala", action: "MontarTelaEscala", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_fornecedor.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Fornecedores", controller: "FornecedorNovo", action: "MontarTelaFornecedor", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Materiais", controller: "Produto", action: "MontarTelaProduto", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Autorizações", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Controle Veículo", controller: "ControleVeiculo", action: "MontarTelaControleVeiculo", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Encomendas", controller: "Encomenda", action: "MontarTelaEncomenda", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Entradas & Saídas", controller: "EntradaSaida", action: "MontarTelaEntradaSaida", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Reservas", controller: "Reserva", action: "MontarTelaReserva", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Mudanças", controller: "Mudanca", action: "MontarTelaMudanca", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+
+
+
+@section Styles {
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Styles.Render("~/plugins/jasnyBootstrapStyles")
+    @Styles.Render("~/Content/loadingDots.css")
+    @Styles.Render("~/plugins/toastrStyles")
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/plugins/dataTables")
+    @Scripts.Render("~/bundles/inputmask")
+    @Scripts.Render("~/plugins/jasnyBootstrap")
+    @Scripts.Render("~/plugins/sparkline")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    @Scripts.Render("~/Scripts/notifier.js")
+    @Scripts.Render("~/Scripts/notificationHandler.js")
+
+
+
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                  alert("@ViewBag.Message");
+            };
+        </script>
+    }
+}
+
+
+
+
+
+

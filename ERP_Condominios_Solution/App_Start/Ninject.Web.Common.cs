@@ -242,6 +242,7 @@ namespace Presentation.Start
             kernel.Bind<IReservaAnexoRepository>().To<ReservaAnexoRepository>();
             kernel.Bind<IReservaComentarioRepository>().To<ReservaComentarioRepository>();
             kernel.Bind<ICargoRepository>().To<CargoRepository>();
+            kernel.Bind<IFinalidadeReservaRepository>().To<FinalidadeReservaRepository>();
 
         }
     }
