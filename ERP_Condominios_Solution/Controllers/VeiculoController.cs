@@ -264,8 +264,11 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara listas
+            List<VAGA> vagas = baseApp.GetAllVagas(idAss).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Vagas = new SelectList(vagas, "VAGA_CD_ID", "VAGA_NM_EXIBE");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
@@ -279,6 +282,7 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 vm.UNID_CD_ID = usuario.UNID_CD_ID.Value;
             }
+            vm.UNID_CD_ID = usuario.UNID_CD_ID.Value;
             return View(vm);
         }
 
@@ -290,15 +294,17 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            List<VAGA> vagas = baseApp.GetAllVagas(idAss).Where(p => p.UNID_CD_ID == usuarioLogado.UNID_CD_ID).ToList();
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Vagas = new SelectList(vagas, "VAGA_CD_ID", "VAGA_NM_EXIBE");
             if (ModelState.IsValid)
             {
                 try
                 {
                     // Executa a operação
                     VEICULO item = Mapper.Map<VeiculoViewModel, VEICULO>(vm);
-                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = baseApp.ValidateCreate(item, usuarioLogado);
 
                     // Verifica retorno
@@ -382,8 +388,12 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara view
+            List<VAGA> vagas = baseApp.GetAllVagas(idAss).Where(p => p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Vagas = new SelectList(vagas, "VAGA_CD_ID", "VAGA_NM_EXIBE");
+            ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             if ((Int32)Session["MensVeiculo"] == 5)
             {
@@ -419,14 +429,16 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("Login", "ControleAcesso");
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+            List<VAGA> vagas = baseApp.GetAllVagas(idAss).Where(p => p.UNID_CD_ID == usuarioLogado.UNID_CD_ID).ToList();
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Vagas = new SelectList(vagas, "VAGA_CD_ID", "VAGA_NM_EXIBE");
             if (ModelState.IsValid)
             {
                 try
                 {
                     // Executa a operação
-                    USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     VEICULO item = Mapper.Map<VeiculoViewModel, VEICULO>(vm);
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 

@@ -149,9 +149,9 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Carrega listas
-            if ((List<VEICULO>)Session["ListaMorador"] == null)
+            if ((List<USUARIO>)Session["ListaMorador"] == null)
             {
-                listaMaster = baseApp.GetAllItens(idAss).Where(p => p.PERF_CD_ID == 6).ToList();
+                listaMaster = baseApp.GetAllItens(idAss).Where(p => p.USUA_IN_MORADOR == 1).ToList();
                 Session["ListaMorador"] = listaMaster;
                 Session["FiltroMorador"] = null;
             }
@@ -164,11 +164,11 @@ namespace ERP_Condominios_Solution.Controllers
             // Indicadores
 
             // Mensagem
-            if ((Int32)Session["MensVeiculo"] == 1)
+            if ((Int32)Session["MensMorador"] == 1)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
             }
-            if ((Int32)Session["MensVeiculo"] == 2)
+            if ((Int32)Session["MensMorador"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
             }
@@ -266,6 +266,10 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             ViewBag.Unidade = usuario.UNID_CD_ID;
 
+            // Recupera Moradores da unidade
+            List<USUARIO> moradores = baseApp.GetAllItens(idAss).Where(p => p.USUA_IN_MORADOR == 1 & p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+            ViewBag.Moradores = moradores;
+
             // Prepara view
             USUARIO item = baseApp.GetItemById(id);
             objetoAntes = item;
@@ -346,6 +350,27 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             Session["VoltaOcorrencia"] = 2;
             return RedirectToAction("VerOcorrencia", "Ocorrencia", new { id = idOcor });
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
     }

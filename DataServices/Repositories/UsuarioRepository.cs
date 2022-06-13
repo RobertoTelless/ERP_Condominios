@@ -42,6 +42,7 @@ namespace DataServices.Repositories
             query = query.Include(p => p.TAREFA);
             query = query.Include(p => p.AGENDA);
             query = query.Include(p => p.LOG);
+            query = query.Include(p => p.VEICULO);
             return query.FirstOrDefault();
         }
 
@@ -138,6 +139,7 @@ namespace DataServices.Repositories
             if (query != null)
             {
                 query = query.Where(p => p.ASSI_CD_ID == idAss);
+                query = query.Where(p => p.USUA_IN_MORADOR == 1);
                 query = query.OrderBy(a => a.USUA_NM_NOME);
                 lista = query.ToList<USUARIO>();
             }

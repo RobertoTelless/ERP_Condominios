@@ -108,7 +108,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             ViewBag.Listas = ((List<ENTRADA_SAIDA>)Session["ListaES"]);
             ViewBag.Title = "Entradas de Saídas";
-            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
+            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_VISITANTE");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
             List<SelectListItem> status = new List<SelectListItem>();
             status.Add(new SelectListItem() { Text = "Completa", Value = "1" });
@@ -258,7 +258,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara listas
             ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
+            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_VISITANTE");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
@@ -282,7 +282,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
+            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_VISITANTE");
             if (ModelState.IsValid)
             {
                 try
@@ -349,7 +349,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             // Prepara view
             ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
-            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
+            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_VISITANTE");
 
             ENTRADA_SAIDA item = baseApp.GetItemById(id);
             objetoAntes = item;
@@ -370,7 +370,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Graus = new SelectList(baseApp.GetAllGraus(idAss), "GRPA_CD_ID", "GRPA_NM_NOME");
-            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_NOME");
+            ViewBag.Autorizacoes = new SelectList(baseApp.GetAllAutorizacoes(idAss), "AUAC_CD_ID", "AUAC_NM_VISITANTE");
             if (ModelState.IsValid)
             {
                 try
@@ -667,5 +667,27 @@ namespace ERP_Condominios_Solution.Controllers
                 return View(vm);
             }
         }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
     }
 }

@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12">
                                     Telefones
-                                    @Html.TextBoxFor(m => m.FOCO_NR_TELEFONES, new { @class = "form-control", autofocus = true })
+                                    @Html.TextBoxFor(m => m.FOCO_NR_TELEFONES, new { @class = "form-control", autofocus = true, @id="tel" })
                                     @Html.ValidationMessageFor(m => m.FOCO_NR_TELEFONES, "",new { @style="color:red" })
                                 </div>
                             </div>
@@ -116,6 +116,7 @@
             $("#cpf").mask("999.999.999-99");
             $("#cnpj").mask("99.999.999/9999-99");
             $("#cep").mask("99999-999");
+            $("#tel").mask("(99)9999-9999");
         });
     </script>
     @Scripts.Render("~/plugins/iCheck")
