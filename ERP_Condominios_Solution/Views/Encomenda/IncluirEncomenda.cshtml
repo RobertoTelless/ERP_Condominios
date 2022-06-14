@@ -24,25 +24,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Encomendas - Registro de Chegada</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -65,7 +46,7 @@
 
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Foto</a></li>
+                                <li><a data-toggle="tab" href="#tab-2">Foto</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -74,7 +55,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     @Html.HiddenFor(m => m.ASSI_CD_ID)
                                                     @Html.HiddenFor(m => m.ENCO_IN_ATIVO)
                                                     @Html.HiddenFor(m => m.ENCO_DT_CHEGADA)
@@ -84,7 +65,7 @@
                                                     @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unids, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color:green; font-weight:bold">
                                                     Data de Chegada*
                                                     @Html.TextBoxFor(m => m.ENCO_DT_CHEGADA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
@@ -93,7 +74,7 @@
                                                     @Html.DropDownListFor(m => m.FOEN_CD_ID, (SelectList)ViewBag.Formas, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.FOEN_CD_ID, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-offset-3 col-xs-12">
+                                                <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Tipo de Encomenda*
                                                     @Html.DropDownListFor(m => m.TIEN_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.TIEN_CD_ID, "", new { @style = "color:red" })
@@ -135,7 +116,7 @@
                                         <div class="row">
                                             <div style="margin-left: 15px;" class="col-lg-12 col-md-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <h4>Foto da Encomenda</h4><input type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="imgProduto" class="btn btn-sm btn-warning" multiple />
+                                                    <h4>Foto da Encomenda</h4><input type="file" accept=".jpg, .png, .jpeg, .gif|images/*" name="file" id="imgEncomenda" class="btn btn-sm btn-warning" multiple />
                                                     <br />
                                                 </div>
                                             </div>
@@ -373,7 +354,7 @@
     </script>
 
     <script>
-        SendFilesV2('imgProduto', 'Veiculo', 'UploadFileToSession');
+        SendFilesV2('imgEncomenda', 'Encomenda', 'UploadFileToSession');
     </script>
 
     @if (ViewBag.Message != null)

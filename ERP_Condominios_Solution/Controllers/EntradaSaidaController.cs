@@ -101,7 +101,7 @@ namespace ERP_Condominios_Solution.Controllers
                 else if (usuario.PERFIL.PERF_SG_SIGLA == "SIN" || usuario.PERFIL.PERF_SG_SIGLA == "POR" || usuario.PERFIL.PERF_SG_SIGLA == "ADM")
                 {
                     listaMaster = baseApp.GetAllItens(idAss);
-                    Session["ListaES"] = listaMaster.Where(p => p.ENSA_DT_ENTRADA == DateTime.Today.Date).ToList();
+                    Session["ListaES"] = listaMaster.Where(p => p.ENSA_DT_ENTRADA.Value.Date == DateTime.Today.Date).ToList();
                 }
                 Session["FiltroES"] = null;
             }
@@ -305,6 +305,11 @@ namespace ERP_Condominios_Solution.Controllers
                     // Notificação
                     if (item.UNID_CD_ID != null & item.UNID_CD_ID > 0)
                     {
+                        
+                        
+                        
+                        
+                        
                         return RedirectToAction("GerarNotificacaoES");
                     }
                     return RedirectToAction("MontarTelaES");
@@ -553,6 +558,11 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ENTRADA_SAIDA entrada = (ENTRADA_SAIDA)Session["ES"];
             List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == entrada.UNID_CD_ID).ToList();
+            if (lista.Where(p => p.USUA_IN_NOTIFICACAO_ENTRADA == 1).ToList().Count == 0)
+            {
+                return RedirectToAction("VoltarBaseES");
+            }
+            USUARIO topo = lista.First();
 
             // Prepara view
             ViewBag.Cats = new SelectList(baseApp.GetAllCatNotificacao(idAss), "CANO_CD_ID", "CANO_NM_NOME");
@@ -569,6 +579,9 @@ namespace ERP_Condominios_Solution.Controllers
             vm.NOTI_IN_STATUS = 1;
             vm.NOTI_IN_VISTA = 0;
             vm.NOTI_NM_TITULO = "Notificação para Morador - Visitante";
+            vm.CANO_CD_ID = 1;
+            vm.USUA_CD_ID = topo.USUA_CD_ID;
+            vm.NOTI_TX_TEXTO = "Notificação de acesso de visitante. Nome: " + entrada.ENSA_NM_NOME + ". Data/Hora de entrada: " + entrada.ENSA_DT_ENTRADA.Value;
             return View(vm);
         }
 

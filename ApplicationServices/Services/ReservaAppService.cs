@@ -22,14 +22,16 @@ namespace ApplicationServices.Services
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
         private readonly IUsuarioAppService _usuService;
+        private readonly IAmbienteService _ambService;
 
-        public ReservaAppService(IReservaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService): base(baseService)
+        public ReservaAppService(IReservaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService, IAmbienteService ambService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
             _temService = temService;
             _confService = confService;
             _usuService = usuService;
+            _ambService = ambService;
         }
 
         public RESERVA CheckExist(RESERVA unid, Int32 idAss)
@@ -140,6 +142,28 @@ namespace ApplicationServices.Services
                     return 1;
                 }
 
+                // Verifica limite de convidados
+                AMBIENTE ambi = _ambService.GetItemById(item.AMBI_CD_ID);
+                if (item.RESE_NR_CONVIDADOS > ambi.AMBI_NR_LOTACAO)
+                {
+                    return 2;
+                }
+
+                // Verifica horario livre
+                List<RESERVA> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID);
+                lista = lista.Where(p => p.AMBI_CD_ID == ambi.AMBI_CD_ID & p.RESE_DT_EVENTO == item.RESE_DT_EVENTO).ToList();
+                foreach (RESERVA res in lista)
+                {
+                    if (res.RESE_HR_INICIO >= item.RESE_HR_INICIO & res.RESE_HR_FINAL <= item.RESE_HR_FINAL)
+                    {
+
+                    }
+                }
+
+
+
+
+
                 // Completa objeto
                 item.RESE_IN_ATIVO = 1;
                 item.ASSI_CD_ID = usuario.ASSI_CD_ID;
@@ -200,7 +224,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_IN_STATUS = 1;
                 noti.NOTI_IN_VISTA = 0;
                 noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - RESERVA";
-                noti.NOTI_TX_TEXTO = "A Unidade: " + usuario.UNIDADE.UNID_NR_NUMERO.ToString() + " abriu uma solicitação de reserva para " + item.RESE_DT_EVENTO.ToShortDateString() + " no ambiente " + item.AMBIENTE.AMBI_NM_AMBIENTE + ".";
+                noti.NOTI_TX_TEXTO = "A Unidade: " + usuario.UNIDADE.UNID_NR_NUMERO.ToString() + " abriu uma solicitação de reserva para " + item.RESE_DT_EVENTO.ToShortDateString() + " no ambiente " + ambi.AMBI_NM_AMBIENTE + ".";
                 noti.USUA_CD_ID = usua.USUA_CD_ID;
                 Int32 volta1 = GerarNotificacao(noti, usua, item, "NOTIRESE");
                 return volta;

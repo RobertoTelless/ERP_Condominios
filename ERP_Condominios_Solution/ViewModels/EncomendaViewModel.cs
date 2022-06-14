@@ -46,6 +46,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<int> ENCO_IN_STATUS { get; set; }
         [DataType(DataType.Date, ErrorMessage = "DATA DE DEVOLUÇÃO Deve ser uma data válida")]
         public Nullable<System.DateTime> ENCO_DT_DEVOLUCAO { get; set; }
+        public Nullable<int> ENCO_IN_STATUS_TROCA { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -51,6 +51,8 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<System.DateTime> RESE_DT_VETADA { get; set; }
         [DataType(DataType.Date, ErrorMessage = "DATA DA CONFIRMAÇÂO Deve ser uma data válida")]
         public Nullable<System.DateTime> RESE_DT_CONFIRMACAO { get; set; }
+        public Nullable<System.TimeSpan> RESE_HR_INICIA { get; set; }
+        public Nullable<System.TimeSpan> RESE_HR_TERMINA { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_CONDOMINIO> AGENDA_CONDOMINIO { get; set; }

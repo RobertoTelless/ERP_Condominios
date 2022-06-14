@@ -78,11 +78,11 @@ namespace DataServices.Repositories
             }
             if (dataEntrada != null & dataSaida == null)
             {
-                query = query.Where(p => p.ENSA_DT_ENTRADA == dataEntrada);
+                query = query.Where(p => DbFunctions.TruncateTime(p.ENSA_DT_ENTRADA).Value == DbFunctions.TruncateTime(dataEntrada).Value);
             }
             else if (dataEntrada == null & dataSaida != null)
             {
-                query = query.Where(p => p.ENSA_DT_SAIDA == dataSaida);
+                query = query.Where(p => DbFunctions.TruncateTime(p.ENSA_DT_SAIDA).Value == DbFunctions.TruncateTime(dataSaida).Value);
             }
             else if (dataEntrada != null & dataSaida != null)
             {

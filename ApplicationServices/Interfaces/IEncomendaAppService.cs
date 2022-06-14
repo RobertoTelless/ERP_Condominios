@@ -14,7 +14,7 @@ namespace ApplicationServices.Interfaces
         Int32 ValidateEdit(ENCOMENDA item, ENCOMENDA itemAntes);
         Int32 ValidateDelete(ENCOMENDA item, USUARIO usuario);
         Int32 ValidateReativar(ENCOMENDA item, USUARIO usuario);
-        Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENCOMENDA entrada, String template);
+        Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENCOMENDA entrada, String unid, String template);
 
         ENCOMENDA GetItemById(Int32 id);
         List<ENCOMENDA> GetAllItens(Int32 idAss);

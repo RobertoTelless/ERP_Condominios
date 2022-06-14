@@ -22,14 +22,16 @@ namespace ApplicationServices.Services
         private readonly ITemplateService _temService;
         private readonly IConfiguracaoService _confService;
         private readonly IUsuarioAppService _usuService;
+        private readonly IUnidadeService _uniService;
 
-        public EncomendaAppService(IEncomendaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService): base(baseService)
+        public EncomendaAppService(IEncomendaService baseService, INotificacaoService notiService, ITemplateService temService, IConfiguracaoService confService, IUsuarioAppService usuService, IUnidadeService uniService): base(baseService)
         {
             _baseService = baseService;
             _notiService = notiService;
             _temService = temService;
             _confService = confService;
             _usuService = usuService;
+            _uniService = uniService;
         }
 
         public List<ENCOMENDA> GetAllItens(Int32 idAss)
@@ -124,9 +126,8 @@ namespace ApplicationServices.Services
             {
 
                 // Verifica existencia prévia
-                String unid = item.UNIDADE.UNID_NM_EXIBE;
                 USUARIO usu = null;
-                if (item.USUARIO == null)
+                if (item.USUARIO != null)
                 {
                     usu = item.USUARIO;
                 }
@@ -139,6 +140,7 @@ namespace ApplicationServices.Services
                     }
                     usu = usua;       
                 }
+                String unid = usu.UNIDADE.UNID_NM_EXIBE;
 
                 // Completa objeto
                 item.ENCO_IN_ATIVO = 1;
@@ -146,6 +148,7 @@ namespace ApplicationServices.Services
                 item.ENCO_CD_CODIGO = Cryptography.GenerateRandomPassword(6);
                 item.ENCO_IN_CONFIRMADO = 0;
                 item.ENCO_IN_STATUS = 1;
+                item.USUA_CD_ID = usu.USUA_CD_ID;
 
                 //Verifica Campos
                 if (item.USUARIO != null)
@@ -189,7 +192,7 @@ namespace ApplicationServices.Services
                 noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA";
                 noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". Uma encomenda chegou para essa unidade em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + ". Está disponível para entrega na portaria. Código: " + item.ENCO_CD_CODIGO + ".";
                 noti.USUA_CD_ID = usu.USUA_CD_ID;
-                Int32 volta1 = GerarNotificacao(noti, usu, item, "NOTIENCO");
+                Int32 volta1 = GerarNotificacao(noti, usu, item, unid, "NOTIENCO");
                 return volta;
             }
             catch (Exception ex)
@@ -203,7 +206,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Criticas
-                if (item.ENCO_IN_STATUS == 2 || item.ENCO_IN_STATUS == 3)
+                if (item.ENCO_IN_STATUS == 2)
                 {
                     if (item.ENCO_DT_ENTREGA == null || item.ENCO_NM_PESSOA == null)
                     {
@@ -212,16 +215,23 @@ namespace ApplicationServices.Services
                 }
                 if (item.ENCO_IN_STATUS == 4)
                 {
-                    if (item.ENCO_DT_DEVOLUCAO == null || item.ENCO_NM_PESSOA == null)
+                    if (item.ENCO_DT_DEVOLUCAO == null || item.ENCO_DS_JUSTIFICATIVA == null)
+                    {
+                        return 2;
+                    }
+                }
+                if (item.ENCO_IN_STATUS == 3)
+                {
+                    if (item.ENCO_DT_DEVOLUCAO == null || item.ENCO_DS_JUSTIFICATIVA == null)
                     {
                         return 2;
                     }
                 }
 
                 // Preparação
-                String unid = item.UNIDADE.UNID_NM_EXIBE;
+                String unid = _uniService.GetItemById(item.UNID_CD_ID.Value).UNID_NM_EXIBE;
                 USUARIO usu = null;
-                if (item.USUARIO == null)
+                if (item.USUARIO != null)
                 {
                     usu = item.USUARIO;
                 }
@@ -294,7 +304,7 @@ namespace ApplicationServices.Services
 
 
                     noti.USUA_CD_ID = usu.USUA_CD_ID;
-                    Int32 volta1 = GerarNotificacao(noti, usu, item, "NOTIENCO");
+                    Int32 volta1 = GerarNotificacao(noti, usu, item, unid, "NOTIENCO");
                 }
                 return volta;
             }
@@ -399,7 +409,7 @@ namespace ApplicationServices.Services
             }
         }
 
-        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENCOMENDA entrada, String template)
+        public Int32 GerarNotificacao(NOTIFICACAO item, USUARIO usuario, ENCOMENDA entrada, String unid, String template)
         {
             try
             {
@@ -424,7 +434,7 @@ namespace ApplicationServices.Services
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
                     footer = footer.Replace("{Codigo}", entrada.ENCO_CD_CODIGO);
-                    footer = footer.Replace("{Unidade}", entrada.UNIDADE.UNID_NM_EXIBE);
+                    footer = footer.Replace("{Unidade}", unid);
                     footer = footer.Replace("{Data}", entrada.ENCO_DT_CHEGADA.Value.ToShortDateString());
                     body = body.Replace("{Texto}", item.NOTI_TX_TEXTO);
                     header = header.Replace("{Nome}", usuario.USUA_NM_NOME);

@@ -751,13 +751,21 @@
     <Content Include="Images\a7.jpg" />
     <Content Include="Images\a8.jpg" />
     <Content Include="Images\angular_logo.png" />
+    <Content Include="Images\assembleia_icone.jpg" />
+    <Content Include="Images\autorizacao_icone.png" />
     <Content Include="Images\Clayton - Cópia .jpg" />
     <Content Include="Images\Clayton.jpg" />
+    <Content Include="Images\controle_veiculo_icone.jpg" />
     <Content Include="Images\dashboard4_1.jpg" />
     <Content Include="Images\dashboard4_2.jpg" />
+    <Content Include="Images\Dash_Financeiro.png" />
+    <Content Include="Images\Dash_principal.png" />
     <Content Include="Images\email_1.jpg" />
     <Content Include="Images\email_2.jpg" />
     <Content Include="Images\email_3.jpg" />
+    <Content Include="Images\encomenda_icone.png" />
+    <Content Include="Images\entrada_saida_icone.jpg" />
+    <Content Include="Images\estoque_icone.png" />
     <Content Include="Images\Favicon_ERP_Condominio.png" />
     <Content Include="Images\favicon_SystemBR.jpg" />
     <Content Include="Images\ff1.jpg" />
@@ -1597,6 +1605,7 @@
     <Content Include="Images\landing\laptop.png" />
     <Content Include="Images\landing\perspective.png" />
     <Content Include="Images\logoFullFav.png" />
+    <Content Include="Images\mudanca_icone.png" />
     <Content Include="Images\off_canvas.jpg" />
     <Content Include="Images\p1.jpg" />
     <Content Include="Images\p2.jpg" />
@@ -1613,6 +1622,7 @@
     <Content Include="Images\p_big2.jpg" />
     <Content Include="Images\p_big3.jpg" />
     <Content Include="Images\qrcodebase.png" />
+    <Content Include="Images\reserva_icone.jpg" />
     <Content Include="Images\zender_logo.png" />
     <Content Include="PdfViewer\build\pdf.js" />
     <Content Include="PdfViewer\build\pdf.worker.js" />

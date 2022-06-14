@@ -75,7 +75,7 @@ namespace DataServices.Repositories
             }
             if (data != null)
             {
-                query = query.Where(p => p.ENCO_DT_CHEGADA == data);
+                query = query.Where(p => DbFunctions.TruncateTime(p.ENCO_DT_CHEGADA).Value == DbFunctions.TruncateTime(data).Value);
             }
             if (query != null)
             {

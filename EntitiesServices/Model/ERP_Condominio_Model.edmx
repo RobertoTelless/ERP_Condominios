@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ERP_CondominioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AGENDA">
           <Key>
             <PropertyRef Name="AGEN_CD_ID" />
@@ -497,6 +497,7 @@
           <Property Name="ENCO_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
           <Property Name="ENCO_IN_STATUS" Type="int" />
           <Property Name="ENCO_DT_DEVOLUCAO" Type="date" />
+          <Property Name="ENCO_IN_STATUS_TROCA" Type="int" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -1114,6 +1115,8 @@
           <Property Name="RESE_IN_ATIVO" Type="int" Nullable="false" />
           <Property Name="RESE_DT_VETADA" Type="date" />
           <Property Name="RESE_DT_CONFIRMACAO" Type="date" />
+          <Property Name="RESE_HR_INICIA" Type="time" Precision="7" />
+          <Property Name="RESE_HR_TERMINA" Type="time" Precision="7" />
         </EntityType>
         <EntityType Name="RESERVA_ANEXO">
           <Key>
@@ -1546,6 +1549,7 @@
           <Property Name="USUA_DS_MOTIVO_SAIDA" Type="varchar" MaxLength="500" />
           <Property Name="USUA_DS_JUSTIFICATIVA" Type="varchar" MaxLength="250" />
           <Property Name="USUA_TX_OBSERVACOES" Type="text" />
+          <Property Name="USUA_IN_NOTIFICACAO_ENTRADA" Type="int" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -5098,8 +5102,7 @@
             <End Role="VEICULO" EntitySet="VEICULO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERP_CondominioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -5742,6 +5745,7 @@
           <NavigationProperty Name="TIPO_ENCOMENDA" Relationship="Self.FK_ENCOMENDA_TIPO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="TIPO_ENCOMENDA" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENCOMENDA_UNIDADE" FromRole="ENCOMENDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENCOMENDA_USUARIO" FromRole="ENCOMENDA" ToRole="USUARIO" />
+          <Property Name="ENCO_IN_STATUS_TROCA" Type="Int32" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -6481,6 +6485,8 @@
           <NavigationProperty Name="RESERVA_COMENTARIO" Relationship="Self.FK_RESERVA_COMENTARIO_RESERVA" FromRole="RESERVA" ToRole="RESERVA_COMENTARIO" />
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_RESERVA_UNIDADE" FromRole="RESERVA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_RESERVA_USUARIO" FromRole="RESERVA" ToRole="USUARIO" />
+          <Property Name="RESE_HR_INICIA" Type="Time" Precision="7" />
+          <Property Name="RESE_HR_TERMINA" Type="Time" Precision="7" />
         </EntityType>
         <EntityType Name="RESERVA_ANEXO">
           <Key>
@@ -7041,6 +7047,7 @@
           <NavigationProperty Name="USUARIO_ESCALA_TRABALHO" Relationship="Self.FK_USUARIO_ESCALA_TRABALHO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_ESCALA_TRABALHO" />
           <NavigationProperty Name="USUARIO_FUNCIONARIO" Relationship="Self.FK_USUARIO_FUNCIONARIO_USUARIO" FromRole="USUARIO" ToRole="USUARIO_FUNCIONARIO" />
           <NavigationProperty Name="VEICULO" Relationship="Self.FK_VEICULO_USUARIO" FromRole="USUARIO" ToRole="VEICULO" />
+          <Property Name="USUA_IN_NOTIFICACAO_ENTRADA" Type="Int32" />
         </EntityType>
         <EntityType Name="USUARIO_ANEXO">
           <Key>
@@ -11119,6 +11126,7 @@
           <EntitySetMapping Name="ENCOMENDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA">
               <MappingFragment StoreEntitySet="ENCOMENDA">
+                <ScalarProperty Name="ENCO_IN_STATUS_TROCA" ColumnName="ENCO_IN_STATUS_TROCA" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -11771,6 +11779,8 @@
           <EntitySetMapping Name="RESERVA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.RESERVA">
               <MappingFragment StoreEntitySet="RESERVA">
+                <ScalarProperty Name="RESE_HR_TERMINA" ColumnName="RESE_HR_TERMINA" />
+                <ScalarProperty Name="RESE_HR_INICIA" ColumnName="RESE_HR_INICIA" />
                 <ScalarProperty Name="RESE_CD_ID" ColumnName="RESE_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="UNID_CD_ID" ColumnName="UNID_CD_ID" />
@@ -12220,6 +12230,7 @@
           <EntitySetMapping Name="USUARIO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.USUARIO">
               <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="USUA_IN_NOTIFICACAO_ENTRADA" ColumnName="USUA_IN_NOTIFICACAO_ENTRADA" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="PERF_CD_ID" ColumnName="PERF_CD_ID" />

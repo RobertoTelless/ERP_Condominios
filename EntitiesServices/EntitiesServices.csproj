@@ -375,133 +375,133 @@
     <Compile Include="Interfaces\Services\IUnidadeService.cs" />
     <Compile Include="Interfaces\Services\IUsuarioService.cs" />
     <Compile Include="Model\AGENDA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AGENDA_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AGENDA_CONDOMINIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AGENDA_CONDOMINIO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AGENDA_VINCULO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AMBIENTE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AMBIENTE_CHAVE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AMBIENTE_CUSTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AMBIENTE_FINALIDADE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AMBIENTE_IMAGEM.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ASSINANTE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ASSINANTE_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AUTORIZACAO_ACESSO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AUTORIZACAO_ACESSO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\BANCO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CARGO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_AGENDA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_EQUIPAMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_FORNECEDOR.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_NOTIFICACAO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_OCORRENCIA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_PRODUTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_TELEFONE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CATEGORIA_USUARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CENTRO_CUSTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONFIGURACAO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONFIGURACAO_ASSOCIACAO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_BANCO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_BANCO_CONTATO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_BANCO_LANCAMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTA_RECEBER.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTROLE_VEICULO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONTROLE_VEICULO_ACOMPANHAMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CONVIDADO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\CORPO_DIRETIVO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ENCOMENDA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ENCOMENDA_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ENCOMENDA_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ENTRADA_SAIDA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ENTRADA_SAIDA_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EQUIPAMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EQUIPAMENTO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\EQUIPAMENTO_MANUTENCAO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ERP_Condominios_Model.cs">
       <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
@@ -529,232 +529,232 @@
       <DependentUpon>ERP_Condominio_Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\FINALIDADE_RESERVA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORMA_ENTREGA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR_CONTATO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR_MENSAGEM.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FORNECEDOR_QUADRO_SOCIETARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\FUNCAO_CORPO_DIRETIVO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GRAU_PARENTESCO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\GRUPO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LISTA_CONVIDADO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LISTA_CONVIDADO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LISTA_CONVIDADO_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\LOG.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MATERIAL.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MATERIAL_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MATERIAL_FORNECEDOR.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MATERIAL_MOVIMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MOVIMENTO_ESTOQUE_PRODUTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTICIA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTICIA_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTIFICACAO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\NOTIFICACAO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\OCORRENCIA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\OCORRENCIA_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\OCORRENCIA_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERFIL.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERIODICIDADE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PERIODICIDADE_TAREFA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PRODUTO_FORNECEDOR.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RESERVA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RESERVA_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\RESERVA_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SOLICITACAO_MUDANCA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SOLICITACAO_MUDANCA_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SOLICITACAO_MUDANCA_COMENTARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SOLICITACAO_MUDANCA_MOVIMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SUBCATEGORIA_PRODUTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\SUBGRUPO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAREFA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAREFA_ACOMPANHAMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAREFA_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAREFA_NOTIFICACAO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TAREFA_VINCULO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TELEFONE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TEMPLATE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_AGENDA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_AMBIENTE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_CONDOMINIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_CONTA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_DOCUMENTO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_ENCOMENDA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_GRUPO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_MATERIAL.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_MENSAGEM.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_PESSOA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_TAREFA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_UNIDADE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_VAGA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TIPO_VEICULO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\TORRE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UF.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UNIDADE.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UNIDADE_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\UNIDADE_MATERIAL.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO_CONTROLE_ENTRADA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO_ESCALA_TRABALHO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\USUARIO_FUNCIONARIO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VAGA.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VEICULO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\VEICULO_ANEXO.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
+      <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkClasses\AttachmentCRM.cs" />

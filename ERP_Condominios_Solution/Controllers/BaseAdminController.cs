@@ -142,7 +142,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.NumCV = listaCV.Count;
             if (listaCV.Count == 0)
             {
-                listaCV = cvApp.GetAllItens(idAss);
+                listaCV = cvApp.GetAllItens (idAss);
             }
             ViewBag.ListaCV = listaCV.Take(5).ToList();
 

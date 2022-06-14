@@ -556,6 +556,10 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             CONTROLE_VEICULO veiculo = (CONTROLE_VEICULO)Session["ControleVeiculo"];
             List<USUARIO> lista = baseApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == veiculo.UNID_CD_ID).ToList();
+            if (lista.Where(p => p.USUA_IN_NOTIFICACAO_ENTRADA == 1).ToList().Count == 0)
+            {
+                return RedirectToAction("VoltarBaseControleVeiculo");
+            }
             USUARIO topo = lista.First();
 
             // Prepara view

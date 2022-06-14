@@ -41,28 +41,6 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>  
                 
                 @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM")
                 {
@@ -102,7 +80,7 @@
                                         @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Reserva", action: "MostrarTudoReserva")
                                         @Html.ButtonLinkIndex(text: "Nova Reserva", controller: "Reserva", action: "IncluirReserva")
                                         @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Reserva", action: "GerarRelatorioReserva")
-                                        @Html.ButtonLinkIndex(text: "Voltar", controller: "Reserva", action: "Voltar")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Reserva", action: "VoltarDash")
                                     </div>
                                 </div>
                         </div>
@@ -134,25 +112,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Reservas</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -163,12 +122,14 @@
                         </div>
                     }
                     <div class="row">
-                            @if ((ViewBag.Listas as List<EntitiesServices.Model.RESERVA>).Count > 0)                                        
+                            @if (ViewBag.Listas != null && (ViewBag.Listas as List<EntitiesServices.Model.RESERVA>).Count > 0)                                        
                             {
                                 <table class="table table-striped table-bordered table-hover dataTables-example">
                                     <thead style ="background-color:lightsteelblue">
                                         <tr>
-                                            <th>Data</th>   
+                                            <th>Data</th> 
+                                            <th>Início</th> 
+                                            <th>Final</th>
                                             <th>Unidade</th>   
                                             <th>Ambiente</th>
                                             <th>Finalidade</th>
@@ -182,6 +143,8 @@
                                         {
                                             <tr>
                                                 <td>@cond.RESE_DT_EVENTO.ToShortDateString()</td>
+                                                <td>@cond.RESE_HR_INICIA.ToString()</td>
+                                                <td>@cond.RESE_HR_TERMINA.ToString()</td>
                                                 <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
                                                 <td>@cond.AMBIENTE.AMBI_NM_AMBIENTE</td>
                                                 <td>@cond.FINALIDADE_RESERVA.FIRE_NM_NOME</td>
@@ -271,6 +234,23 @@
                                         }
                                     </tbody>
                                 </table>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                    </div>
+                                    <div style="border: 5px solid #F6A54A; padding: 10px; border-radius: 8px 8px; " class="col-lg-4 col-md-4 col-xs-8">
+                                        <h2 style="font-weight: bold">Sua pesquisa não retornou nenhum resultado</h2>
+                                        <p>Tente outras opções de pesquisa</p>
+
+                                        @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Reserva", action: "RetirarFiltroReserva")
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-xs-2">
+
+                                    </div>
+                                </div>
                             }
                      </div>
                 </div>

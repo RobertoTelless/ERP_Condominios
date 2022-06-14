@@ -83,6 +83,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<int> USUA_IN_SINDICO { get; set; }
         public Nullable<int> USUA_IN_PROPRIETARIO { get; set; }
         public Nullable<int> USUA_IN_PORTARIA { get; set; }
+        public Nullable<int> USUA_IN_NOTIFICACAO_ENTRADA { get; set; }
 
 
         public bool Bloqueio
@@ -239,6 +240,22 @@ namespace ERP_Condominios_Solution.ViewModels
             set
             {
                 USUA_IN_SINDICO = (value == true) ? 1 : 0;
+            }
+        }
+
+        public bool NotificacaoEntrada
+        {
+            get
+            {
+                if (USUA_IN_NOTIFICACAO_ENTRADA == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            set
+            {
+                USUA_IN_NOTIFICACAO_ENTRADA = (value == true) ? 1 : 0;
             }
         }
 

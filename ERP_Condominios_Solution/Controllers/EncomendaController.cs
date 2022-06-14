@@ -363,7 +363,7 @@ namespace ERP_Condominios_Solution.Controllers
             // Prepara listas
             ViewBag.Tipos = new SelectList(fornApp.GetAllTipos(idAss).OrderBy(x => x.TIEN_NM_NOME).ToList<TIPO_ENCOMENDA>(), "TIEN_CD_ID", "TIEN_NM_NOME");
             ViewBag.Formas = new SelectList(fornApp.GetAllFormas(idAss).OrderBy(x => x.FOEN_NM_NOME).ToList<FORMA_ENTREGA>(), "FOEN_CD_ID", "FOEN_NM_NOME");
-            ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Unids = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME).ToList<USUARIO>(), "USUA_CD_ID", "USUA_NM_NOME");
 
             // Prepara view
@@ -384,7 +384,7 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Tipos = new SelectList(fornApp.GetAllTipos(idAss).OrderBy(x => x.TIEN_NM_NOME).ToList<TIPO_ENCOMENDA>(), "TIEN_CD_ID", "TIEN_NM_NOME");
             ViewBag.Formas = new SelectList(fornApp.GetAllFormas(idAss).OrderBy(x => x.FOEN_NM_NOME).ToList<FORMA_ENTREGA>(), "FOEN_CD_ID", "FOEN_NM_NOME");
-            ViewBag.Unidades = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_EXIBE");
+            ViewBag.Unids = new SelectList(fornApp.GetAllUnidades(idAss).OrderBy(x => x.UNID_NM_EXIBE).ToList<UNIDADE>(), "UNID_CD_ID", "UNID_NM_EXIBE");
             ViewBag.Usuarios = new SelectList(fornApp.GetAllUsuarios(idAss).OrderBy(x => x.USUA_NM_NOME).ToList<USUARIO>(), "USUA_CD_ID", "USUA_NM_NOME");
             if (ModelState.IsValid)
             {
@@ -509,13 +509,11 @@ namespace ERP_Condominios_Solution.Controllers
             List<SelectListItem> status = new List<SelectListItem>();
             if (item.ENCO_IN_STATUS == 1)
             {
-                status.Add(new SelectListItem() { Text = "Recebida", Value = "1" });
                 status.Add(new SelectListItem() { Text = "Entregar", Value = "2" });
                 status.Add(new SelectListItem() { Text = "Recusar", Value = "3" });
             }
-            else if (item.ENCO_IN_STATUS == 3)
+            else if (item.ENCO_IN_STATUS == 2)
             {
-                status.Add(new SelectListItem() { Text = "Recusada", Value = "3" });
                 status.Add(new SelectListItem() { Text = "Devolver", Value = "4" });
             }
             ViewBag.Status = new SelectList(status, "Value", "Text");
@@ -524,6 +522,14 @@ namespace ERP_Condominios_Solution.Controllers
             Session["IdVolta"] = id;
             Session["IdEncomenda"] = id;
             EncomendaViewModel vm = Mapper.Map<ENCOMENDA, EncomendaViewModel>(item);
+            if (vm.ENCO_IN_STATUS == 1)
+            {
+                vm.ENCO_IN_STATUS_TROCA = 2;
+            }
+            if (vm.ENCO_IN_STATUS == 2)
+            {
+                vm.ENCO_IN_STATUS_TROCA = 4;
+            }
             return View(vm);
         }
 
@@ -540,26 +546,24 @@ namespace ERP_Condominios_Solution.Controllers
             List<SelectListItem> status = new List<SelectListItem>();
             if (vm.ENCO_IN_STATUS == 1)
             {
-                status.Add(new SelectListItem() { Text = "Recebida", Value = "1" });
                 status.Add(new SelectListItem() { Text = "Entregar", Value = "2" });
                 status.Add(new SelectListItem() { Text = "Recusar", Value = "3" });
             }
-            else if (vm.ENCO_IN_STATUS == 3)
+            else if (vm.ENCO_IN_STATUS == 2)
             {
-                status.Add(new SelectListItem() { Text = "Recusada", Value = "3" });
                 status.Add(new SelectListItem() { Text = "Devolver", Value = "4" });
             }
+
             ViewBag.Status = new SelectList(status, "Value", "Text");
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Acerta para devolução
-                    if (vm.ENCO_DS_JUSTIFICATIVA != null)
+                    // Acerta status
+                    if (vm.ENCO_IN_STATUS_TROCA > 0)
                     {
-                        vm.ENCO_DT_DEVOLUCAO = DateTime.Today.Date;
-                        vm.ENCO_IN_STATUS = 4;
-                    }
+                        vm.ENCO_IN_STATUS = vm.ENCO_IN_STATUS_TROCA;
+                    }                  
 
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
@@ -1153,6 +1157,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
             ENCOMENDA veiculo = (ENCOMENDA)Session["Encomenda"];
+            String unid = veiculo.UNIDADE.UNID_NM_EXIBE;
             List<USUARIO> lista = fornApp.GetAllUsuarios(idAss);
             ViewBag.Usuarios = new SelectList(lista, "USUA_CD_ID", "USUA_NM_NOME");
             if (ModelState.IsValid)
@@ -1162,7 +1167,7 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     NOTIFICACAO item = Mapper.Map<NotificacaoViewModel, NOTIFICACAO>(vm);
-                    Int32 volta = fornApp.GerarNotificacao(item, usuarioLogado, veiculo, "NOTIOCOR");
+                    Int32 volta = fornApp.GerarNotificacao(item, usuarioLogado, veiculo, unid, "NOTIOCOR");
 
                     // Verifica retorno
 
@@ -1238,5 +1243,27 @@ namespace ERP_Condominios_Solution.Controllers
                 return View(vm);
             }
         }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
     }
 }

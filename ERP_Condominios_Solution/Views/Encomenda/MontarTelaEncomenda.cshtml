@@ -23,25 +23,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>  
                 
                 @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
@@ -62,7 +43,7 @@
                                         Tipo de Encomenda
                                         @Html.DropDownListFor(m => m.TIEN_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control" })                            
                                     </div>
-                                    <div class="col-lg-3 col-md-3 col-xs-5ths">
+                                    <div class="col-lg-2 col-md-2 col-xs-5ths">
                                         Data de Chegada
                                         @Html.TextBoxFor(m => m.ENCO_DT_CHEGADA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data" })
                                     </div>
@@ -81,7 +62,7 @@
                                         {
                                             @Html.ButtonLinkIndex(text: "Exibir Inativas", controller: "Encomenda", action: "MostrarTudoEncomenda")
                                         }
-                                        @Html.ButtonLinkIndex(text: "Voltar", controller: "Encomenda", action: "Voltar")
+                                        @Html.ButtonLinkIndex(text: "Dashboard", controller: "Encomenda", action: "VoltarDash")
                                     </div>
                                 </div>
                         </div>
@@ -93,7 +74,7 @@
                         <div class="col-lg-12 col-md-12 col-xs-12">
                             @Html.ButtonLinkIndex(text: "Ver Hoje", controller: "Encomenda", action: "RetirarFiltroEncomenda")
                             @Html.ButtonLinkIndex(text: "Ver Todas as Datas", controller: "Encomenda", action: "VerTodasEncomenda")
-                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Encomenda", action: "Voltar")
+                            @Html.ButtonLinkIndex(text: "Dashboard", controller: "Encomenda", action: "VoltarDash")
                         </div>
                     </div>
                 }
@@ -106,25 +87,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Encomendas</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -217,12 +179,12 @@
                                                 <td class="td-one-action">
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN"  || ViewBag.Perfil == "POR")
 	                                                {
-                                                        if (cond.ENCO_IN_STATUS == 1 || cond.ENCO_IN_STATUS == 3)
+                                                        if (cond.ENCO_IN_STATUS == 1 || cond.ENCO_IN_STATUS == 2)
                                                         {
                                                            @Html.TableLinkDetails(cond.ENCO_CD_ID, "EditarEncomenda","fa-edit", "Entregar/Alterar")
                                                             if (cond.ENCO_IN_STATUS == 1)
                                                             {
-                                                                if (cond.ENCO_CD_ID == 1)
+                                                                if (cond.ENCO_IN_ATIVO == 1)
                                                                 {
                                                                     @Html.TableLinkDetails(cond.ENCO_CD_ID, "ExcluirEncomenda", "fa-trash-o", "Desativar") 
                                                                 }

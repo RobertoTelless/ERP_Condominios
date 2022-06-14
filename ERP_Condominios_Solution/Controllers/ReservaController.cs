@@ -150,6 +150,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensReserva"] = 0;
             Session["VoltaReserva"] = 1;
             objeto = new RESERVA();
+            objeto.RESE_DT_EVENTO = DateTime.Today.Date;
             return View(objeto);
         }
 
@@ -1613,5 +1614,27 @@ namespace ERP_Condominios_Solution.Controllers
             RESERVA_ANEXO item = baseApp.GetAnexoById(id);
             return View(item);
         }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
     }
 }
