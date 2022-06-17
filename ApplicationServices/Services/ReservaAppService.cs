@@ -149,16 +149,16 @@ namespace ApplicationServices.Services
                     return 2;
                 }
 
-                // Verifica horario livre
-                List<RESERVA> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID);
-                lista = lista.Where(p => p.AMBI_CD_ID == ambi.AMBI_CD_ID & p.RESE_DT_EVENTO == item.RESE_DT_EVENTO).ToList();
-                foreach (RESERVA res in lista)
-                {
-                    if (res.RESE_HR_INICIO >= item.RESE_HR_INICIO & res.RESE_HR_FINAL <= item.RESE_HR_FINAL)
-                    {
+                //// Verifica horario livre
+                //List<RESERVA> lista = _baseService.GetAllItens(usuario.ASSI_CD_ID);
+                //lista = lista.Where(p => p.AMBI_CD_ID == ambi.AMBI_CD_ID & p.RESE_DT_EVENTO == item.RESE_DT_EVENTO).ToList();
+                //foreach (RESERVA res in lista)
+                //{
+                //    if (res.RESE_HR_INICIO >= item.RESE_HR_INICIO & res.RESE_HR_FINAL <= item.RESE_HR_FINAL)
+                //    {
 
-                    }
-                }
+                //    }
+                //}
 
 
 

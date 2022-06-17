@@ -150,6 +150,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["MensMudanca"] = 0;
             Session["VoltaMudanca"] = 1;
             objeto = new SOLICITACAO_MUDANCA();
+            objeto.SOMU_DT_MUDANCA = DateTime.Today.Date;
             return View(objeto);
         }
 
@@ -274,6 +275,7 @@ namespace ERP_Condominios_Solution.Controllers
             vm.SOMU_DT_CRIACAO = DateTime.Today.Date;
             vm.SOMU_IN_STATUS = 1;
             vm.USUA_CD_ID = usuario.USUA_CD_ID;
+            vm.SOMU_DT_MUDANCA = DateTime.Today.Date;
             if (usuario.PERFIL.PERF_SG_SIGLA == "MOR")
             {
                 vm.UNID_CD_ID = usuario.UNID_CD_ID.Value;
