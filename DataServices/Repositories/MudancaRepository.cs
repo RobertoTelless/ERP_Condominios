@@ -29,6 +29,9 @@ namespace DataServices.Repositories
             query = query.Where(p => p.SOMU_CD_ID == id);
             query = query.Include(p => p.UNIDADE);
             query = query.Include(p => p.USUARIO);
+            query = query.Include(p => p.SOLICITACAO_MUDANCA_ANEXO);
+            query = query.Include(p => p.SOLICITACAO_MUDANCA_COMENTARIO);
+            query = query.Include(p => p.SOLICITACAO_MUDANCA_MOVIMENTO);
             return query.FirstOrDefault();
         }
 
@@ -57,7 +60,7 @@ namespace DataServices.Repositories
         {
             List<SOLICITACAO_MUDANCA> lista = new List<SOLICITACAO_MUDANCA>();
             IQueryable<SOLICITACAO_MUDANCA> query = Db.SOLICITACAO_MUDANCA;
-            if (data != null)
+            if (data != null & data != DateTime.MinValue)
             {
                 query = query.Where(p => p.SOMU_DT_MUDANCA == data);
             }

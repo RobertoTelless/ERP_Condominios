@@ -119,32 +119,9 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Solicitações de Mudança - Cancelamento</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
-                    <div class="form-group">
-                        <br />
-                        @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
-                    </div>
                     @Html.AntiForgeryToken()
                     @if (!ViewData.ModelState.IsValid)
                     {
@@ -164,35 +141,52 @@
                                 <div class="panel-body">
                                     @using (Html.BeginForm("CancelarMudanca", "Mudanca", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {                                        
+                                        <div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Cancelamento da Solicitação?", htmlAttributes: new { id = "basictoast" })
+                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
+                                        </div>
                                         <div class="row" style="width: 100%;">
                                             <div class="col-md-12">
                                                 <div class="row">
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                        @Html.HiddenFor(m => m.ASSI_CD_ID)
+                                                        @Html.HiddenFor(m => m.SOMU_CD_ID)
+                                                        @Html.HiddenFor(m => m.SOMU_DT_CADASTRO)
+                                                        @Html.HiddenFor(m => m.SOMU_DT_CRIACAO)
+                                                        @Html.HiddenFor(m => m.SOMU_DT_EXECUCAO_FINAL)
+                                                        @Html.HiddenFor(m => m.SOMU_DT_EXECUCAO_INICIO)
+                                                        @Html.HiddenFor(m => m.SOMU_NR_DURACAO)
+                                                        @Html.HiddenFor(m => m.SOMU_NR_PLACA_CAMINHAO)
+                                                        @Html.HiddenFor(m => m.SOMU_NM_EMPRESA_MUDANCA)
+                                                        @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                        @Html.HiddenFor(m => m.UNID_CD_ID)
+                                                        @Html.HiddenFor(m => m.SOMU_DT_APROVACAO)
                                                         <div class="col-lg-2 col-md-2 col-xs-12" style="color: green; font-weight: bold">
                                                             Situação
                                                             @Html.TextBox("stat", (String)ViewBag.NomeStatus, new { style = "color: green; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
                                                         </div>
+
                                                         @if (Model.SOMU_IN_STATUS == 2 || Model.SOMU_IN_STATUS == 4)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data da Aprovação
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_MUDANCA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
                                                         }
                                                         @if (Model.SOMU_IN_STATUS == 3)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data da Reprovação
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_VETADA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
                                                         }
                                                         else if (Model.SOMU_IN_STATUS == 4)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12" id="Inicio">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="Inicio">
                                                                 Data da Execução - Início
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_EXECUCAO_INICIO, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
-                                                            <div class="col-lg-3 col-md-3 col-xs-12" id="Final">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="Final">
                                                                 Data da Execução - Final
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_EXECUCAO_FINAL, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
@@ -205,35 +199,12 @@
                                                                 @Html.TextBoxFor(m => m.SOMU_NR_PLACA_CAMINHAO, new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
                                                         }
-                                                        else if (Model.SOMU_IN_STATUS == 5)
-                                                        {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12">
-                                                                Data de Cancelamento
-                                                                @Html.TextBoxFor(m => m.SOMU_DT_SUSPENSA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
-                                                            </div>
-                                                            <div class="col-lg-5 col-md-5 col-xs-12">
-                                                                Justificativa
-                                                                @Html.TextBoxFor(m => m.SOMU_DS_JUSTIFICATIVA, new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
-                                                            </div>
-                                                        }
                                                     </div>
                                                 </div>
                                                 <hr />
                                                 <div class="row">
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                         <div class="col-lg-2 col-md-2 col-xs-12">
-                                                            @Html.HiddenFor(m => m.ASSI_CD_ID)
-                                                            @Html.HiddenFor(m => m.SOMU_CD_ID)
-                                                            @Html.HiddenFor(m => m.SOMU_DT_CADASTRO)
-                                                            @Html.HiddenFor(m => m.SOMU_DT_CRIACAO)
-                                                            @Html.HiddenFor(m => m.SOMU_DT_EXECUCAO_FINAL)
-                                                            @Html.HiddenFor(m => m.SOMU_DT_EXECUCAO_INICIO)
-                                                            @Html.HiddenFor(m => m.SOMU_NR_DURACAO)
-                                                            @Html.HiddenFor(m => m.SOMU_NR_PLACA_CAMINHAO)
-                                                            @Html.HiddenFor(m => m.SOMU_NM_EMPRESA_MUDANCA)
-                                                            @Html.HiddenFor(m => m.USUA_CD_ID)
-                                                            @Html.HiddenFor(m => m.UNID_CD_ID)
-                                                            @Html.HiddenFor(m => m.SOMU_DT_APROVACAO)
                                                             Entrada/Saída
                                                             @Html.TextBox("es", (String)ViewBag.ES, new { style = "color: darkblue; font-weight: bold;", @class = "form-control", @readonly = "readonly" })
                                                         </div>
@@ -245,7 +216,7 @@
                                                             Data da Mudança
                                                             @Html.TextBoxFor(m => m.SOMU_DT_MUDANCA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
                                                             Data do Cancelamento*
                                                             @Html.TextBoxFor(m => m.SOMU_DT_SUSPENSA, new { @class = "form-control datetime-picker", autofocus = true, @id = "aprov", @style = "color:green; font-weight:bold" })
                                                             @Html.ValidationMessageFor(m => m.SOMU_DT_SUSPENSA, "",new { @style="color:red" })
@@ -269,9 +240,10 @@
                                                 <br />
                                             </div>
                                         </div>  
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma Cancelamento da Solicitação?", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
-                                        </div>
+                                        @*<div class="form-group">
+                                            @Html.ButtonActionSubmit(text: "Confirma Cancelamento da Solicitação?", htmlAttributes: new { id = "basictoast" })
+                                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
+                                        </div>*@
                                     }
                                 </div>
                             </div>

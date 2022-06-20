@@ -23,25 +23,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Solicitações de Mudança - Inclusão</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -56,11 +37,12 @@
                     <div class="tabs-container">
                         @using (Html.BeginForm("IncluirMudanca", "Mudanca", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                         {
-                            <div class="form-group">
-                                <br />
-                                <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Solicitação</button>
-                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
-                            </div>
+                                <div class="form-group">
+                                    <br />
+                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
+                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Solicitação de Mudança</button>
+                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
+                                </div>
 
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
@@ -143,12 +125,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <br />
-                                    @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
-                                    <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma inclusão de Solicitação</button>
-                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
                                 </div>
                             </div>
                         }
@@ -329,7 +305,7 @@
     </script>
 
     <script>
-        SendFilesV2('imgProduto', 'Veiculo', 'UploadFileToSession');
+        SendFilesV2('imgProduto', 'Mudanca', 'UploadFileToSession');
     </script>
 
     @if (ViewBag.Message != null)

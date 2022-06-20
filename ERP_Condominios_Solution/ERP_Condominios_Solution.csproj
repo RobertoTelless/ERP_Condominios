@@ -711,6 +711,22 @@
     <Content Include="Imagens\1\Condominio\1\Anexos\GestaoAcademica_MindMap_Versao_1.jpg" />
     <Content Include="Imagens\1\Condominio\1\Fotos\67345661_2429151403774918_6154599680316538880_n.jpg" />
     <Content Include="Imagens\1\Condominio\1\Fotos\67360779_2429151300441595_9147533595991080960_n.jpg" />
+    <Content Include="Imagens\1\Encomenda\6\Fotos\47575081_2120949524624436_1096707709916413952_n.jpg" />
+    <Content Include="Imagens\1\Encomenda\7\Anexos\tela03.jpg" />
+    <Content Include="Imagens\1\Encomenda\7\Fotos\encomenda_icone.png" />
+    <Content Include="Imagens\1\Encomenda\8\Fotos\Foto.jpg" />
+    <Content Include="Imagens\1\Encomenda\9\Fotos\Imagem_Teste %281%29.jpg" />
+    <Content Include="Imagens\1\Equipamento\10\Fotos\elevador.png" />
+    <Content Include="Imagens\1\Equipamento\11\Fotos\HondaCRV.jpg" />
+    <Content Include="Imagens\1\Equipamento\1\Fotos\notebook.jpg" />
+    <Content Include="Imagens\1\Equipamento\2\Fotos\geladeira.jpg" />
+    <Content Include="Imagens\1\Equipamento\3\Fotos\notebook.jpg" />
+    <Content Include="Imagens\1\Equipamento\4\Fotos\geladeira.jpg" />
+    <Content Include="Imagens\1\Equipamento\5\Fotos\elevador.png" />
+    <Content Include="Imagens\1\Equipamento\6\Fotos\escrivaninha.jpg" />
+    <Content Include="Imagens\1\Equipamento\7\Fotos\pabx_sistema.jpg" />
+    <Content Include="Imagens\1\Equipamento\8\Fotos\pabx_sistema.jpg" />
+    <Content Include="Imagens\1\Equipamento\9\Fotos\pabx_sistema.jpg" />
     <Content Include="Imagens\1\Fornecedores\1\Fotos\FotoBase.jpg" />
     <Content Include="Imagens\1\Fornecedores\2\Fotos\Amoedo_logo.png" />
     <Content Include="Imagens\1\Fornecedores\2\Fotos\Logo_RTI.png" />
@@ -2152,6 +2168,9 @@
     <Content Include="Imagens\1\Veiculo\13\Anexos\NotificacaoLista_13082021 %282%29.pdf" />
     <Content Include="Imagens\1\Produtos\2\Anexos\CCLista_16082021.pdf" />
     <Content Include="Imagens\1\Produtos\5\Anexos\TarefaLista_13082021.pdf" />
+    <Content Include="Imagens\1\Equipamento\7\Anexos\ProdutoLista_30082021 %282%29.pdf" />
+    <Content Include="Imagens\1\Equipamento\8\Anexos\ProdutoLista_30082021 %282%29.pdf" />
+    <Content Include="Imagens\1\Equipamento\9\Anexos\ProdutoLista_30082021 %282%29.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\characterCount.js" />
@@ -3222,6 +3241,7 @@
     <Content Include="Views\Auditoria\VerLog.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarMorador.cshtml" />
     <Content Include="Views\BaseAdmin\CarregarSindico.cshtml" />
+    <Content Include="Views\Mudanca\VerMudanca.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3242,10 +3262,25 @@
     <Folder Include="Imagens\1\Autorizacoes\1\Anexos\" />
     <Folder Include="Imagens\1\Autorizacoes\3\Anexos\" />
     <Folder Include="Imagens\1\Autorizacoes\4\Anexos\" />
+    <Folder Include="Imagens\1\Encomenda\5\Anexos\" />
+    <Folder Include="Imagens\1\Encomenda\5\Fotos\" />
+    <Folder Include="Imagens\1\Encomenda\6\Anexos\" />
+    <Folder Include="Imagens\1\Encomenda\8\Anexos\" />
+    <Folder Include="Imagens\1\Encomenda\9\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\10\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\11\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\1\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\2\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\3\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\4\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\5\Anexos\" />
+    <Folder Include="Imagens\1\Equipamento\6\Anexos\" />
     <Folder Include="Imagens\1\Fornecedores\1\Anexos\" />
     <Folder Include="Imagens\1\Fornecedores\2\Anexos\" />
     <Folder Include="Imagens\1\Fornecedores\4\Anexos\" />
     <Folder Include="Imagens\1\ListaConvidado\2\Anexos\" />
+    <Folder Include="Imagens\1\Mudanca\1\Anexos\" />
+    <Folder Include="Imagens\1\Mudanca\2\Anexos\" />
     <Folder Include="Imagens\1\Notificacao\1\Anexos\" />
     <Folder Include="Imagens\1\Notificacao\20\Anexos\" />
     <Folder Include="Imagens\1\Notificacao\21\Anexos\" />

@@ -33,6 +33,7 @@ namespace ERP_Condominios_Solution.Controllers
         List<CORPO_DIRETIVO> listaMasterForn = new List<CORPO_DIRETIVO>();
         String extensao;
 
+
         public CorpoDiretivoController(ICorpoDiretivoAppService baseApps, ILogAppService logApps, IConfiguracaoAppService confApps)
         {
             fornApp = baseApps;

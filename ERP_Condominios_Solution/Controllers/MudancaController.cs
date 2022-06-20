@@ -29,6 +29,7 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IMudancaAppService baseApp;
         private readonly INotificacaoAppService notiApp;
         private readonly ILogAppService logApp;
+        private readonly IUnidadeAppService uniApp;
 
         private String msg;
         private Exception exception;
@@ -37,11 +38,12 @@ namespace ERP_Condominios_Solution.Controllers
         List<SOLICITACAO_MUDANCA> listaMaster = new List<SOLICITACAO_MUDANCA>();
         String extensao;
 
-        public MudancaController(IMudancaAppService baseApps, ILogAppService logApps, INotificacaoAppService notiApps)
+        public MudancaController(IMudancaAppService baseApps, ILogAppService logApps, INotificacaoAppService notiApps, IUnidadeAppService uniApps)
         {
             baseApp = baseApps; ;
             logApp = logApps;
             notiApp = notiApps;
+            uniApp = uniApps;
         }
 
         [HttpGet]
@@ -318,7 +320,12 @@ namespace ERP_Condominios_Solution.Controllers
                         return RedirectToAction("MontarTelaMudanca", "Mudanca");
                     }
 
+                    // Cria pastas
+                    String caminho = "/Imagens/" + idAss.ToString() + "/Mudanca/" + item.SOMU_CD_ID.ToString() + "/Anexos/";
+                    Directory.CreateDirectory(Server.MapPath(caminho));
+
                     Session["IdVolta"] = item.SOMU_CD_ID;
+                    Session["IdMudanca"] = item.SOMU_CD_ID;
                     if (Session["FileQueueMudanca"] != null)
                     {
                         List<FileQueue> fq = (List<FileQueue>)Session["FileQueueMudanca"];
@@ -756,7 +763,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.NovoStatus = "Aprovada";
             MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
             vm.SOMU_DT_APROVACAO = DateTime.Now;
-            vm.SOMU_IN_STATUS = 2;
+            //vm.SOMU_IN_STATUS = 2;
             return View(vm);
         }
 
@@ -775,9 +782,11 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    item.SOMU_IN_STATUS = 2;
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
+                    UNIDADE unid = uniApp.GetItemById(item.UNID_CD_ID);
                     if (item.SOMU_IN_STATUS == 2)
                     {
                         NOTIFICACAO not = new NOTIFICACAO();
@@ -789,9 +798,10 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
+                        not.CANO_CD_ID = 1;
                         not.NOTI_NM_TITULO = "Notificação para Morador - Aprovação de Mudança";
                         not.USUA_CD_ID = item.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + unid.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                         Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
 
                         List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
@@ -806,9 +816,10 @@ namespace ERP_Condominios_Solution.Controllers
                             not.NOTI_IN_ORIGEM = 1;
                             not.NOTI_IN_STATUS = 1;
                             not.NOTI_IN_VISTA = 0;
+                            not.CANO_CD_ID = 1;
                             not.NOTI_NM_TITULO = "Notificação para Portaria - Aprovação de Mudança";
                             not.USUA_CD_ID = usu.USUA_CD_ID;
-                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + unid.UNID_NM_EXIBE + " foi aprovada em " + item.SOMU_DT_APROVACAO.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                             Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
                         }
 
@@ -906,7 +917,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.NovoStatus = "Não Aprovada";
             MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
             vm.SOMU_DT_VETADA = DateTime.Now;
-            vm.SOMU_IN_STATUS = 3;
+            //vm.SOMU_IN_STATUS = 3;
             return View(vm);
         }
 
@@ -925,9 +936,11 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    item.SOMU_IN_STATUS = 3;
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
+                    UNIDADE unid = uniApp.GetItemById(item.UNID_CD_ID);
                     if (item.SOMU_IN_STATUS == 3)
                     {
                         NOTIFICACAO not = new NOTIFICACAO();
@@ -939,9 +952,10 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
+                        not.CANO_CD_ID = 1;
                         not.NOTI_NM_TITULO = "Notificação para Morador - Reprovação de Mudança";
                         not.USUA_CD_ID = item.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.SOMU_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + unid.UNID_NM_EXIBE + " NÃO foi aprovada em " + item.SOMU_DT_VETADA.Value.ToShortDateString() + ". Por favor consulte a solicitação e/ou tome as providências necessárias.";
                         Int32 volta1 = notiApp.ValidateCreate(not, usuarioLogado);
                     }
 
@@ -1037,7 +1051,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.NovoStatus = "Cancelada";
             MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
             vm.SOMU_DT_SUSPENSA = DateTime.Now;
-            vm.SOMU_IN_STATUS = 5;
+            //vm.SOMU_IN_STATUS = 5;
             return View(vm);
         }
 
@@ -1056,12 +1070,14 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    item.SOMU_IN_STATUS = 5;
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
                     if (item.SOMU_IN_STATUS == 5)
                     {
                         USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
+                        UNIDADE unid = uniApp.GetItemById(item.UNID_CD_ID);
                         NOTIFICACAO not = new NOTIFICACAO();
                         not.NOTI_DT_EMISSAO = DateTime.Today.Date;
                         not.ASSI_CD_ID = idAss;
@@ -1071,9 +1087,10 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
+                        not.CANO_CD_ID = 1;
                         not.NOTI_NM_TITULO = "Notificação para Síndico - Cancelamento de Mudança";
                         not.USUA_CD_ID = sind.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + unid.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
                         Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
 
                         List<USUARIO> port = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 4).ToList();
@@ -1088,9 +1105,10 @@ namespace ERP_Condominios_Solution.Controllers
                             not.NOTI_IN_ORIGEM = 1;
                             not.NOTI_IN_STATUS = 1;
                             not.NOTI_IN_VISTA = 0;
+                            not.CANO_CD_ID = 1;
                             not.NOTI_NM_TITULO = "Notificação para Portaria - Cancelamento de Mudança";
                             not.USUA_CD_ID = usu.USUA_CD_ID;
-                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                            not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + unid.UNID_NM_EXIBE + " foi cancelada em " + item.SOMU_DT_SUSPENSA.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
                             Int32 volta3 = notiApp.ValidateCreate(not, usuarioLogado);
                         }
                     }
@@ -1188,7 +1206,7 @@ namespace ERP_Condominios_Solution.Controllers
             MudancaViewModel vm = Mapper.Map<SOLICITACAO_MUDANCA, MudancaViewModel>(item);
             vm.SOMU_DT_EXECUCAO_FINAL = DateTime.Now;
             vm.SOMU_DT_EXECUCAO_INICIO = DateTime.Now;
-            vm.SOMU_IN_STATUS = 4;
+            //vm.SOMU_IN_STATUS = 4;
             return View(vm);
         }
 
@@ -1207,9 +1225,11 @@ namespace ERP_Condominios_Solution.Controllers
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     SOLICITACAO_MUDANCA item = Mapper.Map<MudancaViewModel, SOLICITACAO_MUDANCA>(vm);
+                    item.SOMU_IN_STATUS = 4;
                     Int32 volta = baseApp.ValidateEdit(item, objetoAntes, usuarioLogado);
 
                     // Verifica retorno
+                    UNIDADE unid = uniApp.GetItemById(item.UNID_CD_ID);
                     if (item.SOMU_IN_STATUS == 4)
                     {
                         USUARIO sind = baseApp.GetAllUsuarios(idAss).Where(p => p.PERF_CD_ID == 2).FirstOrDefault();
@@ -1222,9 +1242,10 @@ namespace ERP_Condominios_Solution.Controllers
                         not.NOTI_IN_ORIGEM = 1;
                         not.NOTI_IN_STATUS = 1;
                         not.NOTI_IN_VISTA = 0;
+                        not.CANO_CD_ID = 1;
                         not.NOTI_NM_TITULO = "Notificação para Síndico - Execução/Encerramento de Mudança";
                         not.USUA_CD_ID = sind.USUA_CD_ID;
-                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + item.UNIDADE.UNID_NM_EXIBE + " foi executada/encerrada em " + item.SOMU_DT_EXECUCAO_INICIO.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
+                        not.NOTI_TX_TEXTO = "A solicitação de mudança " + item.SOMU_CD_ID.ToString() + " aberta pela unidade " + unid.UNID_NM_EXIBE + " foi executada/encerrada em " + item.SOMU_DT_EXECUCAO_INICIO.Value.ToShortDateString() + ". Por favor consulte a solicitação.";
                         Int32 volta2 = notiApp.ValidateCreate(not, usuarioLogado);
                     }
 
@@ -1660,6 +1681,26 @@ namespace ERP_Condominios_Solution.Controllers
             return View(item);
         }
 
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
 
 
 

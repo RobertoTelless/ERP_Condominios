@@ -43,25 +43,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>  
                 
                 @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM")
@@ -92,9 +73,9 @@
                                         @Html.ButtonActionSubmit(text: "Filtrar")
                                         @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Mudanca", action: "RetirarFiltroMudanca")
                                         @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Mudanca", action: "MostrarTudoMudanca")
-                                        @Html.ButtonLinkIndex(text: "Nova Solicitação", controller: "Mudanca", action: "IncluirMudanca")
+                                        @Html.ButtonLinkIndex(text: "Nova Solicitação de Mudança", controller: "Mudanca", action: "IncluirMudanca")
                                         @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Mudanca", action: "GerarRelatorioMudanca")
-                                        @Html.ButtonLinkIndex(text: "Voltar", controller: "Mudanca", action: "Voltar")
+                                        @Html.ButtonLinkIndex(text: "Voltar", controller: "Mudanca", action: "VoltarDash")
                                     </div>
                                 </div>
                         </div>
@@ -104,8 +85,8 @@
                 {
                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                         <div class="col-lg-12 col-md-12 col-xs-12">
-                            @Html.ButtonLinkIndex(text: "Nova Solicitação", controller: "Mudanca", action: "IncluirMudanca")
-                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Mudanca", action: "Voltar")
+                            @Html.ButtonLinkIndex(text: "Nova Solicitação de Mudança", controller: "Mudanca", action: "IncluirMudanca")
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Mudanca", action: "VoltarDash")
                         </div>
                     </div>
                 }
@@ -113,7 +94,7 @@
                 {
                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                         <div class="col-lg-12 col-md-12 col-xs-12">
-                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Mudanca", action: "Voltar")
+                            @Html.ButtonLinkIndex(text: "Voltar", controller: "Mudanca", action: "VoltarDash")
                         </div>
                     </div>
                 }
@@ -166,7 +147,6 @@
                                             <th>Situação</th>
                                             <th>Início</th>   
                                             <th>Término</th>
-                                            <th>Comentários</th>
                                             <th class="td-one-action">Ações</th>
                                         </tr>
                                     </thead>
@@ -186,7 +166,7 @@
                                                 }
                                                 @if (cond.SOMU_IN_STATUS == 1)
                                                 {
-                                                    <td><span class="badge badge-warning">Em Aprovação</span></td>
+                                                    <td><span class="badge badge-info">Em Aprovação</span></td>
                                                 }
                                                 else if (cond.SOMU_IN_STATUS == 2)
                                                 {
@@ -202,7 +182,7 @@
                                                 }
                                                 else if (cond.SOMU_IN_STATUS == 5)
                                                 {
-                                                    <td><span class="badge badge-info">Cancelada</span></td>
+                                                    <td><span class="badge badge-warning">Cancelada</span></td>
                                                 }
                                                 @if (cond.SOMU_IN_STATUS == 4)
                                                 {
@@ -214,7 +194,6 @@
                                                     <td>-</td>
                                                     <td>-</td>
                                                 }
-                                                <td>@cond.SOLICITACAO_MUDANCA_COMENTARIO.Count</td>
                                                 <td class="td-one-action">
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                                     {
@@ -236,6 +215,10 @@
                                                             {   
                                                                 <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Mudanca/ReativarMudanca/@cond.SOMU_CD_ID')" title="Reativar"></span>
                                                             }
+                                                        }
+                                                        if (cond.SOMU_IN_STATUS == 2)
+                                                        {
+                                                            @Html.TableLinkDetails(cond.SOMU_CD_ID, "EditarMudanca","fa-edit", "Editar")
                                                         }
                                                     }
                                                     else if (ViewBag.Perfil == "MOR")

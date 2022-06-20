@@ -116,25 +116,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Solicitações de Mudança - Edição</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -146,51 +127,65 @@
                             {
                                 @Html.ButtonLinkIndex(text: "Aprovar Solicitação", action: "AprovarMudanca", controller: "Mudanca")
                             }
+                        }
+                        @if (ViewBag.Perfil == "SIN")
+                        {
                             if (Model.SOMU_IN_STATUS == 1)
                             {
                                 @Html.ButtonLinkIndex(text: "Reprovar Solicitação", action: "ReprovarMudanca", controller: "Mudanca")
                             }
-                            @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoMudanca", controller: "Mudanca")
                         }
-                        else if (ViewBag.Perfil == "POR")
+                        @if (ViewBag.Perfil == "POR")
                         {
                             if (Model.SOMU_IN_STATUS == 2)
                             {
                                 @Html.ButtonLinkIndex(text: "Executar Mudança", action: "ExecutarMudanca", controller: "Mudanca")
                             }
-                            @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoMudanca", controller: "Mudanca")
                         }
-                        else if (ViewBag.Perfil == "MOR")
+                        @if (ViewBag.Perfil == "MOR")
                         {
                             if (Model.SOMU_IN_STATUS == 1 || Model.SOMU_IN_STATUS == 2)
                             {
                                 @Html.ButtonLinkIndex(text: "Cancelar Solicitação", action: "CancelarMudanca", controller: "Mudanca")
                             }
                         }
-                        else if (ViewBag.Perfil == "ADM")
+                        @if (ViewBag.Perfil == "ADM")
                         {
                             if (Model.SOMU_IN_STATUS == 1)
                             {
                                 @Html.ButtonLinkIndex(text: "Aprovar Solicitação", action: "AprovarMudanca", controller: "Mudanca")
                             }
+                        }
+                        @if (ViewBag.Perfil == "ADM")
+                        {
+
                             if (Model.SOMU_IN_STATUS == 1)
                             {
                                 @Html.ButtonLinkIndex(text: "Reprovar Solicitação", action: "ReprovarMudanca", controller: "Mudanca")
                             }
+                        }
+                        @if (ViewBag.Perfil == "ADM")
+                        {
                             if (Model.SOMU_IN_STATUS == 1)
                             {
                                 @Html.ButtonLinkIndex(text: "Cancelar Solicitação", action: "CancelarMudanca", controller: "Mudanca")
                             }
+                        }
+                        @if (ViewBag.Perfil == "ADM")
+                        {
                             if (Model.SOMU_IN_STATUS == 2)
                             {
                                 @Html.ButtonLinkIndex(text: "Executar Mudança", action: "ExecutarMudanca", controller: "Mudanca")
                             }
+                        }
+                        @if (ViewBag.Perfil == "ADM")
+                        {
                             if (Model.SOMU_IN_STATUS == 2)
                             {
                                 @Html.ButtonLinkIndex(text: "Cancelar Solicitação", action: "CancelarMudanca", controller: "Mudanca")
                             }
-                            @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoMudanca", controller: "Mudanca")
                         }
+                        @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoMudanca", controller: "Mudanca")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
                     </div>
                     @Html.AntiForgeryToken()
@@ -204,7 +199,7 @@
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">Comentários</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Anotações</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Anexos</a></li>
                         </ul>
                         <div class="tab-content">   
@@ -224,40 +219,40 @@
                                                         </div>
                                                         @if (Model.SOMU_IN_STATUS == 2 || Model.SOMU_IN_STATUS == 4)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data da Aprovação
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_MUDANCA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
                                                         }
                                                         @if (Model.SOMU_IN_STATUS == 3)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data da Reprovação
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_VETADA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
                                                         }
                                                         else if (Model.SOMU_IN_STATUS == 4)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12" id="Inicio">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="Inicio">
                                                                 Data da Execução - Início
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_EXECUCAO_INICIO, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
-                                                            <div class="col-lg-3 col-md-3 col-xs-12" id="Final">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="Final">
                                                                 Data da Execução - Final
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_EXECUCAO_FINAL, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="Final">
+                                                            <div class="col-lg-3 col-md-3 col-xs-12" id="Final">
                                                                 Nome da Empresa
                                                                 @Html.TextBoxFor(m => m.SOMU_NM_EMPRESA_MUDANCA, new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
-                                                            <div class="col-lg-2 col-md-2 col-xs-12" id="Final">
+                                                            <div class="col-lg-1 col-md-1 col-xs-12" id="Final">
                                                                 Placa
                                                                 @Html.TextBoxFor(m => m.SOMU_NR_PLACA_CAMINHAO, new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
                                                         }
                                                         else if (Model.SOMU_IN_STATUS == 5)
                                                         {
-                                                            <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            <div class="col-lg-2 col-md-2 col-xs-12">
                                                                 Data de Cancelamento
                                                                 @Html.TextBoxFor(m => m.SOMU_DT_SUSPENSA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true,  @readonly = "readonly" })
                                                             </div>
@@ -328,7 +323,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h4>Comentários:</h4>
+                                            <h4>Anotações</h4>
                                             @if (Model.SOLICITACAO_MUDANCA_COMENTARIO.Count > 0)
                                             {
                                                 foreach (var item in (Model.SOLICITACAO_MUDANCA_COMENTARIO).OrderByDescending(a => a.SMCO_DT_COMENTARIO))
@@ -357,7 +352,7 @@
                                     </div>
                                     <br />
                                     <div class="form-group">
-                                        @Html.ButtonLinkIndex(text: "Incluir Novo Comentário", action: "IncluirComentarioMudanca", controller: "Mudanca")
+                                        @Html.ButtonLinkIndex(text: "Incluir Nova Anotação", action: "IncluirComentarioMudanca", controller: "Mudanca")
                                     </div>
                                 </div>
                             </div>
@@ -434,10 +429,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMudanca", controller: "Mudanca")
                 </div>
             </div>
         </div>
