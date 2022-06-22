@@ -2172,6 +2172,7 @@
     <Content Include="Imagens\1\Equipamento\8\Anexos\ProdutoLista_30082021 %282%29.pdf" />
     <Content Include="Imagens\1\Equipamento\9\Anexos\ProdutoLista_30082021 %282%29.pdf" />
     <None Include="Properties\PublishProfiles\ERPCondominio - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ERPCondominioWeb - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\characterCount.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
