@@ -164,6 +164,7 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.PontoPedido = pontoPedido.Count;
             ViewBag.EstoqueZerado = estoqueZerado.Count;
             ViewBag.EstoqueNegativo = estoqueNegativo.Count;
+            Session["VoltaEstoque"] = 0;
 
             // Mensagens
             if (Session["MensProduto"] != null)

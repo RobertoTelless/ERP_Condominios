@@ -370,7 +370,7 @@
             <br />
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                    <img alt="image" class="img-circle" src="~/Images/autorizacao_icone.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Autorizações", controller: "Autorizacao", action: "MontarTelaAutorizacao", buttonClass: "primary")
@@ -379,7 +379,7 @@
             <br />
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                    <img alt="image" class="img-circle" src="~/Images/controle_veiculo_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Controle Veículo", controller: "ControleVeiculo", action: "MontarTelaControleVeiculo", buttonClass: "primary")
@@ -388,7 +388,7 @@
             <br />
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                    <img alt="image" class="img-circle" src="~/Images/encomenda_icone.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Encomendas", controller: "Encomenda", action: "MontarTelaEncomenda", buttonClass: "primary")
@@ -397,16 +397,25 @@
             <br />
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                    <img alt="image" class="img-circle" src="~/Images/entrada_saida_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    @Html.ButtonLinkIndex(text: "Entradas & Saídas", controller: "EntradaSaida", action: "MontarTelaEntradaSaida", buttonClass: "primary")
+                    @Html.ButtonLinkIndex(text: "Entradas & Saídas", controller: "EntradaSaida", action: "MontarTelaES", buttonClass: "primary")
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                    <img alt="image" class="img-circle" src="~/Images/assembleia_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Listas Convidados", controller: "ListaConvidado", action: "MontarTelaLista", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/reserva_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Reservas", controller: "Reserva", action: "MontarTelaReserva", buttonClass: "primary")
@@ -415,10 +424,28 @@
             <br />
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12">
-                    <img alt="image" class="img-circle" src="~/Images/icon_material.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                    <img alt="image" class="img-circle" src="~/Images/mudanca_icone.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Mudanças", controller: "Mudanca", action: "MontarTelaMudanca", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/estoque_icone.png" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Estoque", controller: "Estoque", action: "MontarTelaEstoque", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/assembleia_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Assembléias", controller: "Assembleia", action: "MontarTelaAssembleia", buttonClass: "primary")
                 </div>
             </div>
             <br />

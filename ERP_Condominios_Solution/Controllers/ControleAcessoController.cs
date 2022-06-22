@@ -17,15 +17,17 @@ namespace ERP_Condominios_Solution.Controllers
     public class ControleAcessoController : Controller
     {
         private readonly IUsuarioAppService baseApp;
+        private readonly ICorpoDiretivoAppService cdApp;
         private String msg;
         private Exception exception;
         USUARIO objeto = new USUARIO();
         USUARIO objetoAntes = new USUARIO();
         List<USUARIO> listaMaster = new List<USUARIO>();
 
-        public ControleAcessoController(IUsuarioAppService baseApps)
+        public ControleAcessoController(IUsuarioAppService baseApps, ICorpoDiretivoAppService cdApps)
         {
             baseApp = baseApps;
+            cdApp = cdApps;
         }
 
         [HttpGet]
@@ -159,6 +161,16 @@ namespace ERP_Condominios_Solution.Controllers
                 Session["UsuMorador"] = usuario.USUA_IN_MORADOR;
                 Session["UsuPortaria"] = usuario.USUA_IN_PORTARIA;
                 Session["IdUsuario"] = usuario.USUA_CD_ID;
+                Session["UsuSindico"] = 0;
+                Session["UsuProprietario"] = usuario.USUA_IN_PROPRIETARIO;
+                Session["UsuFuncionario"] = usuario.USUA_IN_FUNCIONARIO;
+
+                // Verifica se é sindico
+                List<CORPO_DIRETIVO> corpo = cdApp.GetAllItens(usuario.ASSI_CD_ID).Where(p => p.USUA_CD_ID == usuario.USUA_CD_ID & p.FUCO_CD_ID == 1 & p.CODI_DT_SAIDA_REAL == null).ToList();
+                if (corpo.Count > 0)
+                {
+                    Session["UsuSindico"] = 1;
+                }
 
                 // Route
                 if (usuario.USUA_IN_PROVISORIO == 1)

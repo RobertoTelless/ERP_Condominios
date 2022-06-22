@@ -110,7 +110,7 @@
                                                     @Html.HiddenFor(m => m.AMBI_NM_DESCRICAO)
                                                     @if (!String.IsNullOrEmpty(Model.AMBI_AQ_FOTO))
                                                     {
-                                                        <img src="@Url.Content(Model.AMBI_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.AMBI_NM_AMBIENTE', '@Url.Content(Model.AMBI_AQ_FOTO)')">                                                    }
+                                                        <img src="@Url.Content(Model.AMBI_AQ_FOTO)" style="width: auto; height: auto; max-height: 200px; max-width: 250px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@Model.AMBI_NM_AMBIENTE', '@Url.Content(Model.AMBI_AQ_FOTO)')">                                                    }
                                                     else
                                                     {
                                                         <img src="~/Images/gallery/10s.jpg" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
@@ -424,21 +424,24 @@
                                                                     <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
                                                                     <td>@cond.USUARIO.USUA_NM_NOME</td>
                                                                     <td>@cond.AMCH_DT_PREVISTA.ToShortDateString()</td>
-                                                                    <td>@cond.AMCH_DT_DEVOLUCAO.Value.ToShortDateString()</td>
                                                                     @if (cond.AMCH_DT_DEVOLUCAO != null)
                                                                     {
+                                                                        <td>@cond.AMCH_DT_DEVOLUCAO.Value.ToShortDateString()</td>
                                                                         <td><span class="badge badge-primary">Devolvida</span></td>
                                                                     }
                                                                     else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA >= DateTime.Today.Date)
                                                                     {
+                                                                        <td>-</td>
                                                                         <td><span class="badge badge-warning">Pendente</span></td>
                                                                     }
                                                                     else if (cond.AMCH_DT_DEVOLUCAO == null & cond.AMCH_DT_PREVISTA < DateTime.Today.Date)
                                                                     {
+                                                                        <td>-</td>
                                                                         <td><span class="badge badge-danger">Em Atraso</span></td>
                                                                     }
                                                                     else
                                                                     {
+                                                                        <td>-</td>
                                                                         <td></td>
                                                                     }  
                                                                     @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
@@ -508,10 +511,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "FornecedorNovo")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

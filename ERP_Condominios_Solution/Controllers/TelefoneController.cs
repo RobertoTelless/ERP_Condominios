@@ -501,8 +501,6 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
 
             // Prepara view
-            ViewBag.Incluir = (Int32)Session["IncluirForn"];
-
             TELEFONE item = fornApp.GetItemById(id);
             objetoFornAntes = item;
             Session["Telefone"] = item;
