@@ -539,10 +539,75 @@ namespace ERP_Condominios_Solution.Controllers
             return View(vm);
         }
 
+        //[HttpGet]
+        //public ActionResult ExcluirAutorizacao(Int32 id)
+        //{
+        //    // Verifica se tem usuario logado
+        //    USUARIO usuario = new USUARIO();
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    if ((USUARIO)Session["UserCredentials"] != null)
+        //    {
+        //        usuario = (USUARIO)Session["UserCredentials"];
+
+        //        // Verfifica permissão
+        //        if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+        //        {
+        //            Session["MensAutorizacao"] = 2;
+        //            return RedirectToAction("CarregarBase", "BaseAdmin");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    Int32 idAss = (Int32)Session["IdAssinante"];
+
+        //    // Prepara view
+        //    AUTORIZACAO_ACESSO item = fornApp.GetItemById(id);
+        //    AutorizacaoViewModel vm = Mapper.Map<AUTORIZACAO_ACESSO, AutorizacaoViewModel>(item);
+        //    return View(vm);
+        //}
+
+        //[HttpPost]
+        //public ActionResult ExcluirAutorizacao(AutorizacaoViewModel vm)
+        //{
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    try
+        //    {
+        //        // Executa a operação
+        //        USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+        //        AUTORIZACAO_ACESSO item = Mapper.Map<AutorizacaoViewModel, AUTORIZACAO_ACESSO>(vm);
+        //        Int32 volta = fornApp.ValidateDelete(item, usuarioLogado);
+
+        //        // Verifica retorno
+        //        if (volta == 1)
+        //        {
+        //            Session["MensAutorizacao"] = 4;
+        //            return RedirectToAction("MontarTelaAutorizacao", "Autorizacao");
+        //        }
+
+        //        // Sucesso
+        //        listaMasterForn = new List<AUTORIZACAO_ACESSO>();
+        //        Session["ListaAutorizacao"] = null;
+        //        return RedirectToAction("MontarTelaAutorizacao");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Message = ex.Message;
+        //        return View(objetoForn);
+        //    }
+        //}
+
         [HttpGet]
         public ActionResult ExcluirAutorizacao(Int32 id)
         {
-            // Verifica se tem usuario logado
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -552,12 +617,6 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
-                {
-                    Session["MensAutorizacao"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
-                }
             }
             else
             {
@@ -565,49 +624,20 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             AUTORIZACAO_ACESSO item = fornApp.GetItemById(id);
-            AutorizacaoViewModel vm = Mapper.Map<AUTORIZACAO_ACESSO, AutorizacaoViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ExcluirAutorizacao(AutorizacaoViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                AUTORIZACAO_ACESSO item = Mapper.Map<AutorizacaoViewModel, AUTORIZACAO_ACESSO>(vm);
-                Int32 volta = fornApp.ValidateDelete(item, usuarioLogado);
-
-                // Verifica retorno
-                if (volta == 1)
-                {
-                    Session["MensAutorizacao"] = 4;
-                    return RedirectToAction("MontarTelaAutorizacao", "Autorizacao");
-                }
-
-                // Sucesso
-                listaMasterForn = new List<AUTORIZACAO_ACESSO>();
-                Session["ListaAutorizacao"] = null;
-                return RedirectToAction("MontarTelaAutorizacao");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objetoForn);
-            }
+            item.AUAC_IN_ATIVO = 0;
+            Int32 volta = fornApp.ValidateDelete(item, usuario);
+            listaMasterForn = new List<AUTORIZACAO_ACESSO>();
+            Session["ListaAutorizacao"] = null;
+            Session["FiltroAutorizacao"] = null;
+            return RedirectToAction("MontarTelaAutorizacao");
         }
 
         [HttpGet]
         public ActionResult ReativarAutorizacao(Int32 id)
         {
-            // Verifica se tem usuario logado
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -617,12 +647,6 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
-                {
-                    Session["MensAutorizacao"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
-                }
             }
             else
             {
@@ -630,39 +654,75 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             AUTORIZACAO_ACESSO item = fornApp.GetItemById(id);
-            AutorizacaoViewModel vm = Mapper.Map<AUTORIZACAO_ACESSO, AutorizacaoViewModel>(item);
-            return View(vm);
+            item.AUAC_IN_ATIVO = 1;
+            Int32 volta = fornApp.ValidateReativar(item, usuario);
+            listaMasterForn = new List<AUTORIZACAO_ACESSO>();
+            Session["ListaAutorizacao"] = null;
+            Session["FiltroAutorizacao"] = null;
+            return RedirectToAction("MontarTelaAutorizacao");
         }
 
-        [HttpPost]
-        public ActionResult ReativarAutorizacao(AutorizacaoViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                AUTORIZACAO_ACESSO item = Mapper.Map<AutorizacaoViewModel, AUTORIZACAO_ACESSO>(vm);
-                Int32 volta = fornApp.ValidateReativar(item, usuarioLogado);
+        //[HttpGet]
+        //public ActionResult ReativarAutorizacao(Int32 id)
+        //{
+        //    // Verifica se tem usuario logado
+        //    USUARIO usuario = new USUARIO();
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    if ((USUARIO)Session["UserCredentials"] != null)
+        //    {
+        //        usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verifica retorno
+        //        // Verfifica permissão
+        //        if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
+        //        {
+        //            Session["MensAutorizacao"] = 2;
+        //            return RedirectToAction("CarregarBase", "BaseAdmin");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    Int32 idAss = (Int32)Session["IdAssinante"];
 
-                // Sucesso
-                listaMasterForn = new List<AUTORIZACAO_ACESSO>();
-                Session["ListaAutorizacao"] = null;
-                return RedirectToAction("MontarTelaAutorizacao");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objetoForn);
-            }
-        }
+        //    // Prepara view
+        //    AUTORIZACAO_ACESSO item = fornApp.GetItemById(id);
+        //    AutorizacaoViewModel vm = Mapper.Map<AUTORIZACAO_ACESSO, AutorizacaoViewModel>(item);
+        //    return View(vm);
+        //}
+
+        //[HttpPost]
+        //public ActionResult ReativarAutorizacao(AutorizacaoViewModel vm)
+        //{
+        //    if ((String)Session["Ativa"] == null)
+        //    {
+        //        return RedirectToAction("Login", "ControleAcesso");
+        //    }
+        //    try
+        //    {
+        //        // Executa a operação
+        //        USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
+        //        AUTORIZACAO_ACESSO item = Mapper.Map<AutorizacaoViewModel, AUTORIZACAO_ACESSO>(vm);
+        //        Int32 volta = fornApp.ValidateReativar(item, usuarioLogado);
+
+        //        // Verifica retorno
+
+        //        // Sucesso
+        //        listaMasterForn = new List<AUTORIZACAO_ACESSO>();
+        //        Session["ListaAutorizacao"] = null;
+        //        return RedirectToAction("MontarTelaAutorizacao");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.Message = ex.Message;
+        //        return View(objetoForn);
+        //    }
+        //}
 
         [HttpGet]
         public ActionResult VerAnexoAutorizacao(Int32 id)

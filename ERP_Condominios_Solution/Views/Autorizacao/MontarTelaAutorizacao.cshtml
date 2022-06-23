@@ -5,6 +5,26 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*Titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="limpaModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-title"> 
         <h3 class="title">Autorizações/Restrições</h3> 
         <br />
@@ -138,7 +158,7 @@
                                             <th>Tipo</th>
                                             <th>Limite</th>   
                                             <th>Visitas</th>
-                                            <th></th>
+                                            <th>Duração</th>
                                             <th class="td-one-action">Ações</th>
                                         </tr>
                                     </thead>
@@ -164,13 +184,13 @@
                                                 {
                                                     <td><span class="badge badge-primary">Permanente</span></td>
                                                 }
-                                                else if (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE < DateTime.Today.Date)
+                                                else if (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE.Value.Date < DateTime.Today.Date)
                                                 {
-                                                    <td><span class="badge badge-warning">Não Ativa</span></td>
+                                                    <td><span class="badge badge-warning">Expirada</span></td>
                                                 }
-                                                else if (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE >= DateTime.Today.Date)
+                                                else if (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE.Value.Date >= DateTime.Today.Date)
                                                 {
-                                                    <td><span class="badge badge-danger">Ativa</span></td>
+                                                    <td><span class="badge badge-danger">Normal</span></td>
                                                 }
                                                 else
                                                 {
@@ -179,14 +199,17 @@
                                                 <td class="td-one-action">
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN" || ViewBag.Perfil == "MOR")
                                                     {
-                                                        @Html.TableLinkDetails(cond.AUAC_CD_ID, "EditarAutorizacao","fa-edit", "Editar")
+                                                        if (cond.AUAC_IN_PERMANENTE == 1 || (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE.Value.Date >= DateTime.Today.Date))
+                                                        {
+                                                            @Html.TableLinkDetails(cond.AUAC_CD_ID, "EditarAutorizacao","fa-edit", "Editar")
+                                                        }
                                                         if (cond.AUAC_IN_ATIVO == 1)
 	                                                    {
-                                                            @Html.TableLinkDetails(cond.AUAC_CD_ID, "ExcluirAutorizacao","fa-trash-o", "Desativar")
+                                                            <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Autorizacao/ExcluirAutorizacao/@cond.AUAC_CD_ID')" title="Excluir"></span>
                                                         }
                                                         else
                                                         {   
-                                                            @Html.TableLinkDetails(cond.AUAC_CD_ID, "ReativarAutorizacao","fa-refresh", "Reativar")
+                                                            <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/Autorizacao/ReativarAutorizacao/@cond.AUAC_CD_ID')" title="Reativar"></span>
                                                         }
                                                     }
                                                     else
@@ -253,6 +276,31 @@
             $('#modalDesc').modal('show');
         }
     </script>
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de Autorização?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de Autorização?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+
     <script type="text/javascript" language="javascript">
         $(function () {
             $('.date-picker').datepicker(

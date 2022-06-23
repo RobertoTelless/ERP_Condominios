@@ -303,6 +303,12 @@
   <data name="M0066" xml:space="preserve">
     <value>Número de conselheiros maior que o permitido</value>
   </data>
+  <data name="M0067" xml:space="preserve">
+    <value>Morador inexistente</value>
+  </data>
+  <data name="M0068" xml:space="preserve">
+    <value>Morador sem celular cadastrado</value>
+  </data>
   <data name="M0073" xml:space="preserve">
     <value>A Senha não pode ficar em branco</value>
   </data>

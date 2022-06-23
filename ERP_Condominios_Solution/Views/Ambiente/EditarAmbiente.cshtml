@@ -87,11 +87,11 @@
                             <li class=""><a data-toggle="tab" href="#tab-2">Imagens & Anexos</a></li>
                             @if (Model.AMBI_IN_GRATUITO == 2)
                             {
-                                <li class=""><a data-toggle="tab" href="#tab-3">Preços</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-3" id="preco">Preços</a></li>
                             }
                             @if (Model.AMBI_IN_CHAVE == 1)
                             {
-                                <li class=""><a data-toggle="tab" href="#tab-4">Chaves</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-4" id="chave">Chaves</a></li>
                             }
                             <li class=""><a data-toggle="tab" href="#tab-5">Descrição</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-6">Indicadores</a></li>
@@ -494,7 +494,6 @@
                                         </div>
                                         <div class="form-group">
                                             @Html.ButtonLinkIndex(text: "Incluir Nova Entrega de Chave", action: "IncluirAmbienteChave", controller: "Ambiente")
-                                            @Html.ButtonLinkIndex(text: "Ir para Controle de Chaves de Ambientes", action: "MontarTelaControleChave", controller: "ControleChave")
                                         </div>
                                     </div>
                                 </div>
@@ -593,10 +592,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseAmbiente", controller: "Ambiente")
                 </div>
             </div>
         </div>

@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using CrossCutting;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -916,57 +917,57 @@ namespace ERP_Condominios_Solution.Controllers
                     return RedirectToAction("MontarTelaUnidade");
                 }
 
-                // Monta token
+                // Processa SMS
                 CONFIGURACAO conf = confApp.GetItemById(idAss);
+
+                // Monta token
                 String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
                 byte[] textBytes = Encoding.UTF8.GetBytes(text);
                 String token = Convert.ToBase64String(textBytes);
                 String auth = "Basic " + token;
 
-                // Monta routing
-                String routing = "1";
-
-                // Monta texto
+                // Prepara texto
                 String texto = mensagem;
 
+                // Prepara corpo do SMS e trata link
+                StringBuilder str = new StringBuilder();
+                str.AppendLine(mensagem);
+                String body = str.ToString();
+                String smsBody = body;
+                String erro = null;
+
                 // inicia processo
-                List<String> resposta = new List<string>();
-                WebRequest request = WebRequest.Create("https://api.smsfire.com.br/v1/sms/send");
-                request.Headers["Authorization"] = auth;
-                request.Method = "POST";
-                request.ContentType = "application/json";
+                String resposta = String.Empty;
 
                 // Monta destinatarios
-                String listaDest = "55" + Regex.Replace(resp.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
-
-                // Processa lista
-                String responseFromServer = null;
-                using (var streamWriter = new StreamWriter(request.GetRequestStream()))
+                try
                 {
-                    String campanha = "ERP";
-                    String json = null;
-                    json = "{\"to\":[\"" + listaDest + "\"]," +
-                            "\"from\":\"SMSFire\", " +
-                            "\"campaignName\":\"" + campanha + "\", " +
-                            "\"text\":\"" + texto + "\"} ";
+                    String listaDest = "55" + Regex.Replace(resp.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                    httpWebRequest.Headers["Authorization"] = auth;
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    String customId = Cryptography.GenerateRandomPassword(8);
+                    String data = String.Empty;
+                    String json = String.Empty;
 
-                    streamWriter.Write(json);
-                    streamWriter.Close();
-                    streamWriter.Dispose();
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPCondominio\"}]}");
+                        streamWriter.Write(json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        resposta = result;
+                    }
                 }
-
-                WebResponse response = request.GetResponse();
-                resposta.Add(response.ToString());
-
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                responseFromServer = reader.ReadToEnd();
-                resposta.Add(responseFromServer);
-
-                // Saída
-                reader.Close();
-                response.Close();
-                Session["MensUnidade"] = 12;
+                catch (Exception ex)
+                {
+                    erro = ex.Message;
+                }
                 return RedirectToAction("MontarTelaUnidade");
             }
             catch (Exception ex)

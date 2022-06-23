@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using CrossCutting;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -120,6 +121,16 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("MontarTelaMorador");
             }
             return RedirectToAction("MontarTelaMoradores");
+        }
+
+        public ActionResult VoltarAnexoMorador()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 id = (Int32)Session["IdMorador"];
+            return RedirectToAction("VerMorador", new { id = id });
         }
 
         [HttpGet]
@@ -270,6 +281,16 @@ namespace ERP_Condominios_Solution.Controllers
             List<USUARIO> moradores = baseApp.GetAllItens(idAss).Where(p => p.USUA_IN_MORADOR == 1 & p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
             ViewBag.Moradores = moradores;
 
+            // Mensagens
+            if ((Int32)Session["MensMorador"] == 8)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0067", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensMorador"] == 10)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0068", CultureInfo.CurrentCulture));
+            }
+
             // Prepara view
             USUARIO item = baseApp.GetItemById(id);
             objetoAntes = item;
@@ -371,6 +392,88 @@ namespace ERP_Condominios_Solution.Controllers
                 return RedirectToAction("CarregarSindico", "BaseAdmin");
             }
             return RedirectToAction("CarregarBase", "BaseAdmin");
+        }
+
+        public ActionResult EnviarSmsMorador(Int32 id, String mensagem)
+        {
+            try
+            {
+                USUARIO resp = baseApp.GetById(id);
+                Int32 idAss = (Int32)Session["IdAssinante"];
+
+                // Verifica existencia prévia
+                if (resp == null)
+                {
+                    Session["MensMorador"] = 8;
+                    return RedirectToAction("VoltarAnexoMorador");
+                }
+
+                // Criticas
+                if (resp.USUA_NR_CELULAR == null)
+                {
+                    Session["MensMorador"] = 10;
+                    return RedirectToAction("VoltarAnexoMorador");
+                }
+
+                // Processa SMS
+                CONFIGURACAO conf = confApp.GetItemById(idAss);
+
+                // Monta token
+                String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
+                byte[] textBytes = Encoding.UTF8.GetBytes(text);
+                String token = Convert.ToBase64String(textBytes);
+                String auth = "Basic " + token;
+
+                // Prepara texto
+                String texto = mensagem;
+
+                // Prepara corpo do SMS e trata link
+                StringBuilder str = new StringBuilder();
+                str.AppendLine(mensagem);
+                String body = str.ToString();
+                String smsBody = body;
+                String erro = null;
+
+                // inicia processo
+                String resposta = String.Empty;
+
+                // Monta destinatarios
+                try
+                {
+                    String listaDest = "55" + Regex.Replace(resp.USUA_NR_CELULAR, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled).ToString();
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api-v2.smsfire.com.br/sms/send/bulk");
+                    httpWebRequest.Headers["Authorization"] = auth;
+                    httpWebRequest.ContentType = "application/json";
+                    httpWebRequest.Method = "POST";
+                    String customId = Cryptography.GenerateRandomPassword(8);
+                    String data = String.Empty;
+                    String json = String.Empty;
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        json = String.Concat("{\"destinations\": [{\"to\": \"", listaDest, "\", \"text\": \"", texto, "\", \"customId\": \"" + customId + "\", \"from\": \"ERPCondominio\"}]}");
+                        streamWriter.Write(json);
+                    }
+
+                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    {
+                        var result = streamReader.ReadToEnd();
+                        resposta = result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    erro = ex.Message;
+                }
+                return RedirectToAction("VoltarAnexoMorador");
+            }
+            catch (Exception ex)
+            {
+                Session["MensUnidade"] = 11;
+                Session["MensSMSErro"] = ex.Message;
+                return RedirectToAction("VoltarAnexoMorador");
+            }
         }
 
     }
