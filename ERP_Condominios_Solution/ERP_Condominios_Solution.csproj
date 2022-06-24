@@ -3278,6 +3278,8 @@
     <Content Include="Views\Mudanca\VerMudanca.cshtml" />
     <Content Include="Views\FornecedorNovo\EnviarSMSFornecedorForm.cshtml" />
     <Content Include="Views\FornecedorNovo\EnviarEMailFornecedor.cshtml" />
+    <Content Include="Views\Unidade\EnviarSMSUnidadeForm.cshtml" />
+    <Content Include="Views\Unidade\EnviarEMailUnidade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

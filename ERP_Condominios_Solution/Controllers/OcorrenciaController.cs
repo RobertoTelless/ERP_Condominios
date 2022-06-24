@@ -386,6 +386,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
 
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
+            Session["Usuario"] = usuario.USUA_CD_ID;
             OCORRENCIA item = fornApp.GetItemById(id);
             objetoFornAntes = item;
             Session["Ocorrencia"] = item;

@@ -42,6 +42,8 @@ namespace DataServices.Repositories
         {
             IQueryable<VAGA> query = Db.VAGA.Where(p => p.VAGA_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Include(p => p.UNIDADE);
+            query = query.Include(p => p.VEICULO);
             return query.ToList();
         }
 

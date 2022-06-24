@@ -28,6 +28,8 @@ namespace ERP_Condominios_Solution.Controllers
     {
         private readonly IVagaAppService baseApp;
         private readonly ILogAppService logApp;
+        private readonly IUnidadeAppService uniApp;
+        private readonly IVeiculoAppService veiApp;
 
         private String msg;
         private Exception exception;
@@ -36,10 +38,12 @@ namespace ERP_Condominios_Solution.Controllers
         List<VAGA> listaMaster = new List<VAGA>();
         String extensao;
 
-        public VagaController(IVagaAppService baseApps, ILogAppService logApps)
+        public VagaController(IVagaAppService baseApps, ILogAppService logApps, IUnidadeAppService uniApps, IVeiculoAppService veiApps)
         {
-            baseApp = baseApps; ;
+            baseApp = baseApps;
             logApp = logApps;
+            uniApp = uniApps;   
+            veiApp = veiApps;
         }
 
         [HttpGet]
@@ -112,10 +116,6 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.Vagas = ((List<VAGA>)Session["ListaVaga"]).Count;
 
             // Mensagem
-            //if ((Int32)Session["MensVaga"] == 1)
-            //{
-            //    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
-            //}
             if ((Int32)Session["MensVaga"] == 2)
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0011", CultureInfo.CurrentCulture));
@@ -617,7 +617,11 @@ namespace ERP_Condominios_Solution.Controllers
                     VAGA item = Mapper.Map<VagaViewModel, VAGA>(vm);
                     Int32 volta = baseApp.ValidateAtribuicao(item, objetoAntes, usuarioLogado);
 
-                    // Verifica retorno
+                    // Graba Veiculo
+                    UNIDADE unid = uniApp.GetItemById(item.UNID_CD_ID.Value);
+                    VEICULO veic = veiApp.GetAllItens(idAss).Where(p => p.UNID_CD_ID == item.UNID_CD_ID).First();
+                    veic.VAGA_CD_ID = item.VAGA_CD_ID;
+                    Int32 volta1 = veiApp.ValidateEdit(veic, veic);
 
                     // Sucesso
                     listaMaster = new List<VAGA>();

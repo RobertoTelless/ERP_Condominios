@@ -25,32 +25,12 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Vaga - Edição</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
                         @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Vaga")
-                        @*@Html.ButtonLinkIndex(text: "Emitir Notificação", action: "GerarNotificacaoVaga", controller: "Vaga")*@
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseVaga", controller: "Vaga")
                     </div>
                     @Html.AntiForgeryToken()
@@ -105,8 +85,9 @@
                                             @Html.ButtonActionSubmit(text: "Confirma edição de Vaga", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
                                         </div>
                                     }
+                                    <br />
                                     <hr />
-                                    @using (Html.BeginForm("EditarVaga", "Vaga", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("AtribuirVaga", "Vaga", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row" style="width: 100%;">
                                             <h4>Atribuição</h4>
@@ -149,10 +130,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseVaga", controller: "Vaga")
                 </div>
             </div>
         </div>

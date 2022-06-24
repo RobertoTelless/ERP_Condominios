@@ -152,7 +152,6 @@
                                             <th>Data Atribuição</th>   
                                             <th>Placa</th>
                                             <th>Marca</th>  
-                                            <th></th>  
                                             <th class="td-one-action">Ações</th>
                                         </tr>
                                     </thead>
@@ -179,27 +178,17 @@
                                                     {
                                                         <td>@cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_NM_PLACA</td>
                                                         <td>@cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_NM_MARCA</td>
-                                                        if (!String.IsNullOrEmpty(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))
-                                                        {
-                                                            <td><img src="@Url.Content(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))" style="width: auto; height: auto; max-height: 55px; max-width: 45px;" data-toggle="modal" data-target="#fotoModal" onclick="CriaModal('@cond.VAGA_NM_EXIBE', '@Url.Content(cond.VEICULO.Where(p => p.VAGA_CD_ID == cond.VAGA_CD_ID).First().VEIC_AQ_FOTO))')"></td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td></td>
-                                                        }
                                                     }
                                                     else
                                                     {
                                                         <td>-</td>
                                                         <td>-</td>
-                                                        <td></td>
                                                     }
                                                 }
                                                 else
                                                 {
                                                     <td>-</td>
                                                     <td>-</td>
-                                                    <td></td>
                                                 }
                                                 <td class="td-one-action">
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
