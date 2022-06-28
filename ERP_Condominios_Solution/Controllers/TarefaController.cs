@@ -230,11 +230,11 @@ namespace ERP_Condominios_Solution.Controllers
 
             if (id == null)
             {
-                ViewBag.Listas = ((List<TAREFA>)Session["ListaTarefa"]).OrderBy(x => x.TARE_DT_CADASTRO).ToList<TAREFA>();
+                ViewBag.Listas = ((List<TAREFA>)Session["ListaTarefa"]).OrderByDescending(x => x.TARE_DT_CADASTRO.Date).ToList<TAREFA>();
             }
             else
             {
-                ViewBag.Listas = baseApp.GetByUser(usuario.USUA_CD_ID).Where(x => x.TARE_DT_REALIZADA == null).OrderBy(x => x.TARE_DT_CADASTRO).ToList<TAREFA>();
+                ViewBag.Listas = baseApp.GetByUser(usuario.USUA_CD_ID).Where(x => x.TARE_DT_REALIZADA == null).OrderByDescending(x => x.TARE_DT_CADASTRO).ToList<TAREFA>();
             }
 
             ViewBag.Title = "Tarefas";

@@ -48,34 +48,13 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Morador - Consulta</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
-                        @if (Model.USUA_NR_CELULAR != null)
-                        {
-                            <span class="btn btn-sm btn-warning" onclick="MudaIdForn('@Model.USUA_CD_ID')" data-toggle="modal" data-target="#exampleModal">Enviar SMS</span>
-                        }
+                        @Html.ButtonLinkIndex(text: "Enviar E-Mail", action: "EnviarEMailMorador", controller: "Morador")
+                        @Html.ButtonLinkIndex(text: "Enviar SMS", action: "EnviarSMSMorador", controller: "Morador")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseMorador", controller: "Morador")
                     </div>
                     <div class="tabs-container">

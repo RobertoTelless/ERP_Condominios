@@ -96,22 +96,21 @@
                             {
                                 foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.TELEFONE>))
                                 {
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4">  
                                         <div style="height: 250px;" class="contact-box">
-                                            <a href="@Url.Action("VerTelefone", "Telefone", new { id = cond.TELE_CD_ID })">
-                                                <div class="col-sm-12">
-                                                    <h3><strong>@cond.TELE_NM_NOME</strong></h3>
-                                                    <p><i class="fa fa-map-marker"></i> @cond.TELE_NM_EMAIL</p>
-                                                    <address>
-                                                        @cond.TELE_NM_ENDERECO<br>
-                                                        @cond.TELE_NM_BAIRRO @cond.TELE_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
-                                                        @cond.TELE_NR_CEP<br>
-                                                        <abbr title="Telefone">P:</abbr> @cond.TELE_NR_TELEFONE
-                                                        <abbr title="Celular">P:</abbr> @cond.TELE_NR_CELULAR
-                                                    </address>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </a>
+                                            <a href="@Url.Action("VerTelefone", "Telefone", new { id = cond.TELE_CD_ID })"></a>
+                                            <div class="col-sm-12">
+                                                <h3><strong>@cond.TELE_NM_NOME</strong></h3>
+                                                <p><i class="fa fa-envelope"></i> <a href="@Url.Action("EnviarEMailTelefone", "Telefone", new { id = cond.TELE_CD_ID})">@cond.TELE_NM_EMAIL</a> </p>
+                                                <address>
+                                                    @cond.TELE_NM_ENDERECO<br>
+                                                    @cond.TELE_NM_BAIRRO @cond.TELE_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
+                                                    @cond.TELE_NR_CEP<br>
+                                                    <abbr title="Telefone">P:</abbr> @cond.TELE_NR_TELEFONE <br />
+                                                    <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSTelefone", "Telefone", new { id = cond.TELE_CD_ID})">@cond.TELE_NR_CELULAR</a>
+                                                </address>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
                                     </div>
                                 }   

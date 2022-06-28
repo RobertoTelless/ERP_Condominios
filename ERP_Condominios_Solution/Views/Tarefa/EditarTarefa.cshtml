@@ -73,10 +73,10 @@
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 </div>}
 
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <br />
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTarefa", controller: "Tarefa")
-                    </div>
+                    </div>*@
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
@@ -368,7 +368,7 @@
                                     @Html.DropDownListFor(m => m.TARE_IN_STATUS, (SelectList)ViewBag.StatusX, "Selecionar", new { @class = "form-control", autofocus = true })
                                     @Html.ValidationMessageFor(m => m.TARE_IN_STATUS, "", new { @style = "color:red" })
                                 </div>
-                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                <div class="col-lg-2 col-md-2 col-xs-12">
                                     Data de Encerramento
                                     @Html.TextBoxFor(m => m.TARE_DT_REALIZADA, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "datepicker2" })
                                     @Html.ValidationMessageFor(m => m.TARE_DT_REALIZADA, "", new { @style = "color:red" })

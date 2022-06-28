@@ -28,6 +28,7 @@ namespace ERP_Condominios_Solution.Controllers
     {
         private readonly IVeiculoAppService baseApp;
         private readonly ILogAppService logApp;
+        private readonly IUnidadeAppService uniApp;
 
         private String msg;
         private Exception exception;
@@ -36,10 +37,11 @@ namespace ERP_Condominios_Solution.Controllers
         List<VEICULO> listaMaster = new List<VEICULO>();
         String extensao;
 
-        public VeiculoController(IVeiculoAppService baseApps, ILogAppService logApps)
+        public VeiculoController(IVeiculoAppService baseApps, ILogAppService logApps, IUnidadeAppService uniApps)
         {
-            baseApp = baseApps; ;
+            baseApp = baseApps;
             logApp = logApps;
+            uniApp = uniApps;
         }
 
         [HttpGet]
@@ -238,6 +240,21 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
+        [HttpPost]
+        public JsonResult FiltrarVagaUnidade(Int32? id)
+        {
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            var listaVagas = baseApp.GetAllVagas(idAss);
+
+            // Filtro para caso o placeholder seja selecionado
+            if (id != null)
+            {
+                listaVagas = listaVagas.Where(x => x.UNID_CD_ID == id).ToList();
+            }
+
+            return Json(listaVagas.Select(x => new { x.VAGA_CD_ID, x.VAGA_NR_NUMERO }));
+        }
+
         [HttpGet]
         public ActionResult IncluirVeiculo()
         {
@@ -268,7 +285,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "TIVE_CD_ID", "TIVE_NM_NOME");
             ViewBag.Unidades = new SelectList(baseApp.GetAllUnidades(idAss), "UNID_CD_ID", "UNID_NM_EXIBE");
-            ViewBag.Vagas = new SelectList(vagas, "VAGA_CD_ID", "VAGA_NM_EXIBE");
+            ViewBag.Vagas = new SelectList(vagas, "VAGA_CD_ID", "VAGA_NR_NUMERO");
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             // Prepara view
@@ -417,6 +434,11 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 Session["IdUnidade"] = null;
             }
+
+            // Recupera responsavel da unidade
+            USUARIO usua = uniApp.GetAllUsuarios(idAss).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().First();
+            Session["Responsavel"] = usua.USUA_CD_ID;
+            Session["UsuarioMensagem"] = 3;
             VeiculoViewModel vm = Mapper.Map<VEICULO, VeiculoViewModel>(item);
             return View(vm);
         }
@@ -460,6 +482,30 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        [HttpGet]
+        public ActionResult EnviarEMailVeiculo()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarEMailUsuario", "Usuario", new { id = (Int32)Session["Responsavel"] });
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSVeiculo()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarSMSUsuario", "Usuario", new { id = (Int32)Session["Responsavel"] });
         }
 
         [HttpGet]

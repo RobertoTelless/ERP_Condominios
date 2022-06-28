@@ -59,12 +59,13 @@
                         </div>
                     </div>
                     <div class="row">
-                            @if ((ViewBag.Listas as List<EntitiesServices.Model.CORPO_DIRETIVO>).Count > 0)                                        {
+                            @if ((ViewBag.Listas as List<EntitiesServices.Model.CORPO_DIRETIVO>).Count > 0)                                        
+                            {
                                 foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.CORPO_DIRETIVO>).OrderBy(p => p.FUCO_CD_ID))
                                 {
                                     <div class="col-lg-4">
                                         <div style="height: 250px;" class="contact-box">
-                                            <a href="@Url.Action("VerCorpo", "CorpoDiretivo", new { id = cond.CODI_CD_ID })">
+                                            <a href="@Url.Action("VerCorpo", "CorpoDiretivo", new { id = cond.CODI_CD_ID })"></a>
                                                 <div class="col-sm-4">
                                                     <div class="text-center">
                                                         <img style="max-height: 145px;" alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(cond.USUARIO.USUA_AQ_FOTO)">
@@ -72,16 +73,16 @@
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <h3><strong>@cond.USUARIO.USUA_NM_NOME</strong></h3>
-                                                    <p><i class="fa fa-map-marker"></i> @cond.USUARIO.USUA_NM_EMAIL</p>
+                                                    <p><i class="fa fa-envelope"></i> <a href="@Url.Action("EnviarEMailCorpo", "CorpoDiretivo", new { id = cond.USUARIO.USUA_CD_ID})">@cond.USUARIO.USUA_NM_EMAIL</a> </p>
                                                     <address>
                                                         <strong>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</strong><br>
                                                         Início: @cond.CODI_DT_INICIO.ToShortDateString()<br>
                                                         Previsto: @cond.CODI_DT_FINAL.Value.ToShortDateString()<br>
-                                                        <abbr title="Phone">P:</abbr> @cond.USUARIO.USUA_NR_TELEFONE
+                                                        <abbr title="Phone">P:</abbr> @cond.USUARIO.USUA_NR_TELEFONE<br />
+                                                        <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSCorpo", "CorpoDiretivo", new { id = cond.USUARIO.USUA_CD_ID})">@cond.USUARIO.USUA_NR_CELULAR</a>
                                                     </address>
                                                 </div>
                                                 <div class="clearfix"></div>
-                                            </a>
                                         </div>
                                     </div>
                                 }

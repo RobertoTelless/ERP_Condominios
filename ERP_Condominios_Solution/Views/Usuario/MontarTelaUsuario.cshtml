@@ -41,7 +41,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">Hoje</span>
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">Hoje</span>
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <span class="label label-primary pull-right">Mensal</span>
@@ -152,7 +152,7 @@
                                         <th>Nome</th>
                                         <th>E-Mail</th>
                                         <th>Login</th>
-                                        <th>Cargo</th>
+                                        <th>Celular</th>
                                         <th>Perfil</th>
                                         <th>Bloqueado</th>
                                         <th>Acessos</th>
@@ -165,11 +165,11 @@
                                     {
                                         <tr>
                                             <td>@cond.USUA_NM_NOME</td>
-                                            <td>@cond.USUA_NM_EMAIL</td>
+                                            <td><a href="@Url.Action("EnviarEMailUsuario", "Usuario", new { id = cond.USUA_CD_ID })" />@cond.USUA_NM_EMAIL</td>
                                             <td>@cond.USUA_NM_LOGIN</td>
-                                            @if (cond.CARGO != null)
+                                            @if (cond.USUA_NR_CELULAR != null)
                                             {
-                                                <td>@cond.CARGO.CARG_NM_NOME</td>
+                                                <td><a href="@Url.Action("EnviarSMSUsuario", "Usuario", new { id = cond.USUA_CD_ID })" />@cond.USUA_NR_CELULAR</td>
                                             }
                                             else
                                             {

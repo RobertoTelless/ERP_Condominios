@@ -3280,6 +3280,14 @@
     <Content Include="Views\FornecedorNovo\EnviarEMailFornecedor.cshtml" />
     <Content Include="Views\Unidade\EnviarSMSUnidadeForm.cshtml" />
     <Content Include="Views\Unidade\EnviarEMailUnidade.cshtml" />
+    <Content Include="Views\Usuario\EnviarEMailUsuario.cshtml" />
+    <Content Include="Views\Usuario\EnviarSMSUsuario.cshtml" />
+    <Content Include="Views\Telefone\EnviarEMailTelefone.cshtml" />
+    <Content Include="Views\Telefone\EnviarSMSTelefone.cshtml" />
+    <Content Include="Views\Ambiente\EnviarEMailAmbiente.cshtml" />
+    <Content Include="Views\Ambiente\EnviarSMSAmbiente.cshtml" />
+    <Content Include="Views\CorpoDiretivo\EnviarEMailCorpo.cshtml" />
+    <Content Include="Views\CorpoDiretivo\EnviarSMSCorpo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

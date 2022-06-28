@@ -188,7 +188,7 @@ namespace ERP_Condominios_Solution.Controllers
                 listaMaster = baseApp.GetByUser(usuario.USUA_CD_ID, idAss).ToList();
                 Session["ListaAgenda"] = listaMaster;
             }
-            ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderByDescending(x => x.AGEN_DT_DATA).ThenBy(x => x.AGEN_HR_HORA).ToList<AGENDA>();
+            ViewBag.Listas = ((List<AGENDA>)Session["ListaAgenda"]).OrderByDescending(x => x.AGEN_DT_DATA).ThenByDescending(x => x.AGEN_HR_HORA).ToList<AGENDA>();
             ViewBag.Itens = ((List<AGENDA>)Session["ListaAgenda"]).Count;
             ViewBag.Title = "Agenda";
             ViewBag.Tipos = new SelectList(baseApp.GetAllTipos(idAss), "CAAG_CD_ID", "CAAG_NM_NOME");

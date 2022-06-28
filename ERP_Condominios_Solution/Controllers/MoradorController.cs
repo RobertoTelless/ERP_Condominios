@@ -185,6 +185,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
 
             // Abre view
+            Session["UsuarioMensagem"] = 2;
             Session["MensMorador"] = 0;
             Session["VoltaMorador"] = 2;
             objeto = new USUARIO();
@@ -313,6 +314,30 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
             return RedirectToAction("VerEncomenda", "Encomenda", new { id = idEnc });
+        }
+
+        [HttpGet]
+        public ActionResult EnviarEMailMorador()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarEMailUsuario", "Usuario", new { id = (Int32)Session["IdMorador"] });
+        }
+
+        [HttpGet]
+        public ActionResult EnviarSMSMorador()
+        {
+            // Valida acesso
+            USUARIO usuario = new USUARIO();
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarSMSUsuario", "Usuario", new { id = (Int32)Session["IdMorador"] });
         }
 
         [HttpGet]

@@ -500,6 +500,49 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="ibox float-e-margins">
+                                                <div class="ibox-title">
+                                                    <span class="label label-primary pull-right">Hoje</span>
+                                                    <h5><a href="@Url.Action("MontarTelaAmbiente", "Ambiente")" class="pull-left btn-link"><u>Chaves de Ambientes</u></a></h5>
+                                                </div>
+                                                <div class="ibox-content">
+                                                    @if (Model.AMBIENTE_CHAVE.Count > 0)
+                                                    {
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Ambiente</th>
+                                                                    <th>Entrega</th>
+                                                                    <th>Prevista</th>
+                                                                    <th>Devolução</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach (var cond in (Model.AMBIENTE_CHAVE.OrderByDescending(a => a.AMCH_DT_ENTREGA)).Take(5))
+                                                                {
+                                                                    <tr>
+                                                                        <td>@cond.AMBIENTE.AMBI_NM_AMBIENTE</td>
+                                                                        <td>@cond.AMCH_DT_ENTREGA.ToShortDateString()</td>
+                                                                        <td>@cond.AMCH_DT_PREVISTA.ToShortDateString()</td>
+                                                                        @if (cond.AMCH_DT_DEVOLUCAO != null)
+                                                                        {
+                                                                            <td>@cond.AMCH_DT_DEVOLUCAO.Value.ToShortDateString()</td>
+                                                                        }
+                                                                        else 
+                                                                        {
+                                                                            <td>Pendente</td>
+                                                                        }
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         
@@ -595,10 +638,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseUnidade", controller: "Unidade")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

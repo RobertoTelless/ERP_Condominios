@@ -743,5 +743,14 @@ namespace ERP_Condominios_Solution.App_Start {
                 return ResourceManager.GetString("M0109", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a E-mail já cadastrado.
+        /// </summary>
+        internal static string M0110 {
+            get {
+                return ResourceManager.GetString("M0110", resourceCulture);
+            }
+        }
     }
 }

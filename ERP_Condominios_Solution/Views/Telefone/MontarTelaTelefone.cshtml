@@ -163,8 +163,8 @@
                                                 <td>@cond.TELE_NM_NOME</td>
                                                 <td>@cond.CATEGORIA_TELEFONE.CATE_NM_NOME</td>
                                                 <td>@cond.TELE_NR_TELEFONE</td>
-                                                <td>@cond.TELE_NR_CELULAR</td>
-                                                <td>@cond.TELE_NM_EMAIL</td>
+                                                <td><a href="@Url.Action("EnviarSMSTelefone", "Telefone", new { id = cond.TELE_CD_ID })" />@cond.TELE_NR_CELULAR</td>
+                                                <td><a href="@Url.Action("EnviarEMailTelefone", "Telefone", new { id = cond.TELE_CD_ID })" />@cond.TELE_NM_EMAIL</td>
                                                 <td>@cond.TELE_NR_WHATSAPP</td>
                                                 <td>@cond.TELE_NM_CIDADE</td>
                                                 <td>@cond.UF.UF_SG_SIGLA</td>
@@ -172,7 +172,6 @@
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "GER")
                                                     {
                                                         @Html.TableLinkDetails(cond.TELE_CD_ID, "EditarTelefone","fa-edit", "Editar")
-                                                        <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.TELE_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
                                                         if (cond.TELE_IN_ATIVO == 1)
                                                         {
                                                             <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/Telefone/ExcluirTelefone/@cond.TELE_CD_ID')" title="Excluir"></span>

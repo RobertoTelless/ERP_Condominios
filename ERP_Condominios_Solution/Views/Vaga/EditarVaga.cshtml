@@ -67,7 +67,7 @@
                                                         @Html.DropDownListFor(m => m.TIVA_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.TIVA_CD_ID, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Andar*
                                                         @Html.TextBoxFor(m => m.VAGA_NR_ANDAR, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.VAGA_NR_ANDAR, "", new { @style = "color:red" })
@@ -87,7 +87,7 @@
                                     }
                                     <br />
                                     <hr />
-                                    @using (Html.BeginForm("AtribuirVaga", "Vaga", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
+                                    @using (Html.BeginForm("EditarVaga", "Vaga", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                         <div class="row" style="width: 100%;">
                                             <h4>Atribuição</h4>
@@ -108,12 +108,12 @@
                                                         @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unids, "Selecionar", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         Data de Atribuição
                                                         @Html.TextBoxFor(m => m.VAGA_DT_ATRIBUICAO, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id="data" })
                                                         @Html.ValidationMessageFor(m => m.VAGA_DT_ATRIBUICAO, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                    <div class="col-lg-7 col-md-7 col-xs-12">
                                                         Justificativa
                                                         @Html.TextBoxFor(m => m.VAGA_DS_JUSTIFICATIVA, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.VAGA_DS_JUSTIFICATIVA, "", new { @style = "color:red" })
