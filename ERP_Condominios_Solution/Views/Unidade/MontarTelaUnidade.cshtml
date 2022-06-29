@@ -163,10 +163,6 @@
                                                     <td>Não</td>
                                                 }
                                                 <td class="td-one-action">
-                                                    @if (cond.USUARIO.Where(p => p.USUA_IN_RESPONSAVEL == 1).FirstOrDefault() != null)
-                                                    {
-                                                        <span style="cursor: pointer; color: #337ab7;" class="fa fa-send" onclick="MudaIdForn('@cond.UNID_CD_ID')" data-toggle="modal" data-target="#exampleModal" title="Enviar SMS"> </span>
-                                                    }
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
 	                                                {
                                                         @Html.TableLinkDetails(cond.UNID_CD_ID, "EditarUnidade","fa-edit", "Editar Unidade")

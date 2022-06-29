@@ -1930,6 +1930,24 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
+        public ActionResult EnviarSMSFornecedorFormVai()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarSMSFornecedorForm", new { id = (Int32)Session["IdFornecedor"] });
+        }
+
+        public ActionResult EnviarEMailFornecedorVai()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("EnviarEMailFornecedor", new { id = (Int32)Session["IdFornecedor"] });
+        }
+
         [HttpGet]
         public ActionResult EnviarSMSFornecedorForm(Int32 id)
         {

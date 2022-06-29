@@ -76,7 +76,7 @@
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
-                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Ocorrencia")
+                        @*@Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Ocorrencia")*@
                         @*@if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                         {
                             @Html.ButtonLinkIndex(text: "Emitir Notificações", action: "GerarNotificacaoOcorrencia", controller: "Ocorrencia")
@@ -94,7 +94,7 @@
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">Anexos / Fotos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Anexos  </a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Comentários</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-4">Encerramento</a></li>
                         </ul>
@@ -128,14 +128,14 @@
                                                             Unidade
                                                             @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                         </div>
-                                                        <div class="col-lg-5 col-md-5 col-xs-12" id="razao">
+                                                        <div class="col-lg-5 col-md-5 col-xs-12">
                                                             Título da Ocorrência*
                                                             @Html.TextBoxFor(m => m.OCOR_NM_TITULO, new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.OCOR_NM_TITULO, "", new { @style = "color:red" })
                                                         </div>
                                                         <div class="col-lg-2 col-md-2 col-xs-12">
                                                             Data*
-                                                            @Html.TextBoxFor(m => m.OCOR_DT_OCORRENCIA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, @id = "data1" })
+                                                            @Html.TextBoxFor(m => m.OCOR_DT_OCORRENCIA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id = "data1", @readonly = "readonly" })
                                                             @Html.ValidationMessageFor(m => m.OCOR_DT_OCORRENCIA, "",new { @style="color:red" })
                                                         </div>
                                                     </div>
@@ -292,7 +292,7 @@
                                                             @Html.HiddenFor(m => m.OCOR_TX_TEXTO)
                                                             @Html.HiddenFor(m => m.UNID_CD_ID)
                                                             @Html.HiddenFor(m => m.USUA_CD_ID)
-                                                            Justificativa
+                                                            Justificativa Final
                                                             @Html.TextAreaFor(m => m.OCOR_DS_JUSTIFICATIVA, new { @class = "form-control", style = "width: 100%; height: 200px;", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.OCOR_DS_JUSTIFICATIVA, "", new { @style = "color:red" })
                                                         </div>
@@ -301,7 +301,7 @@
                                                 <br />
                                             </div>
                                         </div>  
-                                        @if (Model.USUA_CD_ID == (Int32)Session["Usuario"])
+                                        if ((Int32)Session["UsuSindico"] == 1 || ViewBag.Perfil == "ADM")
                                         {
                                             <div class="form-group">
                                                 @Html.ButtonActionSubmit(text: "Confirma Encerramento da Ocorrência", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
@@ -314,10 +314,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseOcorrencia", controller: "Ocorrencia")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

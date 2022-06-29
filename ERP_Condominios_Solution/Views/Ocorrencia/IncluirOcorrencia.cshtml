@@ -67,7 +67,7 @@
 
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2">Fotos & Anexos</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                             </ul>
 
                             <div class="tab-content">
@@ -103,7 +103,7 @@
                                                         @Html.ValidationMessageFor(m => m.UNID_CD_ID, "", new { @style = "color:red" })
                                                     </div>
                                                 }
-                                                <div class="col-lg-5 col-md-5 col-xs-12" id="razao">
+                                                <div class="col-lg-5 col-md-5 col-xs-12">
                                                     Título da Ocorrência*
                                                     @Html.TextBoxFor(m => m.OCOR_NM_TITULO, new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.OCOR_NM_TITULO, "", new { @style = "color:red" })
@@ -153,12 +153,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <br />
                                     @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                                     <button class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão de Ocorrência</button>
                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseOcorrencia", controller: "Ocorrencia")
-                                </div>
+                                </div>*@
                             </div>
                         }
                     </div>

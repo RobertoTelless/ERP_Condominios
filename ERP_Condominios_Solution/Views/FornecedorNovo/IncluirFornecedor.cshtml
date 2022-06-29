@@ -25,25 +25,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Fornecedor - Inclusão</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -61,7 +42,7 @@
 
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                                <li class=""><a data-toggle="tab" href="#tab-2">Imagens</a></li>
+                                <li class=""><a data-toggle="tab" href="#tab-2">Logotipo & Anexos</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-3">Endereços</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-4">Contatos</a></li>
                                 <li class=""><a data-toggle="tab" href="#tab-7">Observações</a></li>
@@ -245,17 +226,17 @@
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Telefone
-                                                    @Html.TextBoxFor(m => m.FORN_NR_TELEFONE, new { @class = "form-control", autofocus = true, placeholder = "(99) 9999-9999", id = "tel" })
+                                                    @Html.TextBoxFor(m => m.FORN_NR_TELEFONE, new { @class = "form-control", autofocus = true, id = "tel" })
                                                     @Html.ValidationMessageFor(m => m.FORN_NR_TELEFONE, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Celular
-                                                    @Html.TextBoxFor(m => m.FORN_NR_CELULAR, new { @class = "form-control", autofocus = true, placeholder = "(99) 99999-9999", id = "cel" })
+                                                    @Html.TextBoxFor(m => m.FORN_NR_CELULAR, new { @class = "form-control", autofocus = true, id = "cel" })
                                                     @Html.ValidationMessageFor(m => m.FORN_NR_CELULAR, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     WhatsApp
-                                                    @Html.TextBoxFor(m => m.FORN_NR_WHATSAPP, new { @class = "form-control", autofocus = true, placeholder = "(99) 99999-9999", id = "wpp" })
+                                                    @Html.TextBoxFor(m => m.FORN_NR_WHATSAPP, new { @class = "form-control", autofocus = true, id = "wpp" })
                                                     @Html.ValidationMessageFor(m => m.FORN_NR_WHATSAPP, "", new { @style = "color:red" })
                                                 </div>
                                             </div>

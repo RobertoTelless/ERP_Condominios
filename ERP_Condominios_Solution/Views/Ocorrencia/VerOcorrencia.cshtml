@@ -76,7 +76,7 @@
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
-                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Ocorrencia")
+                        @*@Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Ocorrencia")*@
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseOcorrencia", controller: "Ocorrencia")
                     </div>
                     @Html.AntiForgeryToken()
@@ -90,7 +90,7 @@
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab-1">Dados Gerais</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-2">Anexos / Fotos</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2">Anexos</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-3">Comentários</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-4">Encerramento</a></li>
                         </ul>
@@ -125,11 +125,11 @@
                                                             @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly = "readonly" })
                                                         </div>
                                                         <div class="col-lg-5 col-md-5 col-xs-12" id="razao">
-                                                            Título da Ocorrência*
+                                                            Título da Ocorrência
                                                             @Html.TextBoxFor(m => m.OCOR_NM_TITULO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                         </div>
                                                         <div class="col-lg-2 col-md-2 col-xs-12">
-                                                            Data*
+                                                            Data
                                                             @Html.TextBoxFor(m => m.OCOR_DT_OCORRENCIA, "{0:dd/MM/yyyy}", new { @class = "form-control", autofocus = true, @id = "data1", @readonly="readonly" })
                                                         </div>
                                                     </div>
@@ -217,7 +217,6 @@
                                     @using (Html.BeginForm("VerOcorrencia", "Ocorrencia", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                     }
-                                    <hr />
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h4>Comentários:</h4>

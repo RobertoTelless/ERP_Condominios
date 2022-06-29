@@ -26,6 +26,7 @@ namespace DataServices.Repositories
         {
             IQueryable<CORPO_DIRETIVO> query = Db.CORPO_DIRETIVO;
             query = query.Where(p => p.CODI_CD_ID == id);
+            query = query.Include(p => p.USUARIO);
             return query.FirstOrDefault();
         }
 
@@ -40,6 +41,7 @@ namespace DataServices.Repositories
         {
             IQueryable<CORPO_DIRETIVO> query = Db.CORPO_DIRETIVO.Where(p => p.CODI_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Include(p => p.USUARIO);
             return query.ToList();
         }
 

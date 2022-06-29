@@ -220,14 +220,6 @@
                                                             if (cond.UNID_CD_ID == ViewBag.Unidade)
                                                             {
                                                                 @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
-                                                                if (cond.OCOR_IN_ATIVO == 1)
-	                                                            {
-                                                                    @Html.TableLinkDetails(cond.OCOR_CD_ID, "ExcluirOcorrencia","fa-trash-o", "Desativar")
-                                                                }
-                                                                else
-                                                                {   
-                                                                    @Html.TableLinkDetails(cond.OCOR_CD_ID, "ReativarOcorrencia","fa-refresh", "Reativar")
-                                                                }
                                                             }
                                                             else
                                                             {
@@ -236,7 +228,7 @@
                                                         }
                                                         else if (ViewBag.Perfil == "POR")
                                                         {
-                                                            if (cond.USUA_CD_ID == ViewBag.Usuario)
+                                                            @*if (cond.USUA_CD_ID == ViewBag.Usuario)
                                                             {
                                                                 @Html.TableLinkDetails(cond.OCOR_CD_ID, "EditarOcorrencia","fa-edit", "Editar")
                                                                 if (cond.OCOR_IN_ATIVO == 1)
@@ -249,9 +241,9 @@
                                                                 }
                                                             }
                                                             else
-                                                            {
+                                                            {*@
                                                                 @Html.TableLinkDetails(cond.OCOR_CD_ID, "VerOcorrencia","fa-search", "Consultar")
-                                                            }
+                                                            //}
                                                         }
                                                     }
                                                     else
@@ -289,19 +281,28 @@
 </div>
 
 @section Styles {
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
-    @Styles.Render("~/plugins/sweetAlertStyles")
+    @Styles.Render("~/plugins/toastrStyles")
 }
 
 @section Scripts {
 
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.datetimepicker"></script>
+
+    @Scripts.Render("~/plugins/toastr")
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
-    @Scripts.Render("~/plugins/sweetAlert")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="~/Scripts/uploadAnexo.js"></script>
     
     <script>
         function mostrarDesc(desc) {

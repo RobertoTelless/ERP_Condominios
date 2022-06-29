@@ -27,25 +27,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -116,25 +97,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Fornecedores</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
@@ -144,25 +106,25 @@
                                 {
                                     <div class="col-lg-4">
                                         <div style="height: 250px;" class="contact-box">
-                                            <a href="@Url.Action("EditarFornecedor", "FornecedorNovo", new { id = cond.FORN_CD_ID })">
-                                                <div class="col-sm-4">
-                                                    <div class="text-center">
-                                                        <img style="max-height: 145px;" alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(cond.FORN_AQ_FOTO)">
-                                                    </div>
+                                            <a href="@Url.Action("EditarFornecedor", "FornecedorNovo", new { id = cond.FORN_CD_ID })"></a>
+                                            <div class="col-sm-4">
+                                                <div class="text-center">
+                                                    <img style="max-height: 145px;" alt="image" class="img-circle m-t-xs img-responsive" src="@Url.Content(cond.FORN_AQ_FOTO)">
                                                 </div>
-                                                <div class="col-sm-8">
-                                                    <h3><strong>@cond.FORN_NM_NOME</strong></h3>
-                                                    <p><i class="fa fa-map-marker"></i> @cond.FORN_NM_EMAIL</p>
-                                                    <address>
-                                                        <strong>@cond.FORN_NM_RAZAO_SOCIAL</strong><br>
-                                                        @cond.FORM_NM_ENDERECO<br>
-                                                        @cond.FORN_NM_BAIRRO @cond.FORN_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
-                                                        @cond.FORN_NR_CEP<br>
-                                                        <abbr title="Phone">P:</abbr> @cond.FORN_NR_TELEFONE
-                                                    </address>
-                                                </div>
-                                                <div class="clearfix"></div>
-                                            </a>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <h3><strong>@cond.FORN_NM_NOME</strong></h3>
+                                                <p><i class="fa fa-envelope"></i> <a href="@Url.Action("EnviarEMailFornecedor", "FornecedorNovo", new { id = cond.FORN_CD_ID})">@cond.FORN_NM_EMAIL</a> </p>
+                                                <address>
+                                                    <strong>@cond.FORN_NM_RAZAO_SOCIAL</strong><br>
+                                                    @cond.FORM_NM_ENDERECO<br>
+                                                    @cond.FORN_NM_BAIRRO @cond.FORN_NM_CIDADE @cond.UF.UF_SG_SIGLA<br>
+                                                    @cond.FORN_NR_CEP<br>
+                                                    <abbr title="Phone">P:</abbr> @cond.FORN_NR_TELEFONE<br />
+                                                    <abbr title="Cel">C:</abbr> <a href="@Url.Action("EnviarSMSFornecedorForm", "FornecedorNovo", new { id = cond.FORN_CD_ID})">@cond.FORN_NR_CELULAR</a>
+                                                </address>
+                                            </div>
+                                            <div class="clearfix"></div>
                                         </div>
                                     </div>
                                 }   

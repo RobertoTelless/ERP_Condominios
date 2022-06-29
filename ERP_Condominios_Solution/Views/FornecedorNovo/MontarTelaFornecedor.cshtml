@@ -48,7 +48,7 @@
     @if (ViewBag.Perfil == "ADM")
     {
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-primary pull-right">Hoje</span>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-primary pull-right">Hoje</span>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-primary pull-right">Hoje</span>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <span class="label label-primary pull-right">Hoje</span>
@@ -120,25 +120,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarFornecedor", "FornecedorNovo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -209,25 +190,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Fornecedores</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -242,7 +204,7 @@
                                 <table class="table table-striped table-bordered table-hover dataTables-example">
                                     <thead style ="background-color:lightsteelblue">
                                         <tr>
-                                            <th>Nome/Razão Social</th>   
+                                            <th>Nome</th>   
                                             <th>Categoria</th>   
                                             <th>CPF</th>
                                             <th>CNPJ</th>
@@ -258,14 +220,7 @@
                                         @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.FORNECEDOR>).OrderBy(p => p.FORN_NM_NOME))
                                         {
                                             <tr>
-                                                @if (cond.FORN_NM_RAZAO_SOCIAL != null)
-                                                {
-                                                    <td>@cond.FORN_NM_RAZAO_SOCIAL</td>
-                                                }
-                                                else
-                                                {
-                                                    <td>@cond.FORN_NM_NOME</td>
-                                                }
+                                                <td>@cond.FORN_NM_NOME</td>
                                                 <td>@cond.CATEGORIA_FORNECEDOR.CAFO_NM_NOME</td>
                                                 <td>@cond.FORN_NR_CPF</td>
                                                 <td>@cond.FORN_NR_CNPJ</td>

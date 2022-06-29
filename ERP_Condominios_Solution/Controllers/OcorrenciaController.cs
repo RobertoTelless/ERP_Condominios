@@ -18,6 +18,9 @@ using System.Web.UI.WebControls;
 using System.Runtime.Caching;
 using Image = iTextSharp.text.Image;
 using EntitiesServices.WorkClasses;
+using System.Text;
+using System.Net;
+using CrossCutting;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -28,6 +31,8 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IUsuarioAppService usuApp;
         private readonly IConfiguracaoAppService confApp;
         private readonly IUnidadeAppService uniApp;
+        private readonly ICorpoDiretivoAppService cdApp;
+
         private String msg;
         private Exception exception;
         OCORRENCIA objetoForn = new OCORRENCIA();
@@ -35,13 +40,14 @@ namespace ERP_Condominios_Solution.Controllers
         List<OCORRENCIA> listaMasterForn = new List<OCORRENCIA>();
         String extensao;
 
-        public OcorrenciaController(IOcorrenciaAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IUnidadeAppService uniApps)
+        public OcorrenciaController(IOcorrenciaAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps, IUnidadeAppService uniApps, ICorpoDiretivoAppService cdApps)
         {
             fornApp = baseApps;
             logApp = logApps;
             usuApp = usuApps;
             confApp = confApps;
             uniApp = uniApps;
+            cdApp = cdApps;
         }
 
         [HttpGet]
@@ -295,9 +301,6 @@ namespace ERP_Condominios_Solution.Controllers
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
                     Int32 volta = fornApp.ValidateCreate(item, usuarioLogado);
 
-                    // Verifica retorno
-
-
                     // Cria pastas
                     String caminho = "/Imagens/" + item.ASSI_CD_ID.ToString() + "/Ocorrencias/" + item.OCOR_CD_ID.ToString() + "/Anexos/";
                     Directory.CreateDirectory(Server.MapPath(caminho));
@@ -311,21 +314,26 @@ namespace ERP_Condominios_Solution.Controllers
                     if (Session["FileQueueOcorrencia"] != null)
                     {
                         List<FileQueue> fq = (List<FileQueue>)Session["FileQueueOcorrencia"];
-
                         foreach (var file in fq)
                         {
                             if (file.Profile == null)
                             {
                                 UploadFileQueueOcorrencia(file);
                             }
-                            else
-                            {
-                                //UploadFotoQueueOcorrencia(file);
-                            }
                         }
-
                         Session["FileQueueOcorrencia"] = null;
                     }
+
+                    //Envia mensagem unidade alvo
+                    USUARIO resp = usuApp.GetAllItens(idAss).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().First();
+                    Int32 volta1 = EnviarEMailOcorrencia(item, resp);
+
+                    //Envia mensagem sindico
+                    Int32? sindId = cdApp.GetAllItens(idAss).Where(p => p.CODI_DT_SAIDA_REAL == null & p.FUCO_CD_ID == 1).ToList().First().USUA_CD_ID;
+                    USUARIO sind = usuApp.GetItemById(sindId.Value);
+                    volta1 = EnviarEMailOcorrencia(item, sind);
+
+                    // Volta
                     if ((Int32)Session["VoltaOcorrencia"] == 2)
                     {
                         return RedirectToAction("IncluirOcorrencia");
@@ -342,6 +350,99 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        public Int32 EnviarEMailOcorrencia(OCORRENCIA item, USUARIO usuario)
+        {
+            // Recupera responsavel pela unidade
+            Session["Usuario"] = usuario;
+            ViewBag.Usuario = usuario;
+
+            // Monta mensagem
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = usuario.USUA_NM_NOME;
+            mens.ID = usuario.USUA_CD_ID;
+            mens.MODELO = usuario.USUA_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
+            mens.MENS_TX_TEXTO = "Foi aberta em " + item.OCOR_DT_OCORRENCIA.ToShortDateString() + " uma ocorrência que requer a sua atenção. Ocorrência " + item.OCOR_NM_TITULO + ". Favor acessar o módulo de Ocorrências, verificar e tomar as providências necessárias.";
+
+            try
+            {
+                // Executa a operação
+                Int32 volta = ProcessaEnvioEMailOcorrencia(mens, usuario);
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return 0;
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailOcorrencia(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera usuario
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO cont = (USUARIO)Session["Usuario"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a). <b>" + cont.USUA_NM_NOME + "</b>";
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = "<b>" + assi.ASSI_NM_NOME + "</b>";
+
+            // Prepara corpo do e-mail e trata link
+            String corpo = vm.MENS_TX_TEXTO + "<br /><br />";
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(corpo);
+            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            {
+                if (!vm.MENS_NM_LINK.Contains("www."))
+                {
+                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                }
+                if (!vm.MENS_NM_LINK.Contains("http://"))
+                {
+                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                }
+                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui para maiores informações</a>");
+            }
+            String body = str.ToString();
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Aviso de Registro de Ocorrência";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cont.USUA_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
         }
 
         [HttpGet]
