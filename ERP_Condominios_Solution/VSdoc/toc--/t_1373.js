@@ -1,0 +1,1 @@
+c['1373']=[['1374',"VagaController Constructor","topic_00000000000004AE.html",0],['1375',"Methods","topic_00000000000004A3_methods--.html",1],['1397',"Fields","topic_00000000000004A3_vars--.html",1]];

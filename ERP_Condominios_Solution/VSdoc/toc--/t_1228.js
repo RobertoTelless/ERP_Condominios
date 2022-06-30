@@ -1,0 +1,1 @@
+c['1228']=[['1229',"EnviarSMSTelefone(int) Method","topic_0000000000000443.html",0],['1230',"EnviarSMSTelefone(MensagemViewModel) Method","topic_0000000000000444.html",0],['1231',"EnviarSmsTelefone(int, string) Method","topic_0000000000000430.html",0]];

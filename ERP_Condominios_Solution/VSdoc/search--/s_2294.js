@@ -1,0 +1,1 @@
+search_result['2294']=["topic_00000000000006A7.html","EquipamentoViewModel.EQUI_DS_MOTIVO_BAIXA Property",""];

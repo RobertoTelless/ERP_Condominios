@@ -1,0 +1,1 @@
+c['774']=[['775',"LogController Constructor","topic_00000000000002AE.html",0],['776',"Methods","topic_00000000000002A2_methods--.html",1],['786',"Fields","topic_00000000000002A2_vars--.html",1]];

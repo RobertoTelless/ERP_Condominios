@@ -1,0 +1,1 @@
+c['672']=[['673',"IncluirFornecedor() Method","topic_000000000000024E.html",0],['674',"IncluirFornecedor(FornecedorViewModel) Method","topic_000000000000024F.html",0]];

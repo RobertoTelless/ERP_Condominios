@@ -1,0 +1,1 @@
+search_result['2582']=["topic_0000000000000786.html","NoticiaViewModel.ASSI_CD_ID Property",""];

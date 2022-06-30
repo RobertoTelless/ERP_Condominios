@@ -1,0 +1,1 @@
+c['498']=[['499',"ExcluirEncomenda(int) Method","topic_00000000000001CD.html",0],['500',"ExcluirEncomenda(EncomendaViewModel) Method","topic_00000000000001CE.html",0]];
