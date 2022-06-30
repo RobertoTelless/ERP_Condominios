@@ -41,25 +41,6 @@
         <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
-                    <div style="float: right;" class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                     <div class="row">
                         <div style="text-align: center;" class="col-lg-12 col-md-12 col-xs-12">
                             <h5>Materiais - Edição</h5>
@@ -78,7 +59,7 @@
                     @using (Html.BeginForm("EditarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                     {
                         <div class="form-group">
-                            @Html.ButtonActionSubmit(text: "Confirma edição de Produto", htmlAttributes: new { id = "basictoast" })
+                            @Html.ButtonActionSubmit(text: "Confirma edição de Material", htmlAttributes: new { id = "basictoast" })
                             @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Produto")
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseProduto", controller: "Produto")
                         </div>
@@ -195,9 +176,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             @Html.ButtonActionSubmit(text: "Confirma edição de material", htmlAttributes: new { id = "basictoast" })
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
 
@@ -282,7 +263,7 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
                                                     @Html.HiddenFor(x => x.PROD_CD_ID)
                                                     @Html.HiddenFor(x => x.ASSI_CD_ID)
                                                     @Html.HiddenFor(x => x.CAPR_CD_ID)
@@ -316,20 +297,20 @@
                                                     @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, new { @class = "form-control touchspin2", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MAXIMA, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
                                                     Estoque Mínimo
                                                     @Html.TextBoxFor(m => m.PROD_QN_QUANTIDADE_MINIMA, new { @class = "form-control touchspin2", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_QN_QUANTIDADE_MINIMA, "", new { @style = "color:red" })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                <div class="col-lg-1 col-md-1 col-xs-12">
                                                     Estoque Atual
                                                     @Html.TextBoxFor(m => m.PROD_QN_ESTOQUE, new { @class = "form-control", autofocus = true,  @readonly="readonly", @style = "color:green; font-weight:bold"  })
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                @*<div class="col-lg-1 col-md-1 col-xs-12">
                                                     Reserva de Estoque
                                                     @Html.TextBoxFor(m => m.PROD_QN_RESERVA_ESTOQUE, new { @class = "form-control touchspin2", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.PROD_QN_RESERVA_ESTOQUE, "", new { @style = "color:red" })
-                                                </div>
+                                                </div>*@
                                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                                     Aviso de Limite Mínimo
                                                     <br />
@@ -338,9 +319,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             @Html.ButtonActionSubmit(text: "Confirma edição de Material", htmlAttributes: new { id = "basictoast" })
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
 
@@ -474,7 +455,7 @@
                                 <div id="tab-13" class="tab-pane">
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-2">
                                                 <div class="ibox float-e-margins">
                                                     <div class="ibox-title">
                                                         <span class="label label-primary pull-right">Hoje</span>

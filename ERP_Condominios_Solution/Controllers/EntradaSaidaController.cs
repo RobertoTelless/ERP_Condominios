@@ -363,6 +363,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["IdES"] = id;
             Session["VoltaES"] = 2;
             EntradaSaidaViewModel vm = Mapper.Map<ENTRADA_SAIDA, EntradaSaidaViewModel>(item);
+            vm.ENSA_DT_SAIDA = DateTime.Now;
             return View(vm);
         }
 

@@ -1501,16 +1501,9 @@ namespace ERP_Condominios_Solution.Controllers
             String nomeRel = String.Empty;
             String titulo = String.Empty;
             List<PRODUTO> lista = new List<PRODUTO>();
-            if (id == 1)
-            {
-                nomeRel = "ProdutoLista" + "_" + data + ".pdf";
-                titulo = "Produtos - Listagem";
-                lista = (List<PRODUTO>)Session["ListaProduto"];
-            }
-            else
-            {
-                return RedirectToAction("MontarTelaProduto");
-            }
+            nomeRel = "ProdutoLista" + "_" + data + ".pdf";
+            titulo = "Produtos - Listagem";
+            lista = (List<PRODUTO>)Session["ListaProduto"];
             PRODUTO filtro = (PRODUTO)Session["FiltroProduto"];
             Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);

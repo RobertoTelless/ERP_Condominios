@@ -44,25 +44,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarAutorizacao", "Autorizacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -118,25 +99,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Autorizações</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -153,12 +115,12 @@
                                         <tr>
                                             <th>Data</th>   
                                             <th>Unidade</th>   
-                                            <th>Usuário</th>
-                                            <th>Nome</th>
+                                            <th>Responsável</th>
+                                            <th>Visitante</th>
                                             <th>Tipo</th>
                                             <th>Limite</th>   
                                             <th>Visitas</th>
-                                            <th>Duração</th>
+                                            <th>Situação</th>
                                             <th class="td-one-action">Ações</th>
                                         </tr>
                                     </thead>
@@ -172,25 +134,25 @@
                                                 <td>@cond.AUAC_NM_VISITANTE</td>
                                                 @if (cond.AUAC_IN_TIPO == 1)
                                                 {
-                                                    <td>Autorização</td>
+                                                    <td><span class="badge badge-primary">Autorização</span></td>
                                                 }
                                                 else
                                                 {
-                                                    <td>Restrição</td>
+                                                    <td><span class="badge badge-danger">Restrição</span></td>
                                                 }
                                                 <td>@cond.AUAC_DT_LIMITE.Value.ToShortDateString()</td>
                                                 <td>@cond.ENTRADA_SAIDA.Count</td>
                                                 @if (cond.AUAC_IN_PERMANENTE == 1)
                                                 {
-                                                    <td><span class="badge badge-primary">Permanente</span></td>
+                                                    <td><span class="badge badge-success">Permanente</span></td>
                                                 }
-                                                else if (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE.Value.Date < DateTime.Today.Date)
+                                                else if (cond.AUAC_IN_PERMANENTE == 2 & cond.AUAC_DT_LIMITE.Value.Date < DateTime.Today.Date)
                                                 {
                                                     <td><span class="badge badge-warning">Expirada</span></td>
                                                 }
-                                                else if (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE.Value.Date >= DateTime.Today.Date)
+                                                else if (cond.AUAC_IN_PERMANENTE == 2 & cond.AUAC_DT_LIMITE.Value.Date >= DateTime.Today.Date)
                                                 {
-                                                    <td><span class="badge badge-danger">Normal</span></td>
+                                                    <td><span class="badge badge-primary">Normal</span></td>
                                                 }
                                                 else
                                                 {
@@ -199,7 +161,7 @@
                                                 <td class="td-one-action">
                                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN" || ViewBag.Perfil == "MOR")
                                                     {
-                                                        if (cond.AUAC_IN_PERMANENTE == 1 || (cond.AUAC_IN_PERMANENTE == 0 & cond.AUAC_DT_LIMITE.Value.Date >= DateTime.Today.Date))
+                                                        if (cond.AUAC_IN_PERMANENTE == 1 || (cond.AUAC_IN_PERMANENTE == 2 & cond.AUAC_DT_LIMITE.Value.Date >= DateTime.Today.Date))
                                                         {
                                                             @Html.TableLinkDetails(cond.AUAC_CD_ID, "EditarAutorizacao","fa-edit", "Editar")
                                                         }

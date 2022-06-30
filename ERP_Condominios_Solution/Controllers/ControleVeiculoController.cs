@@ -157,6 +157,19 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("MontarTelaControleVeiculo");
         }
 
+        public ActionResult MostrarAtrasadosControleVeiculo()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            listaMaster = baseApp.GetAllItens(idAss);
+            listaMaster = listaMaster.Where(p => p.COVE_DT_SAIDA == null & p.COVE_DT_PREVISAO_SAIDA < DateTime.Now).ToList();
+            Session["ListaControleVeiculo"] = listaMaster;
+            return RedirectToAction("MontarTelaControleVeiculo");
+        }
+
         public ActionResult MostrarGeralControleVeiculo()
         {
             if ((String)Session["Ativa"] == null)

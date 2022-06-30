@@ -27,25 +27,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarEstoqueProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -84,25 +65,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Materiais em Ponto de Pedido</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -125,6 +87,7 @@
                                         <th>Modelo</th>
                                         <th>Fabricante</th>
                                         <th>Estoque</th>
+                                        <th>Estoque Mínimo</th>
                                         <th></th>
                                         <th class="td-one-action">Ações</th>
                                     </tr>
@@ -141,6 +104,7 @@
                                             <td>@cond.PROD_NM_MODELO</td>
                                             <td>@cond.PROD_NM_FABRICANTE</td>
                                             <td>@cond.PROD_QN_ESTOQUE</td>
+                                            <td>@cond.PROD_QN_QUANTIDADE_MINIMA</td>
                                             @if (!String.IsNullOrEmpty(cond.PROD_AQ_FOTO))
                                             {
                                                 <td><img src="@Url.Content(cond.PROD_AQ_FOTO)" style="width: auto; height: auto; max-height: 55px; max-width: 45px;"></td>

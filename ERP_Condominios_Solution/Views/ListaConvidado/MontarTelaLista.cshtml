@@ -5,6 +5,26 @@
     Layout = "~/Views/Shared/_Layout_Admin.cshtml";
 }
 <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="modalContainer">
+        <div id="modal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        @*Titulo gerado dinamicamente*@
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*Gerado dinamicamente*@
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="limpaModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="page-title"> 
         <h3 class="title">Listas de Convidados</h3> 
         <br />
@@ -24,25 +44,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarLista", "ListaConvidado", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -75,7 +76,7 @@
                                     {
                                         @Html.ButtonLinkIndex(text: "Nova Lista de Convidados", controller: "ListaConvidado", action: "IncluirLista")
                                     }
-                                    @Html.ButtonLinkIndex(text: "Voltar", controller: "ListaConvidado", action: "Voltar")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "ListaConvidado", action: "VoltarDash")
                                 </div>
                             </div>
                     </div>
@@ -89,25 +90,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Listas de Convidados</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -134,9 +116,9 @@
                                     <tbody>
                                         @foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.LISTA_CONVIDADO>).OrderByDescending(p => p.LICO_DT_EVENTO))
                                         {
-                                            if (cond.LICO_DT_EVENTO < DateTime.Today.Date)
+                                            if (cond.LICO_DT_EVENTO.Date < DateTime.Today.Date)
                                             {
-                                                <tr style="background-color:lightcoral">
+                                                <tr style="background-color:azure">
                                                     <td>@cond.LICO_DT_EVENTO.ToShortDateString()</td>
                                                     <td>@cond.UNIDADE.UNID_NM_EXIBE</td>
                                                     <td>@cond.LICO_NM_LISTA</td>
@@ -155,22 +137,7 @@
                                                     }
                                                     <td>@cond.CONVIDADO.Count</td>
                                                     <td class="td-one-action">
-                                                        @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN" || ViewBag.Perfil == "MOR")
-                                                        {
-                                                            @Html.TableLinkDetails(cond.LICO_CD_ID, "EditarLista","fa-edit", "Editar")
-                                                            if (cond.LICO_IN_ATIVO == 1)
-	                                                        {
-                                                                @Html.TableLinkDetails(cond.LICO_CD_ID, "ExcluirLista","fa-trash-o", "Desativar")
-                                                            }
-                                                            else
-                                                            {   
-                                                                @Html.TableLinkDetails(cond.LICO_CD_ID, "ReativarLista","fa-refresh", "Reativar")
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            @Html.TableLinkDetails(cond.LICO_CD_ID, "VerLista","fa-search", "Consultar")
-                                                        }
+                                                        @Html.TableLinkDetails(cond.LICO_CD_ID, "VerLista","fa-search", "Consultar")
                                                     </td>
                                                 </tr>
                                             }
@@ -198,18 +165,26 @@
                                                         @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN" || ViewBag.Perfil == "MOR")
                                                         {
                                                             @Html.TableLinkDetails(cond.LICO_CD_ID, "EditarLista","fa-edit", "Editar")
+                                                            if (cond.LICO_DT_EVENTO.Date == DateTime.Today.Date)
+                                                            {
+                                                                @Html.TableLinkDetails(cond.LICO_CD_ID, "ProcessarLista","fa-check", "Processar")
+                                                            }
                                                             if (cond.LICO_IN_ATIVO == 1)
 	                                                        {
-                                                                @Html.TableLinkDetails(cond.LICO_CD_ID, "ExcluirLista","fa-trash-o", "Desativar")
+                                                                <span style="color: #337ab7; cursor:pointer;" alt="Excluir" class="tbl-link fa-lg fa fa-trash-o" onclick="ShowModalExcluir('/ListaConvidado/ExcluirLista/@cond.LICO_CD_ID')" title="Excluir"></span>
                                                             }
                                                             else
                                                             {   
-                                                                @Html.TableLinkDetails(cond.LICO_CD_ID, "ReativarLista","fa-refresh", "Reativar")
+                                                                <span style="color: #337ab7; cursor:pointer;" alt="Reativar" class="tbl-link fa-lg fa fa-refresh" onclick="ShowModalReativar('/ListaConvidado/ReativarLista/@cond.LICO_CD_ID')" title="Reativar"></span>
                                                             }
                                                         }
-                                                        else
-                                                        {
+                                                        else if (ViewBag.Perfil == "POR")
+                                                        {                                                       
                                                             @Html.TableLinkDetails(cond.LICO_CD_ID, "VerLista","fa-search", "Consultar")
+                                                            if (cond.LICO_DT_EVENTO.Date == DateTime.Today.Date)
+                                                            {
+                                                                @Html.TableLinkDetails(cond.LICO_CD_ID, "ProcessarLista","fa-check", "Processar")
+                                                            }
                                                         }
                                                     </td>
                                                 </tr>
@@ -266,6 +241,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
     <script src="~/Scripts/uploadAnexo.js"></script>
     
+    <script>
+        $(function () {
+            limpaModal();
+        });
+
+        function limpaModal() {
+            $('#btnModal').remove();
+            $('#modalTitle').remove();
+        }
+
+        function ShowModalExcluir(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Desativar" class="btn btn-primary" href="' + url + '" target="_self" title="Desativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma exclusão de Lista de Convidados?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Exclusão</h5>');
+            $('#modal').modal('show');
+        }
+
+        function ShowModalReativar(url) {
+            $('#modal').find('.modal-footer').prepend('<a id="btnModal" alt="Reativar" class="btn btn-primary" href="' + url + '" target="_self" title="Reativar">Confirmar</a>');
+            $('#modal').find('.modal-body').html('Confirma reativação de Lista de Convidados?');
+            $('#modal').find('.modal-header').prepend('<h5 id="modalTitle" class="modal-title">Confimar Reativação</h5>');
+            $('#modal').modal('show');
+        }
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
 

@@ -72,15 +72,15 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.TIVE_CD_ID == idTipo);
             }
-            if (dataEntrada != DateTime.MinValue & dataSaida == null)
+            if (dataEntrada != null & dataSaida == null)
             {
                 query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_ENTRADA) == DbFunctions.TruncateTime(dataEntrada));
             }
-            else if (dataEntrada == DateTime.MinValue & dataSaida != null)
+            else if (dataEntrada == null & dataSaida != null)
             {
                 query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_SAIDA) == DbFunctions.TruncateTime(dataSaida));
             }
-            else if (dataEntrada != DateTime.MinValue & dataSaida != null)
+            else if (dataEntrada != null & dataSaida != null)
             {
                 query = query.Where(p => DbFunctions.TruncateTime(p.COVE_DT_SAIDA) <= DbFunctions.TruncateTime(dataSaida) & DbFunctions.TruncateTime(p.COVE_DT_ENTRADA) >= DbFunctions.TruncateTime(dataEntrada));
             }

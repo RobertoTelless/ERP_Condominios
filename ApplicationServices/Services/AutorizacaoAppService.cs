@@ -176,6 +176,7 @@ namespace ApplicationServices.Services
 
                 // Acerta campos
                 item.AUAC_IN_ATIVO = 0;
+                item.ASSINANTE = null;
 
                 // Monta Log
                 LOG log = new LOG
@@ -185,7 +186,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "DelAUAC",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<AUTORIZACAO_ACESSO>(item)
+                    LOG_TX_REGISTRO = "Autorização: " + item.AUAC_CD_ID.ToString() + "|" + item.UNID_CD_ID + "|" + item.AUAC_DT_INICIO.Value.ToShortDateString() + "|" + item.AUAC_NM_VISITANTE
                 };
 
                 // Persiste
@@ -205,6 +206,7 @@ namespace ApplicationServices.Services
 
                 // Acerta campos
                 item.AUAC_IN_ATIVO = 1;
+                item.ASSINANTE = null;
 
                 // Monta Log
                 LOG log = new LOG
@@ -214,7 +216,7 @@ namespace ApplicationServices.Services
                     USUA_CD_ID = usuario.USUA_CD_ID,
                     LOG_IN_ATIVO = 1,
                     LOG_NM_OPERACAO = "ReatAUAC",
-                    LOG_TX_REGISTRO = Serialization.SerializeJSON<AUTORIZACAO_ACESSO>(item)
+                    LOG_TX_REGISTRO = "Autorização: " + item.AUAC_CD_ID.ToString() + "|" + item.UNID_CD_ID + "|" + item.AUAC_DT_INICIO.Value.ToShortDateString() + "|" + item.AUAC_NM_VISITANTE
                 };
 
                 // Persiste

@@ -40,25 +40,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Entradas & Saídas - Edição/Baixa</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -99,41 +80,36 @@
                                                     Unidade
                                                     @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
-                                                    Nome*
-                                                    @Html.TextBoxFor(m => m.ENSA_NM_NOME, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENSA_NM_NOME, "", new { @style = "color:red" })
+                                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                                    Nome
+                                                    @Html.TextBoxFor(m => m.ENSA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Documento
-                                                    @Html.TextBoxFor(m => m.ENSA_NR_DOCUMENTO, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENSA_NR_DOCUMENTO, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.ENSA_NR_DOCUMENTO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                                     Empresa
-                                                    @Html.TextBoxFor(m => m.ENSA_NM_EMPRESA, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENSA_NM_EMPRESA, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.ENSA_NM_EMPRESA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12" style="color:green;font-weight:bold">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color:green;font-weight:bold">
                                                     Data/Hora Entrada
                                                     @Html.TextBoxFor(m => m.ENSA_DT_ENTRADA, "{0:dd/MM/yyyy HH:mm}", new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                <div class="col-lg-2 col-md-2 col-xs-12" style="color:darkblue;font-weight:bold">
                                                     Data/Hora Saída
                                                     @Html.TextBoxFor(m => m.ENSA_DT_SAIDA, new { @class = "form-control datetime-picker", autofocus = true, @id = "saida", @style = "font-weight:bold" })
                                                     @Html.ValidationMessageFor(m => m.ENSA_DT_SAIDA, "", new { @style = "color:red" })
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                                     Grau Parentesco
-                                                    @Html.DropDownListFor(m => m.GRPA_CD_ID, (SelectList)ViewBag.Graus, "Selecionar", new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.GRPA_CD_ID, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.GRAU_PARENTESCO.GRPA_NM_NOME, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-xs-12" style="color:green;font-weight:bold">
+                                                <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
                                                     Motivo
-                                                    @Html.TextBoxFor(m => m.ENSA_NM_MOTIVO, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENSA_NM_MOTIVO, "", new { @style = "color:red" })
+                                                    @Html.TextBoxFor(m => m.ENSA_NM_MOTIVO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
                                             </div>
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -195,10 +171,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseES", controller: "EntradaSaida")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

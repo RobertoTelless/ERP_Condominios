@@ -43,25 +43,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>  
                 
                 @if (ViewBag.Perfil == "SIN" || ViewBag.Perfil == "ADM" || ViewBag.Perfil == "POR")
@@ -102,11 +83,13 @@
                                         @Html.ButtonActionSubmit(text: "Filtrar")
                                         @Html.ButtonLinkIndex(text: "Data Corrente", controller: "ControleVeiculo", action: "RetirarFiltroControleVeiculo")
                                         @Html.ButtonLinkIndex(text: "Ver Todas as Datas", controller: "ControleVeiculo", action: "MostrarGeralControleVeiculo")
+                                        @Html.ButtonLinkIndex(text: "Ver Atrasados", controller: "ControleVeiculo", action: "MostrarAtrasadosControleVeiculo")
                                         @Html.ButtonLinkIndex(text: "Novo Registro de Entrada", controller: "ControleVeiculo", action: "IncluirControleVeiculo")
                                         @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                         {
                                             @Html.ButtonLinkIndex(text: "Exibir Inativos", controller: "ControleVeiculo", action: "MostrarTudoControleVeiculo")
                                         }
+                                        @Html.ButtonLinkIndex(text: "Listagem de Entradas", controller: "ControleVeiculo", action: "GerarListagemEntradas")
                                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "ControleVeiculo", action: "VoltarDash")
                                     </div>
                                 </div>

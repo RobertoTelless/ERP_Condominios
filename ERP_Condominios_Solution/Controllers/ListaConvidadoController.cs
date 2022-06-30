@@ -489,7 +489,7 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpGet]
         public ActionResult ExcluirLista(Int32 id)
         {
-            // Verifica se tem usuario logado
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -499,12 +499,6 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
-                {
-                    Session["MensLista"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
-                }
             }
             else
             {
@@ -512,49 +506,20 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             LISTA_CONVIDADO item = fornApp.GetItemById(id);
-            ListaConvidadoViewModel vm = Mapper.Map<LISTA_CONVIDADO, ListaConvidadoViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ExcluirLista(ListaConvidadoViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                LISTA_CONVIDADO item = Mapper.Map<ListaConvidadoViewModel, LISTA_CONVIDADO>(vm);
-                Int32 volta = fornApp.ValidateDelete(item, usuarioLogado);
-
-                // Verifica retorno
-                if (volta == 1)
-                {
-                    Session["MensLista"] = 4;
-                    return RedirectToAction("MontarTelaLista", "ListaConvidado");
-                }
-
-                // Sucesso
-                listaMasterForn = new List<LISTA_CONVIDADO>();
-                Session["ListaLista"] = null;
-                return RedirectToAction("MontarTelaLista");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objetoForn);
-            }
+            item.LICO_IN_ATIVO = 0;
+            Int32 volta = fornApp.ValidateDelete(item, usuario);
+            listaMasterForn = new List<LISTA_CONVIDADO>();
+            Session["ListaLista"] = null;
+            Session["FiltroLista"] = null;
+            return RedirectToAction("MontarTelaLista");
         }
 
         [HttpGet]
         public ActionResult ReativarLista(Int32 id)
         {
-            // Verifica se tem usuario logado
+            // Valida acesso
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
             {
@@ -564,12 +529,6 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 usuario = (USUARIO)Session["UserCredentials"];
 
-                // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA == "FUN" || usuario.PERFIL.PERF_SG_SIGLA == "POR")
-                {
-                    Session["MensLista"] = 2;
-                    return RedirectToAction("CarregarBase", "BaseAdmin");
-                }
             }
             else
             {
@@ -577,38 +536,14 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
-            // Prepara view
+            // Executar
             LISTA_CONVIDADO item = fornApp.GetItemById(id);
-            ListaConvidadoViewModel vm = Mapper.Map<LISTA_CONVIDADO, ListaConvidadoViewModel>(item);
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult ReativarLista(ListaConvidadoViewModel vm)
-        {
-            if ((String)Session["Ativa"] == null)
-            {
-                return RedirectToAction("Login", "ControleAcesso");
-            }
-            try
-            {
-                // Executa a operação
-                USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
-                LISTA_CONVIDADO item = Mapper.Map<ListaConvidadoViewModel, LISTA_CONVIDADO>(vm);
-                Int32 volta = fornApp.ValidateReativar(item, usuarioLogado);
-
-                // Verifica retorno
-
-                // Sucesso
-                listaMasterForn = new List<LISTA_CONVIDADO>();
-                Session["ListaLista"] = null;
-                return RedirectToAction("MontarTelaLista");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Message = ex.Message;
-                return View(objetoForn);
-            }
+            item.LICO_IN_ATIVO = 1;
+            Int32 volta = fornApp.ValidateReativar(item, usuario);
+            listaMasterForn = new List<LISTA_CONVIDADO>();
+            Session["ListaLista"] = null;
+            Session["FiltroLista"] = null;
+            return RedirectToAction("MontarTelaLista");
         }
 
         [HttpGet]
@@ -1005,6 +940,27 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 1)
+            {
+                return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 2)
+            {
+                return RedirectToAction("CarregarPortaria", "BaseAdmin");
+            }
+            if ((Int32)Session["VoltaUnidade"] == 3)
+            {
+                return RedirectToAction("CarregarSindico", "BaseAdmin");
+            }
+            return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
     }

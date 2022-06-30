@@ -117,6 +117,7 @@
                                                         @Html.HiddenFor(m => m.UF_CD_ID)
                                                         @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
                                                         @Html.HiddenFor(m => m.FORN_NR_DOCUMENTO)
+                                                        @Html.HiddenFor(m => m.TIPE_CD_ID)
                                                         @if (!String.IsNullOrEmpty(Model.FORN_AQ_FOTO))
                                                         {
                                                             <img src="@Url.Content(Model.FORN_AQ_FOTO)" style="width: auto; height: auto; max-height: 110px; max-width: 90px;">
@@ -262,6 +263,7 @@
                                                     @Html.HiddenFor(m => m.FORN_TX_OBSERVACOES)
                                                     @Html.HiddenFor(m => m.TIPE_CD_ID)
                                                     @Html.HiddenFor(m => m.FORN_NR_DOCUMENTO)
+                                                    @Html.HiddenFor(m => m.TIPE_CD_ID)
                                                     Categoria*
                                                     @Html.DropDownListFor(m => m.CAFO_CD_ID, (SelectList)ViewBag.Cats, "Selecionar", new { @class = "form-control", autofocus = true })
                                                     @Html.ValidationMessageFor(m => m.CAFO_CD_ID, "", new { @style = "color:red" })
@@ -353,7 +355,7 @@
                                                     <h5>Materiais Vinculados</h5>
                                                 </div>
                                                 <div class="ibox-content">
-                                                    @if (Model.MATERIAL_FORNECEDOR.Count > 0)
+                                                    @if (Model.PRODUTO_FORNECEDOR.Count > 0)
                                                     {
                                                         <table class="table table-hover">
                                                             <thead>
@@ -365,13 +367,13 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach (var cond in (Model.MATERIAL_FORNECEDOR.OrderBy(a => a.MATERIAL.MATE_NM_NOME)))
+                                                                @foreach (var cond in (Model.PRODUTO_FORNECEDOR.OrderBy(a => a.PRODUTO.PROD_NM_NOME)))
                                                                 {
                                                                     <tr>
-                                                                        <td>@cond.MATERIAL.MATE_NM_NOME</td>
-                                                                        <td>@cond.MATERIAL.MATE_NM_MARCA</td>
-                                                                        <td>@cond.MATERIAL.MATE_NR_BARCODE</td>
-                                                                        <td>@cond.MATERIAL.MATE_NM_MODELO</td>
+                                                                        <td>@cond.PRODUTO.PROD_NM_NOME</td>
+                                                                        <td>@cond.PRODUTO.PROD_NM_MARCA</td>
+                                                                        <td>@cond.PRODUTO.PROD_NR_BARCODE</td>
+                                                                        <td>@cond.PRODUTO.PROD_NM_MODELO</td>
                                                                     </tr>
                                                                 }
                                                             </tbody>
@@ -495,7 +497,7 @@
                                         {
                                             <div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         <h4>Endereço Principal</h4>
                                                         <br />
                                                         @Html.HiddenFor(m => m.ASSI_CD_ID)
@@ -563,7 +565,7 @@
                                         {
                                             <div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                    <div class="col-lg-3 col-md-3 col-xs-12">
+                                                    <div class="col-lg-2 col-md-2 col-xs-12">
                                                         <h4>Endereço Principal</h4>
                                                         <br />
                                                         CEP
@@ -901,10 +903,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseFornecedor", controller: "FornecedorNovo")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
