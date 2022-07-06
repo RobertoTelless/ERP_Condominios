@@ -20,6 +20,7 @@ namespace ERP_Condominios_Solution.ViewModels
         public string FOCO_NM_CARGO { get; set; }
         [Required(ErrorMessage = "Campo E-MAIL obrigatorio")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "O NOME deve conter no minimo 1 e no máximo 100 caracteres.")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Deve ser um e-mail válido")]
         public string FOCO_NM_EMAIL { get; set; }
         [StringLength(50, ErrorMessage = "O TELEFONE deve conter no máximo 50 caracteres.")]
         public string FOCO_NR_TELEFONES { get; set; }
