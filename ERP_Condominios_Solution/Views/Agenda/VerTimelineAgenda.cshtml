@@ -35,7 +35,7 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div class="col-lg-2 col-md-2 col-xs-12">
                                     Data
-                                    @Html.TextBoxFor(m => m.AGEN_DT_DATA,  "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, id = "data" })
+                                    @Html.TextBoxFor(m => m.AGEN_DT_DATA, "{0:dd/MM/yyyy}", new { @class = "form-control date-picker", autofocus = true, id = "data" })
                                 </div>
                             </div>
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -115,20 +115,17 @@
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />  
     @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
     @Styles.Render("~/plugins/jasnyBootstrapStyles")
-    @Styles.Render("~/Content/plugins/iCheck/iCheckStyles")
     @Styles.Render("~/plugins/touchSpinStyles")
+    @Styles.Render("~/plugins/sweetAlertStyles")
     @Styles.Render("~/plugins/toastrStyles")
 }
 @section Scripts {
+    @Scripts.Render("~/plugins/toastr")    
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-    @Scripts.Render("~/plugins/toastr")
     @Scripts.Render("~/plugins/dataTables")
     @Scripts.Render("~/bundles/inputmask")
     @Scripts.Render("~/plugins/jasnyBootstrap")
-    @Scripts.Render("~/plugins/sparkline")
-    @Scripts.Render("~/plugins/switchery")
     @Scripts.Render("~/plugins/touchSpin")
-    @Scripts.Render("~/plugins/iCheck")
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
     <script type="text/javascript">

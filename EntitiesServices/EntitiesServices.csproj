@@ -503,16 +503,6 @@
     <Compile Include="Model\EQUIPAMENTO_MANUTENCAO.cs">
       <DependentUpon>ERP_Condominio_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ERP_Condominios_Model.cs">
-      <DependentUpon>ERP_Condominios_Model.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Model\ERP_Condominios_Model.Designer.cs">
-      <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="Model\ERP_Condominio_Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -773,10 +763,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Model\ERP_Condominios_Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ERP_Condominios_Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <EntityDeploy Include="Model\ERP_Condominio_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ERP_Condominio_Model.Designer.cs</LastGenOutput>
@@ -791,11 +777,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Model\ERP_Condominios_Model.tt">
-      <DependentUpon>ERP_Condominios_Model.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ERP_Condominios_Model.cs</LastGenOutput>
-    </Content>
     <Content Include="Model\ERP_Condominio_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ERP_Condominio_Model.edmx</DependentUpon>

@@ -89,6 +89,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
+
             // Carrega listas
             if (Session["ListaEncomenda"] == null)
             {
@@ -501,22 +502,19 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0077", CultureInfo.CurrentCulture));
             }
+            if ((Int32)Session["MensEncomenda"] == 9)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0069", CultureInfo.CurrentCulture));
+            }
+            if ((Int32)Session["MensEncomenda"] == 10)
+            {
+                ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0077", CultureInfo.CurrentCulture));
+            }
 
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
 
             ENCOMENDA item = fornApp.GetItemById(id);
             objetoFornAntes = item;
-            List<SelectListItem> status = new List<SelectListItem>();
-            if (item.ENCO_IN_STATUS == 1)
-            {
-                status.Add(new SelectListItem() { Text = "Entregar", Value = "2" });
-                status.Add(new SelectListItem() { Text = "Recusar", Value = "3" });
-            }
-            else if (item.ENCO_IN_STATUS == 2)
-            {
-                status.Add(new SelectListItem() { Text = "Devolver", Value = "4" });
-            }
-            ViewBag.Status = new SelectList(status, "Value", "Text");
 
             Session["Encomenda"] = item;
             Session["IdVolta"] = id;
@@ -530,6 +528,21 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 vm.ENCO_IN_STATUS_TROCA = 4;
             }
+            List<SelectListItem> status = new List<SelectListItem>();
+            if (item.ENCO_IN_STATUS == 1)
+            {
+                status.Add(new SelectListItem() { Text = "Entregar", Value = "2" });
+                status.Add(new SelectListItem() { Text = "Recusar", Value = "3" });
+                vm.ENCO_DT_ENTREGA = DateTime.Now;
+                vm.ENCO_DT_RECUSA = DateTime.Now;
+            }
+            else if (item.ENCO_IN_STATUS == 2)
+            {
+                status.Add(new SelectListItem() { Text = "Devolver", Value = "4" });
+                vm.ENCO_DT_DEVOLUCAO = DateTime.Now;
+            }
+            ViewBag.Status = new SelectList(status, "Value", "Text");
+            Session["StatusInicial"] = vm.ENCO_IN_STATUS;
             return View(vm);
         }
 
@@ -563,7 +576,25 @@ namespace ERP_Condominios_Solution.Controllers
                     if (vm.ENCO_IN_STATUS_TROCA > 0)
                     {
                         vm.ENCO_IN_STATUS = vm.ENCO_IN_STATUS_TROCA;
-                    }                  
+                    }
+
+                    // Verifica código
+                    //if ((Int32)Session["StatusInicial"] == 1)
+                    //{
+                    //    if (vm.ENCO_CD_CODIGO != vm.ENCO_CD_CODIGO_DIGITA)
+                    //    {
+                    //        Session["MensEncomenda"] = 9;
+                    //        return RedirectToAction("EditarEncomenda", "Encomenda");
+                    //    }
+                    //}
+                    if (vm.ENCO_IN_STATUS == 2)
+                    {
+                        if (vm.ENCO_CD_CODIGO != vm.ENCO_CD_CODIGO_DIGITA)
+                        {
+                            Session["MensEncomenda"] = 9;
+                            return RedirectToAction("EditarEncomenda", "Encomenda");
+                        }   
+                    }
 
                     // Executa a operação
                     USUARIO usuarioLogado = (USUARIO)Session["UserCredentials"];
@@ -579,6 +610,11 @@ namespace ERP_Condominios_Solution.Controllers
                     if (volta == 2)
                     {
                         Session["MensEncomenda"] = 8;
+                        return RedirectToAction("EditarEncomenda", "Encomenda");
+                    }
+                    if (volta == 3)
+                    {
+                        Session["MensEncomenda"] = 10;
                         return RedirectToAction("EditarEncomenda", "Encomenda");
                     }
 

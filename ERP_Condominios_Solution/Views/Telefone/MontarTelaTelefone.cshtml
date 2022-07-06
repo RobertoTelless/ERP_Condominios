@@ -85,11 +85,11 @@
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-5ths">
                                     Telefone
-                                    @Html.TextBoxFor(m => m.TELE_NR_TELEFONE, new { @class = "form-control", autofocus = true })
+                                    @Html.TextBoxFor(m => m.TELE_NR_TELEFONE, new { @class = "form-control", autofocus = true, @id="tel" })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-5ths">
                                     Celular
-                                    @Html.TextBoxFor(m => m.TELE_NR_CELULAR, new { @class = "form-control", autofocus = true })
+                                    @Html.TextBoxFor(m => m.TELE_NR_CELULAR, new { @class = "form-control", autofocus = true, @id="cel" })
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-xs-12">
                                     E-Mail
@@ -286,6 +286,8 @@
         $(function () {
             $("#cpf").mask("999.999.999-99");
             $("#cnpj").mask("99.999.999/9999-99");
+            $("#tel").mask("(99)9999-9999");
+            $("#cel").mask("(99)99999-9999");
         });
     </script>
 

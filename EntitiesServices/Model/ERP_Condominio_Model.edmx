@@ -496,8 +496,10 @@
           <Property Name="ENCO_AQ_FOTO" Type="varchar" MaxLength="250" />
           <Property Name="ENCO_DS_JUSTIFICATIVA" Type="varchar" MaxLength="500" />
           <Property Name="ENCO_IN_STATUS" Type="int" />
-          <Property Name="ENCO_DT_DEVOLUCAO" Type="date" />
+          <Property Name="ENCO_DT_DEVOLUCAO" Type="datetime" />
           <Property Name="ENCO_IN_STATUS_TROCA" Type="int" />
+          <Property Name="ENCO_DT_RECUSA" Type="datetime" />
+          <Property Name="ENCO_DS_JUSTIFICATIVA_RECUSA" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -5737,7 +5739,7 @@
           <Property Name="ENCO_AQ_FOTO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="ENCO_DS_JUSTIFICATIVA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ENCO_IN_STATUS" Type="Int32" />
-          <Property Name="ENCO_DT_DEVOLUCAO" Type="DateTime" Precision="0" />
+          <Property Name="ENCO_DT_DEVOLUCAO" Type="DateTime" Precision="3" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_ENCOMENDA_ASSINANTE" FromRole="ENCOMENDA" ToRole="ASSINANTE" />
           <NavigationProperty Name="ENCOMENDA_ANEXO" Relationship="Self.FK_ENCOMENDA_ANEXO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="ENCOMENDA_ANEXO" />
           <NavigationProperty Name="ENCOMENDA_COMENTARIO" Relationship="Self.FK_ENCOMENDA_COMENTARIO_ENCOMENDA" FromRole="ENCOMENDA" ToRole="ENCOMENDA_COMENTARIO" />
@@ -5746,6 +5748,8 @@
           <NavigationProperty Name="UNIDADE" Relationship="Self.FK_ENCOMENDA_UNIDADE" FromRole="ENCOMENDA" ToRole="UNIDADE" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_ENCOMENDA_USUARIO" FromRole="ENCOMENDA" ToRole="USUARIO" />
           <Property Name="ENCO_IN_STATUS_TROCA" Type="Int32" />
+          <Property Name="ENCO_DT_RECUSA" Type="DateTime" Precision="3" />
+          <Property Name="ENCO_DS_JUSTIFICATIVA_RECUSA" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ENCOMENDA_ANEXO">
           <Key>
@@ -11126,6 +11130,8 @@
           <EntitySetMapping Name="ENCOMENDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.ENCOMENDA">
               <MappingFragment StoreEntitySet="ENCOMENDA">
+                <ScalarProperty Name="ENCO_DS_JUSTIFICATIVA_RECUSA" ColumnName="ENCO_DS_JUSTIFICATIVA_RECUSA" />
+                <ScalarProperty Name="ENCO_DT_RECUSA" ColumnName="ENCO_DT_RECUSA" />
                 <ScalarProperty Name="ENCO_IN_STATUS_TROCA" ColumnName="ENCO_IN_STATUS_TROCA" />
                 <ScalarProperty Name="ENCO_CD_ID" ColumnName="ENCO_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />

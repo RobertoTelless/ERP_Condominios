@@ -91,6 +91,9 @@
                                                     @Html.HiddenFor(m => m.ENCO_IN_STATUS)
                                                     @Html.HiddenFor(m => m.ENCO_NM_PESSOA)
                                                     @Html.HiddenFor(m => m.USUA_CD_ID)
+                                                    @Html.HiddenFor(m => m.UNID_CD_ID)
+                                                    @Html.HiddenFor(m => m.FOEN_CD_ID)
+                                                    @Html.HiddenFor(m => m.TIEN_CD_ID)
                                                     Unidade
                                                     @Html.TextBoxFor(m => m.UNIDADE.UNID_NM_EXIBE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
@@ -111,32 +114,60 @@
                                                     @Html.TextBoxFor(m => m.ENCO_CD_CODIGO, new { @class = "form-control", autofocus = true, @readonly="readonly" })
                                                 </div>
                                             </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12" style="color:green;font-weight:bold">
-                                                    Descrição
-                                                    @Html.TextBoxFor(m => m.ENCO_DS_ENCOMENDA, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENCO_DS_ENCOMENDA, "", new { @style = "color:red" })
+                                            @if (Model.ENCO_IN_STATUS == 1)
+                                            {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Descrição
+                                                        @Html.TextBoxFor(m => m.ENCO_DS_ENCOMENDA, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_DS_ENCOMENDA, "", new { @style = "color:red" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
-                                                    Remetente
-                                                    @Html.TextBoxFor(m => m.ENCO_NM_REMETENTE, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENCO_NM_REMETENTE, "", new { @style = "color:red" })
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        Remetente
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_REMETENTE, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_REMETENTE, "", new { @style = "color:red" })
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        Entregador
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_ENTREGADOR, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_NM_ENTREGADOR, "", new { @style = "color:red" })
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-xs-12" style="color:green;font-weight:bold">
-                                                    Entregador
-                                                    @Html.TextBoxFor(m => m.ENCO_NM_ENTREGADOR, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENCO_NM_ENTREGADOR, "", new { @style = "color:red" })
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Observações
+                                                        @Html.TextBoxFor(m => m.ENCO_TX_OBSERVACOES, new { @class = "form-control", autofocus = true })
+                                                        @Html.ValidationMessageFor(m => m.ENCO_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-12 col-md-12 col-xs-12">
-                                                    Observações
-                                                    @Html.TextBoxFor(m => m.ENCO_TX_OBSERVACOES, new { @class = "form-control", autofocus = true })
-                                                    @Html.ValidationMessageFor(m => m.ENCO_TX_OBSERVACOES, "", new { @style = "color:red" })
+                                            }
+                                            else
+                                            {
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Descrição
+                                                        @Html.TextBoxFor(m => m.ENCO_DS_ENCOMENDA, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        Remetente
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_REMETENTE, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                                        Entregador
+                                                        @Html.TextBoxFor(m => m.ENCO_NM_ENTREGADOR, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
+                                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                                        Observações
+                                                        @Html.TextBoxFor(m => m.ENCO_TX_OBSERVACOES, new { @class = "form-control", autofocus = true, @readonly="readonly" })
+                                                    </div>
+                                                </div>
+                                            }
                                             @if (Model.ENCO_IN_STATUS == 2)
                                             {
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
@@ -185,9 +216,12 @@
                                                 </div>
                                             }
                                         </div>
-                                        <div class="form-group">
-                                            @Html.ButtonActionSubmit(text: "Confirma Alteração da Encomenda", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
-                                        </div>
+                                        if (Model.ENCO_IN_STATUS == 1)
+                                        {
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma Alteração da Encomenda", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
+                                            </div>
+                                        }
                                     }
                                 </div>
                             </div>
@@ -230,26 +264,31 @@
                                                             @Html.TextBoxFor(m => m.ENCO_DT_ENTREGA, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataEnt", @style = "color:green; font-weight:bold" })
                                                             @Html.ValidationMessageFor(m => m.ENCO_DT_ENTREGA, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
-                                                            Recebida Por*
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                            Entregue a*
                                                             @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @id = "pessoaEnt" })
                                                             @Html.ValidationMessageFor(m => m.ENCO_NM_PESSOA, "", new { @style = "color:red" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
+                                                            Código Entrega*
+                                                            @Html.TextBoxFor(m => m.ENCO_CD_CODIGO_DIGITA, new { @class = "form-control", autofocus = true })
+                                                            @Html.ValidationMessageFor(m => m.ENCO_CD_CODIGO_DIGITA, "", new { @style = "color:red" })
                                                         </div>
                                                     </div>
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="RE">
                                                         <div class="col-lg-2 col-md-2 col-xs-12" style="color:darkblue;font-weight:bold">
                                                             Data/Hora Recusa*
-                                                            @Html.TextBoxFor(m => m.ENCO_DT_DEVOLUCAO, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataRe", @style = "color:green; font-weight:bold" })
-                                                            @Html.ValidationMessageFor(m => m.ENCO_DT_DEVOLUCAO, "", new { @style = "color:red" })
+                                                            @Html.TextBoxFor(m => m.ENCO_DT_RECUSA, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataRe", @style = "color:green; font-weight:bold" })
+                                                            @Html.ValidationMessageFor(m => m.ENCO_DT_RECUSA, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
                                                             Recusada Por*
                                                             @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @id = "pessoaRe" })
                                                             @Html.ValidationMessageFor(m => m.ENCO_NM_PESSOA, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
                                                             Justificativa
-                                                            @Html.TextBoxFor(m => m.ENCO_DS_JUSTIFICATIVA, new { @class = "form-control", autofocus = true})
+                                                            @Html.TextBoxFor(m => m.ENCO_DS_JUSTIFICATIVA_RECUSA, new { @class = "form-control", autofocus = true})
                                                         </div>
                                                     </div>
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;" id="DE">
@@ -258,12 +297,12 @@
                                                             @Html.TextBoxFor(m => m.ENCO_DT_DEVOLUCAO, new { @class = "form-control datetime-picker", autofocus = true, @id = "dataDe", @style = "color:green; font-weight:bold" })
                                                             @Html.ValidationMessageFor(m => m.ENCO_DT_DEVOLUCAO, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12">
                                                             Devolvida Por*
                                                             @Html.TextBoxFor(m => m.ENCO_NM_PESSOA, new { @class = "form-control", autofocus = true, @id = "pessoaDe" })
                                                             @Html.ValidationMessageFor(m => m.ENCO_NM_PESSOA, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-4 col-md-4 col-xs-12" style="color:darkblue;font-weight:bold">
+                                                        <div class="col-lg-4 col-md-4 col-xs-12">
                                                             Justificativa
                                                             @Html.TextBoxFor(m => m.ENCO_DS_JUSTIFICATIVA, new { @class = "form-control", autofocus = true})
                                                         </div>
@@ -421,10 +460,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseEncomenda", controller: "Encomenda")
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -601,17 +640,14 @@
         });
 
         function LimpaEN() {
-            $('#dataEnt').val('');
             $('#PessoaEnt').val('');
         }
 
         function LimpaRE() {
-            $('#dataRe').val('');
             $('#PessoaRe').val('');
         }
 
         function LimpaDE() {
-            $('#dataDe').val('');
             $('#PessoaDe').val('');
 
         }

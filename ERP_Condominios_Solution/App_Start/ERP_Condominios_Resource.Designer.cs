@@ -637,6 +637,15 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Código de entrega da encomenda inválido.
+        /// </summary>
+        internal static string M0069 {
+            get {
+                return ResourceManager.GetString("M0069", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A Senha não pode ficar em branco.
         /// </summary>
         internal static string M0073 {
@@ -664,7 +673,7 @@ namespace ERP_Condominios_Solution.App_Start {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Informações de entrega/recusa incompletas.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Informações de entrega incompletas.
         /// </summary>
         internal static string M0076 {
             get {
@@ -714,6 +723,15 @@ namespace ERP_Condominios_Solution.App_Start {
         internal static string M0081 {
             get {
                 return ResourceManager.GetString("M0081", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Informações de recusa incompletas.
+        /// </summary>
+        internal static string M0082 {
+            get {
+                return ResourceManager.GetString("M0082", resourceCulture);
             }
         }
         

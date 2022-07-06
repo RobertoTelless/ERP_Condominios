@@ -141,6 +141,8 @@ namespace ModelServices.EntitiesServices
                 try
                 {
                     item.UNIDADE = null;
+                    item.FORMA_ENTREGA = null;  
+                    item.TIPO_ENCOMENDA = null;
                     ENCOMENDA obj = _baseRepository.GetById(item.ENCO_CD_ID);
                     _baseRepository.Detach(obj);
                     _logRepository.Add(log);

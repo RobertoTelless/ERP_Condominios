@@ -94,10 +94,10 @@
                                     {
                                         using (Html.BeginForm("EditarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                         {
-                        <div class="form-group">
-                            @Html.ButtonActionSubmit(text: "Confirma Edição de Tarefa", htmlAttributes: new { id = "basictoast" })
-                            @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTarefa", controller: "Tarefa")
-                        </div>
+                                            <div class="form-group">
+                                                @Html.ButtonActionSubmit(text: "Confirma Edição de Tarefa", htmlAttributes: new { id = "basictoast" })
+                                                @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTarefa", controller: "Tarefa")
+                                            </div>
                                             <div class="row">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                     <div class="col-lg-3 col-md-3 col-xs-12">
@@ -163,15 +163,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                                                <div class="form-group">
+                                                                @*<div class="form-group">
                                                                     @Html.ButtonActionSubmit(text: "Confirma edição de Tarefa", htmlAttributes: new { id = "basictoast" })
                                                                     @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTarefa", controller: "Tarefa")
-                                                                </div>
+                                                                </div>*@
                                                             }
                                                         }
                                                         else
                                                         {
                                                             <div class="row">
+                                                                <div class="form-group">
+                                                                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseTarefa", controller: "Tarefa")
+                                                                </div>
                                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                                     <div class="col-lg-3 col-md-3 col-xs-12">
                                                                         @Html.HiddenFor(m => m.TARE_CD_ID)
@@ -231,7 +234,6 @@
                             <div id="tab-2" class="tab-pane">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <hr />
                                         <div class="col-lg-12 col-md-12 col-xs-12">
                                             <h4>Anexos</h4>
                                             <br />
@@ -484,7 +486,6 @@
                                     @using (Html.BeginForm("EditarTarefa", "Tarefa", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", @id = "pwd-container1" }))
                                     {
                                     }
-                                    <hr />
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <h4>Acompanhamentos:</h4>

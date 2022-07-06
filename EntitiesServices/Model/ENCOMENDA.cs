@@ -43,6 +43,8 @@ namespace EntitiesServices.Model
         public Nullable<int> ENCO_IN_STATUS { get; set; }
         public Nullable<System.DateTime> ENCO_DT_DEVOLUCAO { get; set; }
         public Nullable<int> ENCO_IN_STATUS_TROCA { get; set; }
+        public Nullable<System.DateTime> ENCO_DT_RECUSA { get; set; }
+        public string ENCO_DS_JUSTIFICATIVA_RECUSA { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -222,9 +222,9 @@ namespace ApplicationServices.Services
                 }
                 if (item.ENCO_IN_STATUS == 3)
                 {
-                    if (item.ENCO_DT_DEVOLUCAO == null || item.ENCO_DS_JUSTIFICATIVA == null)
+                    if (item.ENCO_DT_RECUSA == null || item.ENCO_DS_JUSTIFICATIVA_RECUSA == null)
                     {
-                        return 2;
+                        return 3;
                     }
                 }
 
@@ -299,7 +299,7 @@ namespace ApplicationServices.Services
                     else
                     {
                         noti.NOTI_NM_TITULO = "NOTIFICAÇÃO - ENCOMENDA - RECUSA";
-                        noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". A encomenda recebida em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + " e com código: " + item.ENCO_CD_CODIGO + ", foi recusada em " + item.ENCO_DT_BAIXA.Value.ToShortDateString();
+                        noti.NOTI_TX_TEXTO = "Unidade: " + unid + ". A encomenda recebida em " + item.ENCO_DT_CHEGADA.Value.ToShortDateString() + " e com código: " + item.ENCO_CD_CODIGO + ", foi recusada em " + item.ENCO_DT_RECUSA.Value.ToShortDateString();
                     }
 
 
