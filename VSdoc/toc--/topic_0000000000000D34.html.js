@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_00000000000022A0.html"],['641',"ApplicationServices.Services Namespace","topic_0000000000000BA9.html"],['1069',"OcorrenciaAppService Class","topic_0000000000000D2E.html"],['1071',"Methods","topic_0000000000000D2E_methods--.html"],['1080',"GetAllUsuarios Method","topic_0000000000000D34.html"]];

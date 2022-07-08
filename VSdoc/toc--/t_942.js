@@ -1,0 +1,1 @@
+c['942']=[['943',"FornecedorCnpjAppService Constructor","topic_0000000000000CBE.html",0],['944',"Methods","topic_0000000000000CBD_methods--.html",1]];

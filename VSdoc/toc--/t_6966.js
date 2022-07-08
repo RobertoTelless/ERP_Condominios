@@ -1,0 +1,1 @@
+c['6966']=[['6967',"cancelarPedidoScolResponse Constructor","topic_0000000000002173_overloads--.html",1],['6970',"Fields","topic_0000000000002171_vars--.html",1]];

@@ -1,0 +1,1 @@
+c['1757']=[['1758',"GetAllItens Method","topic_0000000000001D4C.html",0],['1759',"GetAllItensAdm Method","topic_0000000000001D4B.html",0],['1760',"GetItemById Method","topic_0000000000001D4A.html",0]];

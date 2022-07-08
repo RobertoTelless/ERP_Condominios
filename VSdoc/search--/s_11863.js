@@ -1,0 +1,1 @@
+search_result['11863']=["topic_0000000000001FBA.html","valorDeclarado.minimo Property",""];

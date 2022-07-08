@@ -1,0 +1,1 @@
+c['777']=[['778',"GetAllItems Method","topic_0000000000000C27.html",0],['779',"GetItemById Method","topic_0000000000000C26.html",0],['780',"ValidateCreate Method","topic_0000000000000C29.html",0],['781',"ValidateEdit Method","topic_0000000000000C28.html",0]];

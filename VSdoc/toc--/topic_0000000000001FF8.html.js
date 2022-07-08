@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_00000000000022A0.html"],['6597',"ExternalServices.WSCorreios Namespace","topic_0000000000001DF9.html"],['7403',"pesquisarParametrosPorDescricao Class","topic_0000000000001FF7.html"],['7407',"Fields","topic_0000000000001FF7_vars--.html"],['7408',"prefix Field","topic_0000000000001FF8.html"]];

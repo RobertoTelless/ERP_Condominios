@@ -1,0 +1,1 @@
+c['7229']=[['7230',"getStatusCartaoPostagemResponse Constructor","topic_000000000000209F_overloads--.html",1],['7233',"Fields","topic_000000000000209D_vars--.html",1]];

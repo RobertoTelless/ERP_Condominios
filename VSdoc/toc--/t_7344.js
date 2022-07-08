@@ -1,0 +1,1 @@
+c['7344']=[['7345',"obterClienteAtualizacaoResponse() Constructor","topic_0000000000002010.html",0],['7346',"obterClienteAtualizacaoResponse(DateTime) Constructor","topic_0000000000002011.html",0]];

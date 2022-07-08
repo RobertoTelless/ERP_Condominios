@@ -1,0 +1,1 @@
+search_result['9738']=["topic_0000000000001A8D.html","TIPO_CONDOMINIO.TICO_CD_ID Property",""];

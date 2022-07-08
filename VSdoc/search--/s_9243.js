@@ -1,0 +1,1 @@
+search_result['9243']=["topic_0000000000001925.html","OCORRENCIA.OCOR_TX_TEXTO_PLANO Property",""];

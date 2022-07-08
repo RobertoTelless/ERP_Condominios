@@ -143,10 +143,10 @@
                             <h5><a href="@Url.Action("MontarTelaES", "EntradaSaida")">Entradas/Saídas de Visitantes</a></h5>
                         </div>
                         <div class="ibox-content">
-                            <small>Entradas/Saídas Hoje</small>
+                            <small>Visitantes Hoje</small>
                             <h1 class="no-margins">@ViewBag.NumES</h1>
                             <hr />
-                            <small>Últimas Entradas/Saídas</small>
+                            <small>Últimos Entradas/Saídas</small>
                             <br />
                             <br />
                             <div class="row">
@@ -204,7 +204,7 @@
                             <h5><a href="@Url.Action("MontarTelaControleVeiculo", "ControleVeiculo")">Entradas/Saídas de Veículos</a></h5>
                         </div>
                         <div class="ibox-content">
-                            <small>Entradas/Saídas Hoje</small>
+                            <small>Veículos Hoje</small>
                             <h1 class="no-margins">@ViewBag.NumCV</h1>
                             <hr />
                             <small>Últimas Entradas/Saídas</small>
@@ -400,7 +400,7 @@
                     <img alt="image" class="img-circle" src="~/Images/entrada_saida_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
-                    @Html.ButtonLinkIndex(text: "Entradas & Saídas", controller: "EntradaSaida", action: "MontarTelaES", buttonClass: "primary")
+                    @Html.ButtonLinkIndex(text: "Visitantes", controller: "EntradaSaida", action: "MontarTelaES", buttonClass: "primary")
                 </div>
             </div>
             <br />
@@ -428,6 +428,15 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12">
                     @Html.ButtonLinkIndex(text: "Mudanças", controller: "Mudanca", action: "MontarTelaMudanca", buttonClass: "primary")
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <img alt="image" class="img-circle" src="~/Images/assembleia_icone.jpg" style = "width: auto; height: auto; max-height: 30px; max-width: 30px;" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    @Html.ButtonLinkIndex(text: "Controle Animais", controller: "Animais", action: "MontarTelaAnimais", buttonClass: "primary")
                 </div>
             </div>
             <br />

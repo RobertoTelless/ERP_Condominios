@@ -1,0 +1,1 @@
+search_result['5282']=["topic_0000000000000F2A.html","EquipamentoService.GetAllPeriodicidades Method",""];

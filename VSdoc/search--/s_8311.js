@@ -1,0 +1,1 @@
+search_result['8311']=["topic_000000000000167B.html","CATEGORIA_EQUIPAMENTO.ASSI_CD_ID Property",""];

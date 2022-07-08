@@ -1,0 +1,1 @@
+search_result['6042']=["topic_0000000000001102_props--.html","ICategoriaFornecedorRepository Properties",""];

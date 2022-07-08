@@ -1,0 +1,1 @@
+c['7780']=[['7781',"validarPostagemSimultanea() Constructor","topic_0000000000002132.html",0],['7782',"validarPostagemSimultanea(int, int, string, string, coletaSimultanea, string, string) Constructor","topic_0000000000002133.html",0]];

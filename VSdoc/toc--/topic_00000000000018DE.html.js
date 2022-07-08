@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_00000000000022A0.html"],['4612',"EntitiesServices.Model Namespace","topic_00000000000014E7.html"],['5691',"NOTICIA Class","topic_00000000000018DD.html"],['5692',"NOTICIA Constructor","topic_00000000000018DE.html"]];

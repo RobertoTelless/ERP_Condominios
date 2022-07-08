@@ -1,0 +1,1 @@
+c['2052']=[['2053',"ExcluirAmbiente(int) Method","topic_000000000000005E.html",0],['2054',"ExcluirAmbiente(AmbienteViewModel) Method","topic_000000000000005F.html",0]];

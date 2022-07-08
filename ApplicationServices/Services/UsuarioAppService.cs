@@ -675,7 +675,7 @@ namespace ApplicationServices.Services
             NOTIFICACAO noti = new NOTIFICACAO();
             noti.CANO_CD_ID = 1;
             noti.ASSI_CD_ID = usuario.ASSI_CD_ID;
-            noti.NOTI_DT_EMISSAO = DateTime.Today;
+            noti.NOTI_DT_EMISSAO = DateTime.Now;
             noti.NOTI_DT_VALIDADE = DateTime.Today.Date.AddDays(30);
             noti.NOTI_IN_VISTA = 0;
             noti.NOTI_NM_TITULO = "Geração de Nova Senha";
@@ -695,7 +695,6 @@ namespace ApplicationServices.Services
             header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
             data = data.Replace("{Data}", usuario.USUA_DT_TROCA_SENHA.Value.ToLongDateString());
             data = data.Replace("{Senha}", usuario.USUA_NM_SENHA);
-
             // Concatena
             String emailBody = header + body + data;
 

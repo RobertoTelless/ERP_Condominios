@@ -1,0 +1,1 @@
+c['8711']=[['8712',"VagaService Constructor","topic_000000000000109B.html",0],['8713',"Methods","topic_0000000000001099_methods--.html",1],['8731',"Fields","topic_0000000000001099_vars--.html",1]];

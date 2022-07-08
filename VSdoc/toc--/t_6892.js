@@ -1,0 +1,1 @@
+c['6892']=[['6893',"buscaTarifaVale() Constructor","topic_00000000000020EB.html",0],['6894',"buscaTarifaVale(string, string, string, string, string, string, string, int, double, double, double, double, string) Constructor","topic_00000000000020EC.html",0]];

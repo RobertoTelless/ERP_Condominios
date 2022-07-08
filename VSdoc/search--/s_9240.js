@@ -1,0 +1,1 @@
+search_result['9240']=["topic_0000000000001922.html","OCORRENCIA.OCOR_TX_ENCERRAMENTO Property",""];

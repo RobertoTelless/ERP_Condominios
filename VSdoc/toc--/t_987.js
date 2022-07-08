@@ -1,0 +1,1 @@
+c['987']=[['988',"LogAppService Constructor","topic_0000000000000CE6.html",0],['989',"Methods","topic_0000000000000CE5_methods--.html",1]];

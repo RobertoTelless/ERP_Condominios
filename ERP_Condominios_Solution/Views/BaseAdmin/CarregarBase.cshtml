@@ -177,7 +177,7 @@
                                 <div class="feed-activity-list">
                                     @if (Model.NOTIFICACAO.Count > 0)
                                     {
-                                        foreach (var cond in (Model.NOTIFICACAO).OrderByDescending(a => a.NOTI_DT_EMISSAO).Take(6))
+                                        foreach (var cond in (((List<EntitiesServices.Model.NOTIFICACAO>)Session["ListaNovas"]) as List<EntitiesServices.Model.NOTIFICACAO>))
                                         {
                                             if (cond.NOTI_DT_VALIDADE >= DateTime.Today)
                                             {

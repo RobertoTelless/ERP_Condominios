@@ -1,0 +1,1 @@
+c['8228']=[['8229',"Create(ENTRADA_SAIDA) Method","topic_0000000000000F1B.html",0],['8230',"Create(ENTRADA_SAIDA, LOG) Method","topic_0000000000000F1A.html",0]];

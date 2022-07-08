@@ -1,0 +1,1 @@
+c['7222']=[['7223',"getStatusCartaoPostagem() Constructor","topic_000000000000209B.html",0],['7224',"getStatusCartaoPostagem(string, string, string) Constructor","topic_000000000000209C.html",0]];

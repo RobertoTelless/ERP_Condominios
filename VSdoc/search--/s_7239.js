@@ -1,0 +1,1 @@
+search_result['7239']=["topic_000000000000137A.html","IEquipamentoService.Create (EQUIPAMENTO, LOG) Method",""];

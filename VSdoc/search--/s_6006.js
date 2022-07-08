@@ -1,0 +1,1 @@
+search_result['6006']=["topic_00000000000010F1.html","IBancoRepository.GetByCodigo Method",""];

@@ -1,0 +1,1 @@
+c['7410']=[['7411',"pesquisarParametrosPorDescricaoResponse() Constructor","topic_0000000000001FFD.html",0],['7412',"pesquisarParametrosPorDescricaoResponse(dimensaoTO) Constructor","topic_0000000000001FFE.html",0]];

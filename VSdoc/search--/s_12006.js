@@ -1,0 +1,1 @@
+search_result['12006']=["topic_0000000000002008_attached_props--.html","obterClienteAtualizacao Attached Properties",""];

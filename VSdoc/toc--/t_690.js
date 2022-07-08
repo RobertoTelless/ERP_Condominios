@@ -1,0 +1,1 @@
+c['690']=[['691',"AssinanteAppService Constructor","topic_0000000000000BD7.html",0],['692',"Methods","topic_0000000000000BD6_methods--.html",1]];

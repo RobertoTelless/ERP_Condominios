@@ -1,0 +1,1 @@
+search_result['9020']=["topic_000000000000187D.html","LOG Class",""];

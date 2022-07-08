@@ -1,0 +1,1 @@
+c['1587']=[['1588',"Methods","topic_0000000000001CBE_methods--.html",1]];

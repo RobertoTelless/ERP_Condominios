@@ -1,0 +1,1 @@
+search_result['11089']=["topic_0000000000001DA6.html","TipoCondominioRepository.GetAllItens Method",""];

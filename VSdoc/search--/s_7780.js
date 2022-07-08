@@ -1,0 +1,1 @@
+search_result['7780']=["topic_00000000000014D0.html","IVagaService.GetAllTipos Method",""];

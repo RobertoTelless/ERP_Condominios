@@ -1,0 +1,1 @@
+var breadcrumbs=[['-1',"",""],['2',"SOLUTION-WIDE PROPERTIES Reference","topic_00000000000022A0.html"],['6597',"ExternalServices.WSCorreios Namespace","topic_0000000000001DF9.html"],['7681',"valePostal Class","topic_00000000000020B3.html"],['7722',"Methods","topic_00000000000020B3_methods--.html"],['7723',"RaisePropertyChanged Method","topic_00000000000020DC.html"]];

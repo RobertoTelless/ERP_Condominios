@@ -1,0 +1,1 @@
+c['8070']=[['8071',"CategoriaFornecedorService Constructor","topic_0000000000000E92.html",0],['8072',"Methods","topic_0000000000000E90_methods--.html",1],['8083',"Fields","topic_0000000000000E90_vars--.html",1]];

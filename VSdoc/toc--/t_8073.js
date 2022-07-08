@@ -1,0 +1,1 @@
+c['8073']=[['8074',"Create(CATEGORIA_FORNECEDOR) Method","topic_0000000000000E97.html",0],['8075',"Create(CATEGORIA_FORNECEDOR, LOG) Method","topic_0000000000000E96.html",0]];

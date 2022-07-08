@@ -1,0 +1,1 @@
+search_result['10523']=["topic_0000000000001C8B.html","ContaBancariaLancamentoRepository.GetAllItens Method",""];

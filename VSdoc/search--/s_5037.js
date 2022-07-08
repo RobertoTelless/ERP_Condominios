@@ -1,0 +1,1 @@
+search_result['5037']=["topic_0000000000000E8B.html","BancoService.Create (BANCO, LOG) Method",""];

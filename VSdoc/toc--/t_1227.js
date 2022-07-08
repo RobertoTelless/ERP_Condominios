@@ -1,0 +1,1 @@
+c['1227']=[['1228',"ValidateEdit(TIPO_PESSOA, TIPO_PESSOA) Method","topic_0000000000000DBB.html",0],['1229',"ValidateEdit(TIPO_PESSOA, TIPO_PESSOA, USUARIO) Method","topic_0000000000000DBA.html",0]];

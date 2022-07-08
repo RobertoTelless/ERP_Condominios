@@ -1,0 +1,1 @@
+search_result['8312']=["topic_000000000000167C.html","CATEGORIA_EQUIPAMENTO.CAEQ_NM_NOME Property",""];

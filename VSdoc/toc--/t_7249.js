@@ -1,0 +1,1 @@
+c['7249']=[['7250',"integrarUsuarioScol() Constructor","topic_0000000000002062.html",0],['7251',"integrarUsuarioScol(int, string, string) Constructor","topic_0000000000002063.html",0]];

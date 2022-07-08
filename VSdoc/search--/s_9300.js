@@ -1,0 +1,1 @@
+search_result['9300']=["topic_000000000000194A.html","PERIODICIDADE.PERI_CD_ID Property",""];

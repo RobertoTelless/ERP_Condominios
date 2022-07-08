@@ -1,0 +1,1 @@
+search_result['10157']=["topic_0000000000001BC2.html","VAGA.ASSI_CD_ID Property",""];

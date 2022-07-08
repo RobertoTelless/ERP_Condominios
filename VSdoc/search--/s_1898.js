@@ -1,0 +1,1 @@
+search_result['1898']=["topic_0000000000000570.html","AssinanteViewModel.TIPO_CONDOMINIO Property",""];

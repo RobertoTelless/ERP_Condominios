@@ -1,0 +1,1 @@
+search_result['8305']=["topic_0000000000001678_events--.html","CATEGORIA_EQUIPAMENTO Events",""];

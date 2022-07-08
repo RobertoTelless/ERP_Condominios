@@ -1,0 +1,1 @@
+c['2651']=[['2652',"ReativarFornecedor(int) Method","topic_0000000000000255.html",0],['2653',"ReativarFornecedor(FornecedorViewModel) Method","topic_0000000000000256.html",0]];

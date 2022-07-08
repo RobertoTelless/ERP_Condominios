@@ -1,0 +1,1 @@
+c['5808']=[['5809',"EQUIPAMENTO Property","topic_000000000000194E.html",0],['5810',"PERI_CD_ID Property","topic_000000000000194A.html",0],['5811',"PERI_IN_ATIVO Property","topic_000000000000194D.html",0],['5812',"PERI_NM_NOME Property","topic_000000000000194B.html",0],['5813',"PERI_NR_DIAS Property","topic_000000000000194C.html",0]];

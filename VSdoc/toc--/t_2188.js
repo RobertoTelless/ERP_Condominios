@@ -1,0 +1,1 @@
+c['2188']=[['2189',"ExcluirBanco(int) Method","topic_00000000000000DB.html",0],['2190',"ExcluirBanco(BancoViewModel) Method","topic_00000000000000DC.html",0]];

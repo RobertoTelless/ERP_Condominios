@@ -1,0 +1,1 @@
+c['6719']=[['6720',"VerificaSeTodosObjetosCanceladosResponse() Constructor","topic_0000000000001FDA.html",0],['6721',"VerificaSeTodosObjetosCanceladosResponse(bool) Constructor","topic_0000000000001FDB.html",0]];

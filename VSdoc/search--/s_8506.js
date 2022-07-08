@@ -1,0 +1,1 @@
+search_result['8506']=["topic_0000000000001702.html","CONTA_BANCO_LANCAMENTO.CBLA_IN_TIPO Property",""];

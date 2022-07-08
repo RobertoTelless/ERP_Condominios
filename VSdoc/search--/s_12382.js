@@ -1,0 +1,1 @@
+search_result['12382']=["topic_00000000000020AF.html","buscaDataAtualResponse Class",""];

@@ -1,0 +1,1 @@
+c['6145']=[['6146',"TIPO_AMBIENTE Constructor","topic_0000000000001A86.html",0],['6147',"Properties","topic_0000000000001A85_props--.html",1]];

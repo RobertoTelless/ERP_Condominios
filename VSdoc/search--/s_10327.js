@@ -1,0 +1,1 @@
+search_result['10327']=["topic_0000000000001C30.html","AmbienteChaveRepository.GetAllItens Method",""];

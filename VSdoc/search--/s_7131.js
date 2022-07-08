@@ -1,0 +1,1 @@
+search_result['7131']=["topic_0000000000001337.html","IContaBancariaService.GetLancamentosDia Method",""];

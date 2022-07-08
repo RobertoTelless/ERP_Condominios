@@ -1,0 +1,1 @@
+c['7236']=[['7237',"getStatusPLP() Constructor","topic_000000000000213B.html",0],['7238',"getStatusPLP(objetoPostal[], string) Constructor","topic_000000000000213C.html",0]];
