@@ -874,7 +874,7 @@ namespace ERP_Condominios_Solution.Controllers
 
                     // Sucesso
                     listaMaster = new List<UNIDADE>();
-                    return RedirectToAction("VoltarBaseUnidade");
+                    return RedirectToAction("VoltarAnexoUnidade");
                 }
                 catch (Exception ex)
                 {

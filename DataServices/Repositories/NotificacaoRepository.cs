@@ -22,6 +22,7 @@ namespace DataServices.Repositories
         {
             IQueryable<NOTIFICACAO> query = Db.NOTIFICACAO.Where(p => p.NOTI_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
+            query = query.Where(p => DbFunctions.TruncateTime(p.NOTI_DT_VALIDADE) >= DbFunctions.TruncateTime(DateTime.Today));
             query = query.OrderByDescending(a => a.NOTI_DT_EMISSAO);
             return query.ToList();
         }

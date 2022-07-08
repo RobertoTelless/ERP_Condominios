@@ -13,12 +13,16 @@
                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                     <br />
                     <div class="col-lg-12 col-md-12 col-xs-12">
+                        @Html.ButtonLinkIndex(text: "Condomínio", action: "MontarTelaCondominio", controller: "Condominio", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Usuários", action: "MontarTelaUsuario", controller: "Usuario", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Auditoria", action: "MontarTelaLog", controller: "Auditoria", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Notificações", action: "MontarTelaNotificacaoGeral", controller: "Notificacao", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Notícias", action: "MontarTelaNoticia", controller: "Noticia", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Unidades", action: "MontarTelaUnidade", controller: "Unidade", buttonClass: "primary")
                         @Html.ButtonLinkIndex(text: "Telefones", action: "MontarTelaTelefone", controller: "Telefone", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Padrões de Mensagens", action: "MontarTelaTemplate", controller: "Template", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Configuração", action: "MontarTelaConfiguracao", controller: "Configuracao", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Tabelas Auxiliares", action: "MontarTelaTabelasAuxiliares", controller: "TabelaAuxiliar", buttonClass: "success")
                         @Html.ButtonLinkIndex(text: "Dashboard", controller: "Usuario", action: "VoltarGeral")
                     </div>
                     <br /><br />
@@ -115,54 +119,11 @@
                         </div>
                         <div class="ibox-content" style="height: 1800px">
                             <div class="row">
-                                @*<div class="col-lg-4 col-md-4 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Usuários/Unidade</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                @if ((ViewBag.ListaUsuUnidade as List<ERP_Condominios_Solution.ViewModels.ModeloViewModel>).Count > 0)
-                                                {
-                                                    <table class="table table-striped table-bordered table-hover">
-                                                        <thead style="background-color:lightsteelblue">
-                                                            <tr>
-                                                                <th>Unidade</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaUsuUnidade as List<ERP_Condominios_Solution.ViewModels.ModeloViewModel>).OrderBy(p => p.Nome))
-                                                            {
-                                                                <tr>
-                                                                    <td>@cond.Nome</td>
-                                                                    <td>@cond.Valor</td>
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8 col-md-8 col-xs-12">
-                                    <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
-                                        <div class="ibox-title">
-                                            <h4>Gráfico de Usuários/Unidade</h4>
-                                        </div>
-                                        <div class="ibox-content">
-                                            <div class="row">
-                                                <canvas id="barChartUnidade" height="150"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>*@                          
-                                
+                               
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Transações/Dia</h4>
+                                            <h4>Transações x Dia (Mês Corrente)</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
@@ -176,7 +137,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaLogDia as List<ERP_Condominios_Solution.ViewModels.ModeloViewModel>).OrderByDescending(p => p.DataEmissao).Take(10))
+                                                            @foreach (var cond in (ViewBag.ListaLogDia as List<ERP_Condominios_Solution.ViewModels.ModeloViewModel>).OrderBy(p => p.DataEmissao).Take(10))
                                                             {
                                                                 <tr>
                                                                     <td>@cond.DataEmissao.ToShortDateString()</td>
@@ -193,7 +154,7 @@
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Gráfico de Transações/Dia</h4>
+                                            <h4>Gráfico de Transações x Dia (Mês Corrente)</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
@@ -206,7 +167,7 @@
                                 <div class="col-lg-4 col-md-4 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Transações/Operação</h4>
+                                            <h4>Transações x Operação</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">
@@ -220,7 +181,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach (var cond in (ViewBag.ListaLogOp as List<ERP_Condominios_Solution.ViewModels.ModeloViewModel>).OrderBy(p => p.Nome))
+                                                            @foreach (var cond in (ViewBag.ListaLogOp as List<ERP_Condominios_Solution.ViewModels.ModeloViewModel>).OrderBy(p => p.Valor).Take(10))
                                                             {
                                                                 <tr>
                                                                     <td>@cond.Nome</td>
@@ -237,7 +198,7 @@
                                 <div class="col-lg-8 col-md-8 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins" style="border-bottom: solid; border-bottom-color: darkblue; border-bottom-width: 2px; border-left: solid; border-left-color: darkblue; border-left-width: 1px; border-right: solid; border-right-color: darkblue; border-right-width: 1px; border-top: solid; border-top-color: darkblue; border-top-width: 1px">
                                         <div class="ibox-title">
-                                            <h4>Gráfico de Transações/Operação</h4>
+                                            <h4>Gráfico de Transações x Operação</h4>
                                         </div>
                                         <div class="ibox-content">
                                             <div class="row">

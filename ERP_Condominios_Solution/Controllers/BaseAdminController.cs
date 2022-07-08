@@ -492,7 +492,9 @@ namespace ERP_Condominios_Solution.Controllers
             Int32 log = listaLog.Count;
             Int32 logDia = listaLog.Where(p => p.LOG_DT_DATA.Value.Date == DateTime.Today.Date).ToList().Count;
             Int32 logMes = listaLog.Where(p => p.LOG_DT_DATA.Value.Month == DateTime.Today.Month & p.LOG_DT_DATA.Value.Year == DateTime.Today.Year).ToList().Count;
-
+            List<LOG> listaDia = listaLog.Where(p => p.LOG_DT_DATA.Value.Date == DateTime.Today.Date).ToList();
+            List<LOG> listaMes = listaLog.Where(p => p.LOG_DT_DATA.Value.Month == DateTime.Today.Month & p.LOG_DT_DATA.Value.Year == DateTime.Today.Year).ToList().ToList();
+            
             ViewBag.Log = log;
             ViewBag.LogDia = logDia;
             ViewBag.LogMes = logMes;
@@ -502,7 +504,7 @@ namespace ERP_Condominios_Solution.Controllers
             Session["LogMes"] = logMes;
 
             // Resumo Log Diario
-            List<DateTime> datasCR = listaLog.Where(m => m.LOG_DT_DATA != null).Select(p => p.LOG_DT_DATA.Value.Date).Distinct().ToList();
+            List<DateTime> datasCR = listaMes.Where(m => m.LOG_DT_DATA != null).OrderBy(m => m.LOG_DT_DATA).Select(p => p.LOG_DT_DATA.Value.Date).Distinct().ToList();
             List<ModeloViewModel> listaLogDia = new List<ModeloViewModel>();
             foreach (DateTime item in datasCR)
             {
@@ -512,6 +514,7 @@ namespace ERP_Condominios_Solution.Controllers
                 mod1.Valor = conta;
                 listaLogDia.Add(mod1);
             }
+            listaLogDia = listaLogDia.OrderBy(p => p.DataEmissao).ToList();
             ViewBag.ListaLogDia = listaLogDia;
             ViewBag.ContaLogDia = listaLogDia.Count;
             Session["ListaDatasLog"] = datasCR;
@@ -532,22 +535,6 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.ContaLogOp = lista2.Count;
             Session["ListaOpLog"] = opLog;
             Session["ListaLogOp"] = lista2;
-
-            //// Resumo Usuário Unidade
-            //List<Int32?> unidades = listaTotal.Select(p => p.UNID_CD_ID).Distinct().ToList();
-            //List<ModeloViewModel> lista3 = new List<ModeloViewModel>();
-            //foreach (Int32 item in unidades)
-            //{
-            //    Int32 conta2 = listaTotal.Where(p => p.UNID_CD_ID == item).ToList().Count;
-            //    ModeloViewModel mod1 = new ModeloViewModel();
-            //    mod1.Nome = uniApp.GetItemById(item).UNID_NM_EXIBE;
-            //    mod1.Valor = conta2;
-            //    lista3.Add(mod1);
-            //}
-            //ViewBag.ListaUsuUnidade = lista3;
-            //ViewBag.ContaUsuUnidade = lista3.Count;
-            //Session["ListaUnidadesUsu"] = unidades;
-            //Session["ListaUsuUnidade"] = lista3;
             Session["VoltaDash"] = 3;
             Session["VoltaUnidade"] = 1;
             return View(vm);

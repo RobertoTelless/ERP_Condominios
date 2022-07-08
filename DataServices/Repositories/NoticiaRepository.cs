@@ -22,6 +22,7 @@ namespace DataServices.Repositories
         public List<NOTICIA> GetAllItens(Int32 idAss)
         {
             IQueryable<NOTICIA> query = Db.NOTICIA.Where(p => p.NOTC_IN_ATIVO == 1);
+            query = query.Where(p => DbFunctions.TruncateTime(p.NOTC_DT_VALIDADE) >= DbFunctions.TruncateTime(DateTime.Today));
             query = query.Include(p => p.NOTICIA_COMENTARIO);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             return query.ToList();

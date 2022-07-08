@@ -33,7 +33,6 @@
                             @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                             <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão da Notificação</button>
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseNotificacao", controller: "Notificacao")
-                            @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Notificacao")
                         </div>
                         @Html.AntiForgeryToken()
                         @if (!ViewData.ModelState.IsValid)
@@ -134,12 +133,12 @@
                         </div>
 
 
-                        <div class="form-group">
+                        @*<div class="form-group">
                             @Html.ButtonActionSubmit(text: "BtnSubmit", htmlAttributes: new { id = "submit", style = "display: none;" })
                             <button style="margin-left: 15px;" class="btnSubmit btn btn-sm btn-success" id="basictoast" type="button">Confirma Inclusão da Notificação</button>
                             @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseNotificacao", controller: "Notificacao")
                             @Html.ButtonLinkIndex(text: "Dashboard", action: "Voltar", controller: "Notificacao")
-                        </div>
+                        </div>*@
                     </div>
                 }
             </div>

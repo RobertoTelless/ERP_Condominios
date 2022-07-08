@@ -102,7 +102,17 @@ namespace ERP_Condominios_Solution.Controllers
             ViewBag.LogsMesCorrente = logApp.GetAllItensMesCorrente(idAss).Count;
             ViewBag.LogsMesAnterior = logApp.GetAllItensMesAnterior(idAss).Count;
 
+            // Mensagens
+            if (Session["MensLog"] != null)
+            {
+                if ((Int32)Session["MensLog"] == 1)
+                {
+                    ModelState.AddModelError("", ERP_Condominios_Resource.ResourceManager.GetString("M0016", CultureInfo.CurrentCulture));
+                }
+            }
+
             // Abre view
+            Session["MensLog"] = 0;
             objeto = new LOG();
             objeto.LOG_DT_DATA = DateTime.Today.Date;
             return View(objeto);
@@ -129,6 +139,7 @@ namespace ERP_Condominios_Solution.Controllers
                 // Verifica retorno
                 if (volta == 1)
                 {
+                    Session["MensLog"] = 1;
                     return RedirectToAction("MontarTelaLog");
                 }
 

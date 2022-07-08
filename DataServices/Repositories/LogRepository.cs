@@ -40,7 +40,7 @@ namespace DataServices.Repositories
         public List<LOG> GetAllItensMesCorrente(Int32 idAss)
         {
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
-            query = query.Where(p => DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Month == DbFunctions.TruncateTime(DateTime.Today.Date).Value.Month);
+            query = query.Where(p => DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Month == DbFunctions.TruncateTime(DateTime.Today.Date).Value.Month & DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Year == DbFunctions.TruncateTime(DateTime.Today.Date).Value.Year);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
             query = query.OrderByDescending(a => a.LOG_DT_DATA);
             return query.ToList();
@@ -50,9 +50,10 @@ namespace DataServices.Repositories
         {
             var currentMonth = DateTime.Today.Month;
             var previousMonth = DateTime.Today.AddMonths(-1).Month;
+            var year = currentMonth > 1 ? DateTime.Today.Year : DateTime.Today.AddYears(-1).Year;
             IQueryable<LOG> query = Db.LOG.Where(p => p.LOG_IN_ATIVO == 1);
             query = query.Where(p => p.ASSI_CD_ID == idAss);
-            query = query.Where(p => DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Month == previousMonth);
+            query = query.Where(p => DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Month == previousMonth & DbFunctions.TruncateTime(p.LOG_DT_DATA).Value.Year == year);
             query = query.OrderByDescending(a => a.LOG_DT_DATA);
             return query.ToList();
         }

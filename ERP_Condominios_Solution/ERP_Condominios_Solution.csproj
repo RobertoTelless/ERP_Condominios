@@ -807,6 +807,7 @@
     <Content Include="Images\encomenda_icone.png" />
     <Content Include="Images\entrada_saida_icone.jpg" />
     <Content Include="Images\estoque_icone.png" />
+    <Content Include="Images\favicon_SystemBR.png" />
     <Content Include="Images\Favicon_ERP_Condominio.png" />
     <Content Include="Images\favicon_SystemBR.jpg" />
     <Content Include="Images\ff1.jpg" />

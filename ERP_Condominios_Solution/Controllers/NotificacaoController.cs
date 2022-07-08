@@ -903,7 +903,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.jpg"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/favicon_SystemBR.png"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -953,13 +953,6 @@ namespace ERP_Condominios_Solution.Controllers
             };
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
-            cell = new PdfPCell(new Paragraph("Foto", meuFont))
-            {
-                VerticalAlignment = Element.ALIGN_MIDDLE,
-                HorizontalAlignment = Element.ALIGN_LEFT
-            };
-            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
-            table.AddCell(cell);
             cell = new PdfPCell(new Paragraph("Título", meuFont))
             {
                 VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -988,6 +981,13 @@ namespace ERP_Condominios_Solution.Controllers
             };
             cell.BackgroundColor = BaseColor.LIGHT_GRAY;
             table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Foto", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
 
             foreach (NOTIFICACAO item in lista)
             {
@@ -1001,23 +1001,6 @@ namespace ERP_Condominios_Solution.Controllers
                     VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
                 };
                 table.AddCell(cell);
-                if (System.IO.File.Exists(Server.MapPath(item.USUARIO.USUA_AQ_FOTO)))
-                {
-                    cell = new PdfPCell();
-                    image = Image.GetInstance(Server.MapPath(item.USUARIO.USUA_AQ_FOTO));
-                    image.ScaleAbsolute(20, 20);
-                    cell.AddElement(image);
-                    table.AddCell(cell);
-                }
-                else
-                {
-                    cell = new PdfPCell(new Paragraph("-", meuFont))
-                    {
-                        VerticalAlignment = Element.ALIGN_MIDDLE,
-                        HorizontalAlignment = Element.ALIGN_LEFT
-                    };
-                    table.AddCell(cell);
-                }
                 cell = new PdfPCell(new Paragraph(item.NOTI_NM_TITULO, meuFont))
                 {
                     VerticalAlignment = Element.ALIGN_MIDDLE,
@@ -1066,6 +1049,24 @@ namespace ERP_Condominios_Solution.Controllers
                     };
                     table.AddCell(cell);
                 }
+                if (System.IO.File.Exists(Server.MapPath(item.USUARIO.USUA_AQ_FOTO)))
+                {
+                    cell = new PdfPCell();
+                    image = Image.GetInstance(Server.MapPath(item.USUARIO.USUA_AQ_FOTO));
+                    image.ScaleAbsolute(20, 20);
+                    cell.AddElement(image);
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("-", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+
             }
             pdfDoc.Add(table);
 

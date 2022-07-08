@@ -63,7 +63,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.TORR_CD_ID == torre);
             }
-            if (idTipo != null)
+            if (idTipo != 0)
             {
                 query = query.Where(p => p.TIUN_CD_ID == idTipo);
             }

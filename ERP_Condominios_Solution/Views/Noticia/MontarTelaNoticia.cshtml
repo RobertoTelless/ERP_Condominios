@@ -63,10 +63,10 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div class="col-lg-6 col-md-6 col-xs-12">
                                     @Html.ButtonActionSubmit(text: "Filtrar")
+                                    @Html.ButtonLinkIndex(text: "Nova Notícia", controller: "Noticia", action: "IncluirNoticia", buttonClass: "primary")
                                     @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Noticia", action: "RetirarFiltroNoticiageral")
                                     @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Noticia", action: "MostrarTudoNoticiaGeral")
-                                    @Html.ButtonLinkIndex(text: "Nova Notícia", controller: "Noticia", action: "IncluirNoticia")
-                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Noticia", action: "VoltarDash")
+                                    @Html.ButtonLinkIndex(text: "Dashboard", controller: "Noticia", action: "VoltarDash", buttonClass: "primary")
                                 </div>
                             </div>
                     </div>
