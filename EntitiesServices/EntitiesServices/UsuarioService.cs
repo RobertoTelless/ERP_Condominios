@@ -50,9 +50,9 @@ namespace ModelServices.EntitiesServices
             return usuario;
         }
 
-        public TEMPLATE GetTemplate(String code)
+        public TEMPLATE GetTemplate(String code, Int32 idAss)
         {
-            return _tempRepository.GetByCode(code);
+            return _tempRepository.GetByCode(code, idAss);
         }
 
         public Boolean VerificarCredenciais (String senha, USUARIO usuario)
@@ -84,9 +84,9 @@ namespace ModelServices.EntitiesServices
             return _usuarioRepository.GetByLogin(login, idAss);
         }
 
-        public TEMPLATE GetTemplateByCode(String codigo)
+        public TEMPLATE GetTemplateByCode(String codigo, Int32 idAss)
         {
-            return _tempRepository.GetByCode(codigo);
+            return _tempRepository.GetByCode(codigo, idAss);
         }
 
         public USUARIO GetItemById(Int32 id)

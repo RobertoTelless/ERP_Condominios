@@ -31,12 +31,12 @@ namespace ModelServices.Interfaces.EntitiesServices
         List<USUARIO> GetAllItensBloqueados(Int32 idAss);
         List<USUARIO> GetAllItensAcessoHoje(Int32 idAss);
         List<USUARIO> ExecuteFilter(Int32? perfilId, Int32? cargoId, String nome, String login, String email, Int32 idAss);
-        TEMPLATE GetTemplateByCode(String codigo);
+        TEMPLATE GetTemplateByCode(String codigo, Int32 idAss);
         USUARIO_ANEXO GetAnexoById(Int32 id);
         List<NOTIFICACAO> GetAllItensUser(Int32 id, Int32 idAss);
         List<NOTIFICACAO> GetNotificacaoNovas(Int32 id, Int32 idAss);
         List<NOTICIA> GetAllNoticias(Int32 idAss);
-        TEMPLATE GetTemplate(String code);
+        TEMPLATE GetTemplate(String code, Int32 idAss);
         USUARIO GetAdministrador(Int32 idAss);
         List<UNIDADE> GetAllUnidades(Int32 idAss);
         List<USUARIO> ExecuteFilterMorador(String nome, Int32? idUnid, Int32 idAss);

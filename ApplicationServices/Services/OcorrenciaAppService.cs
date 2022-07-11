@@ -283,9 +283,9 @@ namespace ApplicationServices.Services
                     volta = _notiService.Create(item);
 
                     // Recupera template e-mail
-                    String header = _temService.GetByCode(template).TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode(template).TEMP_TX_CORPO;
-                    String footer = _temService.GetByCode(template).TEMP_TX_DADOS;
+                    String header = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+                    String footer = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
@@ -340,7 +340,7 @@ namespace ApplicationServices.Services
                 }
 
                 // Monta token
-                CONFIGURACAO conf = _confService.GetItemById(1);
+                CONFIGURACAO conf = _confService.GetItemById(usuario.ASSI_CD_ID);
                 String text = conf.CONF_SG_LOGIN_SMS + ":" + conf.CONF_SG_SENHA_SMS;
                 byte[] textBytes = Encoding.UTF8.GetBytes(text);
                 String token = Convert.ToBase64String(textBytes);
@@ -350,7 +350,7 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("OCORSMS").TEMP_TX_CORPO;
+                String texto = _temService.GetByCode("OCORSMS", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
                 texto = usuario.USUA_NM_NOME;
 
                 // inicia processo

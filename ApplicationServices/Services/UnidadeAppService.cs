@@ -400,9 +400,9 @@ namespace ApplicationServices.Services
                     volta = _notiService.Create(item);
 
                     // Recupera template e-mail
-                    String header = _temService.GetByCode("NOTIUNID").TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode("NOTIUNID").TEMP_TX_CORPO;
-                    String data = _temService.GetByCode("NOTIUNID").TEMP_TX_DADOS;
+                    String header = _temService.GetByCode("NOTIUNID", usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode("NOTIUNID", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+                    String data = _temService.GetByCode("NOTIUNID", usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
                     USUARIO usu = _usuService.GetItemById(item.USUA_CD_ID);

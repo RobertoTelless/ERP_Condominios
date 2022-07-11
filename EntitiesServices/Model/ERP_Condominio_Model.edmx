@@ -21,6 +21,7 @@
           <Property Name="AGEN_CD_USUARIO" Type="int" />
           <Property Name="AGEN_TX_OBSERVACOES" Type="text" />
           <Property Name="AGEN_IN_STATUS" Type="int" />
+          <Property Name="AGEN_LK_REUNIAO" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="AGENDA_ANEXO">
           <Key>
@@ -337,6 +338,7 @@
           <Property Name="CONF_SG_LOGIN_SMS" Type="varchar" MaxLength="50" />
           <Property Name="CONF_SG_SENHA_SMS" Type="varchar" MaxLength="50" />
           <Property Name="CONF_IN_LIMITE_HORA_VEICULO" Type="int" />
+          <Property Name="CONF_NR_DIAS_PATRIMONIO" Type="int" />
         </EntityType>
         <EntityType Name="CONFIGURACAO_ASSOCIACAO">
           <Key>
@@ -5131,6 +5133,7 @@
           <NavigationProperty Name="USUARIO" Relationship="Self.FK_AGENDA_USUARIO" FromRole="AGENDA" ToRole="USUARIO" />
           <NavigationProperty Name="USUARIO1" Relationship="Self.FK_AGENDA_USUARIO1" FromRole="AGENDA" ToRole="USUARIO" />
           <NavigationProperty Name="AGENDA_VINCULO" Relationship="Self.FK_AGENDA_VINCULO_AGENDA" FromRole="AGENDA" ToRole="AGENDA_VINCULO" />
+          <Property Name="AGEN_LK_REUNIAO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="AGENDA_ANEXO">
           <Key>
@@ -5560,6 +5563,7 @@
           <Property Name="CONF_IN_LIMITE_HORA_VEICULO" Type="Int32" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_CONFIGURACAO_ASSINANTE" FromRole="CONFIGURACAO" ToRole="ASSINANTE" />
           <NavigationProperty Name="CONFIGURACAO_ASSOCIACAO" Relationship="Self.FK_CONFIGURACAO_ASSOCIACAO_CONFIGURACAO" FromRole="CONFIGURACAO" ToRole="CONFIGURACAO_ASSOCIACAO" />
+          <Property Name="CONF_NR_DIAS_PATRIMONIO" Type="Int32" />
         </EntityType>
         <EntityType Name="CONFIGURACAO_ASSOCIACAO">
           <Key>
@@ -10630,6 +10634,7 @@
           <EntitySetMapping Name="AGENDA">
             <EntityTypeMapping TypeName="ERP_CondominioModel.AGENDA">
               <MappingFragment StoreEntitySet="AGENDA">
+                <ScalarProperty Name="AGEN_LK_REUNIAO" ColumnName="AGEN_LK_REUNIAO" />
                 <ScalarProperty Name="AGEN_CD_ID" ColumnName="AGEN_CD_ID" />
                 <ScalarProperty Name="USUA_CD_ID" ColumnName="USUA_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
@@ -10968,6 +10973,7 @@
           <EntitySetMapping Name="CONFIGURACAO">
             <EntityTypeMapping TypeName="ERP_CondominioModel.CONFIGURACAO">
               <MappingFragment StoreEntitySet="CONFIGURACAO">
+                <ScalarProperty Name="CONF_NR_DIAS_PATRIMONIO" ColumnName="CONF_NR_DIAS_PATRIMONIO" />
                 <ScalarProperty Name="CONF_CD_ID" ColumnName="CONF_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="CONF_NR_FALHAS_DIA" ColumnName="CONF_NR_FALHAS_DIA" />

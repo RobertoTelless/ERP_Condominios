@@ -687,9 +687,9 @@ namespace ApplicationServices.Services
             Int32 volta1 = _notiService.Create(noti);
 
             // Recupera template e-mail
-            String header = _usuarioService.GetTemplate("NEWPWD").TEMP_TX_CABECALHO;
-            String body = _usuarioService.GetTemplate("NEWPWD").TEMP_TX_CORPO;
-            String data = _usuarioService.GetTemplate("NEWPWD").TEMP_TX_DADOS;
+            String header = _usuarioService.GetTemplate("NEWPWD", usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+            String body = _usuarioService.GetTemplate("NEWPWD", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+            String data = _usuarioService.GetTemplate("NEWPWD", usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
             // Prepara dados do e-mail  
             header = header.Replace("{Nome}", usuario.USUA_NM_NOME);

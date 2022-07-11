@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_Condominios_Solution.ViewModels
 {
     public class ConfiguracaoViewModel
     {
@@ -31,18 +31,22 @@ namespace SystemBRPresentation.ViewModels
         [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
         public Nullable<int> CONF_NR_DIAS_PATRIMONIO { get; set; }
         [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
-        public Nullable<int> CONF_NR_DIAS_ATENDIMENTO { get; set; }
-        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
         public Nullable<int> CONF_NR_REFRESH_DASH { get; set; }
         [StringLength(50, ErrorMessage = "O ARQUIVO DE ALARME deve conter no máximo 50.")]
         public string CONF_NM_ARQUIVO_ALARME { get; set; }
         [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
         public Nullable<int> CONF_NR_REFRESH_NOTIFICACAO { get; set; }
-        [StringLength(50, ErrorMessage = "A CHAVE SENDGRID deve conter no máximo 50.")]
-        public string CONF_NM_SENDGRID_KEY { get; set; }
-        [StringLength(50, ErrorMessage = "O NOME DA EMPRESA deve conter no máximo 50.")]
-        public string CONF_NM_NOME_EMPRESA { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_NR_NUMERO_CONSELHEIROS { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_NR_CORPO_DIRETIVO_PERIODO { get; set; }
+        public string CONF_SG_LOGIN_SMS { get; set; }
+        public string CONF_SG_SENHA_SMS { get; set; }
+        [RegularExpression(@"^([0-9]+)$", ErrorMessage = "Deve ser um valor inteiro positivo")]
+        public Nullable<int> CONF_IN_LIMITE_HORA_VEICULO { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CONFIGURACAO_ASSOCIACAO> CONFIGURACAO_ASSOCIACAO { get; set; }
     }
 }

@@ -104,6 +104,7 @@ namespace ERP_Condominios_Solution.Controllers
             }
             Int32 idAss = (Int32)Session["IdAssinante"];
 
+
             // Carrega listas
             if (Session["ListaTemplate"] == null)
             {
@@ -213,7 +214,7 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensTemplate"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
@@ -238,6 +239,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult IncluirTemplate(TemplateViewModel vm)
         {
             if ((String)Session["Ativa"] == null)
@@ -294,7 +296,7 @@ namespace ERP_Condominios_Solution.Controllers
                 usuario = (USUARIO)Session["UserCredentials"];
 
                 // Verfifica permissão
-                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" || usuario.PERFIL.PERF_SG_SIGLA != "GER")
+                if (usuario.PERFIL.PERF_SG_SIGLA != "ADM" & usuario.PERFIL.PERF_SG_SIGLA != "GER")
                 {
                     Session["MensTemplate"] = 2;
                     return RedirectToAction("CarregarBase", "BaseAdmin");
@@ -319,7 +321,7 @@ namespace ERP_Condominios_Solution.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult EditarTemplate(TemplateViewModel vm)
         {
             if ((String)Session["Ativa"] == null)

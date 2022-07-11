@@ -17,7 +17,9 @@ using System.Collections;
 using System.Web.UI.WebControls;
 using System.Runtime.Caching;
 using Image = iTextSharp.text.Image;
-
+using System.Text;
+using System.Net;
+using CrossCutting;
 
 namespace ERP_Condominios_Solution.Controllers
 {
@@ -26,6 +28,7 @@ namespace ERP_Condominios_Solution.Controllers
         private readonly IAgendaAppService baseApp;
         private readonly ILogAppService logApp;
         private readonly IUsuarioAppService usuApp;
+        private readonly IConfiguracaoAppService confApp;
 
         private String msg;
         private Exception exception;
@@ -36,11 +39,12 @@ namespace ERP_Condominios_Solution.Controllers
         List<Hashtable> listaCalendario = new List<Hashtable>();
         String extensao;
 
-        public AgendaController(IAgendaAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps)
+        public AgendaController(IAgendaAppService baseApps, ILogAppService logApps, IUsuarioAppService usuApps, IConfiguracaoAppService confApps)
         {
             baseApp = baseApps;
             logApp = logApps;
             usuApp = usuApps;
+            confApp = confApps;
         }
 
         [HttpGet]
@@ -72,6 +76,7 @@ namespace ERP_Condominios_Solution.Controllers
             listaMaster = new List<AGENDA>();
             Session["Agenda"] = null;
             return RedirectToAction("CarregarAdmin", "BaseAdmin");
+
         }
 
         [HttpGet]
@@ -1168,5 +1173,139 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("MontarTelaAgenda");
         }
 
+        public ActionResult EnviarLinkReuniao(Int32 id)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+
+            // Recupera agenda
+            AGENDA age = baseApp.GetItemById(id);
+            USUARIO usuario = usuApp.GetItemById(age.AGEN_CD_USUARIO.Value);
+
+
+            // Monta mensagem
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = usuario.USUA_NM_NOME;
+            mens.ID = usuario.USUA_CD_ID;
+            mens.MODELO = usuario.USUA_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
+            mens.MENS_TX_TEXTO = "Foi agendada uma reunião para o Sr(a). em " + age.AGEN_DT_DATA.ToShortDateString() + " às " + age.AGEN_HR_HORA.ToString() + " horas, com assunto " + age.AGEN_NM_TITULO + ". Favor acessar o link em anexo e tomar as providências necessárias.";
+            mens.MENS_NM_LINK = age.AGEN_LK_REUNIAO;
+
+            try
+            {
+                // Executa a operação
+                Int32 volta = ProcessaEnvioEMailReuniao(mens, usuario);
+                return RedirectToAction("MontarTelaAgenda");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("MontarTelaAgenda");
+            }
+        }
+
+        public ActionResult EnviarLinkReuniaoForm()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+
+            // Recupera agenda
+            AGENDA age = baseApp.GetItemById((Int32)Session["IdAgenda"]);
+            USUARIO usuario = usuApp.GetItemById(age.AGEN_CD_USUARIO.Value);
+
+
+            // Monta mensagem
+            MensagemViewModel mens = new MensagemViewModel();
+            mens.NOME = usuario.USUA_NM_NOME;
+            mens.ID = usuario.USUA_CD_ID;
+            mens.MODELO = usuario.USUA_NM_EMAIL;
+            mens.MENS_DT_CRIACAO = DateTime.Today.Date;
+            mens.MENS_IN_TIPO = 1;
+            mens.MENS_TX_TEXTO = "Foi agendada uma reunião para o Sr(a). em " + age.AGEN_DT_DATA.ToShortDateString() + " às " + age.AGEN_HR_HORA.ToString() + " horas, com assunto " + age.AGEN_NM_TITULO + ". Favor acessar o link em anexo e tomar as providências necessárias.";
+            mens.MENS_NM_LINK = age.AGEN_LK_REUNIAO;
+
+            try
+            {
+                // Executa a operação
+                Int32 volta = ProcessaEnvioEMailReuniao(mens, usuario);
+                return RedirectToAction("MontarTelaAgenda");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+                return RedirectToAction("MontarTelaAgenda");
+            }
+        }
+
+        [ValidateInput(false)]
+        public Int32 ProcessaEnvioEMailReuniao(MensagemViewModel vm, USUARIO usuario)
+        {
+            // Recupera usuario
+            Int32 idAss = (Int32)Session["IdAssinante"];
+            USUARIO cont = (USUARIO)Session["Usuario"];
+
+            // Processa e-mail
+            CONFIGURACAO conf = confApp.GetItemById(usuario.ASSI_CD_ID);
+
+            // Prepara cabeçalho
+            String cab = "Prezado Sr(a). <b>" + vm.NOME + "</b>";
+
+            // Prepara rodape
+            ASSINANTE assi = (ASSINANTE)Session["Assinante"];
+            String rod = "<b>" + usuario.USUA_NM_NOME + "</b>";
+
+            // Prepara corpo do e-mail e trata link
+            String corpo = vm.MENS_TX_TEXTO + "<br /><br />";
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(corpo);
+            if (!String.IsNullOrEmpty(vm.MENS_NM_LINK))
+            {
+                if (!vm.MENS_NM_LINK.Contains("www."))
+                {
+                    vm.MENS_NM_LINK = "www." + vm.MENS_NM_LINK;
+                }   
+                if (!vm.MENS_NM_LINK.Contains("http://"))
+                {
+                    vm.MENS_NM_LINK = "http://" + vm.MENS_NM_LINK;
+                }
+                str.AppendLine("<a href='" + vm.MENS_NM_LINK + "'>Clique aqui acessar a reunião</a>");
+            }
+            String body = str.ToString();
+            String emailBody = cab + "<br /><br />" + body + "<br /><br />" + rod;
+
+            // Monta e-mail
+            NetworkCredential net = new NetworkCredential(conf.CONF_NM_EMAIL_EMISSOO, conf.CONF_NM_SENHA_EMISSOR);
+            Email mensagem = new Email();
+            mensagem.ASSUNTO = "Envio de Link para Reunião";
+            mensagem.CORPO = emailBody;
+            mensagem.DEFAULT_CREDENTIALS = false;
+            mensagem.EMAIL_DESTINO = cont.USUA_NM_EMAIL;
+            mensagem.EMAIL_EMISSOR = conf.CONF_NM_EMAIL_EMISSOO;
+            mensagem.ENABLE_SSL = true;
+            mensagem.NOME_EMISSOR = usuario.ASSINANTE.ASSI_NM_NOME;
+            mensagem.PORTA = conf.CONF_NM_PORTA_SMTP;
+            mensagem.PRIORIDADE = System.Net.Mail.MailPriority.High;
+            mensagem.SENHA_EMISSOR = conf.CONF_NM_SENHA_EMISSOR;
+            mensagem.SMTP = conf.CONF_NM_HOST_SMTP;
+            mensagem.IS_HTML = true;
+            mensagem.NETWORK_CREDENTIAL = net;
+
+            // Envia mensagem
+            try
+            {
+                Int32 voltaMail = CommunicationPackage.SendEmail(mensagem);
+            }
+            catch (Exception ex)
+            {
+                String erro = ex.Message;
+            }
+            return 0;
+        }
     }
 }

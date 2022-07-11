@@ -33,6 +33,8 @@ namespace ERP_Condominios_Solution.ViewModels
         public Nullable<int> AGEN_CD_USUARIO { get; set; }
         public string AGEN_TX_OBSERVACOES { get; set; }
         public Nullable<int> AGEN_IN_STATUS { get; set; }
+        [StringLength(250, ErrorMessage = "O LINK DE REUNIÃO deve conter no máximo 250.")]
+        public string AGEN_LK_REUNIAO { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AGENDA_ANEXO> AGENDA_ANEXO { get; set; }

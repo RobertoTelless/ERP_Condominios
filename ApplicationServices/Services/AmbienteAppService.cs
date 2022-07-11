@@ -307,9 +307,9 @@ namespace ApplicationServices.Services
 
                     // Recupera template e-mail
                     String texto = "A devolução da chave do ambiente " + amb.AMBI_NM_AMBIENTE + " que estava sob sua responsabilidade foi devolvida após a data especificada. Isso poderá gerar multa. Você será contactado pela Administração";
-                    String header = _temService.GetByCode("NOTICHAVE").TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode("NOTICHAVE").TEMP_TX_CORPO;
-                    String data = _temService.GetByCode("NOTICHAVE").TEMP_TX_DADOS;
+                    String header = _temService.GetByCode("NOTICHAVE", usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode("NOTICHAVE", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+                    String data = _temService.GetByCode("NOTICHAVE", usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
                     body = body.Replace("{Texto}", texto);
                     body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
@@ -426,9 +426,9 @@ namespace ApplicationServices.Services
                 volta = _notiService.Create(vm);
 
                 // Recupera template e-mail
-                String header = _temService.GetByCode("NOTICHAVE").TEMP_TX_CABECALHO;
-                String body = _temService.GetByCode("NOTICHAVE").TEMP_TX_CORPO;
-                String footer = _temService.GetByCode("NOTICHAVE").TEMP_TX_DADOS;
+                String header = _temService.GetByCode("NOTICHAVE", usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                String body = _temService.GetByCode("NOTICHAVE", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+                String footer = _temService.GetByCode("NOTICHAVE", usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
                 // Prepara corpo do e-mail  
                 String frase = String.Empty;

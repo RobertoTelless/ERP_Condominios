@@ -328,9 +328,9 @@ namespace ApplicationServices.Services
                     volta = _notiService.Create(item);
 
                     // Recupera template e-mail
-                    String header = _temService.GetByCode(template).TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode(template).TEMP_TX_CORPO;
-                    String footer = _temService.GetByCode(template).TEMP_TX_DADOS;
+                    String header = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+                    String footer = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
@@ -396,7 +396,7 @@ namespace ApplicationServices.Services
                 String routing = "1";
 
                 // Monta texto
-                String texto = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                String texto = _temService.GetByCode("VEICSMS", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
 
                 // inicia processo
                 List<String> resposta = new List<string>();

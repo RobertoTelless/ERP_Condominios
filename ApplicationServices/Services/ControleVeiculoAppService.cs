@@ -290,9 +290,9 @@ namespace ApplicationServices.Services
                     volta = _notiService.Create(item);
 
                     // Recupera template e-mail
-                    String header = _temService.GetByCode(template).TEMP_TX_CABECALHO;
-                    String body = _temService.GetByCode(template).TEMP_TX_CORPO;
-                    String footer = _temService.GetByCode(template).TEMP_TX_DADOS;
+                    String header = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                    String body = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_CORPO;
+                    String footer = _temService.GetByCode(template, usuario.ASSI_CD_ID).TEMP_TX_DADOS;
 
                     // Prepara corpo do e-mail  
                     String frase = String.Empty;
@@ -364,8 +364,8 @@ namespace ApplicationServices.Services
                 {
                     msg = msg.Substring(0, 750);
                 }
-                String header = _temService.GetByCode("VEICSMS").TEMP_TX_CABECALHO;
-                String body = _temService.GetByCode("VEICSMS").TEMP_TX_CORPO;
+                String header = _temService.GetByCode("VEICSMS", usuario.ASSI_CD_ID).TEMP_TX_CABECALHO;
+                String body = _temService.GetByCode("VEICSMS", usuario.ASSI_CD_ID).TEMP_TX_CORPO;
                 body = body.Replace("{Texto}", msg);
                 body = body.Replace("{Condominio}", usuario.ASSINANTE.ASSI_NM_NOME);
                 header = header.Replace("{Nome}", usuario.USUA_NM_NOME);
