@@ -171,6 +171,15 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("MontarTelaCondominio");
         }
 
+        public ActionResult VoltarDash()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            return RedirectToAction("MontarTelaDashboardAdministracao", "BaseAdmin");
+        }
+
         [HttpPost]
         public JsonResult PesquisaCEP_Javascript(String cep, int tipoEnd)
         {

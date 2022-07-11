@@ -22,25 +22,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Condomínio - Informações Gerais</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Configuração 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Configuração 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
 
                 <div class="ibox-content">
@@ -75,7 +56,7 @@
                                             <div class="col-lg-12 col-md-12 col-xs-12">
                                                 <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                                     @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast" })
-                                                    @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Condominio")
+                                                    @Html.ButtonLinkIndex(text: "Dashboard", action: "VoltarDash", controller: "Condominio")
                                                 </div>
                                             </div>
                                         </div>
@@ -104,12 +85,12 @@
                                             <div class="col-md-10">
                                                 <div class="row">
                                                     <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                        <div class="col-lg-4 col-md-4 col-xs-12">
+                                                        <div class="col-lg-5 col-md-5 col-xs-12">
                                                             Nome*
                                                             @Html.TextBoxFor(m => m.ASSI_NM_NOME, new { @class = "form-control", autofocus = true })
                                                             @Html.ValidationMessageFor(m => m.ASSI_NM_NOME, "", new { @style = "color:red" })
                                                         </div>
-                                                        <div class="col-lg-3 col-md-3 col-xs-12">
+                                                        <div class="col-lg-2 col-md-2 col-xs-12">
                                                             Tipo de Pessoa*
                                                             @Html.DropDownListFor(m => m.TIPE_CD_ID, (SelectList)ViewBag.Tipos, "Selecionar", new { @class = "form-control", autofocus = true, @id = "pessoa", onchange = "ValidaDiv($(this).val())" })
                                                             @Html.ValidationMessageFor(m => m.TIPE_CD_ID, "", new { @style = "color:red" })
@@ -159,10 +140,10 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row">
                                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
-                                                <div class="col-lg-3 col-md-3 col-xs-12">
+                                                <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <hr />
                                                     <h4>Endereço</h4>
                                                     <br />
                                                     CEP
@@ -216,8 +197,8 @@
                                                                 <tr>
                                                                     <th>Cargo</th>
                                                                     <th>Nome</th>
-                                                                    <th>Unidade</th>
-                                                                    <th>Telefone</th>
+                                                                    @*<th>Unidade</th>*@
+                                                                    <th>Celular</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -226,7 +207,7 @@
                                                                     <tr>
                                                                         <td>@cond.FUNCAO_CORPO_DIRETIVO.FUCO_NM_NOME</td>
                                                                         <td>@cond.USUARIO.USUA_NM_NOME</td>
-                                                                        <td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>
+                                                                        @*<td>@cond.USUARIO.UNIDADE.UNID_NM_EXIBE</td>*@
                                                                         <td>@cond.USUARIO.USUA_NR_CELULAR</td>
                                                                     </tr>
                                                                 }
@@ -236,9 +217,9 @@
                                                 </div>
                                             }
                                         </div>
-                                        <div class="form-group">
+                                        @*<div class="form-group">
                                             @Html.ButtonActionSubmit(text: "Confirma edição de Dados do Condomínio", htmlAttributes: new { id = "basictoast", style = "margin-bottom: -35px;" })
-                                        </div>
+                                        </div>*@
                                     }
                                 </div>
                             </div>
@@ -602,10 +583,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <br />
-                    @Html.ButtonLinkIndex(text: "Voltar", action: "Voltar", controller: "Condominio")
-                </div>
+                    @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarDash", controller: "Condominio")
+                </div>*@
             </div>
         </div>
     </div>

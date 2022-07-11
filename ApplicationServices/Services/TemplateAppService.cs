@@ -21,21 +21,21 @@ namespace ApplicationServices.Services
             _baseService = baseService;
         }
 
-        public List<TEMPLATE> GetAllItens()
+        public List<TEMPLATE> GetAllItens(Int32 idAss)
         {
-            List<TEMPLATE> lista = _baseService.GetAllItens();
+            List<TEMPLATE> lista = _baseService.GetAllItens(idAss);
             return lista;
         }
 
-        public TEMPLATE CheckExist(TEMPLATE conta)
+        public TEMPLATE CheckExist(TEMPLATE conta, Int32 idAss)
         {
-            TEMPLATE item = _baseService.CheckExist(conta);
+            TEMPLATE item = _baseService.CheckExist(conta, idAss);
             return item;
         }
 
-        public List<TEMPLATE> GetAllItensAdm()
+        public List<TEMPLATE> GetAllItensAdm(Int32 idAss)
         {
-            List<TEMPLATE> lista = _baseService.GetAllItensAdm();
+            List<TEMPLATE> lista = _baseService.GetAllItensAdm(idAss);
             return lista;
         }
 
@@ -45,13 +45,13 @@ namespace ApplicationServices.Services
             return item;
         }
 
-        public TEMPLATE GetByCode(String sigla)
+        public TEMPLATE GetByCode(String sigla, Int32 idAss)
         {
-            TEMPLATE item = _baseService.GetByCode(sigla);
+            TEMPLATE item = _baseService.GetByCode(sigla, idAss);
             return item;
         }
 
-        public Int32 ExecuteFilter(String sigla, String nome, String conteudo, out List<TEMPLATE> objeto)
+        public Int32 ExecuteFilter(String sigla, String nome, String conteudo, Int32 idAss, out List<TEMPLATE> objeto)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace ApplicationServices.Services
                 Int32 volta = 0;
 
                 // Processa filtro
-                objeto = _baseService.ExecuteFilter(sigla, nome, conteudo);
+                objeto = _baseService.ExecuteFilter(sigla, nome, conteudo, idAss);
                 if (objeto.Count == 0)
                 {
                     volta = 1;
@@ -77,7 +77,7 @@ namespace ApplicationServices.Services
             try
             {
                 // Verifica existencia prévia
-                if (_baseService.CheckExist(item) != null)
+                if (_baseService.CheckExist(item, usuario.ASSI_CD_ID) != null)
                 {
                     return 1;
                 }
@@ -137,10 +137,6 @@ namespace ApplicationServices.Services
             try
             {
                 // Checa integridade
-                //if (item.CONTRATO.Count > 0)
-                //{
-                //    return 1;
-                //}              
                 
                 // Acerta campos
                 item.TEMP_IN_ATIVO = 0;

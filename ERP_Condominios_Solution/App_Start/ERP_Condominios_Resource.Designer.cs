@@ -770,5 +770,14 @@ namespace ERP_Condominios_Solution.App_Start {
                 return ResourceManager.GetString("M0110", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Padrão de Mensagem já cadastrado.
+        /// </summary>
+        internal static string M0111 {
+            get {
+                return ResourceManager.GetString("M0111", resourceCulture);
+            }
+        }
     }
 }

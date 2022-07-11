@@ -354,4 +354,7 @@
   <data name="M0110" xml:space="preserve">
     <value>E-mail já cadastrado</value>
   </data>
+  <data name="M0111" xml:space="preserve">
+    <value>Padrão de Mensagem já cadastrado</value>
+  </data>
 </root>

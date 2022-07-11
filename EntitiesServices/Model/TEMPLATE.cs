@@ -26,6 +26,7 @@ namespace EntitiesServices.Model
         public string TEMP_TX_CORPO { get; set; }
         public string TEMP_TX_DADOS { get; set; }
         public Nullable<System.DateTime> TEMP_DT_CRIACAO { get; set; }
+        public Nullable<int> TEMP_IN_EDITAVEL { get; set; }
     
         public virtual ASSINANTE ASSINANTE { get; set; }
     }

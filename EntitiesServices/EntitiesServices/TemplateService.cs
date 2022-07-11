@@ -35,31 +35,31 @@ namespace ModelServices.EntitiesServices
             return item;
         }
 
-        public List<TEMPLATE> GetAllItens()
+        public List<TEMPLATE> GetAllItens(Int32 idAss)
         {
-            return _baseRepository.GetAllItens();
+            return _baseRepository.GetAllItens(idAss);
         }
 
-        public List<TEMPLATE> GetAllItensAdm()
+        public List<TEMPLATE> GetAllItensAdm(Int32 idAss)
         {
-            return _baseRepository.GetAllItensAdm();
+            return _baseRepository.GetAllItensAdm(idAss);
         }
 
-        public TEMPLATE CheckExist(TEMPLATE item)
+        public TEMPLATE CheckExist(TEMPLATE item, Int32 idAss)
         {
-            TEMPLATE volta = _baseRepository.CheckExist(item);
+            TEMPLATE volta = _baseRepository.CheckExist(item, idAss);
             return volta;
         }
 
-        public TEMPLATE GetByCode(String sigla)
+        public TEMPLATE GetByCode(String sigla, Int32 idAss)
         {
-            TEMPLATE item = _baseRepository.GetByCode(sigla);
+            TEMPLATE item = _baseRepository.GetByCode(sigla, idAss);
             return item;
         }
 
-        public List<TEMPLATE> ExecuteFilter(String sigla, String nome, String conteudo)
+        public List<TEMPLATE> ExecuteFilter(String sigla, String nome, String conteudo, Int32 idAss)
         {
-            return _baseRepository.ExecuteFilter(sigla, nome, conteudo);
+            return _baseRepository.ExecuteFilter(sigla, nome, conteudo, idAss);
 
         }
 

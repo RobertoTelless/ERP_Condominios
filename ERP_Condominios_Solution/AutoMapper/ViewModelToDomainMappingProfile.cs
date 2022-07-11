@@ -27,7 +27,7 @@ namespace MvcMapping.Mappers
             //CreateMap<CategoriaFornecedorViewModel, CATEGORIA_FORNECEDOR>();
             //CreateMap<TipoPessoaViewModel, TIPO_PESSOA>();
             CreateMap<UnidadeViewModel, UNIDADE>();
-            //CreateMap<TemplateViewModel, TEMPLATE>();
+            CreateMap<TemplateViewModel, TEMPLATE>();
             CreateMap<TarefaViewModel, TAREFA>();
             CreateMap<CategoriaAgendaViewModel, CATEGORIA_AGENDA>();
             CreateMap<AgendaViewModel, AGENDA>();

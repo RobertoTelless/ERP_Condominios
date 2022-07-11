@@ -1329,6 +1329,7 @@
           <Property Name="TEMP_TX_CORPO" Type="text" />
           <Property Name="TEMP_TX_DADOS" Type="text" />
           <Property Name="TEMP_DT_CRIACAO" Type="date" />
+          <Property Name="TEMP_IN_EDITAVEL" Type="int" />
         </EntityType>
         <EntityType Name="TIPO_AGENDA">
           <Key>
@@ -6741,6 +6742,7 @@
           <Property Name="TEMP_TX_DADOS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TEMP_DT_CRIACAO" Type="DateTime" Precision="0" />
           <NavigationProperty Name="ASSINANTE" Relationship="Self.FK_TEMPLATE_ASSINANTE" FromRole="TEMPLATE" ToRole="ASSINANTE" />
+          <Property Name="TEMP_IN_EDITAVEL" Type="Int32" />
         </EntityType>
         <EntityType Name="TIPO_AGENDA">
           <Key>
@@ -12027,6 +12029,7 @@
           <EntitySetMapping Name="TEMPLATE">
             <EntityTypeMapping TypeName="ERP_CondominioModel.TEMPLATE">
               <MappingFragment StoreEntitySet="TEMPLATE">
+                <ScalarProperty Name="TEMP_IN_EDITAVEL" ColumnName="TEMP_IN_EDITAVEL" />
                 <ScalarProperty Name="TEMP_CD_ID" ColumnName="TEMP_CD_ID" />
                 <ScalarProperty Name="ASSI_CD_ID" ColumnName="ASSI_CD_ID" />
                 <ScalarProperty Name="TEMP_SG_SIGLA" ColumnName="TEMP_SG_SIGLA" />

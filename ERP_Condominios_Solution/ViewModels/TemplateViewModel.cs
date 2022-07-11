@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using EntitiesServices.Model;
 
-namespace SystemBRPresentation.ViewModels
+namespace ERP_Condominios_Solution.ViewModels
 {
     public class TemplateViewModel
     {
@@ -26,6 +26,8 @@ namespace SystemBRPresentation.ViewModels
         public string TEMP_TX_CABECALHO { get; set; }
         public string TEMP_TX_CORPO { get; set; }
         public string TEMP_TX_DADOS { get; set; }
+        public Nullable<System.DateTime> TEMP_DT_CRIACAO { get; set; }
+        public Nullable<int> TEMP_IN_EDITAVEL { get; set; }
 
         public virtual ASSINANTE ASSINANTE { get; set; }
     }

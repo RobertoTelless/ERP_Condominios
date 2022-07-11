@@ -287,6 +287,7 @@
     <Compile Include="Controllers\BaseAdminController.cs" />
     <Compile Include="Controllers\CentroCustoController.cs" />
     <Compile Include="Controllers\CondominioController.cs" />
+    <Compile Include="Controllers\ConfiguracaoController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
     <Compile Include="Controllers\ControleVeiculoController.cs" />
     <Compile Include="Controllers\CorpoDiretivoController.cs" />
@@ -306,6 +307,7 @@
     <Compile Include="Controllers\ReservaController.cs" />
     <Compile Include="Controllers\TarefaController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\VagaController.cs" />
@@ -364,6 +366,7 @@
     <Compile Include="ViewModels\ListaConvidadoViewModel.cs" />
     <Compile Include="ViewModels\ControleVeiculoViewModel.cs" />
     <Compile Include="ViewModels\MudancaViewModel.cs" />
+    <Compile Include="ViewModels\TemplateViewModel.cs" />
     <Compile Include="ViewModels\VeiculoViewModel.cs" />
     <Compile Include="ViewModels\VagaViewModel.cs" />
     <Compile Include="ViewModels\UnidadeViewModel.cs" />
@@ -3300,6 +3303,9 @@
     <Content Include="Views\Ambiente\EnviarSMSAmbiente.cshtml" />
     <Content Include="Views\CorpoDiretivo\EnviarEMailCorpo.cshtml" />
     <Content Include="Views\CorpoDiretivo\EnviarSMSCorpo.cshtml" />
+    <Content Include="Views\Template\MontarTelaTemplate.cshtml" />
+    <Content Include="Views\Template\IncluirTemplate.cshtml" />
+    <Content Include="Views\Template\EditarTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3429,6 +3435,7 @@
     <Folder Include="Imagens\Agenda\1\20\Anexos\" />
     <Folder Include="Imagens\Agenda\1\21\Anexos\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Configuracao\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
