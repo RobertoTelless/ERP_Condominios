@@ -45,25 +45,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarAmbiente", "Ambiente", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -82,12 +63,12 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     @Html.ButtonActionSubmit(text: "Filtrar")
-                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Ambiente", action: "RetirarFiltroAmbiente")
-                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Ambiente", action: "MostrarTudoAmbiente")
                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                     {
-                                        @Html.ButtonLinkIndex(text: "Novo Ambiente", controller: "Ambiente", action: "IncluirAmbiente")
+                                        @Html.ButtonLinkIndex(text: "Novo Ambiente", controller: "Ambiente", action: "IncluirAmbiente", buttonClass: "primary")
                                     }
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Ambiente", action: "RetirarFiltroAmbiente")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Ambiente", action: "MostrarTudoAmbiente")
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Ambiente", action: "GerarRelatorioLista")
                                     @Html.ButtonLinkIndex(text: "Dashboard", controller: "Ambiente", action: "VoltarDash")
                                 </div>
@@ -103,25 +84,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Ambientes</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     @if (!ViewData.ModelState.IsValid)
@@ -187,7 +149,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <td>Não tem Chave</td>
+                                                    <td><span class="badge badge-success">Não tem chave</span></td>
                                                 }
                                                 @if (cond.RESERVA.Where(p => p.AMBI_CD_ID == cond.AMBI_CD_ID & p.RESE_IN_STATUS == 1).ToList().Count > 0)
                                                 {

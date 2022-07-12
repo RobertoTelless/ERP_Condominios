@@ -50,7 +50,7 @@
                 <div class="ibox-content">
                     <div class="form-group">
                         <br />
-                        @Html.ButtonLinkIndex(text: "Gerar Relatório", action: "GerarRelatorioDetalhe", controller: "Ambiente")
+                        @Html.ButtonLinkIndex(text: "Relatório Detalhe", action: "GerarRelatorioDetalhe", controller: "Ambiente")
                         @Html.ButtonLinkIndex(text: "Voltar", action: "VoltarBaseAmbiente", controller: "Ambiente")
                     </div>
                     @Html.AntiForgeryToken()
@@ -124,7 +124,7 @@
                                                         @Html.TextBoxFor(m => m.AMBI_NM_AMBIENTE, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_NM_AMBIENTE, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-1 col-md-1 col-xs-12">
                                                         Lotação*
                                                         @Html.TextBoxFor(m => m.AMBI_NR_LOTACAO, new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_NR_LOTACAO, "", new { @style = "color:red" })
@@ -152,12 +152,12 @@
                                                 </div>
                                                 <br />
                                                 <div class="row">
-                                                    <div class="col-lg-2 col-md-2 col-xs-12">
+                                                    <div class="col-lg-1 col-md-1 col-xs-12">
                                                         Tem Chave?
                                                         @Html.DropDownListFor(m => m.AMBI_IN_CHAVE, (SelectList)ViewBag.Chave, "Selecionar", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_IN_CHAVE, "", new { @style = "color:red" })
                                                     </div>
-                                                    <div class="col-lg-2 col-md-2 col-xs-12" id="razao">
+                                                    <div class="col-lg-1 col-md-1 col-xs-12" id="razao">
                                                         Gratuito?
                                                         @Html.DropDownListFor(m => m.AMBI_IN_GRATUITO, (SelectList)ViewBag.Gratuito, "Selecionar", new { @class = "form-control", autofocus = true })
                                                         @Html.ValidationMessageFor(m => m.AMBI_IN_GRATUITO, "", new { @style = "color:red" })
