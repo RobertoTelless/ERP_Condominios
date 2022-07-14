@@ -800,6 +800,10 @@
     <Content Include="Images\autorizacao_icone.png" />
     <Content Include="Images\Clayton - Cópia .jpg" />
     <Content Include="Images\Clayton.jpg" />
+    <Content Include="Images\CondImagem1.png" />
+    <Content Include="Images\CondImagem2.jpg" />
+    <Content Include="Images\CondImagem3.jpg" />
+    <Content Include="Images\CondImagem4.jpg" />
     <Content Include="Images\controle_veiculo_icone.jpg" />
     <Content Include="Images\dashboard4_1.jpg" />
     <Content Include="Images\dashboard4_2.jpg" />

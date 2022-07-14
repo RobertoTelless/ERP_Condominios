@@ -24,7 +24,7 @@ namespace ERP_Condominios_Solution.ViewModels
         [Required(ErrorMessage = "Campo E-MAIL EMISSOR obrigatorio")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "O E-MAIL EMISSOR deve conter no minimo 1 caracteres e no máximo 100.")]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Deve ser um e-mail válido")]
-        public string CONF_NM_EMAIL_EMISSOR { get; set; }
+        public string CONF_NM_EMAIL_EMISSOO { get; set; }
         [Required(ErrorMessage = "Campo CREDENCIAIS obrigatorio")]
         [StringLength(50, MinimumLength = 1, ErrorMessage = "A CREDENCIAL deve conter no minimo 1 caracteres e no máximo 50.")]
         public string CONF_NM_SENHA_EMISSOR { get; set; }

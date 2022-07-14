@@ -57,6 +57,10 @@
                         <div class="col-lg-12 col-md-12 col-xs-12">
                             @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                             {
+                                @Html.ButtonLinkIndex(text: "Novo Membro do Corpo Diretivo", controller: "CorpoDiretivo", action: "IncluirCorpo", buttonClass: "primary")
+                            }
+                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
+                            {
                                 @Html.ButtonLinkIndex(text: "Exibir Corpo Atual", controller: "CorpoDiretivo", action: "RetirarFiltroCorpo")
                             }
                             @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
@@ -66,10 +70,6 @@
                             @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                             {
                                 @Html.ButtonLinkIndex(text: "Exibir Excluídos", controller: "CorpoDiretivo", action: "MostrarTudoCorpo")
-                            }
-                            @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
-                            {
-                                @Html.ButtonLinkIndex(text: "Novo Membro do Corpo Diretivo", controller: "CorpoDiretivo", action: "IncluirCorpo")
                             }
                             @Html.ButtonLinkIndex(text: "Ver Organograma", controller: "CorpoDiretivo", action: "MontarTelaCorpoGrafica")
                             @Html.ButtonLinkIndex(text: "Dashboard", controller: "CorpoDiretivo", action: "VoltarDash")
