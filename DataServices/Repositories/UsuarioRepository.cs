@@ -132,7 +132,7 @@ namespace DataServices.Repositories
             {
                 query = query.Where(p => p.USUA_NM_NOME.Contains(nome));
             }
-            if (idUnid != 0)
+            if (idUnid != null)
             {
                 query = query.Where(p => p.UNID_CD_ID == idUnid);
             }

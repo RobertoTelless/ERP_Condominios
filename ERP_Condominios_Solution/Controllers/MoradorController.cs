@@ -136,6 +136,7 @@ namespace ERP_Condominios_Solution.Controllers
         [HttpGet]
         public ActionResult MontarTelaMoradores()
         {
+
             // Verifica se tem usuario logado
             USUARIO usuario = new USUARIO();
             if ((String)Session["Ativa"] == null)
@@ -274,12 +275,13 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return RedirectToAction("Login", "ControleAcesso");
             }
+            USUARIO item = baseApp.GetItemById(id);
             Int32 idAss = (Int32)Session["IdAssinante"];
             ViewBag.Perfil = usuario.PERFIL.PERF_SG_SIGLA;
-            ViewBag.Unidade = usuario.UNID_CD_ID;
+            ViewBag.Unidade = item.UNID_CD_ID;
 
             // Recupera Moradores da unidade
-            List<USUARIO> moradores = baseApp.GetAllItens(idAss).Where(p => p.USUA_IN_MORADOR == 1 & p.UNID_CD_ID == usuario.UNID_CD_ID).ToList();
+            List<USUARIO> moradores = baseApp.GetAllItens(idAss).Where(p => p.USUA_IN_MORADOR == 1 & p.UNID_CD_ID == item.UNID_CD_ID).ToList();
             ViewBag.Moradores = moradores;
 
             // Mensagens
@@ -293,7 +295,6 @@ namespace ERP_Condominios_Solution.Controllers
             }
 
             // Prepara view
-            USUARIO item = baseApp.GetItemById(id);
             objetoAntes = item;
             Session["Morador"] = item;
             Session["IdVolta"] = id;

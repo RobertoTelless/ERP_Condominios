@@ -22,6 +22,7 @@ using System.Text;
 using System.Net;
 using CrossCutting;
 
+
 namespace ERP_Condominios_Solution.Controllers
 {
     public class OcorrenciaController : Controller
@@ -325,13 +326,16 @@ namespace ERP_Condominios_Solution.Controllers
                     }
 
                     //Envia mensagem unidade alvo
-                    USUARIO resp = usuApp.GetAllItens(idAss).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().First();
-                    Int32 volta1 = EnviarEMailOcorrencia(item, resp);
+                    if (item.UNID_CD_ID != null)
+                    {
+                        USUARIO resp = usuApp.GetAllItens(idAss).Where(p => p.UNID_CD_ID == item.UNID_CD_ID & p.USUA_IN_RESPONSAVEL == 1).ToList().First();
+                        Int32 volta1 = EnviarEMailOcorrencia(item, resp);
+                    }
 
                     //Envia mensagem sindico
                     Int32? sindId = cdApp.GetAllItens(idAss).Where(p => p.CODI_DT_SAIDA_REAL == null & p.FUCO_CD_ID == 1).ToList().First().USUA_CD_ID;
                     USUARIO sind = usuApp.GetItemById(sindId.Value);
-                    volta1 = EnviarEMailOcorrencia(item, sind);
+                    Int32 volta2 = EnviarEMailOcorrencia(item, sind);
 
                     // Volta
                     if ((Int32)Session["VoltaOcorrencia"] == 2)
@@ -1093,6 +1097,304 @@ namespace ERP_Condominios_Solution.Controllers
             {
                 return View(vm);
             }
+        }
+
+        public ActionResult GerarRelatorioLista(Int32? tipo)
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            // Prepara geração
+            String data = DateTime.Today.Date.ToShortDateString();
+            data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
+            String nomeRel = "OcorrenciaLista" + "_" + data + ".pdf";
+            List<OCORRENCIA> lista = new List<OCORRENCIA>();
+            String titulo = String.Empty;
+            titulo = "Ocorrências - Listagem";
+            lista = (List<OCORRENCIA>)Session["ListaOcorrencia"];
+
+            OCORRENCIA filtro = (OCORRENCIA)Session["FiltroOcorrencia"];
+            Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+            // Cria documento
+            Document pdfDoc = new Document(PageSize.A4.Rotate(), 10, 10, 10, 10);
+            PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+
+            // Linha horizontal
+            Paragraph line = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line);
+
+            // Cabeçalho
+            PdfPTable table = new PdfPTable(5);
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            PdfPCell cell = new PdfPCell();
+            cell.Border = 0;
+            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
+            image.ScaleAbsolute(50, 50);
+            cell.AddElement(image);
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph(titulo, meuFont2))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            cell.Border = 0;
+            cell.Colspan = 4;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            Paragraph line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+            line1 = new Paragraph("  ");
+            pdfDoc.Add(line1);
+
+            // Grid
+            table = new PdfPTable(new float[] { 70f, 70f, 100f, 70f, 120f, 50f, 50f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("Ocorrências selecionados pelos parametros de filtro abaixo", meuFont1))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.Colspan = 8;
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Data", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Unidade", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Autor", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Categoria", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Título", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Situação", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Comentários", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+
+            foreach (OCORRENCIA item in lista)
+            {
+                cell = new PdfPCell(new Paragraph(item.OCOR_DT_OCORRENCIA.ToShortDateString(), meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.UNIDADE.UNID_NM_EXIBE, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.USUARIO.USUA_NM_NOME, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.CATEGORIA_OCORRENCIA.CAOC_NM_NOME, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.OCOR_NM_TITULO, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                if (item.OCOR_IN_STATUS == 1)
+                {
+                    cell = new PdfPCell(new Paragraph("Ativa", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("Encerrada", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                if (item.OCORRENCIA_COMENTARIO.Count > 0)
+                {
+                    cell = new PdfPCell(new Paragraph(item.OCORRENCIA_COMENTARIO.Count.ToString(), meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("-", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+            }
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            Paragraph line2 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line2);
+
+            // Rodapé
+            Chunk chunk1 = new Chunk("Parâmetros de filtro: ", FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk1);
+
+            String parametros = String.Empty;
+            Int32 ja = 0;
+            if (filtro != null)
+            {
+                if (filtro.UNID_CD_ID > 0)
+                {
+                    parametros += "Unidade: " + filtro.UNID_CD_ID;
+                    ja = 1;
+                }
+                if (filtro.USUA_CD_ID != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Autor: " + filtro.USUA_CD_ID;
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e Autor: " + filtro.USUA_CD_ID;
+                    }
+                }
+                if (filtro.CAOC_CD_ID != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Categoria: " + filtro.CAOC_CD_ID;
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e Categoria: " + filtro.CAOC_CD_ID;
+                    }
+                }
+                if (filtro.OCOR_NM_TITULO != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Título: " + filtro.OCOR_NM_TITULO;
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e Título: " + filtro.OCOR_NM_TITULO;
+                    }
+                }
+                if (filtro.OCOR_DT_OCORRENCIA != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Data: " + filtro.OCOR_DT_OCORRENCIA.ToString();
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e Data: " + filtro.OCOR_DT_OCORRENCIA.ToString();
+                    }
+                }
+                if (filtro.OCOR_TX_TEXTO != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Conteúdo: " + filtro.OCOR_TX_TEXTO;
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e Conteúdo: " + filtro.OCOR_TX_TEXTO;
+                    }
+                }
+                if (ja == 0)
+                {
+                    parametros = "Nenhum filtro definido.";
+                }
+            }
+            else
+            {
+                parametros = "Nenhum filtro definido.";
+            }
+            Chunk chunk = new Chunk(parametros, FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk);
+
+            // Linha Horizontal
+            Paragraph line3 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line3);
+
+            // Finaliza
+            pdfWriter.CloseStream = false;
+            pdfDoc.Close();
+            Response.Buffer = true;
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=" + nomeRel);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Write(pdfDoc);
+            Response.End();
+            return RedirectToAction("MontarTelaOcorrencia");
         }
 
     }
