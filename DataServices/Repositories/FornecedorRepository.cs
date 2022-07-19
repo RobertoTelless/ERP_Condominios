@@ -72,20 +72,18 @@ namespace DataServices.Repositories
             }
             if (!String.IsNullOrEmpty(razao))
             {
-                query = query.Where(p => p.FORN_NM_RAZAO_SOCIAL.Contains(razao));
+                query = query.Where(p => p.FORN_NM_RAZAO_SOCIAL.ToUpper().Contains(razao.ToUpper()));
             }
             if (!String.IsNullOrEmpty(nome))
             {
-                query = query.Where(p => p.FORN_NM_NOME.Contains(nome));
+                query = query.Where(p => p.FORN_NM_NOME.ToUpper().Contains(nome.ToUpper()));
             }
             if (!String.IsNullOrEmpty(cpf))
             {
-                //cpf = ValidarNumerosDocumentos.RemoveNaoNumericos(cpf);
                 query = query.Where(p => p.FORN_NR_CPF == cpf);
             }
             if (!String.IsNullOrEmpty(cnpj))
             {
-                //cnpj = ValidarNumerosDocumentos.RemoveNaoNumericos(cnpj);
                 query = query.Where(p => p.FORN_NR_CNPJ == cnpj);
             }
             if (!String.IsNullOrEmpty(email))
@@ -94,7 +92,7 @@ namespace DataServices.Repositories
             }
             if (!String.IsNullOrEmpty(cidade))
             {
-                query = query.Where(p => p.FORN_NM_CIDADE.Contains(cidade));
+                query = query.Where(p => p.FORN_NM_CIDADE.ToUpper().Contains(cidade.ToUpper()));
             }
             if (uf != null)
             {

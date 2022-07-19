@@ -105,11 +105,11 @@
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuProprietario"] == 1)
                     {
-                        @Html.ButtonLinkIndex(text: "Proprietário", action: "MontarTelaDashboardProprietario", controller: "BaseAdmin", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Proprietário", action: "CarregarDesenvolvimento", controller: "BaseAdmin", buttonClass: "primary")
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuFuncionario"] == 1)
                     {
-                        @Html.ButtonLinkIndex(text: "Funcionário", action: "MontarTelaDashboardFuncionario", controller: "BaseAdmin", buttonClass: "primary")
+                        @Html.ButtonLinkIndex(text: "Funcionário", action: "CarregarDesenvolvimento", controller: "BaseAdmin", buttonClass: "primary")
                     }
                 </div>
 
@@ -151,7 +151,7 @@
                     </div>
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuSindico"] == 1)
                     {
-                        @Html.ButtonLinkIndex(text: "Financeiro", action: "MontarTelaDashboardFinanceiro", controller: "BaseAdmin", buttonClass: "success")
+                        @Html.ButtonLinkIndex(text: "Financeiro", action: "CarregarDesenvolvimento", controller: "BaseAdmin", buttonClass: "success")
                     }
                     @if (ViewBag.Perfil == "ADM" || (Int32)Session["UsuSindico"] == 1)
                     {

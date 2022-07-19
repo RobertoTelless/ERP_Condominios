@@ -55,16 +55,8 @@
                                     @Html.DropDownListFor(m => m.UNID_CD_ID, (SelectList)ViewBag.Unidades, "Selecionar", new { @class = "form-control" })                            
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-5ths">
-                                    Nome
+                                    Visitante
                                     @Html.TextBoxFor(m => m.AUAC_NM_VISITANTE, new { @class = "form-control", autofocus = true })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-5ths">
-                                    Documento
-                                    @Html.TextBoxFor(m => m.AUAC_NR_DOCUMENTO, new { @class = "form-control", autofocus = true })
-                                </div>
-                                <div class="col-lg-2 col-md-2 col-xs-5ths">
-                                    Empresa
-                                    @Html.TextBoxFor(m => m.AUAC_NM_EMPRESA, new { @class = "form-control", autofocus = true })
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-xs-5ths">
                                     Tipo
@@ -78,12 +70,12 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     @Html.ButtonActionSubmit(text: "Filtrar")
-                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Autorizacao", action: "RetirarFiltroAutorizacao")
-                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Autorizacao", action: "MostrarTudoAutorizacao")
                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN" || ViewBag.Perfil == "MOR")
                                     {
-                                        @Html.ButtonLinkIndex(text: "Nova Autorização/Restrição", controller: "Autorizacao", action: "IncluirAutorizacao")
+                                        @Html.ButtonLinkIndex(text: "Nova Autorização/Restrição", controller: "Autorizacao", action: "IncluirAutorizacao", buttonClass: "primary")
                                     }
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Autorizacao", action: "RetirarFiltroAutorizacao")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Autorizacao", action: "MostrarTudoAutorizacao")
                                     @Html.ButtonLinkIndex(text: "Gerar Relatório", controller: "Autorizacao", action: "GerarRelatorioLista")
                                     @Html.ButtonLinkIndex(text: "Dashboard", controller: "Autorizacao", action: "VoltarDash")
                                 </div>

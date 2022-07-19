@@ -918,5 +918,301 @@ namespace ERP_Condominios_Solution.Controllers
             return RedirectToAction("CarregarBase", "BaseAdmin");
         }
 
+        public ActionResult GerarRelatorioLista()
+        {
+            if ((String)Session["Ativa"] == null)
+            {
+                return RedirectToAction("Login", "ControleAcesso");
+            }
+            // Prepara geração
+            String data = DateTime.Today.Date.ToShortDateString();
+            data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
+            String nomeRel = "AutorizacaoLista" + "_" + data + ".pdf";
+            List<AUTORIZACAO_ACESSO> lista = new List<AUTORIZACAO_ACESSO>();
+            String titulo = String.Empty;
+            titulo = "Autorizações - Listagem";
+            lista = (List<AUTORIZACAO_ACESSO>)Session["ListaAutorizacao"];
+
+            AUTORIZACAO_ACESSO filtro = (AUTORIZACAO_ACESSO)Session["FiltroAutorizacao"];
+            Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+            // Cria documento
+            Document pdfDoc = new Document(PageSize.A4.Rotate(), 10, 10, 10, 10);
+            PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+
+            // Linha horizontal
+            Paragraph line = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line);
+
+            // Cabeçalho
+            PdfPTable table = new PdfPTable(5);
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            PdfPCell cell = new PdfPCell();
+            cell.Border = 0;
+            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
+            image.ScaleAbsolute(50, 50);
+            cell.AddElement(image);
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph(titulo, meuFont2))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            cell.Border = 0;
+            cell.Colspan = 4;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            Paragraph line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+            line1 = new Paragraph("  ");
+            pdfDoc.Add(line1);
+
+            // Grid
+            table = new PdfPTable(new float[] { 70f, 70f, 90f, 90f, 50f, 50f, 50f, 50f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("Autorizações selecionadas pelos parametros de filtro abaixo", meuFont1))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.Colspan = 8;
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Data", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Unidade", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Responsável", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Visitante", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Tipo", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Limite", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Visitas", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Situação", meuFont))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+            table.AddCell(cell);
+
+            foreach (AUTORIZACAO_ACESSO item in lista)
+            {
+                cell = new PdfPCell(new Paragraph(item.AUAC_DT_INICIO.Value.ToShortDateString(), meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.UNIDADE.UNID_NM_EXIBE, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE, HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.USUARIO.USUA_NM_NOME, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph(item.AUAC_NM_VISITANTE, meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                if (item.AUAC_IN_TIPO == 1)
+                {
+                    cell = new PdfPCell(new Paragraph("Autorização", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("Restrição", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                if (item.AUAC_DT_LIMITE != null)
+                {
+                    cell = new PdfPCell(new Paragraph(item.AUAC_DT_LIMITE.Value.ToShortDateString(), meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("-", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                cell = new PdfPCell(new Paragraph(item.ENTRADA_SAIDA.Count.ToString(), meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                table.AddCell(cell);
+                if (item.AUAC_IN_PERMANENTE == 1)
+                {
+                    cell = new PdfPCell(new Paragraph("Permanente", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else if (item.AUAC_IN_PERMANENTE == 2 & item.AUAC_DT_LIMITE.Value.Date < DateTime.Today.Date)
+                {
+                    cell = new PdfPCell(new Paragraph("Expirada", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                else
+                {
+                    cell = new PdfPCell(new Paragraph("Normal", meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+            }
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            Paragraph line2 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line2);
+
+            // Rodapé
+            Chunk chunk1 = new Chunk("Parâmetros de filtro: ", FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk1);
+
+            String parametros = String.Empty;
+            Int32 ja = 0;
+            if (filtro != null)
+            {
+                if (filtro.UNID_CD_ID > 0)
+                {
+                    parametros += "Unidade: " + filtro.UNID_CD_ID;
+                    ja = 1;
+                }
+                if (filtro.AUAC_NM_VISITANTE != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Visitante: " + filtro.AUAC_NM_VISITANTE;
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e Visitante: " + filtro.AUAC_NM_VISITANTE;
+                    }
+                }
+                if (filtro.AUAC_IN_TIPO != null)
+                {
+                    if (ja == 0)
+                    {
+                        parametros += "Tipo: " + filtro.AUAC_IN_TIPO;
+                        ja = 1;
+                    }
+                    else
+                    {
+                        parametros += " e E-Tipo: " + filtro.AUAC_IN_TIPO;
+                    }
+                }
+                if (ja == 0)
+                {
+                    parametros = "Nenhum filtro definido.";
+                }
+            }
+            else
+            {
+                parametros = "Nenhum filtro definido.";
+            }
+            Chunk chunk = new Chunk(parametros, FontFactory.GetFont("Arial", 9, Font.NORMAL, BaseColor.BLACK));
+            pdfDoc.Add(chunk);
+
+            // Linha Horizontal
+            Paragraph line3 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line3);
+
+            // Finaliza
+            pdfWriter.CloseStream = false;
+            pdfDoc.Close();
+            Response.Buffer = true;
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=" + nomeRel);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Write(pdfDoc);
+            Response.End();
+            return RedirectToAction("MontarTelaAutorizacao");
+        }
+
     }
 }

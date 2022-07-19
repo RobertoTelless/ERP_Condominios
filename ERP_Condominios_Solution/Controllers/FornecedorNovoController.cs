@@ -1487,7 +1487,7 @@ namespace ERP_Condominios_Solution.Controllers
 
             PdfPCell cell = new PdfPCell();
             cell.Border = 0;
-            Image image = Image.GetInstance(Server.MapPath("~/Images/5.png"));
+            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
             image.ScaleAbsolute(50, 50);
             cell.AddElement(image);
             table.AddCell(cell);
@@ -2196,5 +2196,350 @@ namespace ERP_Condominios_Solution.Controllers
             }
             return 0;
         }
+
+        public ActionResult GerarRelatorioDetalhe()
+        {
+            // Prepara geração
+            FORNECEDOR aten = fornApp.GetItemById((Int32)Session["IdFornecedor"]);
+            String data = DateTime.Today.Date.ToShortDateString();
+            data = data.Substring(0, 2) + data.Substring(3, 2) + data.Substring(6, 4);
+            String nomeRel = "Fornecedor_" + aten.FORN_CD_ID.ToString() + "_" + data + ".pdf";
+            Font meuFont = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont1 = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFont2 = FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            Font meuFontBold = FontFactory.GetFont("Arial", 8, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            String foto = String.Empty;
+
+            // Cria documento
+            Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
+            PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+
+            // Linha horizontal
+            Paragraph line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Cabeçalho
+            PdfPTable table = new PdfPTable(5);
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            PdfPCell cell = new PdfPCell();
+            cell.Border = 0;
+            Image image = Image.GetInstance(Server.MapPath("~/Images/Favicon_ERP_Condominio.png"));
+            image.ScaleAbsolute(50, 50);
+            cell.AddElement(image);
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("Fornecedor - Detalhes", meuFont2))
+            {
+                VerticalAlignment = Element.ALIGN_MIDDLE,
+                HorizontalAlignment = Element.ALIGN_CENTER
+            };
+            cell.Border = 0;
+            cell.Colspan = 4;
+            table.AddCell(cell);
+
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+            line1 = new Paragraph("  ");
+            pdfDoc.Add(line1);
+
+            // Dados Gerais
+            table = new PdfPTable(new float[] { 120f, 120f, 120f, 120f, 120f });
+            table.WidthPercentage = 100;
+            table.HorizontalAlignment = 0;
+            table.SpacingBefore = 1f;
+            table.SpacingAfter = 1f;
+
+            cell = new PdfPCell(new Paragraph("Dados Gerais", meuFontBold));
+            cell.Border = 0;
+            cell.Colspan = 5;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            if (System.IO.File.Exists(Server.MapPath(aten.FORN_AQ_FOTO)))
+            {
+                cell = new PdfPCell();
+                cell.Border = 0;
+                cell.Colspan = 5;
+                image = Image.GetInstance(Server.MapPath(aten.FORN_AQ_FOTO));
+                image.ScaleAbsolute(50, 50);
+                cell.AddElement(image);
+                table.AddCell(cell);
+            }
+
+            cell = new PdfPCell(new Paragraph("Tipo: " + aten.TIPO_PESSOA.TIPE_NM_NOME, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Categoria: " + aten.CATEGORIA_FORNECEDOR.CAFO_NM_NOME, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 2;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Nome: " + aten.FORN_NM_NOME, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 2;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            if (aten.TIPE_CD_ID == 1)
+            {
+                cell = new PdfPCell(new Paragraph("CPF: " + aten.FORN_NR_CPF, meuFont));
+                cell.Border = 0;
+                cell.Colspan = 5;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+            }
+            else
+            {
+                cell = new PdfPCell(new Paragraph("Razão Social: " + aten.FORN_NM_RAZAO_SOCIAL, meuFont));
+                cell.Border = 0;
+                cell.Colspan = 3;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("CNPJ: " + aten.FORN_NR_CNPJ, meuFont));
+                cell.Border = 0;
+                cell.Colspan = 1;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("Insc.Estadual: " + aten.FORN_NR_INSCRICAO_ESTADUAL, meuFont));
+                cell.Border = 0;
+                cell.Colspan = 1;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+
+            }
+
+            cell = new PdfPCell(new Paragraph("Endereço: " + aten.FORM_NM_ENDERECO, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 3;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Bairro: " + aten.FORN_NM_BAIRRO, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Cidade: " + aten.FORN_NM_CIDADE, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("UF: " + aten.UF.UF_NM_NOME, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("CEP: " + aten.FORN_NR_CEP, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 4;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+
+            cell = new PdfPCell(new Paragraph("E-Mail: " + aten.FORN_NM_EMAIL, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 2;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Telefone: " + aten.FORN_NR_TELEFONE, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("Celular: " + aten.FORN_NR_CELULAR, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            cell = new PdfPCell(new Paragraph("WhatsApp: " + aten.FORN_NR_WHATSAPP, meuFont));
+            cell.Border = 0;
+            cell.Colspan = 1;
+            cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+            cell.HorizontalAlignment = Element.ALIGN_LEFT;
+            table.AddCell(cell);
+            pdfDoc.Add(table);
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Lista de Contatos
+            if (aten.FORNECEDOR_CONTATO.Count > 0)
+            {
+                table = new PdfPTable(new float[] { 100f, 100f, 100f, 100f});
+                table.WidthPercentage = 100;
+                table.HorizontalAlignment = 0;
+                table.SpacingBefore = 1f;
+                table.SpacingAfter = 1f;
+
+                cell = new PdfPCell(new Paragraph("Contatos", meuFontBold));
+                cell.Border = 0;
+                cell.Colspan = 4;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Nome", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("E-Mail", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("Cargo", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("Telefone", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+
+                foreach (FORNECEDOR_CONTATO item in aten.FORNECEDOR_CONTATO)
+                {
+                    cell = new PdfPCell(new Paragraph(item.FOCO_NM_NOME, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph(item.FOCO_NM_EMAIL, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph(item.FOCO_NM_CARGO, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph(item.FOCO_NR_TELEFONES, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                pdfDoc.Add(table);
+            }
+
+            // Linha Horizontal
+            line1 = new Paragraph(new Chunk(new iTextSharp.text.pdf.draw.LineSeparator(0.0F, 100.0F, BaseColor.BLUE, Element.ALIGN_LEFT, 1)));
+            pdfDoc.Add(line1);
+
+            // Produtos Vinculados
+            if (aten.PRODUTO_FORNECEDOR.Count > 0)
+            {
+                table = new PdfPTable(new float[] { 80f, 80f, 200f});
+                table.WidthPercentage = 100;
+                table.HorizontalAlignment = 0;
+                table.SpacingBefore = 1f;
+                table.SpacingAfter = 1f;
+
+                cell = new PdfPCell(new Paragraph("Produtos Vinculados", meuFontBold));
+                cell.Border = 0;
+                cell.Colspan = 3;
+                cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                table.AddCell(cell);
+
+                cell = new PdfPCell(new Paragraph("Código", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("Categoria", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+                cell = new PdfPCell(new Paragraph("Nome", meuFont))
+                {
+                    VerticalAlignment = Element.ALIGN_MIDDLE,
+                    HorizontalAlignment = Element.ALIGN_LEFT
+                };
+                cell.BackgroundColor = BaseColor.LIGHT_GRAY;
+                table.AddCell(cell);
+
+                foreach (PRODUTO_FORNECEDOR item in aten.PRODUTO_FORNECEDOR)
+                {
+                    cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_CD_CODIGO, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph(item.PRODUTO.CATEGORIA_PRODUTO.CAPR_NM_NOME, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                    cell = new PdfPCell(new Paragraph(item.PRODUTO.PROD_NM_NOME, meuFont))
+                    {
+                        VerticalAlignment = Element.ALIGN_MIDDLE,
+                        HorizontalAlignment = Element.ALIGN_LEFT
+                    };
+                    table.AddCell(cell);
+                }
+                pdfDoc.Add(table);
+            }
+
+            // Finaliza
+            pdfWriter.CloseStream = false;
+            pdfDoc.Close();
+            Response.Buffer = true;
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("content-disposition", "attachment;filename=" + nomeRel);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Write(pdfDoc);
+            Response.End();
+            return RedirectToAction("VoltarAnexoFornecedor");
+        }
+
     }
 }

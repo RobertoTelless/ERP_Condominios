@@ -27,25 +27,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Filtros</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>           
             
                 @using (Html.BeginForm("FiltrarProduto", "Produto", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal" }))
@@ -68,12 +49,12 @@
                             <div class="form-group" style=" margin-left: -15px; margin-right: -15px;">
                                 <div class="col-lg-12 col-md-12 col-xs-12">
                                     @Html.ButtonActionSubmit(text: "Filtrar")
-                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Produto", action: "RetirarFiltroProduto")
-                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Produto", action: "MostrarTudoProduto")
                                     @if (ViewBag.Perfil == "ADM" || ViewBag.Perfil == "SIN")
                                     {
-                                        @Html.ButtonLinkIndex(text: "Novo Material", controller: "Produto", action: "IncluirProduto")
+                                        @Html.ButtonLinkIndex(text: "Novo Material", controller: "Produto", action: "IncluirProduto", buttonClass: "primary")
                                     }
+                                    @Html.ButtonLinkIndex(text: "Retirar Filtro", controller: "Produto", action: "RetirarFiltroProduto")
+                                    @Html.ButtonLinkIndex(text: "Exibir Todos", controller: "Produto", action: "MostrarTudoProduto")
                                     @Html.ButtonLinkIndex(text: "Exibir Lista dos Produtos", controller: "Produto", action: "MontarTelaProduto")
                                 </div>
                             </div>
@@ -88,25 +69,6 @@
             <div class="col-lg-12 col-md-12 col-xs-12 ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>Produtos</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li>
-                                <a href="#">Config option 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
@@ -114,8 +76,8 @@
                             {
                                 foreach (var cond in (ViewBag.Listas as List<EntitiesServices.Model.PRODUTO>))
                                 {
-                                    <div class="col-lg-4">
-                                        <div class="contact-box" style="height: 100px;">
+                                    <div class="col-lg-3">
+                                        <div class="contact-box" style="height: 200px;">
                                             <a href="@Url.Action("EditarProduto", "Produto", new { id = cond.PROD_CD_ID })">
                                                 <div class="col-sm-4">
                                                     @if (!String.IsNullOrEmpty(cond.PROD_AQ_FOTO))
@@ -133,6 +95,12 @@
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <h3><strong>@cond.PROD_NM_NOME</strong></h3>
+                                                    <h4><strong>@cond.PROD_NR_BARCODE</strong></h4>
+                                                    <address>
+                                                        @cond.PROD_NM_MARCA<br>
+                                                        @cond.PROD_NM_MODELO<br>
+                                                        Estoque: @cond.PROD_QN_ESTOQUE<br>
+                                                    </address>
                                                 </div>
                                                 <div class="clearfix"></div>
                                             </a>
